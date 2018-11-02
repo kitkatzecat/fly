@@ -1,0 +1,16 @@
+{
+	"Documents": "%FLY.USER.PATH%Documents",
+	"documents": "%FLY.USER.PATH%Documents",
+	"Media": "%FLY.USER.PATH%Media",
+	"media": "%FLY.USER.PATH%Media",
+	"Desktop": "%FLY.USER.PATH%Desktop",
+	"desktop": "%FLY.USER.PATH%Desktop",
+	"Computer": "%FLY.PATH%",
+	"computer": "%FLY.PATH%",
+	"users": "%FLY.RESOURCE.PATH.USERS%",
+	"system": "%FLY.RESOURCE.PATH.SYSTEM%",
+	"undefined": "./",
+	".": "./",
+	"..": "./",
+	"../": "./"
+}

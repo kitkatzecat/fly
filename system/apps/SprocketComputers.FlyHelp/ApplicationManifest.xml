@@ -1,0 +1,19 @@
+<manifest>
+	<id>SprocketComputers.FlyHelp</id>
+	<name>Fly Help</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%question.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Get help and tutorials with a range of topics related to Fly.]]></description>
+	<window>
+		<title>Fly Help</title>
+		<width>640</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>

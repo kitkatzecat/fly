@@ -1,0 +1,43 @@
+<manifest>
+	<id>SprocketComputers.Marketplace</id>
+	<name>Marketplace</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%marketplace.svg</icon>
+	<date>1493614800</date>
+	<index></index>
+	<description><![CDATA[Download applications and more from the online Fly Marketplace.]]></description>
+	<window>
+		<title>Fly Marketplace</title>
+		<width>640</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+	<masks>
+		<mask hidden="true" id="AppChooser">
+			<name>Application Chooser</name>
+			<icon>%app_path%marketplace.svg</icon>
+			<index>control.php?type=applicationChooser</index>
+			<window>
+				<title>Application Chooser</title>
+				<width>240</width>
+				<height>320</height>
+				<x>32</x>
+				<y>32</y>
+			</window>
+		</mask>
+		<mask hidden="false" id="AppInstaller">
+			<name>Application Installer</name>
+			<icon>%FLY_ICONS_URL%package.svg</icon>
+			<index>installer.php</index>
+			<window>
+				<title>Install ""</title>
+				<width>400</width>
+				<height>300</height>
+				<x>32</x>
+				<y>32</y>
+			</window>
+		</mask>
+	</masks>
+</manifest>

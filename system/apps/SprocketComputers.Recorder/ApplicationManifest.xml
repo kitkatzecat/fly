@@ -1,0 +1,17 @@
+<manifest>
+	<id>SprocketComputers.Recorder</id>
+	<name>Sound Recorder</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%recorder.svg</icon>
+	<index>index.php</index>
+	<date>1493614800</date>
+	<description><![CDATA[Record audio from your computer's microphone and save it as a file.]]></description>
+	<window>
+		<title>Sound Recorder</title>
+		<width>240</width>
+		<height>34</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+</manifest>

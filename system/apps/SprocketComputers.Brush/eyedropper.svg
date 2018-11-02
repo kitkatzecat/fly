@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   height="100%"
+   width="100%"
+   version="1.1"
+   id="svg2"
+   viewBox="0,0,48,48">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4581">
+      <stop
+         style="stop-color:#b6b6b6;stop-opacity:1"
+         offset="0"
+         id="stop4579" />
+      <stop
+         style="stop-color:#242424;stop-opacity:1"
+         offset="1"
+         id="stop4577" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4568">
+      <stop
+         style="stop-color:#eaf8ff;stop-opacity:1"
+         offset="0"
+         id="stop4566" />
+      <stop
+         style="stop-color:#dcf4ff;stop-opacity:1"
+         offset="1"
+         id="stop4564" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="matrix(1.3371719,2.26355e-8,-2.26355e-8,1.3371719,0.94436597,-27.924439)"
+       gradientUnits="userSpaceOnUse"
+       y2="29.003136"
+       x2="26.746081"
+       y1="29.003136"
+       x1="21.253918"
+       id="linearGradient4570"
+       xlink:href="#linearGradient4568" />
+    <radialGradient
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(-0.5375243,2.3560307,-2.195971,-0.50100818,78.606657,-61.301717)"
+       r="5.1152341"
+       fy="13.765291"
+       fx="31.20673"
+       cy="13.765291"
+       cx="31.20673"
+       id="radialGradient4587"
+       xlink:href="#linearGradient4581" />
+    <filter
+       height="1.0849644"
+       y="-0.042482203"
+       width="1.1103302"
+       x="-0.055165117"
+       id="filter4650"
+       style="color-interpolation-filters:sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur4652"
+         stdDeviation="0.58690707" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     transform="matrix(1.3371719,0,0,1.3371719,-9.0357879,-9.8885834)"
+     id="rect4562-7"
+     d="m 33.191406,8.765625 a 5.1159873,6.5261636 35.748994 0 0 -5.507812,3.091797 5.1159873,6.5261636 35.748994 0 0 -1.414063,3.439453 5.0503979,2.3612249 35.748994 0 0 -1.388672,0.564453 5.0503979,2.3612249 35.748994 0 0 0.726563,2.97461 c -0.117991,0.153493 -0.239971,0.294635 -0.355469,0.455078 L 14.419922,34.339844 c -2.295569,3.188864 -3.150703,6.47056 -1.916016,7.359375 1.234687,0.888814 4.077478,-0.961526 6.373047,-4.150391 L 29.708984,22.5 c 0.116382,-0.161671 0.213379,-0.322546 0.322266,-0.484375 a 5.0503979,2.3612249 35.748994 0 0 3.048828,-0.251953 5.0503979,2.3612249 35.748994 0 0 0.09766,-1.496094 5.1159873,6.5261636 35.748994 0 0 2.808594,-2.43164 A 5.1159873,6.5261636 35.748994 0 0 35.648442,9.5488281 5.1159873,6.5261636 35.748994 0 0 33.19141,8.765625 Z"
+     style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1.08722818;stroke-opacity:1;filter:url(#filter4650)" />
+  <rect
+     transform="rotate(35.748994)"
+     ry="9.4837465"
+     rx="8.0230312"
+     y="-11.023255"
+     x="29.36451"
+     height="43.76199"
+     width="7.343966"
+     id="rect4562"
+     style="opacity:1;fill:url(#linearGradient4570);fill-opacity:1;stroke:none;stroke-width:1.45381093;stroke-opacity:1" />
+  <path
+     id="path4558"
+     d="m 38.632783,2.8802328 a 6.8409544,8.7266025 35.748994 0 0 -10.650506,3.0875138 6.8409544,8.7266025 35.748994 0 0 -1.891093,4.5983614 6.7532501,3.1573636 35.748994 0 0 -1.856579,0.755193 6.7532501,3.1573636 35.748994 0 0 3.636523,6.508366 6.7532501,3.1573636 35.748994 0 0 7.325972,1.38321 6.7532501,3.1573636 35.748994 0 0 0.130642,-2.000864 6.8409544,8.7266025 35.748994 0 0 3.756922,-3.251987 6.8409544,8.7266025 35.748994 0 0 -0.451881,-11.0797932 z"
+     style="opacity:1;fill:url(#radialGradient4587);fill-opacity:1;stroke:none;stroke-width:1.36160767;stroke-opacity:1" />
+</svg>

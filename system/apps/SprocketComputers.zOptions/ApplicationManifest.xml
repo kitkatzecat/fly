@@ -1,0 +1,21 @@
+<manifest>
+	<id>SprocketComputers.zOptions</id>
+	<name>Options</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>1.0</version>
+	<icon>%FLY.RESOURCE.URL.ICONS%options.svg</icon>
+	<date>1516759067</date>
+	<index>index.php</index>
+	<description><![CDATA[Change computer and personal settings.]]></description>
+	<window>
+		<title>Options</title>
+		<width>720</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+		<minwidth>640</minwidth>
+		<minheight>480</minheight>
+	</window>
+</manifest>

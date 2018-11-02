@@ -1,0 +1,25 @@
+<manifest>
+	<id>SprocketComputers.Brush</id>
+	<name>Brush</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%FLY.WORKING_URL%brush.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Create digital pictures with a set of artistic tools and save them to your computer.]]></description>
+	<mime>image/*</mime>
+	<mime-actions><![CDATA[
+		"image/*": "file=%FLY.CURRENT_PATH%"
+	]]></mime-actions>
+	<window>
+		<title>Brush</title>
+		<width>720</width>
+		<height>480</height>
+		<minwidth>640</minwidth>
+		<minheight>240</minheight>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>

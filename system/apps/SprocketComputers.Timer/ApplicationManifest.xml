@@ -1,0 +1,17 @@
+<manifest>
+	<id>SprocketComputers.Timer</id>
+	<name>Timer</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%timer.svg</icon>
+	<index>index.php</index>
+	<date>1493614800</date>
+	<description><![CDATA[Use the timer to count down or the stopwatch to keep time.]]></description>
+	<window>
+		<title>Timer</title>
+		<width>320</width>
+		<height>108</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+</manifest>

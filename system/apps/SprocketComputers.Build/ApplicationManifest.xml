@@ -1,0 +1,19 @@
+<manifest>
+	<id>SprocketComputers.Buid</id>
+	<name>Build</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%build.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Fly build development tools]]></description>
+	<window>
+		<title>Fly Build</title>
+		<width>320</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>false</expand>
+		<resize>false</resize>
+	</window>
+</manifest>

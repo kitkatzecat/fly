@@ -1,0 +1,27 @@
+[
+	{
+		"name": "Home",
+		"icon": "%FLY.RESOURCE.URL.ICONS%home.svg",
+		"index": "home.php"
+	},
+	{
+		"name": "Personalization",
+		"icon": "%FLY.RESOURCE.URL.ICONS%personalization.svg",
+		"index": "personalization/index.php"
+	},
+	{
+		"name": "Files & Applications",
+		"icon": "%FLY.RESOURCE.URL.ICONS%application.svg",
+		"index": "filesapps/index.php"
+	},
+	{
+		"name": "Users",
+		"icon": "%FLY.RESOURCE.URL.ICONS%person.svg",
+		"index": "users/index.php"
+	},
+	{
+		"name": "Time & Date",
+		"icon": "%FLY.RESOURCE.URL.ICONS%clock.svg",
+		"index": "timedate/index.php"
+	}
+]

@@ -1,0 +1,17 @@
+<manifest>
+	<id>SprocketComputers.Agenda</id>
+	<name>Agenda</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%agenda.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Use planning tools such as a calendar and reminders to organize your agenda.]]></description>
+	<window>
+		<title>Agenda</title>
+		<width>640</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+</manifest>

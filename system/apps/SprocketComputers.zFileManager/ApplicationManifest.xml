@@ -1,0 +1,119 @@
+<manifest>
+	<id>SprocketComputers.zFileManager</id>
+	<name>zFile Manager</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%fileman.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[View and manage your files and folders.]]></description>
+	<window>
+		<title>File Manager</title>
+		<width>720</width>
+		<height>480</height>
+		<minwidth>400</minwidth>
+		<minheight>160</minheight>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+	<!--<extensions>
+		<extension id="FileChooser" type="control" src="ext_filechooser.js"></extension>
+		<extension id="LocationChooser" type="control" src="ext_locationchooser.js"></extension>
+		<extension id="SaveDialog" type="control" src="ext_savedialog.js"></extension>
+	</extensions>-->
+	<types>
+		<als>
+			<icon><![CDATA[%app_path%alias.svg]]></icon>
+			<description><![CDATA[File Alias]]></description>
+			<action><![CDATA[SprocketComputers.FileManager]]></action>
+		</als>
+	</types>
+	<masks>
+		<!--<mask id="Folders" hidden="false">
+			<name>Folders</name>
+			<icon>%icon_path%folder.svg</icon>
+			<index>foldertree.php?popout=true</index>
+			<window>
+				<x>auto</x>
+				<y>auto</y>
+				<width>240</width>
+				<height>320</height>
+				<title>Folders</title>
+			</window>
+		</mask>
+		<mask id="Trash" hidden="false">
+			<name>Trash</name>
+			<icon>%icon_path%trash.svg</icon>
+			<index>trash.php</index>
+			<window>
+				<x>auto</x>
+				<y>auto</y>
+				<width>640</width>
+				<height>480</height>
+				<title>Trash</title>
+			</window>
+		</mask>-->
+		<mask id="Properties" hidden="true">
+			<name>Properties</name>
+			<icon>%icon_path%properties.svg</icon>
+			<index>properties.php</index>
+			<window>
+				<x>auto</x>
+				<y>auto</y>
+				<width>240</width>
+				<height>320</height>
+				<title>Properties</title>
+			</window>
+		</mask>
+		<mask id="Rename" hidden="true">
+			<name>Rename</name>
+			<icon>%app_path%fileman.svg</icon>
+			<index>fileact.php?act=rename</index>
+			<window>
+				<x>32</x>
+				<y>32</y>
+				<width>500</width>
+				<height>220</height>
+				<title>Rename</title>
+			</window>
+		</mask>
+		<mask id="Delete" hidden="true">
+			<name>Delete</name>
+			<icon>%app_path%fileman.svg</icon>
+			<index>fileact.php?act=delete</index>
+			<window>
+				<x>32</x>
+				<y>32</y>
+				<width>500</width>
+				<height>220</height>
+				<title>Delete</title>
+			</window>
+		</mask>
+		<!--<mask id="FileChooser" hidden="true" extension="true">
+			<name>File Chooser</name>
+			<icon>%app_path%fileman.svg</icon>
+			<index>control.php?type=fileBrowser</index>
+			<window>
+				<x>32</x>
+				<y>32</y>
+				<width>480</width>
+				<height>240</height>
+				<title>Browse for File</title>
+			</window>
+		</mask>
+		<mask id="LocationChooser" hidden="true">
+			<name>Location Chooser</name>
+			<icon>%app_path%fileman.svg</icon>
+			<index>control.php?type=saveBrowser</index>
+			<window>
+				<x>32</x>
+				<y>32</y>
+				<width>480</width>
+				<height>240</height>
+				<title>Browse for Location</title>
+			</window>
+		</mask>-->
+	</masks>
+</manifest>

@@ -1,0 +1,79 @@
+<manifest>
+	<id>SprocketComputers.LinuxTools</id>
+	<name>Linux Tools</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%linux.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Tools to run Linux commands, reboot and shut down the computer, etc.]]></description>
+	<window>
+		<title>Linux Tools</title>
+		<width>240</width>
+		<height>320</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+	<masks>
+		<mask id="Volume" hidden="false">
+			<name>Volume</name>
+			<icon>%app_path%../SprocketComputers.MediaPlayer/button.volume.svg</icon>
+			<index>index.php?volume=true</index>
+			<window>
+				<title>Volume</title>
+				<width>100</width>
+				<height>100</height>
+				<x>-1000</x>
+				<y>-1000</y>
+			</window>
+		</mask>
+		<mask id="Unmute" hidden="false">
+			<name>Unmute</name>
+			<icon>%app_path%../SprocketComputers.MediaPlayer/button.volume.mute.svg</icon>
+			<index>index.php?unmute=true</index>
+			<window>
+				<title>Unmute</title>
+				<width>100</width>
+				<height>100</height>
+				<x>-1000</x>
+				<y>-1000</y>
+			</window>
+		</mask>
+		<mask id="ScreenOff" hidden="false">
+			<name>Screen Off</name>
+			<icon>%icon_path%mark-o.svg</icon>
+			<index>index.php?screenoff=true</index>
+			<window>
+				<title>Screen Off</title>
+				<width>100</width>
+				<height>100</height>
+				<x>-1000</x>
+				<y>-1000</y>
+			</window>
+		</mask>
+		<mask id="Reboot" hidden="false">
+			<name>Reboot</name>
+			<icon>%icon_path%refresh.svg</icon>
+			<index>index.php?reboot=true</index>
+			<window>
+				<title>Reboot</title>
+				<width>100</width>
+				<height>100</height>
+				<x>-1000</x>
+				<y>-1000</y>
+			</window>
+		</mask>
+		<mask id="ShutDown" hidden="false">
+			<name>Shut Down</name>
+			<icon>%icon_path%mark-x.svg</icon>
+			<index>index.php?shutdown=true</index>
+			<window>
+				<title>Shut Down</title>
+				<width>100</width>
+				<height>100</height>
+				<x>-1000</x>
+				<y>-1000</y>
+			</window>
+		</mask>
+	</masks>
+</manifest>

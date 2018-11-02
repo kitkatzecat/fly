@@ -1,0 +1,20 @@
+<manifest>
+	<id>SprocketComputers.Preview</id>
+	<name>Preview</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%preview.svg</icon>
+	<index>index.php</index>
+	<date>1493614800</date>
+	<description><![CDATA[View files of many different types.]]></description>
+	<mime>image/*,text/*</mime>
+	<window>
+		<title>Preview</title>
+		<width>640</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>

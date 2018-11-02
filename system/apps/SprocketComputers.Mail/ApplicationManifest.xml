@@ -1,0 +1,21 @@
+<manifest>
+	<id>SprocketComputers.Mail</id>
+	<name>Mail</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%FLY.RESOURCE.URL.ICONS%mail.svg</icon>
+	<date>1517437377</date>
+	<index>index.php</index>
+	<description><![CDATA[]]></description>
+	<window>
+		<title>Mail</title>
+		<width>720</width>
+		<height>480</height>
+		<minwidth>480</minwidth>
+		<minheight>320</minheight>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>

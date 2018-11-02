@@ -1,0 +1,17 @@
+<manifest>
+	<id>SprocketComputers.Notebook</id>
+	<name>Notebook</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%notebook.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Take quick notes that are automatically saved to your computer.]]></description>
+	<window>
+		<title>Notebook</title>
+		<width>342</width>
+		<height>512</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+</manifest>

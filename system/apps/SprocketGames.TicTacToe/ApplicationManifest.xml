@@ -1,0 +1,21 @@
+<manifest>
+	<id>SprocketGames.TicTacToe</id>
+	<name>Tic-Tac-Toe</name>
+	<publisher>Sprocket Games</publisher>
+	<version>1.0</version>
+	<icon>%app_path%tictactoe.svg</icon>
+	<date>1508766687</date>
+	<index>index.php</index>
+	<description><![CDATA[A simple game in which you and the computer take turns to mark a 3 x 3 grid with your own mark, and if 3 consecutive marks are formed, the game is won.]]></description>
+	<window>
+		<title>Tic Tac Toe</title>
+		<width>480</width>
+		<height>400</height>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+		<minwidth>480</minwidth>
+		<minheight>400</minheight>
+	</window>
+</manifest>

@@ -1,0 +1,17 @@
+<manifest>
+	<id>SprocketComputers.Feeds</id>
+	<name>Feeds</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%feeds.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[<TODO: DESCRIPTION>]]></description>
+	<window>
+		<title>Feeds</title>
+		<width>480</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+</manifest>

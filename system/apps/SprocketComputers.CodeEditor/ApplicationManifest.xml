@@ -1,0 +1,19 @@
+<manifest>
+	<id>SprocketComputers.CodeEditor</id>
+	<name>Code Editor</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>1.0</version>
+	<icon>%icon_path%type/code.svg</icon>
+	<date>1510619546</date>
+	<index>index.php</index>
+	<description><![CDATA[Create and edit code files with syntax highlighting in a variety of common coding languages.]]></description>
+	<window>
+		<title>Code Editor</title>
+		<width>640</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>
