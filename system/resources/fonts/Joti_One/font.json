@@ -1,0 +1,9 @@
+{
+	"name": "Joti One",
+	"author": "Eduardo Tunni",
+	"version": "1.001",
+	"license": "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web",
+	"resources": {
+		"normal": "JotiOne-Regular.ttf"
+	}
+}

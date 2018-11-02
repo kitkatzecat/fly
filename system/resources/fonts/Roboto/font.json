@@ -1,0 +1,24 @@
+{
+	"name": "Roboto",
+	"author": "Christian Robertson",
+	"version": "2.137",
+	"license": "http://www.apache.org/licenses/LICENSE-2.0",
+	"resources": {
+		"normal": "Roboto-Regular.ttf",
+		"bold": "Roboto-Bold.ttf",
+		"italic": "Roboto-Italic.ttf",
+		"bolditalic": "Roboto-BoldItalic.ttf",
+		"100": "Roboto-Thin.ttf",
+		"italic100": "Roboto-ThinItalic.ttf",
+		"200": "Roboto-Light.ttf",
+		"italic200": "Roboto-LightItalic.ttf",
+		"400": "Roboto-Regular.ttf",
+		"italic400": "Roboto-Italic.ttf",
+		"500": "Roboto-Medium.ttf",
+		"italic500": "Roboto-MediumItalic.ttf",
+		"700": "Roboto-Bold.ttf",
+		"italic700": "Roboto-BoldItalic.ttf",
+		"900": "Roboto-Black.ttf",
+		"italic900": "Roboto-BlackItalic.ttf"
+	}
+}

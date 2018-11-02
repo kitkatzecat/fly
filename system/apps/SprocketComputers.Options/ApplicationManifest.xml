@@ -1,0 +1,46 @@
+<manifest>
+	<id>SprocketComputers.Options</id>
+	<name>Options</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%FLY.RESOURCE.URL.ICONS%options.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Change computer and personal settings.]]></description>
+	<window>
+		<title>Options</title>
+		<width>640</width>
+		<height>480</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+	<masks>
+		<mask id="ThemeCustomizer" hidden="false">
+			<name>Theme Customizer</name>
+			<icon>%FLY.WORKING_URL%icons/personalization.svg</icon>
+			<index>customizer</index>
+			<window>
+				<title>Theme Customizer</title>
+				<width>320</width>
+				<height>480</height>
+				<x>auto</x>
+				<y>auto</y>
+			</window>
+		</mask>
+		<mask id="FontManager" hidden="false">
+			<name>Font Manager</name>
+			<icon>%FLY.RESOURCE.URL.ICONS%text.svg</icon>
+			<index>fontmgr.php</index>
+			<window>
+				<title>Font Manager</title>
+				<width>320</width>
+				<height>480</height>
+				<minwidth>320</minwidth>
+				<minheight>240</minheight>
+				<x>auto</x>
+				<y>auto</y>
+				<resize>true</resize>
+			</window>
+		</mask>
+	</masks>
+</manifest>

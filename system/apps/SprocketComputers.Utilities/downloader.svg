@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   height="100%"
+   width="100%"
+   version="1.1"
+   id="svg2"
+   viewBox="0,0,48,48">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4611">
+      <stop
+         id="stop4607"
+         offset="0"
+         style="stop-color:#ffffff;stop-opacity:1" />
+      <stop
+         id="stop4609"
+         offset="1"
+         style="stop-color:#ffffff;stop-opacity:0" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(1.1473072e-6)"
+       gradientUnits="userSpaceOnUse"
+       y2="42.024555"
+       x2="24.01926"
+       y1="-11.968575"
+       x1="24.01926"
+       id="linearGradient4613"
+       xlink:href="#linearGradient4611" />
+    <filter
+       height="1.108507"
+       y="-0.05425352"
+       width="1.134216"
+       x="-0.067108016"
+       id="filter4662"
+       style="color-interpolation-filters:sRGB">
+      <feGaussianBlur
+         id="feGaussianBlur4664"
+         stdDeviation="0.93621687" />
+    </filter>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     transform="matrix(1.0417167,0,0,1.0417167,-1.0012004,-0.40130912)"
+     id="g4669">
+    <path
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.98106045;stroke-opacity:1;filter:url(#filter4662)"
+       d="M 14.562002,3.292399 V 25.143294 H 7.2589273 l 8.3685927,9.780208 8.372481,9.784099 8.372481,-9.784099 8.368593,-9.780208 H 33.438 V 3.292399 Z"
+       id="rect4558-6" />
+    <path
+       style="opacity:1;fill:#2a8cdc;fill-opacity:1;stroke:none;stroke-width:0.98106045;stroke-opacity:1"
+       d="M 14.562002,3.292399 V 25.143294 H 7.2589273 l 8.3685927,9.780208 8.372481,9.784099 8.372481,-9.784099 8.368593,-9.780208 H 33.438 V 3.292399 Z"
+       id="rect4558" />
+    <path
+       style="opacity:1;fill:url(#linearGradient4613);fill-opacity:1;stroke:none;stroke-width:0.98106045;stroke-opacity:1"
+       d="M 15.562501,4.2929688 V 26.142578 H 9.4316417 l 6.6757813,7.802734 c 5.201415,1.36933 12.520696,-0.750632 18.513672,-3.189453 L 38.56836,26.142578 H 32.437501 V 4.2929688 Z"
+       id="rect4558-1" />
+  </g>
+</svg>

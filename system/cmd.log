@@ -1,0 +1,51 @@
+
+
+Fly Cerulean (version 3.1 build 428.725) - Logged in as User (user)
+
+
+11-01-2018 11:49:05 PM America/Chicago
+run:%FLY.USER.PATH%data/autostart.jsc
+try { (function(){}()); } catch(e) {shell.dialog('Script error','An error has occurred in the script "autostart.jsc":<br><pre>'+e+'</pre>','Script Error');};
+Opening "autostart.jsc"...
+
+
+11-01-2018 11:49:35 PM America/Chicago
+run:SprocketComputers.Options.FontManager
+task.create('SprocketComputers.Options.FontManager', {title:'Font Manager', name:'Font Manager', x:'auto', y:'auto', width:320, height:480, minwidth:320, minheight:240, maxwidth:false, maxheight:false, location:'https://localhost/system/apps/SprocketComputers.Options/fontmgr.php', icon:'https://localhost/system/resources/icons/text.svg', expand:false, minimize:true, close:true, resize:true});
+Opening "Font Manager"...
+
+
+11-01-2018 11:49:39 PM America/Chicago
+run:SprocketComputers.Utilities.AboutFly
+task.create('SprocketComputers.Utilities.AboutFly', {title:'About Fly', name:'About Fly', x:'auto', y:'auto', width:400, height:350, minwidth:false, minheight:false, maxwidth:false, maxheight:false, location:'https://localhost/system/apps/SprocketComputers.Utilities/aboutfly.php', icon:'https://localhost/system/resources/icons/fly.svg', expand:false, minimize:true, close:true, resize:false});
+Opening "About Fly"...
+
+
+11-01-2018 11:49:42 PM America/Chicago
+run:/mnt/c/Users/kopak/OneDrive/Apache/htdocs/users/user/Desktop/Media.als
+system.command('run:SprocketComputers.FileManager,path=/mnt/c/Users/kopak/OneDrive/Apache/htdocs/users/user/Media');
+Opening "Media.als"...
+
+
+11-01-2018 11:49:42 PM America/Chicago
+run:SprocketComputers.FileManager,path=/mnt/c/Users/kopak/OneDrive/Apache/htdocs/users/user/Media
+task.create('SprocketComputers.FileManager', {title:'File Manager', name:'File Manager', x:'auto', y:'auto', width:640, height:480, minwidth:640, minheight:160, maxwidth:false, maxheight:false, location:'https://localhost/system/apps/SprocketComputers.FileManager/index.php?path=%2Fmnt%2Fc%2FUsers%2Fkopak%2FOneDrive%2FApache%2Fhtdocs%2Fusers%2Fuser%2FMedia', icon:'https://localhost/system/apps/SprocketComputers.FileManager/fileman.svg', expand:true, minimize:true, close:true, resize:true});
+Opening "File Manager"...
+
+
+11-01-2018 11:49:45 PM America/Chicago
+run:/mnt/c/Users/kopak/OneDrive/Apache/htdocs/users/user/Desktop/Documents.als
+system.command('run:SprocketComputers.FileManager,path=/mnt/c/Users/kopak/OneDrive/Apache/htdocs/users/user/Documents');
+Opening "Documents.als"...
+
+
+11-01-2018 11:49:45 PM America/Chicago
+run:SprocketComputers.FileManager,path=/mnt/c/Users/kopak/OneDrive/Apache/htdocs/users/user/Documents
+task.create('SprocketComputers.FileManager', {title:'File Manager', name:'File Manager', x:'auto', y:'auto', width:640, height:480, minwidth:640, minheight:160, maxwidth:false, maxheight:false, location:'https://localhost/system/apps/SprocketComputers.FileManager/index.php?path=%2Fmnt%2Fc%2FUsers%2Fkopak%2FOneDrive%2FApache%2Fhtdocs%2Fusers%2Fuser%2FDocuments', icon:'https://localhost/system/apps/SprocketComputers.FileManager/fileman.svg', expand:true, minimize:true, close:true, resize:true});
+Opening "File Manager"...
+
+
+11-01-2018 11:49:51 PM America/Chicago
+run:SprocketComputers.FileManager.Trash
+task.create('SprocketComputers.FileManager.Trash', {title:'Trash', name:'Trash', x:'auto', y:'auto', width:640, height:480, minwidth:false, minheight:false, maxwidth:false, maxheight:false, location:'https://localhost/system/apps/SprocketComputers.FileManager/trash.php', icon:'https://localhost/system/resources/icons/trash.svg', expand:false, minimize:true, close:true, resize:false});
+Opening "Trash"...

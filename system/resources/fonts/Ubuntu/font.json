@@ -1,0 +1,12 @@
+{
+	"name": "Ubuntu",
+	"author": "Dalton Maag",
+	"version": "0.83",
+	"license": "https://www.ubuntu.com/legal/terms-and-policies/font-licence",
+	"resources": {
+		"normal": "Ubuntu-Regular.ttf",
+		"bold": "Ubuntu-Bold.ttf",
+		"italic": "Ubuntu-Italic.ttf",
+		"bolditalic": "Ubuntu-BoldItalic.ttf"
+	}
+}

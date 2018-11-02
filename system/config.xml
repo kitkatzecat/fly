@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<user>
+		<name>Fly</name>
+	</user>
+	<version>
+		<name><![CDATA[Cerulean]]></name>
+		<image><![CDATA[./system/resources/os/logo.svg]]></image>
+		<major>3.1</major>
+		<build>428.725</build>
+		<bdate>20181101224858</bdate>
+	</version>
+	<firstRun>false</firstRun>
+</config>

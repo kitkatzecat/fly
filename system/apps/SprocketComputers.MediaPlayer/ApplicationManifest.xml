@@ -1,0 +1,65 @@
+<manifest>
+	<id>SprocketComputers.MediaPlayer</id>
+	<name>Media Player</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%media.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Play or view multimedia files stored on your computer.]]></description>
+	<types>
+		<mp3>
+			<icon><![CDATA[%FLY_ICONS_URL%type/audio.svg]]></icon>
+			<description><![CDATA[MPEG Audio Layer 3]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%,autoplay=true]]></action>
+		</mp3>
+		<m4a>
+			<icon><![CDATA[%FLY_ICONS_URL%type/audio.svg]]></icon>
+			<description><![CDATA[MPEG-4 Audio]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%,autoplay=true]]></action>
+		</m4a>
+		<ogg>
+			<icon><![CDATA[%FLY_ICONS_URL%type/audio.svg]]></icon>
+			<description><![CDATA[OGG Audio]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%,autoplay=true]]></action>
+		</ogg>
+		<wav>
+			<icon><![CDATA[%FLY_ICONS_URL%type/audio.svg]]></icon>
+			<description><![CDATA[WAVE Audio]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%,autoplay=true]]></action>
+		</wav>
+		<!--<mp4>
+			<icon><![CDATA[%FLY_ICONS_URL%type/audio.svg]]></icon>
+			<description><![CDATA[WAVE Audio]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%,autoplay=true,full=true]]></action>
+		</mp4>-->
+	</types>
+	<mime>audio/*,video/*</mime>
+	<window>
+		<title>Media Player</title>
+		<width>320</width>
+		<height>72</height>
+		<minwidth>320</minwidth>
+		<minheight>72</minheight>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+	<masks>
+		<mask id="TrackPlayer" hidden="false">
+			<name>Track Player</name>
+			<icon>%FLY.WORKING_URL%trackplayer.svg</icon>
+			<index>trackplayer.php</index>
+			<window>
+				<title>Track Player</title>
+				<width>640</width>
+				<height>480</height>
+				<x>auto</x>
+				<y>auto</y>
+				<expand>true</expand>
+				<resize>true</resize>
+			</window>
+		</mask>
+	</masks>
+</manifest>

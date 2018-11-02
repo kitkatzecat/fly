@@ -1,0 +1,163 @@
+{
+	"pkg": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%package.svg",
+		"description": "Application Package",
+		"action": "SprocketComputers.Marketplace.AppInstaller,file=%1",
+		"app": "SprocketComputers.Marketplace.AppInstaller"
+	},
+	"jpg": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
+		"description": "JPEG Image",
+		"app": "SprocketComputers.PhotoViewer",
+		"mime": "image/jpeg"
+	},
+	"png": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
+		"description": "PNG Image",
+		"app": "SprocketComputers.PhotoViewer",
+		"mime": "image/png"
+	},
+	"gif": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
+		"description": "GIF Image",
+		"app": "SprocketComputers.PhotoViewer",
+		"mime": "image/gif"
+	},
+	"bmp": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
+		"description": "Bitmap Image",
+		"action": "SprocketComputers.PhotoViewer,file=%1"
+	},
+	"svg": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
+		"description": "SVG Image",
+		"app": "SprocketComputers.PhotoViewer",
+		"mime": "image/svg+xml"
+	},
+	"txt": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/text.svg",
+		"description": "Text Document",
+		"action": "SprocketComputers.Memo,file=%1",
+		"app": "SprocketComputers.Memo",
+		"mime": "text/plain"
+	},
+	"log": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/setting.svg",
+		"description": "Log File",
+		"action": "SprocketComputers.Preview,file=%1",
+		"app": "SprocketComputers.Preview"
+	},
+	"mp3": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
+		"description": "MPEG Audio Layer 3",
+		"app": "SprocketComputers.MediaPlayer",
+		"mime": "audio/mpeg"
+	},
+	"ogg": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
+		"description": "OGG Audio",
+		"app": "SprocketComputers.MediaPlayer",
+		"mime": "audio/ogg"
+	},
+	"m4a": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
+		"description": "MPEG-4 Audio",
+		"app": "SprocketComputers.MediaPlayer",
+		"mime": "application/octet-stream"
+	},
+	"wav": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
+		"description": "WAVE Audio",
+		"app": "SprocketComputers.MediaPlayer",
+		"mime": "audio/x-wav"
+	},
+	"mp4": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/video.svg",
+		"description": "MPEG-4 Video",
+		"app": "SprocketComputers.MediaPlayer"
+	},
+	"exe": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/windows.svg",
+		"description": "Windows Application",
+		"action": "",
+		"mime": "application/x-dosexec"
+	},
+	"dll": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/windows.svg",
+		"description": "Windows Dynamic Link Library",
+		"action": "",
+		"mime": "application/x-dosexec"
+	},
+	"php": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/code.svg",
+		"description": "PHP Script",
+		"action": "SprocketComputers.Memo,file=%1",
+		"mime": "text/x-php"
+	},
+	"js": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/code.svg",
+		"description": "JavaScript Script",
+		"action": "SprocketComputers.Memo,file=%1"
+	},
+	"json": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/code.svg",
+		"description": "JavaScript Object Notation",
+		"action": "SprocketComputers.Memo,file=%1"
+	},
+	"xml": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/code.svg",
+		"description": "XML Document",
+		"action": "SprocketComputers.Memo,file=%1",
+		"mime": "application/xml"
+	},
+	"htm": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/code.svg",
+		"description": "HTML Document",
+		"action": "SprocketComputers.Utilities.Executor,file=%1",
+		"mime": "text/html"
+	},
+	"html": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/code.svg",
+		"description": "HTML Document",
+		"action": "SprocketComputers.Memo,file=%1",
+		"mime": "text/html"
+	},
+	"css": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/code.svg",
+		"description": "Cascading Style Sheet",
+		"action": "SprocketComputers.Memo,file=%1"
+	},
+	"thm": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%personalization.svg",
+		"description": "Fly Theme",
+		"action": "SprocketComputers.Utilities.ThemeLoader,file=%1"
+	},
+	"ini": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/setting.svg",
+		"description": "INI Configuration File",
+		"action": "SprocketComputers.Memo,file=%1"
+	},
+	"conf": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/setting.svg",
+		"description": "Configuration File",
+		"action": "SprocketComputers.Preview,file=%1"
+	},
+	"als": {
+		"icon": "%FLY.URL%system/apps/SprocketComputers.FileManager/alias.svg",
+		"description": "File Alias",
+		"action": "SprocketComputers.FileManager"
+	},
+	"jsc": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/script.svg",
+		"description": "Executable JavaScript",
+		"action": "SprocketComputers.Utilities.Executor"
+	},
+	"ttf": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/font.svg",
+		"description": "TrueType Font"
+	},
+	"otf": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/font.svg",
+		"description": "OpenType Font"
+	}
+}

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   viewBox="0,0,48,48"
+   id="svg2"
+   version="1.1"
+   width="100%"
+   height="100%">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient5103"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop5105" />
+    </linearGradient>
+    <linearGradient
+       gradientUnits="userSpaceOnUse"
+       y2="-0.26209447"
+       x2="26.0625"
+       y1="48.175404"
+       x1="26.0625"
+       id="linearGradient4201"
+       xlink:href="#linearGradient4730" />
+    <linearGradient
+       gradientTransform="matrix(2.9349053,0,0,0.86945131,-20.536781,-4.9928599)"
+       gradientUnits="userSpaceOnUse"
+       y2="3.7048709"
+       x2="34.343147"
+       y1="44.186733"
+       x1="34.343147"
+       id="linearGradient4814-9"
+       xlink:href="#linearGradient4730" />
+    <linearGradient
+       id="linearGradient4730">
+      <stop
+         id="stop4732"
+         offset="0"
+         style="stop-color:#4e4e4e;stop-opacity:1" />
+      <stop
+         style="stop-color:#181818;stop-opacity:1;"
+         offset="0.49000001"
+         id="stop4740" />
+      <stop
+         style="stop-color:#4a4a4a;stop-opacity:1;"
+         offset="0.5"
+         id="stop4738" />
+      <stop
+         id="stop4734"
+         offset="1"
+         style="stop-color:#707070;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     id="path4141"
+     d="m 22.229299,2.0078129 0,4.1820489 A 19.25,19.25 0 0 0 4.75,25.343 19.25,19.25 0 0 0 24,44.593 19.25,19.25 0 0 0 43.25,25.343 19.25,19.25 0 0 0 40.551466,15.556564 l -7.033524,4.465837 A 10.916159,10.916159 0 0 1 34.91649,25.343 10.916159,10.916159 0 0 1 24,36.25949 10.916159,10.916159 0 0 1 13.08351,25.343 10.916159,10.916159 0 0 1 22.229299,14.57775 l 0,4.734331 12.126413,-8.651284 0,-0.0034 -12.126413,-8.6495851 z"
+     style="opacity:1;fill:url(#linearGradient4201);fill-opacity:1;stroke:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+</svg>

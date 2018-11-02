@@ -1,0 +1,112 @@
+<components>
+	<component file="cmd.php">
+		<name>Fly Command Processor</name>
+		<version>1.2</version>
+		<description>Processes commands for core system functions, such as run:, info:, and others.</description>
+	</component>
+	<component file="devtool.php">
+		<name>Fly Developer Tools</name>
+		<version>0.1</version>
+		<description>[DEPRECATED]</description>
+	</component>
+	<component file="dialog.php">
+		<name>Fly Dialogs</name>
+		<version>1.0</version>
+		<description>Displays message dialogs, input dialogs, and confirm dialogs called using system functions.</description>
+	</component>
+	<component file="document-otf.php">
+		<name>On-The-Fly Document Renderer</name>
+		<version>0.1</version>
+		<description>[DEPRECATED] Used to render documents created on-the-fly for a window page source.</description>
+	</component>
+	<component file="hostedwindow.php">
+		<name>External Window Host</name>
+		<version>1.0</version>
+		<description>Used to display a window to an external single-window system.</description>
+	</component>
+	<component file="jump.php">
+		<name>Fly Jump Menu</name>
+		<version>1.1</version>
+		<description>Loads user preferences and applications on the computer for display in the Jump menu.</description>
+	</component>
+	<component file="login.php">
+		<name>Fly Logon Services</name>
+		<version>1.1</version>
+		<description>Displays login dialog window when system is turned on or user logs out.</description>
+	</component>
+	<component file="security.php">
+		<name>Fly Security Confirmation</name>
+		<version>0.1</version>
+		<description>Used to get confirmation from user before performing a specified action.</description>
+	</component>
+	<component file="shell.php">
+		<name>Fly Shell</name>
+		<version>1.0</version>
+		<description>Handles desktop functions such as showing dialogs and notifications.</description>
+	</component>
+	<component file="sound.php">
+		<name>Fly Shell Sound</name>
+		<version>1.0</version>
+		<description>Extension to Fly Shell - enables system and applications to play user-specified sounds for events.</description>
+	</component>
+	<component file="syscheck.php">
+		<name>System Check</name>
+		<version>1.0</version>
+		<description>Validates system connectivity during use.</description>
+	</component>
+	<component file="theme.php">
+		<name>Fly Theme Loader</name>
+		<version>1.1</version>
+		<description>[DEPRECATED] Loads system theme assets for use on desktop and in applications.</description>
+	</component>
+	<component file="theme2.php">
+		<name>Fly Theme Loader</name>
+		<version>2.0</version>
+		<description>Loads user-specified theme assets for use on desktop and in applications.</description>
+	</component>
+	<component file="ui.php">
+		<name>Fly Desktop User Interface</name>
+		<version>1.0</version>
+		<description>Loads desktop UI elements such as toolbar, Jump menu, and desktop icons.</description>
+	</component>
+	<component file="window.php">
+		<name>Fly Window Manager</name>
+		<version>1.0</version>
+		<description>[DEPRECATED] Manages windows and open applications.</description>
+	</component>
+	<component file="window2.php">
+		<name>Fly Window Manager</name>
+		<version>2.0</version>
+		<description>[DEPRECATED] Manages windows, open applications, and background processes with tasks.</description>
+	</component>
+	<component file="window3.php">
+		<name>Fly Window Manager</name>
+		<version>3.0</version>
+		<description>Manages windows, open applications, and background processes with tasks.</description>
+	</component>
+	<component file="components.xml">
+		<name>Components List</name>
+		<version>1.0</version>
+		<description>List of all installed components with names, versions, and descriptions.</description>
+	</component>
+	<component file="oobe.php">
+		<name>Fly Out-Of-Box Experience</name>
+		<version>1.0</version>
+		<description>Guides you through the setup of your new Fly computer.</description>
+	</component>
+	<component file="resources.json">
+		<name>Fly Resource Locations</name>
+		<version>1.0</version>
+		<description>Provides the system with the locations of essential system files.</description>
+	</component>
+	<component file="types.json">
+		<name>File Types Index</name>
+		<version>1.0</version>
+		<description>Provides the system with information about file types including icons, descriptions, and actions.</description>
+	</component>
+	<component file="types_compatibility.php">
+		<name>File Types Compatibility</name>
+		<version>1.0</version>
+		<description>Provides a compatibility layer between types.json and System.FileTypes.xml, two different versions of storing the file types index.</description>
+	</component>
+</components>

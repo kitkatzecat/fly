@@ -1,0 +1,17 @@
+<manifest>
+	<id>SprocketComputers.Calculator</id>
+	<name>Calculator</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%calculator.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[Perform mathematical calculations.]]></description>
+	<window>
+		<title>Calculator</title>
+		<width>240</width>
+		<height>316</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+</manifest>

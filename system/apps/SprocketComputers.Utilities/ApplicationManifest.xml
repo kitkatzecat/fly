@@ -1,0 +1,199 @@
+<manifest>
+	<id>SprocketComputers.Utilities</id>
+	<name>Utilities</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%FLY.WORKING_URL%utilities.svg</icon>
+	<index>index.php</index>
+	<date>1493614800</date>
+	<description><![CDATA[Utilities]]></description>
+	<window>
+		<title>Utilities</title>
+		<width>240</width>
+		<height>320</height>
+		<x>auto</x>
+		<y>auto</y>
+	</window>
+	<extensions>
+		<extension id="ColorPicker" type="control" src="ext_colorpicker.js"></extension>
+	</extensions>
+	<masks>
+		<mask id="WinMgr" hidden="false">
+			<icon>%FLY.WORKING_URL%winmgr.svg</icon>
+			<name>Window Manager</name>
+			<index>winmgr.php</index>
+			<window>
+				<title>Window Manager</title>
+				<width>240</width>
+				<height>320</height>
+				<minwidth>240</minwidth>
+				<minheight>160</minheight>
+				<x>auto</x>
+				<y>auto</y>
+				<resize>true</resize>
+			</window>
+		</mask>
+		<mask id="Run" hidden="false">
+			<icon>%FLY.WORKING_URL%run.svg</icon>
+			<name>Run</name>
+			<index>run.php</index>
+			<window>
+				<title>Run</title>
+				<width>240</width>
+				<height>120</height>
+				<minwidth>240</minwidth>
+				<minheight>120</minheight>
+				<maxwidth>640</maxwidth>
+				<maxheight>120</maxheight>
+				<x>auto</x>
+				<y>auto</y>
+				<resize>true</resize>
+			</window>
+		</mask>
+		<mask id="CommandPrompt" hidden="false">
+			<icon>%FLY.WORKING_URL%command.svg</icon>
+			<name>Command Prompt</name>
+			<index>command.php</index>
+			<window>
+				<title>Command Prompt</title>
+				<width>640</width>
+				<height>320</height>
+				<minwidth>400</minwidth>
+				<minheight>160</minheight>
+				<x>auto</x>
+				<y>auto</y>
+				<expand>true</expand>
+				<resize>true</resize>
+			</window>
+		</mask>
+		<mask id="Executor" hidden="false">
+			<icon>%FLY.WORKING_URL%executor.svg</icon>
+			<name>Executor</name>
+			<index>executor.php</index>
+			<window>
+				<title>Executor - No file</title>
+				<width>640</width>
+				<height>480</height>
+				<x>auto</x>
+				<y>auto</y>
+				<resize>true</resize>
+				<expand>true</expand>
+			</window>
+		</mask>
+		<mask id="FileDownloader" hidden="false">
+			<icon>%FLY.WORKING_URL%downloader.svg</icon>
+			<name>File Downloader</name>
+			<index>downloader.php</index>
+			<window>
+				<title>File Downloader</title>
+				<width>240</width>
+				<height>120</height>
+				<x>auto</x>
+				<y>auto</y>
+			</window>
+		</mask>
+		<mask id="SystemVariables" hidden="false">
+			<icon>%FLY.RESOURCE.URL.ICONS%index.svg</icon>
+			<name>System Variables</name>
+			<index>vars.php</index>
+			<window>
+				<title>System Variables</title>
+				<width>720</width>
+				<height>480</height>
+				<x>auto</x>
+				<y>auto</y>
+				<resize>true</resize>
+				<expand>true</expand>
+			</window>
+		</mask>
+		<mask id="ThemeLoader" hidden="false">
+			<icon>%FLY.RESOURCE.URL.ICONS%personalization.svg</icon>
+			<name>Theme Loader</name>
+			<index>themeloader.php</index>
+			<window>
+				<title>Theme Loader</title>
+				<width>500</width>
+				<height>212</height>
+				<x>auto</x>
+				<y>auto</y>
+			</window>
+		</mask>
+		<mask id="AboutFly" hidden="false">
+			<icon>%FLY.RESOURCE.URL.ICONS%fly.svg</icon>
+			<name>About Fly</name>
+			<index>aboutfly.php</index>
+			<window>
+				<title>About Fly</title>
+				<width>400</width>
+				<height>350</height>
+				<x>auto</x>
+				<y>auto</y>
+			</window>
+		</mask>
+		<mask id="PackageManager" hidden="false">
+			<icon>%FLY.RESOURCE.URL.ICONS%package.svg</icon>
+			<name>Package Manager</name>
+			<index>pkgmgr.php</index>
+			<window>
+				<title>Package Manager</title>
+				<width>320</width>
+				<height>320</height>
+				<x>auto</x>
+				<y>auto</y>
+				<resize>false</resize>
+				<expand>false</expand>
+			</window>
+		</mask>
+		<mask id="OpenWith" hidden="true">
+			<icon>%FLY.RESOURCE.URL.ICONS%run.svg</icon>
+			<name>Open With</name>
+			<index>openwith.php</index>
+			<window>
+				<title>Open With</title>
+				<width>320</width>
+				<height>480</height>
+				<x>auto</x>
+				<y>auto</y>
+			</window>
+		</mask>
+		<mask id="Applications" hidden="false">
+			<icon>%FLY.RESOURCE.URL.ICONS%application.svg</icon>
+			<name>Applications</name>
+			<index>applications.php</index>
+			<window>
+				<title>Applications</title>
+				<width>640</width>
+				<height>480</height>
+				<x>auto</x>
+				<y>auto</y>
+				<resize>true</resize>
+				<expand>true</expand>
+			</window>
+		</mask>
+		<mask id="Screenshot" hidden="true">
+			<icon>%FLY.WORKING_URL%run.svg</icon>
+			<name>Screenshot</name>
+			<index>screenshot.php</index>
+			<window>
+				<title>Screenshot</title>
+				<width>640</width>
+				<height>480</height>
+				<x>auto</x>
+				<y>auto</y>
+			</window>
+		</mask>
+		<mask id="PowerOptions" hidden="true">
+			<name>Power Options</name>
+			<icon>%FLY.RESOURCE.URL.ICONS%power.svg</icon>
+			<index>power.php</index>
+			<window>
+				<x>32</x>
+				<y>32</y>
+				<width>500</width>
+				<height>220</height>
+				<title>Power Options</title>
+				<minimize>false</minimize>
+			</window>
+		</mask>
+	</masks>
+</manifest>

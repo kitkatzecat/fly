@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   width="640"
+   height="64"
+   viewBox="0 0 640.00001 64.000001"
+   id="svg2"
+   version="1.1">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4153">
+      <stop
+         style="stop-color:#0079b0;stop-opacity:1;"
+         offset="0"
+         id="stop4155" />
+      <stop
+         style="stop-color:#0079b0;stop-opacity:0;"
+         offset="1"
+         id="stop4157" />
+    </linearGradient>
+    <linearGradient
+       xlink:href="#linearGradient4153"
+       id="linearGradient4159"
+       x1="-56.568542"
+       y1="974.74237"
+       x2="672.7616"
+       y2="974.74237"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(0,-956.36216)" />
+    <linearGradient
+       id="linearGradient5103"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop5105" />
+    </linearGradient>
+  </defs>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <rect
+     y="-25.363449"
+     x="0"
+     height="89.363449"
+     width="640"
+     id="rect4521"
+     style="opacity:1;fill:#cae1ef;fill-opacity:1;stroke-width:1.58439553" />
+  <path
+     id="path4622"
+     d="M 653.72022,18.038059 521.49125,31.826642 425.67828,30.412428 258.80108,12.734759 177.13025,8.492118 100.76272,10.259885 -11.313708,21.927147 -13.435029,-42.066017 648.06336,-43.833784 Z"
+     style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+  <path
+     id="path4523-1"
+     d="M 166.03905,3.867188 C 124.41218,3.933868 77.011461,7.313816 0.015625,14.986328 v 10 C 164.2734,8.618302 193.84021,11.780087 320,24.992228 c 164.26758,16.372781 193.83438,13.211164 319.98437,0.0039 v -10 C 513.83438,28.203392 484.26757,31.365009 320,14.992228 252.97761,7.973259 213.21618,3.791615 166.03905,3.867188 Z"
+     style="fill:#e7f1f8;fill-opacity:1;stroke:none;stroke-width:0.29306981px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+</svg>

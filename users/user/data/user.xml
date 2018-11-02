@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<user>
+		<name>User</name>
+		<id>user</id>
+		<image><![CDATA[%FLY.RESOURCE.URL.OS%defaultuserimage1.png]]></image>
+		<password><![CDATA[]]></password>
+	</user>
+	<visual>
+		<theme>
+			<color>
+				<r>0</r>
+				<g>32</g>
+				<b>0</b>
+				<a>0.8</a>
+			</color>
+			<backgroundImage><![CDATA[Field.jpg]]></backgroundImage>
+			<backgroundColor><![CDATA[rgb(128,128,128)]]></backgroundColor>
+			<transparency>true</transparency>
+			<url><![CDATA[%FLY.RESOURCE.PATH.THEMES%default.thm]]></url>
+		</theme>
+		<scale>1</scale>
+	</visual>
+	<jump>
+		<item>SprocketComputers.FileManager</item>
+		<item>SprocketComputers.Options</item>
+		<item>SprocketComputers.Utilities</item>
+		<item>SprocketComputers.Utilities.CommandPrompt</item>
+		<item>SprocketComputers.Utilities.Run</item>
+	</jump>
+</config>

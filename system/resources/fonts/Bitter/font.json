@@ -1,0 +1,11 @@
+{
+	"name": "Bitter",
+	"author": " Huerta Tipográfica",
+	"version": "1.002",
+	"license": "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web",
+	"resources": {
+		"normal": "Bitter-Regular.ttf",
+		"bold": "Bitter-Bold.ttf",
+		"italic": "Bitter-Italic.ttf"
+	}
+}

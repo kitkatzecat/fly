@@ -1,0 +1,12 @@
+{
+	"name": "PT Sans",
+	"author": "ParaType",
+	"version": "2.003W OFL",
+	"license": "http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=OFL_web",
+	"resources": {
+		"normal": "PT_Sans-Regular.ttf",
+		"bold": "PT_Sans-Bold.ttf",
+		"italic": "PT_Sans-Italic.ttf",
+		"bolditalic": "PT_Sans-BoldItalic.ttf"
+	}
+}

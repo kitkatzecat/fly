@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<config>
+	<visual>
+		<theme>
+			<color>
+				<r>6</r>
+				<g>43</g>
+				<b>94</b>
+				<a>0.8</a>
+			</color>
+			<backgroundImage><![CDATA[system/resources/os/login.jpg]]></backgroundImage>
+			<backgroundColor><![CDATA[rgb(128,128,128)]]></backgroundColor>
+			<transparency>true</transparency>
+			<url>%FLY.RESOURCE.PATH.THEMES%default.thm</url>
+		</theme>
+		<scale>1</scale>
+	</visual>
+	<registry>
+		<SprocketComputers>
+			<Options>
+				<TimeShowSeconds>false</TimeShowSeconds>
+				<TimeShowMilitary>false</TimeShowMilitary>
+			</Options>
+		</SprocketComputers>
+	</registry>
+</config>

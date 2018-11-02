@@ -1,0 +1,15 @@
+{
+	"RESOURCE": {
+	    "RESOURCES": "\/system\/resources\/",
+	    "ICONS": "\/system\/resources\/icons\/",
+	    "SOUNDS": "\/system\/resources\/sounds\/",
+	    "APPS": "\/system\/apps\/",
+	    "TEMP": "\/system\/tmp\/",
+	    "USERS": "\/system\/users\/",
+	    "OS": "\/system\/resources\/os\/",
+	    "CMD": "\/system\/components\/cmd\/",
+	    "SYSTEM": "\/system\/",
+	    "COMPONENTS": "\/system\/components\/",
+	    "TYPES": "\/system\/reg\/SprocketComputers.Fly\/System.Types.xml"
+	}
+}

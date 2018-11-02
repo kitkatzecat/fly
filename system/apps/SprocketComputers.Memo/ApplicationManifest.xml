@@ -1,0 +1,22 @@
+<manifest>
+	<id>SprocketComputers.Memo</id>
+	<name>Memo</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%app_path%memo.svg</icon>
+	<date>1493614800</date>
+	<index>index.php</index>
+	<description><![CDATA[View, edit, and save plain text files on your computer.]]></description>
+	<mime>text/*</mime>
+	<window>
+		<title>Memo</title>
+		<width>640</width>
+		<height>480</height>
+		<minwidth>400</minwidth>
+		<minheight>160</minheight>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>

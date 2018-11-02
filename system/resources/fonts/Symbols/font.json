@@ -1,0 +1,9 @@
+{
+	"name": "Symbols",
+	"author": "Sprocket Computers",
+	"version": "1.000",
+	"license": "http://www.gnu.org/copyleft/gpl.html",
+	"resources": {
+		"normal": "Symbols.ttf"
+	}
+}
