@@ -1,9 +1,0 @@
-
-
-Fly Cerulean (version 3.1 build 428.725) - Logged in as User (user)
-
-
-11-02-2018 12:17:45 AM America/Chicago
-run:%FLY.USER.PATH%data/autostart.jsc
-try { (function(){}()); } catch(e) {shell.dialog('Script error','An error has occurred in the script "autostart.jsc":<br><pre>'+e+'</pre>','Script Error');};
-Opening "autostart.jsc"...
