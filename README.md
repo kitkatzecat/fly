@@ -1,7 +1,7 @@
 # Fly
 Fly is a HTML/PHP/JavaScript/whatever else -based "operating system" that I started working on when I was 14 years old.
 
-(For the full histroy, see my [A Brief History of Fly Tumblr post](https://myboringcoding.tumblr.com/post/167342691393/a-brief-history-of-fly))
+(For the full history, see my [A Brief History of Fly Tumblr post](https://myboringcoding.tumblr.com/post/167342691393/a-brief-history-of-fly))
 
 I am entirely self-taught in every language used in this project, so there is a ton of code (old and new) that is horrible, but I'm slowly making it better (I hope).
 
