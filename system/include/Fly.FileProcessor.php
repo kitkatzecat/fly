@@ -346,25 +346,25 @@ function FlyFileTypeLookup($string) {
 
 	$extension = strtolower($string);
 	
-	$typesXML = simpleXML_load_file($_FLY['RESOURCE']['PATH']['TYPES']);
+	$types = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['COMPONENTS'].'types.json'),true);
 	
-	if (isset($typesXML->$extension)) {
-		$icon = FlyVarsReplace(FlyStringReplaceConstants($typesXML->$extension->icon));
+	if (isset($types[$extension])) {
+		$icon = FlyVarsReplace(FlyStringReplaceConstants($types[$extension]['icon']));
 		if ($icon ==  '') {
 			$icon = $protocol.$_SERVER['HTTP_HOST'].'/system/resources/icons/type/unknown.svg';
 		}
 		
-		$description = (string)$typesXML->$extension->description;
+		$description = (string)$types[$extension]['description'];
 		if ($description ==  '') {
 			$description = 'Unknown';
 		}
 		
-		if (!(!isset($typesXML->$extension->action) || (string)$typesXML->$extension->action == '')) {
-			$action = (string)$typesXML->$extension->action;
+		if (!(!isset($types[$extension]['action']) || (string)$types[$extension]['action'] == '')) {
+			$action = (string)$types[$extension]['action'];
 			$app = false;
 		} else {
-			if (isset($typesXML->$extension->app)) {
-				$app = (string)$typesXML->$extension->app;
+			if (isset($types[$extension]['app'])) {
+				$app = (string)$types[$extension]['app'];
 				if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].$app.'/ApplicationManifest.xml')) {
 					$appXML = simpleXML_load_file($_FLY['RESOURCE']['PATH']['APPS'].$app.'/ApplicationManifest.xml');
 					if (isset($appXML->types->$extension)) {
@@ -393,13 +393,23 @@ function FlyFileTypeLookup($string) {
 				$app = false;
 			}
 		}
-		$mime = (string)$typesXML->$extension->mime;
+		$mime = (string)$types[$extension]['mime'];
 		
 		return ["extension"=>$extension,"type"=>$extension,"icon"=>$icon,"description"=>$description,"action"=>$action,"app"=>$app,"mime"=>$mime];
 	} else {
 		return false;
 	}
 	
+}
+
+function FlyGetFileContextMenu($file,$process=false) {
+	if (!$process) {
+		$process = FlyFileStringProcessor($file);
+		if (!$process) {
+			return false;
+		}
+	}
+	// more coming soon...
 }
 
 function FlyGetApps() {
