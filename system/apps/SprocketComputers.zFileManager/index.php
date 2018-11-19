@@ -246,7 +246,7 @@ var Dialog = {
 		var size = Fly.window.size.get();
 		var x = parseInt(pos[0])+parseInt((size[0]/2)-(width/2));
 		var y = parseInt(pos[1])+parseInt((size[1]/2)-(height/2));
-		url = '<?php echo $_FLY['WORKING_URL'];?>'+url+'&parent_id='+Fly.window.id;
+		url = '<?php echo $_FLY['WORKING_URL']; ?>'+url+'&parent_id='+Fly.window.id;
 		return window.top.task.create('<?php echo $_FLY['APP']['ID']; ?>',{name:title,title:title,width:width,height:height,icon:'<?php echo $_FLY['APP']['ICON_URL']; ?>',x:x,y:y,location:url});
 	}
 };

@@ -3,8 +3,8 @@ if (session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
 if (!empty($_POST['user']) || !empty($_POST['password'])) {
-	if (file_exists($_SERVER['DOCUMENT_ROOT'].'/users/'.$_POST['user'])) {
-		$xml = simpleXML_load_file($_SERVER['DOCUMENT_ROOT'].'/users/'.$_POST['user'].'/data/user.xml');
+	if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/users/' . $_POST['user'])) {
+		$xml = simpleXML_load_file($_SERVER['DOCUMENT_ROOT'] . '/users/' . $_POST['user'] . '/data/user.xml');
 		if ($_POST['password'] == base64_decode((string)$xml->user->password)) {
 			$_SESSION['fly_user_id'] = $_POST['user'];
 		} else {
@@ -20,7 +20,7 @@ if (!empty($_GET['logout'])) {
 	header('Location: index.php?skiplogo=true');
 	exit;
 }
-if ($_SESSION['fly_user_id']=='' || !empty($_GET['login'])) {
+if ($_SESSION['fly_user_id'] == '' || !empty($_GET['login'])) {
 	goto login;
 }
 ?>
@@ -31,29 +31,27 @@ if ($_SESSION['fly_user_id']=='' || !empty($_GET['login'])) {
 // DELETE TMP FILES
 function unlink_dir($directory)
 {
-    foreach(glob("{$directory}/*") as $file)
-    {
-        if(is_dir($file)) { 
-            unlink_dir($file);
-        } else {
-            unlink($file);
-        }
-    }
-    rmdir($directory);
+	foreach (glob("{$directory}/*") as $file) {
+		if (is_dir($file)) {
+			unlink_dir($file);
+		} else {
+			unlink($file);
+		}
+	}
+	rmdir($directory);
 }
-unlink_dir($_SERVER['DOCUMENT_ROOT'].'/system/tmp');
-mkdir($_SERVER['DOCUMENT_ROOT'].'/system/tmp');
+unlink_dir($_SERVER['DOCUMENT_ROOT'] . '/system/tmp');
+mkdir($_SERVER['DOCUMENT_ROOT'] . '/system/tmp');
 
 // FLY EXTENDED PHP FUNCTIONS
 date_default_timezone_set("America/Chicago");
 function str_lreplace($search, $replace, $subject)
 {
-    $pos = strrpos($subject, $search);
-    if($pos !== false)
-    {
-        $subject = substr_replace($subject, $replace, $pos, strlen($search));
-    }
-    return $subject;
+	$pos = strrpos($subject, $search);
+	if ($pos !== false) {
+		$subject = substr_replace($subject, $replace, $pos, strlen($search));
+	}
+	return $subject;
 }
 
 // DEFINE PHP CONSTANTS
@@ -62,22 +60,22 @@ include 'Fly.Constants.php';
 
 // LOAD CONFIG
 $config_system = $_FLY_CONFIG; // System config
-$config_user = simpleXML_load_file($_FLY['USER']['PATH'].'data/user.xml'); // User config
+$config_user = simpleXML_load_file($_FLY['USER']['PATH'] . 'data/user.xml'); // User config
 //$config_user = $_FLY_USER; // User config
 
 // SYSTEM COMPONENTS
 include 'Fly.Registry.php'; // Registry
 include 'Fly.Command.php'; // Dynamic commands
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'shell.php'; // Fly shell
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'sound.php'; // Fly shell - sound
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'shell.php'; // Fly shell
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'sound.php'; // Fly shell - sound
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'theme.php'; // Theme loader 1.0 (OLD)
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'theme2.php'; // Theme loader 2.0
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme2.php'; // Theme loader 2.0
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window.php'; // Window manager 1.0 (OLD)
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window2.php'; // Window manager 2.0 (OLD)
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window3.php'; // Window manager 3.0
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'ui.php'; // Fly user interface
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'window3.php'; // Window manager 3.0
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'ui.php'; // Fly user interface
 
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'types_compatibility.php'; // Fly user interface
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'types_compatibility.php'; // Fly user interface
 
 include 'Fly.Actionmenu.php'; // Fly Actionmenu for Window Switcher menu
 
@@ -134,20 +132,20 @@ date_default_timezone_set("America/Chicago");
 if (intval($config_system->version->bdate) >= intval(date("YmdHis", filemtime('index.php')))) {
 	$build = $config_system->version->build;
 } else {
-	$build_o = $config_system->version->build.'';
-	$build = ((float)$config_system->version->build)+1;
-	$config_system->version->build = ((float)$config_system->version->build)+1;
+	$build_o = $config_system->version->build . '';
+	$build = ((float)$config_system->version->build) + 1;
+	$config_system->version->build = ((float)$config_system->version->build) + 1;
 	$config_system->version->bdate = date("YmdHis", filemtime('index.php'));
-	$config_system->asXML($_SERVER['DOCUMENT_ROOT'].'/system/config.xml');
-	echo '<script>setTimeout(function() {shell.notification.create("Build Updated","The Fly build has been updated from '.$build_o.' to '.$build.'.","'.FLY_ICONS_URL.'fly.svg");},5000);</script>';
+	$config_system->asXML($_SERVER['DOCUMENT_ROOT'] . '/system/config.xml');
+	echo '<script>setTimeout(function() {shell.notification.create("Build Updated","The Fly build has been updated from ' . $build_o . ' to ' . $build . '.","' . FLY_ICONS_URL . 'fly.svg");},5000);</script>';
 }
 ?>
-<title><?php echo 'Fly v'.$config_system->version->major.' b'.$build; ?></title>
+<title><?php echo 'Fly v' . $config_system->version->major . ' b' . $build; ?></title>
 </head>
 <body onload="onload()">
 <?php
-if (in_array(FlyRegistryGet('DesktopShowVersion','SprocketComputers.Options'),['on','true','yes'])) {
-	echo '<div class="FlyUiNoSelect FlyUiText" onclick="system.command(\'run:SprocketComputers.Utilities.AboutFly\')" style="position:fixed;bottom:12px;right:12px;width:240px;text-align:right;color:#FFFFFF;text-shadow: 0px 0px 6px #000000;z-index:0;">Fly&nbsp;'.$config_system->version->name.'<br>Version '.$config_system->version->major.'&nbsp;Build&nbsp;'.$build.'<br>&copy;&nbsp;'.substr($config_system->version->bdate,0,4).'&nbsp;Sprocket Computers</div>';
+if (in_array(FlyRegistryGet('DesktopShowVersion', 'SprocketComputers.Options'), ['on', 'true', 'yes'])) {
+	echo '<div class="FlyUiNoSelect FlyUiText" onclick="system.command(\'run:SprocketComputers.Utilities.AboutFly\')" style="position:fixed;bottom:12px;right:12px;width:240px;text-align:right;color:#FFFFFF;text-shadow: 0px 0px 6px #000000;z-index:0;">Fly&nbsp;' . $config_system->version->name . '<br>Version ' . $config_system->version->major . '&nbsp;Build&nbsp;' . $build . '<br>&copy;&nbsp;' . substr($config_system->version->bdate, 0, 4) . '&nbsp;Sprocket Computers</div>';
 }
 ?>
 <div id="SystemStartupCover" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:rgba(0,0,0,1);z-index:5000010;transition:background-color 1s linear;">
@@ -159,7 +157,7 @@ if (in_array(FlyRegistryGet('DesktopShowVersion','SprocketComputers.Options'),['
 <?php
 exit;
 
-login:
+login :
 ?>
 <!DOCTYPE html>
 <html>
@@ -178,15 +176,15 @@ include 'Fly.FileProcessor.php';
 
 // LOAD CONFIG
 $config_system = $_FLY_CONFIG; // System config
-$config_user = simpleXML_load_file($_FLY['RESOURCE']['PATH']['RESOURCES'].'os/loginstyles.xml'); // User config
+$config_user = simpleXML_load_file($_FLY['RESOURCE']['PATH']['RESOURCES'] . 'os/loginstyles.xml'); // User config
 
 // SYSTEM COMPONENTS
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'theme2.php'; // Theme loader
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window3.php'; // Window manager 3.0
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'sound.php'; // Fly shell - sound
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme2.php'; // Theme loader
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'window3.php'; // Window manager 3.0
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'sound.php'; // Fly shell - sound
 
 // EXECUTE SYSTEM FUNCTIONS
-FlyLoadTheme('window body text',$config_user);
+FlyLoadTheme('window body text', $config_user);
 audio_sound_init($config_user);
 
 if (!empty($_GET['skiplogo'])) {
@@ -195,12 +193,12 @@ if (!empty($_GET['skiplogo'])) {
 	$skip = 'false';
 }
 
-if (in_array((string)$config_user->registry->SprocketComputers->Options->TimeShowSeconds,['true','yes','on'])) {
+if (in_array((string)$config_user->registry->SprocketComputers->Options->TimeShowSeconds, ['true', 'yes', 'on'])) {
 	$script_show_seconds = '":" + seconds';
 } else {
 	$script_show_seconds = '""';
 }
-if (in_array((string)$config_user->registry->SprocketComputers->Options->TimeShowMilitary,['true','yes','on'])) {
+if (in_array((string)$config_user->registry->SprocketComputers->Options->TimeShowMilitary, ['true', 'yes', 'on'])) {
 	$script_show_military = 'var hr = "";';
 } else {
 	$script_show_military = '
@@ -266,8 +264,8 @@ function updateTime() {
 	var month   = currentTime.getMonth()+1; 
 	var day     = currentTime.getDate();
 	<?php
-	echo $script_show_military;
-	?>
+echo $script_show_military;
+?>
 	if (minutes < 10){
 	    minutes = "0" + minutes;
 	}

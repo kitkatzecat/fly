@@ -1,5 +1,5 @@
 <?php
-if ($_GET['list']=="true") {
+if ($_GET['list'] == "true") {
 	goto contents;
 }
 include 'fly.php';
@@ -9,154 +9,157 @@ include 'Fly.Actionmenu.php';
 
 
 
-function getFolders( $path = '.' ){
+function getFolders($path = '.')
+{
 
-$return = '';
+	$return = '';
 
-$ignore = array( 'cgi-bin', '.', '..' ); 
+	$ignore = array('cgi-bin', '.', '..');
 
-$dh = @opendir( $path ); 
+	$dh = @opendir($path);
 
-$contents = array();
-while( false !== ( $file = readdir( $dh ) ) ){ 
-	array_push($contents,$file);
-}
-natcasesort($contents);
+	$contents = array();
+	while (false !== ($file = readdir($dh))) {
+		array_push($contents, $file);
+	}
+	natcasesort($contents);
 
-foreach ($contents as $file) {
-    if( !in_array( $file, $ignore ) ){ 
+	foreach ($contents as $file) {
+		if (!in_array($file, $ignore)) {
 
-        if( is_dir( "$path/$file" ) ){ 
-			$process = FlyFileStringProcessor("$path/$file");
-			if ($process != false) {
-				if (FlyRegistryGet('IconSize')=='list' && !in_array($_GET['seamless'],['true','yes','on']) || FlyRegistryGet('IconSize')=='slist' && !in_array($_GET['seamless'],['true','yes','on'])) {
-					$return .= '<div class="item FlyUiText FlyUiNoSelect" oncontextmenu="context(event,\''."$path/$file".'\');return false;" ondblclick="navigate(\''."$path/$file".'\')"><img class="icon FlyUiNoSelect" src="'.$process["icon"].'">'.$process["name"].'</div>';
-				} else {
-					if (in_array($_GET['seamless'],['true','yes','on'])) {
-						$return .= '<div class="item FlyUiText FlyUiNoSelect" oncontextmenu="context(event,\''."$path/$file".'\');return false;" ondblclick="run(\''."$path/$file".'\')"><img class="icon FlyUiNoSelect" src="'.$process["icon"].'"><br>'.$process["name"].'</div>';
+			if (is_dir("$path/$file")) {
+				$process = FlyFileStringProcessor("$path/$file");
+				if ($process != false) {
+					if (FlyRegistryGet('IconSize') == 'list' && !in_array($_GET['seamless'], ['true', 'yes', 'on']) || FlyRegistryGet('IconSize') == 'slist' && !in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
+						$return .= '<div class="item FlyUiText FlyUiNoSelect" oncontextmenu="context(event,\'' . "$path/$file" . '\');return false;" ondblclick="navigate(\'' . "$path/$file" . '\')"><img class="icon FlyUiNoSelect" src="' . $process["icon"] . '">' . $process["name"] . '</div>';
 					} else {
-						$return .= '<div class="item FlyUiText FlyUiNoSelect" oncontextmenu="context(event,\''."$path/$file".'\');return false;" ondblclick="navigate(\''."$path/$file".'\')"><img class="icon FlyUiNoSelect" src="'.$process["icon"].'"><br>'.$process["name"].'</div>';
+						if (in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
+							$return .= '<div class="item FlyUiText FlyUiNoSelect" oncontextmenu="context(event,\'' . "$path/$file" . '\');return false;" ondblclick="run(\'' . "$path/$file" . '\')"><img class="icon FlyUiNoSelect" src="' . $process["icon"] . '"><br>' . $process["name"] . '</div>';
+						} else {
+							$return .= '<div class="item FlyUiText FlyUiNoSelect" oncontextmenu="context(event,\'' . "$path/$file" . '\');return false;" ondblclick="navigate(\'' . "$path/$file" . '\')"><img class="icon FlyUiNoSelect" src="' . $process["icon"] . '"><br>' . $process["name"] . '</div>';
+						}
 					}
 				}
 			}
-        } 
 
-    } 
+		}
 
-} 
-closedir( $dh ); 
-return $return;
+	}
+	closedir($dh);
+	return $return;
 }
 
-function getFiles( $path = '.' ){
+function getFiles($path = '.')
+{
 
-$return = '';
+	$return = '';
 
-$ignore = array( 'cgi-bin', '.', '..' ); 
+	$ignore = array('cgi-bin', '.', '..');
 
-$dh = @opendir( $path ); 
+	$dh = @opendir($path);
 
-$contents = array();
-while( false !== ( $file = readdir( $dh ) ) ){ 
-	array_push($contents,$file);
-}
-natcasesort($contents);
+	$contents = array();
+	while (false !== ($file = readdir($dh))) {
+		array_push($contents, $file);
+	}
+	natcasesort($contents);
 
-foreach ($contents as $file) {
-    if( !in_array( $file, $ignore ) ){ 
+	foreach ($contents as $file) {
+		if (!in_array($file, $ignore)) {
 
-        if( !is_dir( "$path/$file" ) ){ 
-			$process = FlyFileStringProcessor("$path/$file");
-			if ($process != false) {
-				if (in_array($_GET['FileManagerFileBrowser'],['true','yes','on'])) {
-					$click = ' onclick="window.parent.select(\''."$path/$file".'\',\''.$file.'\',\''.$process['URL'].'\',\''.$process['extension'].'\',\''.$process['icon'].'\')"';
-				} else {
-					$click = '';
-				}
-				if (in_array(FlyRegistryGet('ImagePreview'),["true","on","yes"])) {
-					if (in_array($process["extension"],["svg","png","gif","jpg","bmp"])) {
-						if ($process["extension"]=="svg") {
-							$icon_src = $process["URL"];
-							$icon_style = '';
-							$icon_class = "image";
+			if (!is_dir("$path/$file")) {
+				$process = FlyFileStringProcessor("$path/$file");
+				if ($process != false) {
+					if (in_array($_GET['FileManagerFileBrowser'], ['true', 'yes', 'on'])) {
+						$click = ' onclick="window.parent.select(\'' . "$path/$file" . '\',\'' . $file . '\',\'' . $process['URL'] . '\',\'' . $process['extension'] . '\',\'' . $process['icon'] . '\')"';
+					} else {
+						$click = '';
+					}
+					if (in_array(FlyRegistryGet('ImagePreview'), ["true", "on", "yes"])) {
+						if (in_array($process["extension"], ["svg", "png", "gif", "jpg", "bmp"])) {
+							if ($process["extension"] == "svg") {
+								$icon_src = $process["URL"];
+								$icon_style = '';
+								$icon_class = "image";
+							} else {
+								$icon_src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+								$icon_style = 'background-image:url(\'' . $process["URL"] . '\');';
+								$icon_class = "image";
+							}
 						} else {
-							$icon_src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-							$icon_style = 'background-image:url(\''.$process["URL"].'\');';
-							$icon_class = "image";
+							$icon_src = $process["icon"];
+							$icon_style = '';
+							$icon_class = "icon";
 						}
 					} else {
 						$icon_src = $process["icon"];
 						$icon_style = '';
 						$icon_class = "icon";
 					}
-				} else {
-					$icon_src = $process["icon"];
-					$icon_style = '';
-					$icon_class = "icon";
-				}
-				$dblclick = 'run(\''."$path/$file".'\')';
-				if ($process["extension"]=='als') {
-					if (!in_array(FlyRegistryGet('ShowExtensionALS'),['true','on','yes'])) {
-						$name = str_lreplace('.als','',$process["name"]);
+					$dblclick = 'run(\'' . "$path/$file" . '\')';
+					if ($process["extension"] == 'als') {
+						if (!in_array(FlyRegistryGet('ShowExtensionALS'), ['true', 'on', 'yes'])) {
+							$name = str_lreplace('.als', '', $process["name"]);
+						} else {
+							$name = $process["name"];
+						}
+						if (!in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
+							$alsxml = simpleXML_load_file("$path/$file");
+							if (is_dir(FlyVarsReplace(FlyStringReplaceConstants((string)$alsxml->link)))) {
+								$dblclick = 'navigate(\'' . FlyVarsReplace(FlyStringReplaceConstants((string)$alsxml->link)) . '\')';
+							}
+						}
+						$icon_src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+						$icon_style = 'background-image:url(\'' . FlyVarsReplace(FlyStringReplaceConstants(simpleXML_load_file(FLY_ROOT . 'system/reg/SprocketComputers.Fly/System.FileTypes.xml')->als->icon)) . '\'),url(\'' . $process["icon"] . '\');background-size: 30% 30%,100% 100%;background-repeat:no-repeat;background-position:left bottom,center center;';
 					} else {
-						$name = $process["name"];
-					}
-					if (!in_array($_GET['seamless'],['true','yes','on'])) {
-						$alsxml = simpleXML_load_file("$path/$file");
-						if (is_dir(FlyVarsReplace(FlyStringReplaceConstants((string)$alsxml->link)))) {
-							$dblclick = 'navigate(\''.FlyVarsReplace(FlyStringReplaceConstants((string)$alsxml->link)).'\')';
+						if (in_array(FlyRegistryGet('HideFileExtensions'), ['true', 'on', 'yes'])) {
+							$name = str_lreplace('.' . $process["extension"], '', $process["name"]);
+						} else {
+							$name = $process["name"];
 						}
 					}
-					$icon_src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///////yH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-					$icon_style = 'background-image:url(\''.FlyVarsReplace(FlyStringReplaceConstants(simpleXML_load_file(FLY_ROOT.'system/reg/SprocketComputers.Fly/System.FileTypes.xml')->als->icon)).'\'),url(\''.$process["icon"].'\');background-size: 30% 30%,100% 100%;background-repeat:no-repeat;background-position:left bottom,center center;';
-				} else {
-					if (in_array(FlyRegistryGet('HideFileExtensions'),['true','on','yes'])) {
-						$name = str_lreplace('.'.$process["extension"],'',$process["name"]);
+					if (FlyRegistryGet('IconSize') == 'list' && !in_array($_GET['seamless'], ['true', 'yes', 'on']) || FlyRegistryGet('IconSize') == 'slist' && !in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
+						$return .= '<div class="item FlyUiText FlyUiNoSelect"' . $click . ' oncontextmenu="context(event,\'' . "$path/$file" . '\');return false;" ondblclick="' . $dblclick . '"><img style="' . $icon_style . '" class="' . $icon_class . ' FlyUiNoSelect" src="' . $icon_src . '">' . $name . '</div>';
 					} else {
-						$name = $process["name"];
+						$return .= '<div class="item FlyUiText FlyUiNoSelect"' . $click . ' oncontextmenu="context(event,\'' . "$path/$file" . '\');return false;" ondblclick="' . $dblclick . '"><img style="' . $icon_style . '" class="' . $icon_class . ' FlyUiNoSelect" src="' . $icon_src . '"><br>' . $name . '</div>';
 					}
 				}
-				if (FlyRegistryGet('IconSize')=='list' && !in_array($_GET['seamless'],['true','yes','on']) || FlyRegistryGet('IconSize')=='slist' && !in_array($_GET['seamless'],['true','yes','on'])) {
-					$return .= '<div class="item FlyUiText FlyUiNoSelect"'.$click.' oncontextmenu="context(event,\''."$path/$file".'\');return false;" ondblclick="'.$dblclick.'"><img style="'.$icon_style.'" class="'.$icon_class.' FlyUiNoSelect" src="'.$icon_src.'">'.$name.'</div>';
-				} else {
-					$return .= '<div class="item FlyUiText FlyUiNoSelect"'.$click.' oncontextmenu="context(event,\''."$path/$file".'\');return false;" ondblclick="'.$dblclick.'"><img style="'.$icon_style.'" class="'.$icon_class.' FlyUiNoSelect" src="'.$icon_src.'"><br>'.$name.'</div>';
-				}
 			}
-        } 
 
-    } 
+		}
 
-} 
-closedir( $dh ); 
-return $return;
+	}
+	closedir($dh);
+	return $return;
 }
-function getContents( $path = '.' ){
-	return getFolders($path).getFiles($path);
+function getContents($path = '.')
+{
+	return getFolders($path) . getFiles($path);
 }
-if (substr($_GET['path'],0,1) == '.') {
-	$input_path = substr_replace(preg_replace('#/+#','/',$_GET['path']),$_SERVER['DOCUMENT_ROOT'],0,1);
+if (substr($_GET['path'], 0, 1) == '.') {
+	$input_path = substr_replace(preg_replace('#/+#', '/', $_GET['path']), $_SERVER['DOCUMENT_ROOT'], 0, 1);
 } else {
-	$input_path = preg_replace('#/+#','/',$_GET['path']);
+	$input_path = preg_replace('#/+#', '/', $_GET['path']);
 }
 
 if (!is_dir($input_path)) {
-	$query = '?path='.str_replace('/'.basename($_GET['path']),'',$_GET['path']);
+	$query = '?path=' . str_replace('/' . basename($_GET['path']), '', $_GET['path']);
 	foreach ($_GET as $key => $value) {
 		if (strtolower($key) !== 'path') {
-			$query .= '&'.$key.'='.$value;
+			$query .= '&' . $key . '=' . $value;
 		}
 	}
 	echo '
 		<script>
-		window.top.system.command(\'run:'.$input_path.'\');
-		window.location.href = \'filelist.php'.$query.'\';
+		window.top.system.command(\'run:' . $input_path . '\');
+		window.location.href = \'filelist.php' . $query . '\';
 		</script>
 		';
 }
 
 $l_current = $input_path;
-$l_user = str_replace($_SERVER['DOCUMENT_ROOT'],'.',$input_path);
-$l_up = str_lreplace('/'.basename($input_path),'',$l_current);
+$l_user = str_replace($_SERVER['DOCUMENT_ROOT'], '.', $input_path);
+$l_up = str_lreplace('/' . basename($input_path), '', $l_current);
 $l_basename = basename($input_path);
 if ($l_user == '.' || $l_user == './') {
 	$l_user = './';
@@ -164,36 +167,37 @@ if ($l_user == '.' || $l_user == './') {
 	$l_up = $l_current;
 }
 if (strlen($l_basename) > 36) {
-	$l_basename = substr($l_basename,0,36).'...';
+	$l_basename = substr($l_basename, 0, 36) . '...';
 }
-function listContents( $path = '.' ){
+function listContents($path = '.')
+{
 
-$return = '['.FlyRegistryGet('IconSize').'] ['.FlyRegistryGet('ImagePreview').'] ['.FlyRegistryGet('HideFileExtensions').'] ';
+	$return = '[' . FlyRegistryGet('IconSize') . '] [' . FlyRegistryGet('ImagePreview') . '] [' . FlyRegistryGet('HideFileExtensions') . '] ';
 
-$ignore = array( 'cgi-bin', '.', '..' ); 
+	$ignore = array('cgi-bin', '.', '..');
 
-$dh = @opendir( $path ); 
+	$dh = @opendir($path);
 
-while( false !== ( $file = readdir( $dh ) ) ){ 
+	while (false !== ($file = readdir($dh))) {
 
-    if( !in_array( $file, $ignore ) ){ 
+		if (!in_array($file, $ignore)) {
 
-        if( is_dir( "$path/$file" ) ){ 
-			$return .= ' [folder]'.htmlentities($file,ENT_QUOTES);
-        } else {
-			$return .= ' [file]'.htmlentities($file,ENT_QUOTES);
+			if (is_dir("$path/$file")) {
+				$return .= ' [folder]' . htmlentities($file, ENT_QUOTES);
+			} else {
+				$return .= ' [file]' . htmlentities($file, ENT_QUOTES);
+			}
+
 		}
 
-    } 
-
-} 
-closedir( $dh ); 
-return $return;
+	}
+	closedir($dh);
+	return $return;
 }
 
 $iconSize = FlyRegistryGet('IconSize');
 
-if (in_array($_GET['seamless'],['true','yes','on'])) {
+if (in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
 	if ($iconSize == 'list') {
 		$iconSize = '48';
 	}
@@ -239,13 +243,13 @@ if ($iconSize == 'list') {
 	} else {
 		$fontSize = '16';
 	}
-	$itemWidth = ($iconSize+52).'px';
-	$itemHeight = ($iconSize+48).'px';
+	$itemWidth = ($iconSize + 52) . 'px';
+	$itemHeight = ($iconSize + 48) . 'px';
 	$itemAlign = 'center';
 	$iconStyles = '';
 }
 
-if (in_array($_GET['seamless'],['true','yes','on']) && in_array($_GET['FlyDesktopFiles'],['true','yes','on'])) {
+if (in_array($_GET['seamless'], ['true', 'yes', 'on']) && in_array($_GET['FlyDesktopFiles'], ['true', 'yes', 'on'])) {
 	//$bodyattr = ' onmouseover="document.body.style.opacity=\'1\'" onmouseout="document.body.style.opacity=\'0.5\'"';
 	$bodyattr = ' '; //removed mouseover opacity due to performance issues
 	$fdf_opacity = 'window.top.ui.desktop.style.opacity = 1';
@@ -264,16 +268,16 @@ body {
 .item {
 	display: inline-block;
 	float: left;
-	width: '.$itemWidth.';
-	height: '.$itemHeight.';
+	width: ' . $itemWidth . ';
+	height: ' . $itemHeight . ';
 	border: 1px solid transparent;
-	text-align: '.$itemAlign.';
+	text-align: ' . $itemAlign . ';
 	padding: 4px;
 	word-wrap: break-word;
 	box-sizing: border-box;
 	cursor: default;
 	overflow: hidden;
-	font-size: '.$fontSize.'px;
+	font-size: ' . $fontSize . 'px;
 }
 .item:hover {
 	border-radius: 5px;
@@ -291,34 +295,34 @@ body {
 	cursor: alias;
 }
 .icon {
-	width: '.$iconSize.'px;
-	height: '.$iconSize.'px;
+	width: ' . $iconSize . 'px;
+	height: ' . $iconSize . 'px;
 	margin-bottom: 4px;
 	pointer-events: none;
-	'.$iconStyles.'
+	' . $iconStyles . '
 }
 .image {
-	width: '.$iconSize.'px;
-	height: '.$iconSize.'px;
+	width: ' . $iconSize . 'px;
+	height: ' . $iconSize . 'px;
 	margin-bottom: 4px;
 	background-size: contain;
 	background-repeat: no-repeat;
 	background-position: center center;
 	box-shadow: 0px 0px 3px #808080;	
 	pointer-events: none;
-	'.$iconStyles.'
+	' . $iconStyles . '
 }
 </style>
 <script>
 function navigate(path) {
-	window.location = "filelist.php?'.$_SERVER['QUERY_STRING'].'&path="+path+"&from='.$l_current.'&rand='.rand().'";
+	window.location = "filelist.php?' . $_SERVER['QUERY_STRING'] . '&path="+path+"&from=' . $l_current . '&rand=' . rand() . '";
 }
 function run(file) {
 	window.top.system.command("run:"+file);
 }
 function properties(file) {
 ';
-if (in_array($_GET['seamless'],['true','yes','on'])) {
+if (in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
 	echo 'window.top.system.command(\'run:SprocketComputers.FileManager.Properties,file=\'+file)';
 } else {
 	echo 'window.top.system.command(\'run:SprocketComputers.FileManager.Properties,Fly_x=\'+(parseInt(window.parent.Fly.window.position.get()[0])+32)+\',Fly_y=\'+(parseInt(window.parent.Fly.window.position.get()[1])+32)+\',file=\'+file);';
@@ -326,7 +330,7 @@ if (in_array($_GET['seamless'],['true','yes','on'])) {
 echo '}
 function rename(file) {
 ';
-if (in_array($_GET['seamless'],['true','yes','on'])) {
+if (in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
 	echo 'window.top.system.command(\'run:SprocketComputers.FileManager.Rename,file=\'+file)';
 } else {
 	echo 'window.top.system.command(\'run:SprocketComputers.FileManager.Rename,Fly_x=\'+(parseInt(window.parent.Fly.window.position.get()[0])+194)+\',Fly_y=\'+(parseInt(window.parent.Fly.window.position.get()[1])+180)+\',file=\'+file);';
@@ -334,7 +338,7 @@ if (in_array($_GET['seamless'],['true','yes','on'])) {
 echo '}
 function del(file) {
 ';
-if (in_array($_GET['seamless'],['true','yes','on'])) {
+if (in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
 	echo 'window.top.system.command(\'run:SprocketComputers.FileManager.Delete,file=\'+file)';
 } else {
 	echo 'window.top.system.command(\'run:SprocketComputers.FileManager.Delete,Fly_x=\'+(parseInt(window.parent.Fly.window.position.get()[0])+194)+\',Fly_y=\'+(parseInt(window.parent.Fly.window.position.get()[1])+180)+\',file=\'+file);';
@@ -344,14 +348,14 @@ function context(e,file) {
 	Fly.actionmenu(e,[
 		[\'<b>Open</b>\',function() {run(file)}],
 		[\'Open with\',[
-			[\'Memo\',function() {window.top.system.command(\'run:SprocketComputers.Memo,file=\'+file)},{icon:\''.$_FLY['RESOURCE']['URL']['APPS'].'SprocketComputers.Memo/memo.svg\'}],
-			[\'Executor\',function() {window.top.system.command(\'run:SprocketComputers.Utilities.Executor,file=\'+file)},{icon:\''.$_FLY['RESOURCE']['URL']['APPS'].'SprocketComputers.Utilities/executor.svg\'}],
-			[\'zFileManager\',function() {window.top.system.command(\'run:SprocketComputers.zFileManager,p=\'+file)},{icon:\''.$_FLY['RESOURCE']['URL']['APPS'].'SprocketComputers.zFileManager/fileman.svg\'}]
+			[\'Memo\',function() {window.top.system.command(\'run:SprocketComputers.Memo,file=\'+file)},{icon:\'' . $_FLY['RESOURCE']['URL']['APPS'] . 'SprocketComputers.Memo/memo.svg\'}],
+			[\'Executor\',function() {window.top.system.command(\'run:SprocketComputers.Utilities.Executor,file=\'+file)},{icon:\'' . $_FLY['RESOURCE']['URL']['APPS'] . 'SprocketComputers.Utilities/executor.svg\'}],
+			[\'zFileManager\',function() {window.top.system.command(\'run:SprocketComputers.zFileManager,p=\'+file)},{icon:\'' . $_FLY['RESOURCE']['URL']['APPS'] . 'SprocketComputers.zFileManager/fileman.svg\'}]
 		]],
 		[\'\'],
-		[\'Rename\',function() {rename(file)},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pencil.svg\'}],
-		[\'Delete\',function() {del(file)},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'trash.svg\'}],
-		[\'Properties\',function() {properties(file)},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'properties.svg\'}]
+		[\'Rename\',function() {rename(file)},{icon:\'' . $_FLY['RESOURCE']['URL']['ICONS'] . 'pencil.svg\'}],
+		[\'Delete\',function() {del(file)},{icon:\'' . $_FLY['RESOURCE']['URL']['ICONS'] . 'trash.svg\'}],
+		[\'Properties\',function() {properties(file)},{icon:\'' . $_FLY['RESOURCE']['URL']['ICONS'] . 'properties.svg\'}]
 	]);
 }
 function bodyContext(e) {
@@ -370,7 +374,11 @@ function checkFiles(cmd) {
 function checkResponse() {
     if(request.readyState == 4) {
         if(request.status == 200) {
-            if (request.responseText == \''; if (file_exists($input_path)) {echo listContents($input_path);}; echo '\') {
+            if (request.responseText == \'';
+if (file_exists($input_path)) {
+	echo listContents($input_path);
+};
+echo '\') {
 				setTimeout(function() {checkFiles();}, 10000);
 			} else {
 				Refresh();
@@ -382,16 +390,16 @@ function checkResponse() {
 }
 
 function Refresh() {
-	'.$fdf_transparency.'
+	' . $fdf_transparency . '
 	setTimeout(function(){window.location.reload();},500);
 }
 
 function setLocation() {
-	setTimeout(function() {checkFiles();}, '.FlyRegistryGet('RefreshInterval').');
+	setTimeout(function() {checkFiles();}, ' . FlyRegistryGet('RefreshInterval') . ');
 	
-	'.$fdf_opacity.'
+	' . $fdf_opacity . '
 	
-	window.parent.setLocation(\''.$l_current.'\',\''.$l_up.'\',\''.$l_user.'\',\''.$l_basename.'\',\''.$_GET['from'].'\');
+	window.parent.setLocation(\'' . $l_current . '\',\'' . $l_up . '\',\'' . $l_user . '\',\'' . $l_basename . '\',\'' . $_GET['from'] . '\');
 }
 
 function desktopSetActive() {
@@ -407,34 +415,34 @@ function desktopSetActive() {
 </script></head>
 ';
 
-if (in_array($_GET['seamless'],['true','yes','on']) && in_array($_GET['FlyDesktopFiles'],['true','yes','on'])) {
+if (in_array($_GET['seamless'], ['true', 'yes', 'on']) && in_array($_GET['FlyDesktopFiles'], ['true', 'yes', 'on'])) {
 	$bodyonclick = 'desktopSetActive();';
 } else {
 	$bodyonclick = '';
 }
 
 echo '
-<body oncontextmenu="return false;" onclick="'.$bodyonclick.'" onload="setLocation()"'.$bodyattr.'>';
+<body oncontextmenu="return false;" onclick="' . $bodyonclick . '" onload="setLocation()"' . $bodyattr . '>';
 if (file_exists($input_path)) {
 	$contents = getContents($input_path);
 	if ($contents == '') {
 		echo '<p class="FlyUiText">This folder is empty.</p>';
 	} else {
-		if (in_array($_GET['seamless'],['true','yes','on']) && in_array($_GET['FlyDesktopFiles'],['true','yes','on'])) {
+		if (in_array($_GET['seamless'], ['true', 'yes', 'on']) && in_array($_GET['FlyDesktopFiles'], ['true', 'yes', 'on'])) {
 			echo '<div class="column">';
 		}
-		if (in_array($_GET['FlyDesktopFiles'],['true','yes','on'])) {
-			echo '<div class="item FlyUiText FlyUiNoSelect" ondblclick="window.top.system.command(\'run:SprocketComputers.FileManager.Trash\');" oncontextmenu="Fly.control.contextMenu(event,[\'<b>Open</b>\'],[\'window.top.system.command(\\\'run:SprocketComputers.FileManager.Trash\\\');\']);return false;"><img style="" class="icon FlyUiNoSelect" src="'.FLY_ICONS_URL.'trash.svg"><br>Trash</div>';
+		if (in_array($_GET['FlyDesktopFiles'], ['true', 'yes', 'on'])) {
+			echo '<div class="item FlyUiText FlyUiNoSelect" ondblclick="window.top.system.command(\'run:SprocketComputers.FileManager.Trash\');" oncontextmenu="Fly.control.contextMenu(event,[\'<b>Open</b>\'],[\'window.top.system.command(\\\'run:SprocketComputers.FileManager.Trash\\\');\']);return false;"><img style="" class="icon FlyUiNoSelect" src="' . FLY_ICONS_URL . 'trash.svg"><br>Trash</div>';
 		}
 		echo $contents;
-		if (in_array($_GET['seamless'],['true','yes','on']) && in_array($_GET['FlyDesktopFiles'],['true','yes','on'])) {
+		if (in_array($_GET['seamless'], ['true', 'yes', 'on']) && in_array($_GET['FlyDesktopFiles'], ['true', 'yes', 'on'])) {
 			echo '</div>';
 		}
 	}
 } else {
-	echo '<p class="FlyUiText">The folder "'.$l_user.'" does not exist.</p>';
+	echo '<p class="FlyUiText">The folder "' . $l_user . '" does not exist.</p>';
 }
-if (in_array($_GET['seamless'],['true','yes','on'])) {
+if (in_array($_GET['seamless'], ['true', 'yes', 'on'])) {
 	echo '
 	<style>
 	.item {
@@ -3096,7 +3104,7 @@ ICAgICAgICAM
 	';
 }
 exit;
-contents:
-include 'registry.php';
+contents :
+	include 'registry.php';
 echo listContents($_GET['path']);
 ?>
