@@ -89,7 +89,7 @@ echo '
 	}
 	
 	body {
-		background-image: url("'.$config->visual->theme->backgroundImage.'");
+		background-image: url("'.FlyVarsReplace((string)$config->visual->theme->backgroundImage).'");
 		background-color: '.$config->visual->theme->backgroundColor.';
 	
 		background-size: cover;
