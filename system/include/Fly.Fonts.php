@@ -5,6 +5,7 @@ if (!isset($_FLY)) {
 if (!FlyIncludeCheck('FLY.FONTS')) {
 FlyIncludeRegister('FLY.FONTS');
 
+// Loads a font installed in the fonts resources directory (FLY.RESOURCE.*.FONTS)
 function FlyFontLoad($name,$echo=true,$enclosure=true) {
 	global $_FLY;
 	
@@ -39,6 +40,7 @@ function FlyFontLoad($name,$echo=true,$enclosure=true) {
 	}
 }
 
+// Returns the information about a font as an array (from the font's font.json file)
 function FlyFontInfo($name) {
 	global $_FLY;
 	
@@ -58,6 +60,7 @@ function FlyFontInfo($name) {
 	}
 }
 
+// Checks if a font is installed
 function FlyFontCheck($name) {
 	global $_FLY;
 	
@@ -68,59 +71,12 @@ function FlyFontCheck($name) {
 	}
 }
 
+// Returns the CSS font notation for a Fly font style
 function FlyFontStyleToCss($style) {
 	$css = '';
-	if ($style == 'normal') {
-		$css .= 'font-style: normal;';
-	} else if ($style == 'bold') {
-		$css .= 'font-weight: bold;';
-	} else if ($style == 'italic') {
-		$css .= 'font-style: italic;';
-	} else if ($style == 'bolditalic') {
-		$css .= 'font-style: italic;font-weight: bold;';
-	} else if ($style == 'oblique') {
-		$css .= 'font-style: oblique;';
-	} else if ($style == 'condensed') {
-		$css .= 'font-stretch: condensed;';
-	} else if ($style == 'expanded') {
-		$css .= 'font-stretch: expanded;';
-	} else if ($style == '100') {
-		$css .= 'font-weight: 100;';
-	} else if ($style == '200') {
-		$css .= 'font-weight: 200;';
-	} else if ($style == '300') {
-		$css .= 'font-weight: 300;';
-	} else if ($style == '400') {
-		$css .= 'font-weight: 400;';
-	} else if ($style == '500') {
-		$css .= 'font-weight: 500;';
-	} else if ($style == '600') {
-		$css .= 'font-weight: 600;';
-	} else if ($style == '700') {
-		$css .= 'font-weight: 700;';
-	} else if ($style == '800') {
-		$css .= 'font-weight: 800;';
-	} else if ($style == '900') {
-		$css .= 'font-weight: 900;';
-	} else if ($style == 'italic100') {
-		$css .= 'font-weight: 100;font-style: italic;';
-	} else if ($style == 'italic200') {
-		$css .= 'font-weight: 200;font-style: italic;';
-	} else if ($style == 'italic300') {
-		$css .= 'font-weight: 300;font-style: italic;';
-	} else if ($style == 'italic400') {
-		$css .= 'font-weight: 400;font-style: italic;';
-	} else if ($style == 'italic500') {
-		$css .= 'font-weight: 500;font-style: italic;';
-	} else if ($style == 'italic600') {
-		$css .= 'font-weight: 600;font-style: italic;';
-	} else if ($style == 'italic700') {
-		$css .= 'font-weight: 700;font-style: italic;';
-	} else if ($style == 'italic800') {
-		$css .= 'font-weight: 800;font-style: italic;';
-	} else if ($style == 'italic900') {
-		$css .= 'font-weight: 900;font-style: italic;';
-	} else {}
+	$i = ['normal',	'bold','italic','bolditalic','oblique','condensed','expanded','100','200','300','400','500','600','700','800','900','italic100','italic200','italic300','italic400','italic500','italic600','italic700','italic800','italic900'];
+	$o = ['font-style: normal;','font-weight: bold;','font-style: italic;','font-style: italic;font-weight: bold;','font-style: oblique;','font-stretch: condensed;','font-stretch: expanded;','font-weight: 100;','font-weight: 200;','font-weight: 300;','font-weight: 400;','font-weight: 500;','font-weight: 600;','font-weight: 700;','font-weight: 800;','font-weight: 900;','font-weight: 100;font-style: italic;','font-weight: 200;font-style: italic;','font-weight: 300;font-style: italic;','font-weight: 400;font-style: italic;','font-weight: 500;font-style: italic;','font-weight: 600;font-style: italic;','font-weight: 700;font-style: italic;','font-weight: 800;font-style: italic;','font-weight: 900;font-style: italic;',];
+	$css = str_replace($i,$o,$style);
 	return $css;
 }
 
