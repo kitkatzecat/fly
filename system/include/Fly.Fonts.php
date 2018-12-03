@@ -58,6 +58,16 @@ function FlyFontInfo($name) {
 	}
 }
 
+function FlyFontCheck($name) {
+	global $_FLY;
+	
+	if (file_exists($_FLY['RESOURCE']['PATH']['FONTS'].$name)) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function FlyFontStyleToCss($style) {
 	$css = '';
 	if ($style == 'normal') {
