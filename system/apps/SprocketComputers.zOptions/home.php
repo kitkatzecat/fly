@@ -45,7 +45,7 @@ var OptionsTree = [
 <?php
 echo '<div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</div>';
 ?>
-<div class="box"><h1><img class="userImage" src="https://localhost/system/resources/os/userimagelight.svg"><?php echo htmlentities($userXML->user->name); ?></h1></div>
+<div class="box"><h1><img class="userImage" src="<?php echo $_FLY['RESOURCE']['URL']['OS']; ?>userimagelight.svg"><?php echo htmlentities($userXML->user->name); ?></h1></div>
 <div class="title">Common tasks</div>
 <p><a onclick="window.location.href='personalization/background.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>personalization.svg">Change your background</a></p>
 <p><a onclick="window.location.href='users/name.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg">Change your name</a></p>
