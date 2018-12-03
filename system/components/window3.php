@@ -164,21 +164,25 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	frame.window.focus = frame.id;
 	
 	// Calculate window size
-	if ((attributes.width+"").indexOf('%') == attributes.width.length-1 ) {
+	if ((attributes.width+"").indexOf('%') != -1 && (attributes.width+"").indexOf('%') == attributes.width.length-1 ) {
 		attributes.width = (parseInt(attributes.width)/100)*window.innerWidth;
 		if (attributes.maxinitwidth) {
 			if (attributes.width > attributes.maxinitwidth) {
 				attributes.width = attributes.maxinitwidth;
 			}
 		}
+	} else {
+		attributes.width = parseInt(attributes.width);
 	}
-	if ((attributes.height+"").indexOf('%') == attributes.height.length-1 ) {
+	if ((attributes.height+"").indexOf('%') != -1 && (attributes.height+"").indexOf('%') == attributes.height.length-1 ) {
 		attributes.height = (parseInt(attributes.height)/100)*window.innerHeight;
 		if (attributes.maxinitheight) {
 			if (attributes.height > attributes.maxinitheight) {
 				attributes.height = attributes.maxinitheight;
 			}
 		}
+	} else {
+		attributes.height = parseInt(attributes.height);
 	}
 
 	// Set window position
