@@ -75,8 +75,14 @@ if ($enclosure) {
 	font-family: sans-serif;
 }
 ';
+}
 
-FlyFontLoad('Roboto',true,false);
+// Checks if fonts on theme's font list are installed and loads them if they are
+$fonts = explode(', ', (string)$theme->desktop->font);
+foreach ($fonts as $key) {
+	if (FlyFontCheck(trim($key))) {
+		FlyFontLoad(trim($key),true,false);
+	}
 }
 
 if (strpos($settings, 'body') !== false || strpos($settings, 'all') !== false) {
