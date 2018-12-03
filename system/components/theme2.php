@@ -73,6 +73,7 @@ if ($enclosure) {
 }
 * {
 	font-family: sans-serif;
+	font-family: '.$theme->desktop->font.';
 }
 ';
 }
