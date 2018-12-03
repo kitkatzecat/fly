@@ -148,6 +148,7 @@ function FlyFileStringProcessor($item) {
 				} else {
 					$expand = 'false';
 				}
+
 				if (intval((string)$manifestXML->window->minwidth)) {
 					$minWidth = intval((string)$manifestXML->window->minwidth);
 				} else {
@@ -158,6 +159,7 @@ function FlyFileStringProcessor($item) {
 				} else {
 					$maxWidth = 'false';
 				}
+
 				if (intval((string)$manifestXML->window->minheight)) {
 					$minHeight = intval((string)$manifestXML->window->minheight);
 				} else {
@@ -168,6 +170,18 @@ function FlyFileStringProcessor($item) {
 				} else {
 					$maxHeight = 'false';
 				}
+
+				if (intval((string)$manifestXML->window->maxinitwidth)) {
+					$maxInitWidth = intval((string)$manifestXML->window->maxinitwidth);
+				} else {
+					$maxInitWidth = 'false';
+				}
+				if (intval((string)$manifestXML->window->maxinitheight)) {
+					$maxInitHeight = intval((string)$manifestXML->window->maxinitheight);
+				} else {
+					$maxInitHeight = 'false';
+				}
+
 				if (in_array((string)$manifestXML->window->minimize,['false','no','off'])) {
 					$minimize = 'false';
 				} else {
@@ -186,7 +200,7 @@ function FlyFileStringProcessor($item) {
 				$filePath = preg_replace('#/+#','/',$filePath);
 				$location = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/';
 				$manifest = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/ApplicationManifest.xml';
-				$action = 'task.create(\''.$id.'\', {title:\''.$manifestXML->window->title.'\', name:\''.$name.'\', x:\''.$appX.'\', y:\''.$appY.'\', width:'.$manifestXML->window->width.', height:'.$manifestXML->window->height.', minwidth:'.$minWidth.', minheight:'.$minHeight.', maxwidth:'.$maxWidth.', maxheight:'.$maxHeight.', location:\''.$window.'\', icon:\''.$icon.'\', expand:'.$expand.', minimize:'.$minimize.', close:'.$close.', resize:'.$resize.'})';
+				$action = 'task.create(\''.$id.'\', {title:\''.$manifestXML->window->title.'\', name:\''.$name.'\', x:\''.$appX.'\', y:\''.$appY.'\', width:\''.$manifestXML->window->width.'\', height:\''.$manifestXML->window->height.'\', minwidth:\''.$minWidth.'\', minheight:\''.$minHeight.'\', maxwidth:\''.$maxWidth.'\', maxheight:\''.$maxHeight.'\', maxinitwidth:\''.$maxInitWidth.'\', maxinitheight:\''.$maxInitHeight.'\', location:\''.$window.'\', icon:\''.$icon.'\', expand:'.$expand.', minimize:'.$minimize.', close:'.$close.', resize:'.$resize.'})';
 				return ["file"=>$filePath,"type"=>$type,"name"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"location"=>$location,"manifest"=>$manifest];
 			} else {
 				return false;

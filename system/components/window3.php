@@ -39,7 +39,7 @@ task.init = function() {
 	task.autoPos = 0;
 }
 
-task.create = function(id='public', attributes={title:'Untitled', name:'Untitled', icon:'', x:'auto', y:'auto', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false}) {
+task.create = function(id='public', attributes={title:'Untitled', name:'Untitled', icon:'', x:'auto', y:'auto', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false}) {
 	
 	// Init new task
 	task.index += 1;
@@ -63,11 +63,19 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	if (typeof attributes.minwidth == 'undefined' || attributes.minwidth == false) {
 		attributes.minwidth = 200;
 	}
+
 	if (typeof attributes.maxheight == 'undefined') {
 		attributes.maxheight = false;
 	}
 	if (typeof attributes.maxwidth == 'undefined') {
 		attributes.maxwidth = false;
+	}
+
+	if (typeof attributes.maxinitheight == 'undefined') {
+		attributes.maxinitheight = false;
+	}
+	if (typeof attributes.maxinitwidth == 'undefined') {
+		attributes.maxinitwidth = false;
 	}
 	
 	frame.window.isBackground = attributes.background;
@@ -155,6 +163,24 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	// Set window focus
 	frame.window.focus = frame.id;
 	
+	// Calculate window size
+	if ((attributes.width+"").indexOf('%') == attributes.width.length-1 ) {
+		attributes.width = (parseInt(attributes.width)/100)*window.innerWidth;
+		if (attributes.maxinitwidth) {
+			if (attributes.width > attributes.maxinitwidth) {
+				attributes.width = attributes.maxinitwidth;
+			}
+		}
+	}
+	if ((attributes.height+"").indexOf('%') == attributes.height.length-1 ) {
+		attributes.height = (parseInt(attributes.height)/100)*window.innerHeight;
+		if (attributes.maxinitheight) {
+			if (attributes.height > attributes.maxinitheight) {
+				attributes.height = attributes.maxinitheight;
+			}
+		}
+	}
+
 	// Set window position
 	if (attributes.x == 'auto' || attributes.y == 'auto' || attributes.x == '' || attributes.y == '') {
 		task.autoPos = task.autoPos+32;
@@ -1012,6 +1038,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	//frame.window.composition.content.appendChild(frame.window.composition.cover); 
 	
 	
+	// CONTENT FRAME
 	frame.window.content = document.createElement('iframe');
 	frame.window.content.style.width = attributes.width+'px';
 	frame.window.content.style.height = attributes.height+'px';

@@ -9,13 +9,15 @@
 	<description><![CDATA[Change computer and personal settings.]]></description>
 	<window>
 		<title>Options</title>
-		<width>720</width>
-		<height>480</height>
+		<width>70%</width>
+		<height>70%</height>
 		<x>auto</x>
 		<y>auto</y>
 		<expand>true</expand>
 		<resize>true</resize>
 		<minwidth>640</minwidth>
 		<minheight>480</minheight>
+		<maxinitwidth>1280</maxinitwidth>
+		<maxinitheight>720</maxinitheight>
 	</window>
 </manifest>
