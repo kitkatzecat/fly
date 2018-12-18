@@ -20,11 +20,19 @@ include 'fly.php';
 	bottom: 8px;
 	right: 10px;
 }
+#license {
+	position: absolute;
+	bottom: 12px;
+	left: 10px;
+}
 </style>
 <script>
 function onload() {
 	Fly.window.position.set(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24));
 	window.top.shell.sound.system('error');
+}
+function license() {
+	window.top.task.create('SprocketComputers.Preview', {title:'Preview', name:'Preview', x:'auto', y:'auto', width:'640', height:'480', location:'<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.Preview?file=./LICENSE', icon:'<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.Preview/preview.svg'});
 }
 </script>
 <body onload="onload()" class="FlyUiNoSelect">
@@ -36,6 +44,7 @@ Version <?php echo $_FLY['VERSION_MAJOR']; ?> Build  <?php echo $_FLY['VERSION_B
 &copy; <?php echo substr($_FLY['VERSION_DATE'],0,4); ?> Sprocket Computers
 </div>
 </div>
+<div id="license" class="FlyUiTextHover" onclick="license()">License</div>
 <button onclick="Fly.window.close();" class="button"><img src="<?php echo FLY_ICONS_URL; ?>mark-o.svg" style="width:16px;height:16px;vertical-align:middle;pointer-events:none;"></button>
 
 </body>
