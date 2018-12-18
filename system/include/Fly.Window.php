@@ -19,6 +19,8 @@ if (typeof Fly.window == "undefined") {
 		} catch(err) {}
 	}
 
+	Fly.window.ready = function() {}
+
 	Fly.window.title = function() {
 		return Fly.window.title.get();
 	}
