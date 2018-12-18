@@ -18,13 +18,13 @@ Control.innerHTML = '<input type="hidden" value="#FF0000" name="'+name+'" id="'+
 Control.loaded = function() {
 	try {
 		Control.window.window.content.contentWindow.ret = Control.return;
-		Control.window.window.content.contentWindow.init(WindowId);
+		Control.window.window.content.contentWindow.init(Fly.window.id);
 	} catch(err) {
 		window.top.shell.dialog('Control Error - Error','An error has occurred in the control:<pre>'+err+'</pre>','Control Error');
 	}
 }
 Control.choose = function() {
-	Control.window = window.top.task.create('SprocketComputers.Utilities',{title:Fly.window.name.get()+' - Pick Color', name:'Color Picker', x:parseInt(Fly.window.position.get()[0])+32, y:parseInt(Fly.window.position.get()[1])+32, width:240, height:324, location:'%FLY.RESOURCE.URL.APPS%/SprocketComputers.Utilities/colorpicker.php?windowid='+WindowId+'&color='+Control.color.rgb, icon:Fly.window.icon.get(), load:Control.loaded});
+	Control.window = window.top.task.create('SprocketComputers.Utilities',{title:Fly.window.name.get()+' - Pick Color', name:'Color Picker', x:parseInt(Fly.window.position.get()[0])+32, y:parseInt(Fly.window.position.get()[1])+32, width:240, height:324, location:'%FLY.RESOURCE.URL.APPS%/SprocketComputers.Utilities/colorpicker.php?Fly.window.id='+Fly.window.id+'&color='+Control.color.rgb, icon:Fly.window.icon.get(), load:Control.loaded});
 }
 Control.onchange = function() {};
 Control.return = function(ret) {
