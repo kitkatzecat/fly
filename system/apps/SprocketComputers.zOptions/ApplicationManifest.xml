@@ -9,8 +9,8 @@
 	<description><![CDATA[Change computer and personal settings.]]></description>
 	<window>
 		<title>Options</title>
-		<width>70%</width>
-		<height>70%</height>
+		<width>60%</width>
+		<height>60%</height>
 		<x>auto</x>
 		<y>auto</y>
 		<expand>true</expand>
