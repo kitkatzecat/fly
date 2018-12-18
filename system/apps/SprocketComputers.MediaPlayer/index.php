@@ -5,7 +5,7 @@
 include 'fly.php';
 include 'fileprocessor.php';
 
-echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
+echo FlyLoadExtension('SprocketComputers.FileManager', 'FileChooser');
 ?>
 <style>
 button {
@@ -213,6 +213,7 @@ button {
 	font-size: 36px;
 	padding-right: 180px;
    	background-repeat: repeat-x;
+	word-wrap: break-word;
 }
 @keyframes Text-NowPlaying-Animation {
 	from {background-position: 0px 0px;}
@@ -540,22 +541,22 @@ document.getElementById('Control-Browser').onchange = function() {
 }
 </script>
 <?php
-if (in_array($_GET['autoplay'],['true','on','yes'])) {
+if (in_array($_GET['autoplay'], ['true', 'on', 'yes'])) {
 	$autoplay = 'audio.play();';
 } else {
 	$autoplay = '';
 }
-if (in_array($_GET['repeat'],['true','on','yes'])) {
+if (in_array($_GET['repeat'], ['true', 'on', 'yes'])) {
 	$repeat = 'ButtonRepeat();';
 } else {
 	$repeat = '';
 }
-if (in_array($_GET['full'],['true','on','yes'])) {
+if (in_array($_GET['full'], ['true', 'on', 'yes'])) {
 	$mode = 'ButtonModeFull();';
 } else {
 	$mode = '';
 }
-if ($_GET['file']=='' || !file_exists($_GET['file'])) {
+if ($_GET['file'] == '' || !file_exists($_GET['file'])) {
 	$autoplay = '';
 	$mode = '';
 	$load = 'document.getElementById(\'Text-Duration\').innerHTML = \'No file selected\';ButtonModeFull();TabLibrary();
@@ -567,7 +568,7 @@ if ($_GET['file']=='' || !file_exists($_GET['file'])) {
 		}
 	';
 } else {
-	$load = 'Load(\''.FlyConvertPathtoURL($_GET['file']).'\',\''.basename($_GET['file']).'\');Fly.window.title.set(\'Media Player - '.htmlentities(basename($_GET['file'])).'\');';
+	$load = 'Load(\'' . FlyConvertPathtoURL($_GET['file']) . '\',\'' . basename($_GET['file']) . '\');Fly.window.title.set(\'Media Player - ' . htmlentities(basename($_GET['file'])) . '\');';
 }
 
 echo '
@@ -670,7 +671,7 @@ function onload() {
 			audio.play();
 		}
 		
-		'.$autoplay.'
+		' . $autoplay . '
 	}
 	audio.onended = function() {
 		document.getElementById(\'Text-Duration\').innerHTML = \'00:00 / \'+FormatTime(Math.round(audio.duration));
@@ -700,9 +701,9 @@ function onload() {
 	
 	ToolbarInit();
 	ShortcutInit();
-	'.$mode.'
-	'.$repeat.'
-	'.$load.'
+	' . $mode . '
+	' . $repeat . '
+	' . $load . '
 }
 </script>
 ';
