@@ -170,6 +170,9 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			if (attributes.width > attributes.maxinitwidth) {
 				attributes.width = attributes.maxinitwidth;
 			}
+			if (attributes.width < attributes.minwidth) {
+				attributes.width = attributes.minwidth;
+			}
 		}
 	} else {
 		attributes.width = parseInt(attributes.width);
@@ -179,6 +182,9 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		if (attributes.maxinitheight) {
 			if (attributes.height > attributes.maxinitheight) {
 				attributes.height = attributes.maxinitheight;
+			}
+			if (attributes.height < attributes.minheight) {
+				attributes.height = attributes.minheight;
 			}
 		}
 	} else {
