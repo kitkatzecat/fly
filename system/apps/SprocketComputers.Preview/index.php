@@ -7,6 +7,7 @@ include 'fileprocessor.php';
 if ($_GET['file'] == '') {
 	goto no_file;
 }
+$_GET['file'] = FlyVarsReplace($_GET['file']);
 $process = FlyFileStringProcessor($_GET['file']);
 
 $filesize = intval(filesize($_GET['file']));

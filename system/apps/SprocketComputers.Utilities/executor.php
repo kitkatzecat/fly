@@ -6,6 +6,7 @@ include 'fly.php';
 include 'Fly.FileProcessor.php';
 
 if ($_GET['file'] !== '') {
+	$_GET['file'] = FlyVarsReplace($_GET['file']);
 	if (file_exists($_GET['file']) && !is_dir($_GET['file'])) {
 		$process = FlyFileStringProcessor($_GET['file']);
 		echo '<script>

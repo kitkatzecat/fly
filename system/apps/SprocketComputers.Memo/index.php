@@ -49,6 +49,7 @@ if ($_GET['file'] == '') {
 	$content = '';
 	$issaved = 'false';
 } else {
+	$_GET['file'] = FlyVarsReplace($_GET['file']);
 	if (file_exists($_GET['file'])) {
 		$process = FlyFileStringProcessor($_GET['file']);
 		if ($process) {
