@@ -1,0 +1,28 @@
+{
+	"id": "SprocketComputers.Brush",
+	"name": "Brush",
+	"publisher": "Sprocket Computers",
+	"version": "1.0",
+	"icon": "%FLY.WORKING_URL%brush.svg",
+	"date": "1545169152",
+	"index": "index.php",
+	"description": "Create digital pictures with a set of artistic tools and save them to your computer.",
+	"mime": {
+		"image/*": "file=%FLY.CURRENT_PATH%"
+	},
+	"window": {
+		"title": "Brush",
+		"expand": true,
+		"resize": true,
+		"position": {
+			"x": "auto",
+			"y": "auto"
+		},
+		"size": {
+			"width": "60%",
+			"height": "60%",
+			"minwidth": "720",
+			"minheight": "480"
+		}
+	}
+}
