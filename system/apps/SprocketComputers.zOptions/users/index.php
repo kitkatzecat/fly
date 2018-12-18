@@ -68,7 +68,7 @@ if ($user == $_FLY['USER']['ID']) {
 	echo '<div class="title">Manage user</div>';
 }
 ?>
-<div class="box"><h1><img class="userImage" src="https://localhost/system/resources/os/userimagelight.svg"><?php echo htmlentities($userXML->user->name); ?></h1></div>
+<div class="box"><h1><img class="userImage" src="<?php echo $_FLY['RESOURCE']['URL']['OS']; ?>userimagelight.svg"><?php echo htmlentities($userXML->user->name); ?></h1></div>
 <p><a onclick="window.location.href='name.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg">Change <?php echo $p; ?> name</a></p>
 <p><a onclick="window.location.href='image.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg">Change <?php echo $p; ?> picture</a></p>
 <p><a onclick="window.location.href='password.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg">Change <?php echo $p; ?> password</a></p>
