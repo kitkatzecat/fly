@@ -9,10 +9,12 @@
 	<description><![CDATA[View and manage your files and folders.]]></description>
 	<window>
 		<title>File Manager</title>
-		<width>720</width>
-		<height>480</height>
+		<width>70%</width>
+		<height>70%</height>
 		<minwidth>400</minwidth>
 		<minheight>160</minheight>
+		<maxinitwidth>1280</maxinitwidth>
+		<maxinitheight>720</maxinitheight>
 		<x>auto</x>
 		<y>auto</y>
 		<expand>true</expand>
