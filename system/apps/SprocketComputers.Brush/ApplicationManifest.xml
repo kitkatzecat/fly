@@ -13,9 +13,9 @@
 	]]></mime-actions>
 	<window>
 		<title>Brush</title>
-		<width>720</width>
-		<height>480</height>
-		<minwidth>640</minwidth>
+		<width>60%</width>
+		<height>60%</height>
+		<minwidth>720</minwidth>
 		<minheight>240</minheight>
 		<x>auto</x>
 		<y>auto</y>
