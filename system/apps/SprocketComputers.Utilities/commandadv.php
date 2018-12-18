@@ -6,7 +6,7 @@
 include 'fly.php';
 include 'Fly.Command.php';
 
-echo FlyLoadExtension('SprocketComputers.Utilities','ColorPicker');
+echo FlyLoadExtension('SprocketComputers.Utilities', 'ColorPicker');
 ?>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
@@ -18,11 +18,8 @@ echo FlyLoadExtension('SprocketComputers.Utilities','ColorPicker');
 	bottom: 48px;
 	background-color: #000;
 	color: #fff;
-	overflow-x: hidden;
-	word-wrap: break-word;
-	white-space: pre-wrap;
-	word-break: break-all;
-	overflow-y: auto;
+	white-space: pre;
+	overflow: auto;
 	font-family: Consolas, Courier New, monospace;
 	padding: 4px;
 	font-size: 12px;
@@ -48,6 +45,18 @@ echo FlyLoadExtension('SprocketComputers.Utilities','ColorPicker');
 	left: 20px;
 	font-family: Consolas, Courier New, monospace;
 }
+a {
+	color: inherit;
+	text-decoration: underline;
+	cursor: pointer;
+	font-family: inherit;
+}
+a:hover, a:active {
+	color: inherit;
+}
+xmp {
+	font-family: inherit;
+}
 </style>
 <script>
 Fly.window.ready = function() {
@@ -61,51 +70,61 @@ Fly.window.ready = function() {
 	}
 	
 	init();
-	cmd('clear');
+	cmd.ready();
 }
-function cmd(cmd) {
+function cmd(comd) {
 	var input = document.getElementById('input');
 	var button = document.getElementById('button');
 	var text = document.getElementById('main');
 	
+	text.innerHTML = '';
+
 	if (!input.disabled) {
-		text.innerText += '> '+cmd;
+		text.innerHTML += '&gt; '+comd;
 	}
 	
 	input.disabled = true;
 	button.disabled = true;
-		
-	if (cmd == 'clearlog' || cmd == 'clear') {
-		text.innerText = '';
-	}
 	
-	FlyCommand(cmd,function(a) {
+	FlyCommand(comd,function(a) {
 		if (a == false) {
-			text.innerText += "\r\nCommand error: "+FlyCommand.error+"\r\n\r\n";
-			text.scrollTop = text.scrollHeight;
-			
-			input.disabled = false;
-			button.disabled = false;
-			
-			input.focus();
-			input.select();
+			text.innerHTML += "\r\nCommand error: "+FlyCommand.error+"\r\n\r\n";
+			cmd.ready();
 		} else {
-			text.innerText += "\r\n"+a.display+"\r\n\r\n";
-			text.scrollTop = text.scrollHeight;
-			try {
-				if (a.execute !=='') {
-					window.top.window.eval(a.execute);
-				}
-			} catch(err) {}
+			text.innerHTML += '\r\n\r\nDisplay:\r\n'+a.display;
+
+			cmd.execute = function() {
+				try {
+					window.top.eval(a.execute);
+				} catch (err) {console.log(err);}
+			}
+			text.innerHTML += '\r\n\r\nExecute:\r\n';
+			text.innerHTML += '<a onclick="cmd.execute();"><xmp>'+a.execute+'</xmp></a>';
+
+			cmd.error = function() {
+				try {
+					window.top.eval(a.error);
+				} catch (err) {console.log(err);}
+			}
+			text.innerHTML += '\r\n\r\nError:\r\n';
+			text.innerHTML += '<a onclick="cmd.error();"><xmp>'+a.error+'</xmp></a>';
+
+			text.innerHTML += '\r\n\r\nJSON:\r\n';
+			text.innerHTML += '<xmp>'+JSON.stringify(a,null,'    ')+'</xmp>';
 			
-			input.disabled = false;
-			button.disabled = false;
-			
-			input.focus();
-			input.select();
+			cmd.ready();
 		}
 	});
 }
+cmd.ready = function() {		
+	input.disabled = false;
+	button.disabled = false;
+			
+	input.focus();
+	input.select();
+}
+cmd.error = function(){};
+cmd.execute = function(){};
 function enter() {
 	var input = document.getElementById('input');
 	if (input.value !== '') {
@@ -121,8 +140,8 @@ function eva(event) {
 }
 var actionbar;
 function init() {
-	Fly.window.size.set(640,320);
-	Fly.window.title.set('Command Prompt');
+	Fly.window.size.set(720,480);
+	Fly.window.title.set('Command Prompt - Details');
 
 	actionbar = new Fly.actionbar();
 	actionbar.style.position = 'absolute';
@@ -142,12 +161,11 @@ function init() {
 				picker.onchange = color_text;
 				picker.choose();
 			}],
-		],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>colors.svg'}],
-		['Clear',function() {cmd('clear')},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'}]
+		],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>colors.svg'}]
 	]});
 	actionbar.add({text:'Mode',type:'dropdown',menu:[
-		['Output',function(){},{toggled:true}],
-		['Details',function() {mode();}]
+		['Output',function() {mode();}],
+		['Details',function(){},{toggled:true}]
 	]});	
 	actionbar.add({text:'About',align:'right',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg',action:function() {
 		window.top.system.command('ver');
@@ -171,13 +189,13 @@ function color_text() {
 	main.style.color = picker.color.hex;
 }
 function mode() {
-	window.location.href = 'commandadv.php';
+	window.location.href = 'command.php';
 }
 </script>
 </head>
 <body>
 
-<div id="main"></div>
+<div id="main"><br>Enter a command to view detailed output</div>
 <div id="carat" class="FlyUiTextHighlight FlyUiNoSelect">&gt;</div><input disabled onkeypress="eva(event)" type="text" id="input"><button class="FlyUiNoSelect" onclick="enter()" disabled id="button">Execute</button>
 
 <div id="ColorPicker" style="display:none;"></div>
