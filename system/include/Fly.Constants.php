@@ -4,9 +4,9 @@ if (!isset($_FLY)) {
 }
 FlyIncludeRegister('FLY.CONSTANTS');
 
-if (!function_exists(FlyStringReplaceConstants)) {
+if (!function_exists('FlyStringReplaceConstants')) {
 
-if (!function_exists(str_lreplace)) {
+if (!function_exists('str_lreplace')) {
 	include 'functions.php';
 }
 

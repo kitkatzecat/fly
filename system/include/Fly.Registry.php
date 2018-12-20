@@ -4,7 +4,7 @@ if (!isset($_FLY)) {
 }
 FlyIncludeRegister('FLY.REGISTRY');
 
-if (!function_exists(FlyRegistrySet)) {
+if (!function_exists('FlyRegistrySet')) {
 function FlyRegistrySet( $key, $value ) {
 	return FlyUserRegistrySet($key,$value);
 }

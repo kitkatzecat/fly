@@ -261,7 +261,7 @@ function FlyCoreVars($scope=false,$_FLY=false) {
 	return $_FLY;
 }
 
-if (!function_exists(FlyIncludeRegister)) {
+if (!function_exists('FlyIncludeRegister')) {
 function FlyIncludeRegister($id) {
 	global $_FLY;
 	array_push($_FLY['INCLUDES'], $id);
@@ -277,7 +277,7 @@ function FlyIncludeCheck($id) {
 }
 }
 
-if (!function_exists(FlyVarsReplace)) {
+if (!function_exists('FlyVarsReplace')) {
 function FlyVarsReplace($string,$url=false,$fly=false) {
 	global $_FLY;
 	

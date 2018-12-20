@@ -1,7 +1,7 @@
 <?php
 // theme.php - Fly Theme loader 2
 // body,window,text,toolbar,controls
-if (!function_exists(FlyLoadTheme)) {
+if (!function_exists('FlyLoadTheme')) {
 if (!isset($_FLY)) {
 	include 'Fly.Core.php';
 }
