@@ -89,6 +89,8 @@ function cmd(comd) {
 	FlyCommand(comd,function(a) {
 		if (a == false) {
 			text.innerHTML += "\r\nCommand error: "+FlyCommand.error+"\r\n\r\n";
+			text.innerHTML += "Response body:\r\n";
+			text.innerHTML += '<xmp>'+FlyCommand.request.responseText+'</xmp>';
 			cmd.ready();
 		} else {
 			text.innerHTML += '\r\n\r\nDisplay:\r\n'+a.display;
