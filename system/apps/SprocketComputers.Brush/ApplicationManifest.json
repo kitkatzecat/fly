@@ -7,8 +7,12 @@
 	"date": "1545169152",
 	"index": "index.php",
 	"description": "Create digital pictures with a set of artistic tools and save them to your computer.",
-	"mime": {
-		"image/*": "file=%FLY.CURRENT_PATH%"
+	"types": {
+		".png": {
+			"action": "file=%FLY.CURRENT_PATH%",
+			"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
+			"description": "PNG Image"
+		}
 	},
 	"window": {
 		"title": "Brush",
