@@ -6,28 +6,28 @@ include 'Fly.FileProcessor.php';
 
 $FlyCommandVersion = '1.2';
 
-$echo = '';
-$display = '';
-$err = '';
-$return = '';
-function FlyCommandError($er) {
-	global $err;
-	$err .= $er.';';
+$COMMAND_ECHO = '';
+$COMMAND_DISPLAY = '';
+$COMMAND_ERROR = '';
+$COMMAND_RETURN = '';
+function FlyCommandError($string) {
+	global $COMMAND_ERROR;
+	$COMMAND_ERROR .= $string.';';
 }
-function FlyCommandExecute($ex) {
-	global $echo;
-	$echo .= $ex.';';
+function FlyCommandExecute($execute) {
+	global $COMMAND_ECHO;
+	$COMMAND_ECHO .= $execute.';';
 }
-function FlyCommandDisplay($ds) {
-	global $display;
-	$display .= $ds."\r\n";
+function FlyCommandDisplay($string) {
+	global $COMMAND_DISPLAY;
+	$COMMAND_DISPLAY .= $string."\r\n";
 }
-function FlyCommandReturn($rt,$ovr=false) {
-	global $return;
-	if ($ovr) {
-		$return = $rt;
+function FlyCommandReturn($string,$overwrite=false) {
+	global $COMMAND_RETURN;
+	if ($overwrite) {
+		$COMMAND_RETURN = $string;
 	} else {
-		$return .= $rt;
+		$COMMAND_RETURN .= $string;
 	}
 }
 
@@ -50,10 +50,10 @@ if ($_GET['cmd']==="" || $_GET['cmd']=="undefined") {
 }
 
 function FlyCommand($cmd,$execute=false,$error=false) {
-	global $echo;
-	global $display;
-	global $err;
-	global $return;
+	global $COMMAND_ECHO;
+	global $COMMAND_DISPLAY;
+	global $COMMAND_ERROR;
+	global $COMMAND_RETURN;
 	global $_FLY;
 	global $FlyCommandVersion;
 	
@@ -70,6 +70,7 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 	$do = $cmd[0];
 	$cmd = FlyVarsReplace(FlyStringReplaceConstants($cmd[1]));
 	$cmd = explode(',',$cmd);
+	$COMMAND = $cmd;
 	
 	$process = FlyFileStringProcessor($do);
 	
@@ -83,21 +84,24 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 		FlyCommandDisplay('"'.$do.'" is not a recognized command. (Fly error code 1d400)');
 	}
 	ext:
-	file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n".$echo."\r\n".$display,FILE_APPEND);
+	file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n".$COMMAND_ECHO."\r\n".$COMMAND_DISPLAY,FILE_APPEND);
 	if ($execute == true) {
-		echo $echo;	
+		echo $COMMAND_ECHO;	
 	}
 	if ($error == true) {
-		echo $err;	
+		echo $COMMAND_ERROR;	
 	}
-	$return = array(
-		'display' => $display,
-		'execute' => $echo,
-		'error' => $err,
-		'return' => $return,
+	$COMMAND_RETURN = array(
+		'command' => $do.':'.implode(',',$cmd),
+		'arguments' => $cmd,
+		'date' => (string)time(),
+		'display' => $COMMAND_DISPLAY,
+		'execute' => $COMMAND_ECHO,
+		'error' => $COMMAND_ERROR,
+		'return' => $COMMAND_RETURN,
 	);
-	$return['json'] = json_encode($return);
-	return $return;
+	$COMMAND_RETURN['json'] = json_encode($COMMAND_RETURN);
+	return $COMMAND_RETURN;
 }
 	
 	/*
