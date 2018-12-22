@@ -70,8 +70,11 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 	$do = $cmd[0];
 	$cmd = FlyVarsReplace(FlyStringReplaceConstants($cmd[1]));
 	$cmd = explode(',',$cmd);
-	$COMMAND = $cmd;
+
+	$cmd = array_diff($cmd,[""]);
 	
+	$COMMAND = $cmd;
+
 	$process = FlyFileStringProcessor($do);
 	
 	if (file_exists($_FLY['RESOURCE']['PATH']['CMD'].$do.'.php')) {
@@ -91,6 +94,7 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 	if ($error == true) {
 		echo $COMMAND_ERROR;	
 	}
+
 	$COMMAND_RETURN = array(
 		'command' => $do.':'.implode(',',$cmd),
 		'arguments' => $cmd,
