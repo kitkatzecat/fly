@@ -235,6 +235,9 @@ body {
 		try {
 			window.top.shell.sound.system('password');
 		} catch(err) {}
+		document.body.addEventListener('click',function() {
+			document.getElementById('TextInput').focus();
+		});
 	}
 
 	var dialog = function() {};
