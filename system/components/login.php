@@ -219,6 +219,10 @@ body {
 <body onload="onload()">
 
 <script>
+	Fly.window.ready = function() {
+		document.getElementById('TextInput').focus();
+	}
+
 	function onload() {
 		Fly.window.size.set(500,(156+Math.max(document.getElementById('Content').scrollHeight,56)));
 		document.getElementById('Content').style.overflow = 'visible';
