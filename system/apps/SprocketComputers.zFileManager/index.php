@@ -74,6 +74,8 @@ function ToolbarInit() {
 		['Image Previews',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
 		['File Extensions',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
 		[''],
+		['Status Bar'],
+		[''],
 		['Panes',[
 			['Search',function(){Pane.toggle('search');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg'}],
 			['Properties',function(){Pane.toggle('properties');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>properties.svg'}],
