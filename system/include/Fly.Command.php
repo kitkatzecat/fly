@@ -38,7 +38,7 @@ var FlyCommand = function(cmd=\'\',callback=function(){}) {
 	
 	FlyCommand.callback = callback;
 	
-    FlyCommand.request.open("GET", \''.$_FLY['RESOURCE']['URL']['COMPONENTS'].'cmd.php?time=\'+dateTime+\'&json=true&req=true&cp='.$_FLY['CURRENT_PATH'].'&cmd=\'+encodeURIComponent(cmd), false);
+    FlyCommand.request.open("GET", \''.$_FLY['RESOURCE']['URL']['COMPONENTS'].'cmd.php?time=\'+dateTime+\'&json=true&req=true&cp='.$_FLY['CURRENT_PATH'].'&cmd=\'+encodeURIComponent(cmd), true);
     FlyCommand.request.onreadystatechange = FlyCommand.response;
     FlyCommand.request.setRequestHeader("Cache-Control", "no-cache");
     FlyCommand.request.send(null);
