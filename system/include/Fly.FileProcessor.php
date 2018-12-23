@@ -246,9 +246,9 @@ function FlyFileStringProcessor($item) {
 			}
 			$description = 'Folder';
 			$action = 'system.command(\'run:SprocketComputers.FileManager,path='.$filePath.'\')';
-			$path = trimslashes(str_replace(basename($filePath),'',$filePath));
+			$path = trimslashes(str_lreplace(basename($filePath),'',$filePath));
 			$ffile = trimslashes(str_freplace($_SERVER['DOCUMENT_ROOT'],'.',$filePath));
-			$fpath = trimslashes(str_replace($_SERVER['DOCUMENT_ROOT'],'.',str_replace(basename('/'.$filePath),'',$filePath)));
+			$fpath = trimslashes(str_freplace($_SERVER['DOCUMENT_ROOT'],'.',str_lreplace(basename('/'.$filePath),'',$filePath)));
 			
 			if (trimslashes($filePath,true) == trimslashes($_FLY['PATH'],true) || $filePath == '.') {
 				$fname = 'Computer';
