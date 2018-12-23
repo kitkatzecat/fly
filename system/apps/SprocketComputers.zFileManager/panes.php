@@ -45,6 +45,7 @@ if ($_GET['pane'] == 'folders') {
 	<span id="title" class="FlyUiTextHighlight">Bookmarks</span>
 	<div onclick="window.parent.Dialog.open(\'dialogs.php?dialog=bookmark_add\',\'Add Bookmark\');" class="FlyUiToolbarItem FlyUiNoSelect" style="position:fixed;bottom:2px;left:2px;right:2px;text-align:center;"><img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'mark-plus.svg">Add bookmark</div>
 	';
+	goto bookmarks;
 } else if ($_GET['pane'] == 'search') {
 	echo '
 	<span id="title" class="FlyUiTextHighlight">Search</span>
@@ -185,3 +186,49 @@ ul {
 </style>
 <?php
 goto ext;
+
+bookmarks:
+echo '<ul style="margin-left:8px;margin-top:6px;" id="folders">';
+if (file_exists($_FLY['APP']['DATA'].'bookmarks.json')) {
+	$json = json_decode(file_get_contents($_FLY['APP']['DATA'].'bookmarks.json'),true);
+	if (count($json) > 0) {
+		foreach ($json as $b) {
+			$process = FlyFileStringProcessor(FlyVarsReplace($b));
+			if ($process) {
+				echo '<li class="FlyUiTextHover FlyUiNoSelect item" onclick="window.parent.Nav(atob(\''.base64_encode($process['file']).'\'));"><img class="icon FlyUiNoSelect" src="'.$process['icon'].'">'.$process['name'].'</li>';
+			}
+		}
+	}
+} else {
+	file_put_contents($_FLY['APP']['DATA'].'bookmarks.json','[]');
+}
+?>
+</ul>
+<style>
+ul {
+	padding-left: 0px;
+}
+.item {
+	display: block;
+	list-style-type: none;
+	font-size: 14px;
+	line-height: 20px;
+	cursor: pointer;
+	white-space: nowrap;
+	padding-top: 6px;
+	margin-top: -8px;
+	padding-bottom: 6px;
+	margin-bottom: -8px;
+	margin-left: -8px;
+}
+.icon {
+	width: 16px;
+	height: 16px;
+	margin-right: 2px;
+	vertical-align: middle;
+}
+</style>
+<?php
+goto ext;
+
+?>
