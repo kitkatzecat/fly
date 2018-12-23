@@ -115,6 +115,9 @@ dg_input:
 		document.getElementById('TextInput').disabled = false;
 		document.getElementById('ButtonOk').disabled = false;
 	}
+	Fly.window.ready = function() {
+		document.getElementById('TextInput').focus();
+	}
 </script>
 <div style="position:absolute;top:0px;left:0px;right:0px;bottom:50px;background:#fff;" class="">
 	<div style="padding:24px;">
