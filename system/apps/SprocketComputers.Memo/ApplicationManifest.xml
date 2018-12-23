@@ -10,8 +10,8 @@
 	<mime>text/*</mime>
 	<window>
 		<title>Memo</title>
-		<width>640</width>
-		<height>480</height>
+		<width>60%</width>
+		<height>60%</height>
 		<minwidth>400</minwidth>
 		<minheight>160</minheight>
 		<x>auto</x>
