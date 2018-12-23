@@ -1074,11 +1074,11 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			catch(err) {
 				shell.dialog('Window error','Window load function error:<pre>'+err+'</pre>','Window Error');
 			}
+			frame.window.setSize(attributes.width,attributes.height);
 		}
 
 		if (typeof frame.window.content.contentWindow.Fly.window != 'undefined') {
 			frame.window.content.contentWindow.Fly.window.id = frame.id;
-			frame.window.setSize(attributes.width,attributes.height);
 			try {
 				frame.window.content.contentWindow.Fly.window.ready();
 			} catch(err) {console.log(err);}
