@@ -280,7 +280,7 @@ Fly.control.saveBrowser.browse = function(id) {
 } 
 Fly.control.saveBrowser.setLocation = function(id,path,basename,fpath) {
 	document.getElementById(id+\'-saveBrowser-text\').style.color = "#000000";
-	document.getElementById(id+\'-saveBrowser-text\').innerHTML = \'<img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="'.FLY_ICONS_URL.'folder.svg">\'+basename;
+	document.getElementById(id+\'-saveBrowser-text\').innerHTML = \'<img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'folder.svg">\'+basename;
 	document.getElementById(id+\'-saveBrowser-path\').value = path;
 	document.getElementById(id).setAttribute("basename",basename);
 	document.getElementById(id).setAttribute("path",path);
@@ -352,9 +352,9 @@ Fly.control.contextMenu.close = function(id) {
 	document.getElementById(id).parentNode.removeChild(document.getElementById(id));
 }
 
-Fly.control.input = function(msg="Enter text",content="",title="Enter Text",icon="'.FLY_ICONS_URL.'pencil.svg",funct=function(){}) {
+Fly.control.input = function(msg="Enter text",content="",title="Enter Text",icon="'.$_FLY['RESOURCE']['URL']['ICONS'].'pencil.svg",funct=function(){}) {
 	if (icon == "") {
-		icon = "'.FLY_ICONS_URL.'pencil.svg";
+		icon = "'.$_FLY['RESOURCE']['URL']['ICONS'].'pencil.svg";
 	}
 	var init = function() {
 		try {
@@ -369,9 +369,9 @@ Fly.control.input = function(msg="Enter text",content="",title="Enter Text",icon
 	var frame = window.top.task.create(\''.$_FLY['APP']['ID'].'\',{title:title,x:((window.top.window.innerWidth/2)-258),y:((window.top.window.innerHeight/2)-154),width:500,height:220,location:\'/system/components/dialog.php?type=input&windowid=\'+encodeURIComponent(window.btoa(Fly.window.id))+\'&message=\'+encodeURIComponent(window.btoa(msg))+\'&content=\'+encodeURIComponent(window.btoa(content))+\'&icon=\'+encodeURIComponent(window.btoa(icon)),icon:Fly.window.icon.get(),load:init});
  }
 
-Fly.control.confirm = function(msg="Confirm",content="Are you sure you want to do this?",title="Confirm",icon="'.FLY_ICONS_URL.'question.svg",returntrue=function(){},returnfalse=function(){}) {
+Fly.control.confirm = function(msg="Confirm",content="Are you sure you want to do this?",title="Confirm",icon="'.$_FLY['RESOURCE']['URL']['ICONS'].'question.svg",returntrue=function(){},returnfalse=function(){}) {
 	if (icon == "") {
-		icon = "'.FLY_ICONS_URL.'question.svg";
+		icon = "'.$_FLY['RESOURCE']['URL']['ICONS'].'question.svg";
 	}
 	var init = function() {
 		try {

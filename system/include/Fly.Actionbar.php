@@ -532,13 +532,13 @@ Fly.actionbar = function() {
 				if (extrapadding && !menuobject.extrapadding) {
 					Object.keys(menuobject.options).forEach(function(i) { 
 						if (!menuobject.options[i].extrapadding && menuobject.options[i].type !== 'divider') {
-							menuobject.options[i].innerHTML = '<img style="width:12px;height:12px;padding-right:6px;margin-top:-2px;pointer-events:none;vertical-align:middle;opacity:0;" class="FlyUiNoSelect" src="<?php echo FLY_ICONS_URL; ?>arrow-right.svg">'+menuobject.options[i].innerHTML;
+							menuobject.options[i].innerHTML = '<img style="width:12px;height:12px;padding-right:6px;margin-top:-2px;pointer-events:none;vertical-align:middle;opacity:0;" class="FlyUiNoSelect" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-right.svg">'+menuobject.options[i].innerHTML;
 						}
 					});
 					menuobject.extrapadding = true;
 				}
 				if (menuobject.extrapadding && menuobject.options[index].type !== 'divider' && !menuobject.options[index].extrapadding) {
-					menuobject.options[index].innerHTML = '<img style="width:12px;height:12px;padding-right:6px;margin-top:-2px;pointer-events:none;vertical-align:middle;opacity:0;" class="FlyUiNoSelect" src="<?php echo FLY_ICONS_URL; ?>arrow-right.svg">'+menuobject.options[index].innerHTML;
+					menuobject.options[index].innerHTML = '<img style="width:12px;height:12px;padding-right:6px;margin-top:-2px;pointer-events:none;vertical-align:middle;opacity:0;" class="FlyUiNoSelect" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-right.svg">'+menuobject.options[index].innerHTML;
 				}
 				menuobject.appendChild(menuobject.options[index]);
 			}
