@@ -1,6 +1,2 @@
-.gitignore
 system/cmd.log
-.vscode/
 users/*
-system/resources/icons_orig
-system/resources/icons_new
