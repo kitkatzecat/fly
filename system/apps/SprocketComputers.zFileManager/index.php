@@ -2,7 +2,7 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
 include 'Fly.Actionbar.php';
 include 'Fly.Command.php';
 

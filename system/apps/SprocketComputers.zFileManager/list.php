@@ -8,7 +8,7 @@
 	v : View (Optional) - Override the registry setting to use a specific view
 */
 
-include 'fly.php';
+include 'Fly.Standard.php';
 include 'Fly.Command.php';
 include 'Fly.FileProcessor.php';
 include 'Fly.Registry.php';
