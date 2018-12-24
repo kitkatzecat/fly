@@ -177,6 +177,7 @@ function Go() {
 function Nav(path) {
 	window.top.shell.sound.system('click');
 	Addressbar.value = '';
+	document.getElementById('statusbar').innerHTML = 'Loading...';
 	document.getElementById('frame-main').style.display = 'none';
 	FlyCommand('fileprocess:'+path,function(pth){
 		if (pth['return'].hasOwnProperty('ffile')) {
@@ -260,6 +261,18 @@ var CurrentLocation = {
 	fpath: './system',
 };
 var SelectedFile = CurrentLocation;
+
+function FrameLoad() {
+	var frame = document.getElementById('frame-main');
+
+	frame.style.display = 'block';
+	if (parseInt(frame.contentWindow.List.length)) {
+		document.getElementById('statusbar').innerHTML = frame.contentWindow.List.length+' items';
+	} else {
+		document.getElementById('statusbar').innerHTML = 'Ready';
+	}
+}
+
 </script>
 <style>
 #main {
@@ -267,7 +280,7 @@ var SelectedFile = CurrentLocation;
 	top: 68px;
 	left: 0px;
 	right: 0px;
-	bottom: 0px;
+	bottom: 24px;
 	transition: right 0.2s ease-in-out;
 	background: #fff;
 	z-index: 2;
@@ -333,14 +346,26 @@ var SelectedFile = CurrentLocation;
 	left: calc(100% - 160px);
 	display: none;
 }
+#statusbar {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	right: 0px;
+	height: 24px;
+	box-sizing: border-box;
+	font-size: 12px;
+	padding: 6px;
+}
 </style>
 </head>
 <body onload="Load()">
 
 <iframe id="frame-pane" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
 <div id="main">
-<iframe id="frame-main" onload="this.style.display='block';" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
+<iframe id="frame-main" onload="FrameLoad();" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
 </div>
+<div class="FlyUiTextHighlight" id="statusbar">Loading...</div>
+
 
 </body>
 </html>
