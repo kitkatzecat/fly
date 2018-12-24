@@ -93,7 +93,7 @@ function cmd(comd) {
 			text.innerHTML += '<xmp>'+FlyCommand.request.responseText+'</xmp>';
 			cmd.ready();
 		} else {
-			text.innerHTML += '\r\n\r\nDisplay:\r\n'+a.display;
+			text.innerHTML += '\r\n\r\nDisplay:\r\n<xmp>'+a.display+'</xmp>';
 
 			cmd.execute = function() {
 				try {
