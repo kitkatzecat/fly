@@ -324,7 +324,7 @@ function FlyFileStringProcessor($item) {
 			}
 			$action = '';
 			if ($extension == 'als') {
-				$action = FlyFileStringProcessor(FlyVarsReplace(FlyStringReplaceConstants(simpleXML_load_file($filePath)->link),false,FlyCoreVars($filePath)))['action'];
+				$action = 'system.command(\'run:'.FlyVarsReplace(FlyStringReplaceConstants((string)simpleXML_load_file($filePath)->link)).'\')';
 			} else if ($extension == 'jsc') {
 				$action = 'try { (function(){'.FlyVarsReplace(FlyStringReplaceConstants(file_get_contents($filePath)),false,FlyCoreVars($filePath)).'}()); } catch(e) {shell.dialog(\'Script error\',\'An error has occurred in the script "'.htmlspecialchars(basename($filePath)).'":<br><pre>\'+e+\'</pre>\',\'Script Error\');}';
 			} else {
