@@ -34,13 +34,15 @@ if ($_GET['type'] == 'message') {
 dg_message:
 ?>
 <script>
+	Fly.window.ready = function() {
+		Fly.window.size.set(500,(148+Math.max(document.getElementById('Content').scrollHeight,56)));
+		Fly.window.position.set(Math.max(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),0),Math.max((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24,0));
+		Fly.window.minimize.disable();
+	}
 	try {
 		window.top.shell.sound.system('error');
 	} catch(err) {}
 	function onload() {
-		Fly.window.size.set(500,(148+Math.max(document.getElementById('Content').scrollHeight,56)));
-		Fly.window.position.set(Math.max(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),0),Math.max((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24,0));
-		Fly.window.minimize.disable();
 		document.getElementById('Content').style.overflow = 'visible';
 		document.addEventListener("keydown", function(e) {
 			if (e.keyCode == 13) {
@@ -67,10 +69,12 @@ goto ext;
 dg_input:
 ?>
 <script>
-	function onload() {
+	Fly.window.ready = function() {
 		Fly.window.size.set(500,(156+Math.max(document.getElementById('Content').scrollHeight,56)));
 		Fly.window.position.set(Math.max(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),0),Math.max((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24,0));
 		Fly.window.minimize.disable();
+	}
+	function onload() {
 		document.getElementById('Content').style.overflow = 'visible';
 		document.addEventListener("keydown", function(e) {
 			if (e.keyCode == 13) {
@@ -138,10 +142,12 @@ goto ext;
 dg_confirm:
 ?>
 <script>
-	function onload() {
+	Fly.window.ready = function() {
 		Fly.window.size.set(500,(148+Math.max(document.getElementById('Content').scrollHeight,56)));
 		Fly.window.position.set(Math.max(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),0),Math.max((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24,0));
 		Fly.window.minimize.disable();
+	}
+	function onload() {
 		document.getElementById('Content').style.overflow = 'visible';
 		document.addEventListener("keydown", function(e) {
 			if (e.keyCode == 13) {
@@ -206,10 +212,12 @@ goto ext;
 dg_modal:
 ?>
 <script>
-	function onload() {
+	Fly.window.ready = function() {
 		Fly.window.size.set(500,(148+Math.max(document.getElementById('Content').scrollHeight,56)));
 		Fly.window.position.set(Math.max(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),0),Math.max((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24,0));
 		Fly.window.minimize.disable();
+	}
+	function onload() {
 		document.getElementById('Content').style.overflow = 'visible';
 		document.addEventListener("keydown", function(e) {
 			if (e.keyCode == 13) {
@@ -282,7 +290,13 @@ if ($_FLY['IS_USER'] !== false) {
 		} catch(err) {}
 	};
 	cover.oncontextmenu = function() {return false;};
-	
+
+	Fly.window.ready = function() {
+		Fly.window.size.set(500,(156+Math.max(document.getElementById('Content').scrollHeight,56)));
+		Fly.window.position.set(Math.max(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),0),Math.max((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24,0));
+		Fly.window.title.hide();
+	}
+
 	function onload() {
 		Fly.window.minimize.disable();
 		window.top.document.body.appendChild(cover);
@@ -291,9 +305,6 @@ if ($_FLY['IS_USER'] !== false) {
 			window.top.document.getElementById(Fly.window.id).style.zIndex = '999999999';
 		}, 1000);
 		
-		Fly.window.size.set(500,(156+Math.max(document.getElementById('Content').scrollHeight,56)));
-		Fly.window.position.set(Math.max(((window.top.window.innerWidth/2)-(window.top.document.getElementById(Fly.window.id).offsetWidth/2)),0),Math.max((window.top.window.innerHeight/2)-(window.top.document.getElementById(Fly.window.id).offsetHeight/2)-24,0));
-		Fly.window.title.hide();
 		document.getElementById('Content').style.overflow = 'visible';
 		document.addEventListener("keydown", function(e) {
 			if (e.keyCode == 13) {
