@@ -1,7 +1,6 @@
 <?php
-if (!isset($_FLY)) {
-	include 'Fly.Core.php';
-}
+include 'Fly.Core.php';
+
 FlyIncludeRegister('FLY.STANDARD');
 
 if (!FlyIncludeCheck('FLY.THEME')) {
