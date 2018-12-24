@@ -85,6 +85,17 @@ include 'Fly.Actionmenu.php'; // Fly Actionmenu for Window Switcher menu
 FlyLoadTheme('all');
 audio_sound_init($config_user);
 
+// CHECK USER FOLDERS
+if (!is_dir($_FLY['USER']['DATA_PATH'])) {
+	mkdir($_FLY['USER']['DATA_PATH']);
+}
+if (!is_dir($_FLY['USER']['DATA_PATH'].'apps')) {
+	mkdir($_FLY['USER']['DATA_PATH'].'apps');
+}
+if (!is_dir($_FLY['USER']['DATA_PATH'].'registry')) {
+	mkdir($_FLY['USER']['DATA_PATH'].'registry');
+}
+
 ?>
 <script>
 function onload() {
