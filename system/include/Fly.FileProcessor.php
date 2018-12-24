@@ -232,6 +232,11 @@ function FlyFileStringProcessor($item) {
 					$icon = $_FLY['RESOURCE']['URL']['ICONS'].'desktop.svg';
 				}
 			}
+			if (fnmatch($_FLY['RESOURCE']['PATH']['USERS']."*/data/registry/*",$filePath)) {
+				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/settingfolder.svg';
+			} else if (fnmatch($_FLY['REGISTRY']."*",$filePath)) {
+				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/settingfolder.svg';
+			}
 		/*	if (fnmatch($_FLY['RESOURCE']['PATH']['USERS']."[!/]/Documents",$filePath)) {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/docsfolder.svg';
 			}
@@ -302,7 +307,7 @@ function FlyFileStringProcessor($item) {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/unknown.svg';
 			}
 			$description = $lookup['description'];
-			if (fnmatch($_FLY['PATH']."system/users/*/data/registry/*",$filePath) && $extension == '') {
+			if (fnmatch($_FLY['RESOURCE']['PATH']['USERS']."*/data/registry/*",$filePath) && $extension == '') {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/setting.svg';
 				$description = 'Registry';
 			} else if (fnmatch($_FLY['REGISTRY']."*",$filePath) && $extension == '') {
