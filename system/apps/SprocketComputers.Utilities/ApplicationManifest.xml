@@ -80,6 +80,22 @@
 				<expand>true</expand>
 			</window>
 		</mask>
+		<mask id="RegEdit" hidden="false">
+			<icon>%FLY.WORKING_URL%regedit.svg</icon>
+			<name>Registry Editor</name>
+			<index>regedit.php</index>
+			<window>
+				<title>Registry Editor</title>
+				<width>300</width>
+				<height>60%</height>
+				<x>auto</x>
+				<y>auto</y>
+				<minwidth>300</minwidth>
+				<minheight>300</minheight>
+				<resize>true</resize>
+				<expand>true</expand>
+			</window>
+		</mask>
 		<mask id="FileDownloader" hidden="false">
 			<icon>%FLY.WORKING_URL%downloader.svg</icon>
 			<name>File Downloader</name>
