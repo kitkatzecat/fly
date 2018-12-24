@@ -10,15 +10,14 @@ for ($x = 1; $x < count($cmd); $x++) {
 	}
 }
 $process = FlyFileStringProcessor($cmd[0].$given);
-$process1 = FlyFileStringProcessor(FLY_ROOT.$cmd[0].$given);
-if ($process != false) {
-} else if ($process1 != false) {
+$process1 = FlyFileStringProcessor($_FLY['PATH'].$cmd[0].$given);
+if (!$process && $process1) {
 	$process = $process1;
 } else {
 	$process = false;
 }
 
-if ($process != false) {
+if ($process) {
 	if ($process["action"]!=="") {
 		FlyCommandExecute($process["action"]);
 		FlyCommandDisplay('Opening "'.$process['name'].'"...');
@@ -38,7 +37,7 @@ if ($process != false) {
 		FlyCommandError('system.command(\'run:SprocketComputers.Utilities.OpenWith,file='.$process['file'].'\');');
 	}
 } else {
-	$notfound = str_replace($_SERVER['DOCUMENT_ROOT'],'.',$cmd[0]);
+	$notfound = str_replace($_FLY['PATH'],'.',$cmd[0]);
 	FlyCommandError('shell.dialog("Item does not exist",\'The item "'.htmlentities($notfound).'" could not be found.<br><small><pre>Fly error code 1d200</pre></small>\',"Not Found","'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg")');
 	FlyCommandDisplay('The item "'.$notfound.'" could not be found. (Fly error code 1d200)');
 }
