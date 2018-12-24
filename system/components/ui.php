@@ -520,6 +520,8 @@ ui.init = function() {
 					['Maximize',frame.window.maximize,{icon:'/system/resources/icons/arrow-left-down.svg'}],
 					['Close',frame.window.close,{icon:'/system/resources/icons/mark-x.svg'}],
 				]);
+				e.stopPropagation();
+				return false;
 			}
 			
 			trayObj.list.style.lineHeight = '24px';
