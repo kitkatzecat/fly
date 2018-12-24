@@ -228,7 +228,7 @@ dg_modal:
 		Fly.window.onclose = dialog.returnFalse;
 	}
 	try {
-		window.top.shell.sound.system('question');
+		window.top.shell.sound.system('error');
 	} catch(err) {}
 	var dialog = function() {};
 	dialog.return = function() {
