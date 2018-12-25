@@ -50,8 +50,8 @@
 	"md": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/text.svg",
 		"description": "Markdown Document",
-		"action": "SprocketComputers.Memo,file=%1",
-		"app": "SprocketComputers.Memo"
+		"action": "SprocketComputers.Preview,file=%1",
+		"app": "SprocketComputers.Preview"
 	},
 	"mp3": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
