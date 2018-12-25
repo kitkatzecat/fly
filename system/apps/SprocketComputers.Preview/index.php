@@ -86,6 +86,11 @@ function toggleProperties() {
 <?php
 if (in_array($process['extension'],['png','bmp','gif','jpg','svg'])){
 	echo '<div id="main" style="background-image:url(\''.$process["URL"].'\');"></div>';
+} else if ($process['extension'] == 'md') {
+	include 'Parsedown.php';
+	$Parsedown = new Parsedown();
+	echo '<style>pre,code { font-family: monospace; } pre>* { font-family: monospace; }</style>';
+	echo '<div id="main" class="FlyUiText" style="padding:4px;">'.$Parsedown->text(file_get_contents($_GET['file'])).'</div>';
 } else {
 	echo '<div id="main" style="padding:4px;font-size:12px;font-family:monospace;white-space:pre;">'.htmlentities(file_get_contents($_GET['file'])).'</div>';
 }
