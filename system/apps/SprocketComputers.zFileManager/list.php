@@ -64,7 +64,7 @@ if (is_dir($Path)) {
 	// Path given is not to a directory
 	if ($FolderProcess['type'] == 'file') {
 		// Path given is to a file
-		echo '<script>window.top.eval(atob(\''.base64_encode($FolderProcess['action']).'\'));window.parent.Fly.window.message(\'"\'+atob(\''.base64_encode($FolderProcess['fname']).'\')+\'" has been opened\');window.parent.Nav(\''.$FolderProcess['path'].'\');</script>';
+		echo '<script>window.top.eval(atob(\''.base64_encode('system.command(\'run:'.$FolderProcess['file'].'\');').'\'));window.parent.Fly.window.message(\'"\'+atob(\''.base64_encode($FolderProcess['fname']).'\')+\'" has been opened\');window.parent.Nav(\''.$FolderProcess['path'].'\');</script>';
 	} else {
 		// Directory does not exist
 		$Output = '<script>window.parent.Fly.window.title.set(\'File Manager - Not Found\');</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified directory could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
@@ -103,11 +103,12 @@ function Deselect(item=false) {
 		}
 		Selected.className = Selected.className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
 		Selected = false;
+		window.parent.SelectedFile = window.parent.CurrentLocation;
 	} else {
 		item.className = item.className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
 	}
 }
-function Select(item,e) {
+function Select(item,e,obj) {
 	if (Selected) {
 		Deselect(Selected);
 	}
@@ -115,9 +116,18 @@ function Select(item,e) {
 		item.className = item.className.replace('FlyUiMenuItem','FlyUiMenuItemActive');
 	}
 	Selected = item;
+	window.parent.SelectedFile = obj;
 	e.stopPropagation();
 }
 var Selected = false;
+
+function Click(obj) {
+	if (obj['isdir']) {
+		window.parent.Nav(obj['file']);
+	} else {
+		window.top.system.command('run:'+obj['file']);
+	}
+}
 </script>
 <script src="view/<?php echo $View; ?>.js?r=<?php echo rand(); ?>"></script>
 <style>

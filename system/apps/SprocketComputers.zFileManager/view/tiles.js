@@ -47,10 +47,11 @@ function View() {
 			itm.draggable = true;
 			
 			itm.onmousedown = function(e) {
-				Select(this,e);
+				Select(this,e,List[this.id]);
 			}
 			itm.ondblclick = function() {
-				window.parent.Nav(List[this.id]['file']);
+				Click(List[this.id]);
+				//window.parent.Nav(List[this.id]['file']);
 			}
 			
 			document.body.appendChild(itm);
