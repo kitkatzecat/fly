@@ -218,6 +218,52 @@ function FlyUserRegistryGetKeys( $application='' ) {
 	}
 }
 
+function FlyGlobalRegistryGetKeys( $application='' ) {
+	global $_FLY;
+	
+	if (empty($application)) {
+		if ($_FLY['IS_APP']) {
+			$application = $_FLY['APP']['ID'];
+		} else {
+			$application = 'root.public';
+		}
+	}
+	
+	$pub = explode('.',$application)[0];
+	$app = explode('.',$application)[1];
+	
+	$registry = $_FLY['REGISTRY'];
+	
+	if (!is_dir($registry.$pub) || !is_dir($registry.$pub.'/'.$app)) {
+		return false;
+	} else {
+		
+		$path = $registry.$pub.'/'.$app.'/';
+		$return = array();
+
+		$ignore = array( '.', '..' ); 
+
+		$dh = @opendir( $path ); 
+
+		while( false !== ( $file = readdir( $dh ) ) ){ 
+
+		    if( !in_array( $file, $ignore ) ){ 
+
+		        if( !is_dir( "$path/$file" ) ){ 
+					$return[$file] = file_get_contents("$path/$file");
+				}
+
+		    } 
+
+		} 
+		closedir( $dh ); 
+		asort($return);
+		return $return;
+		
+	}
+}
+
+
 function FlyRegistryListKeys( $application='' ) {
 	return FlyUserRegistryListKeys($application);
 }
@@ -239,7 +285,7 @@ function FlyUserRegistryListKeys( $application='' ) {
 	$registry = $_FLY['USER']['PATH'].'/data/registry/';
 	
 	if (!is_dir($registry.$pub) || !is_dir($registry.$pub.'/'.$app)) {
-		return false;
+		return [];
 	} else {
 		
 		$path = $registry.$pub.'/'.$app.'/';
@@ -267,6 +313,50 @@ function FlyUserRegistryListKeys( $application='' ) {
 	}
 }
 	
+function FlyGlobalRegistryListKeys( $application='' ) {
+	global $_FLY;
+	
+	if (empty($application)) {
+		if ($_FLY['IS_APP']) {
+			$application = $_FLY['APP']['ID'];
+		} else {
+			$application = 'root.public';
+		}
+	}
+	
+	$pub = explode('.',$application)[0];
+	$app = explode('.',$application)[1];
+	
+	$registry = $_FLY['REGISTRY'];
+	
+	if (!is_dir($registry.$pub) || !is_dir($registry.$pub.'/'.$app)) {
+		return [];
+	} else {
+		
+		$path = $registry.$pub.'/'.$app.'/';
+		$return = array();
+
+		$ignore = array( '.', '..' ); 
+
+		$dh = @opendir( $path ); 
+
+		while( false !== ( $file = readdir( $dh ) ) ){ 
+
+		    if( !in_array( $file, $ignore ) ){ 
+
+		        if( !is_dir( "$path/$file" ) ){ 
+					array_push($return,$file);
+				}
+
+		    } 
+
+		} 
+		closedir( $dh ); 
+		asort($return);
+		return $return;
+		
+	}
+}
 }
 
 //FlyRegistryGlobalGet
