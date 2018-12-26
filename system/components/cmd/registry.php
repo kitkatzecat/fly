@@ -123,6 +123,49 @@ switch($cmd[0]) {
 		}
 		break;
 
+		case 'getkeys':
+		// 0: "getkeys", 1: application
+		$keys = FlyRegistryGetKeys($cmd[1]);
+		if (empty($cmd[1])) {
+			$app = $_FLY['APP']['ID'];
+		} else {
+			$app = $cmd[1];
+		}
+		if ($keys) {
+			FlyCommandReturn(json_encode($keys));
+			$display = str_freplace('Array',$cmd[1],print_r($keys,true));
+			FlyCommandDisplay($display);
+		} else {
+			FlyCommandDisplay('An error occurred while retrieving the user registry keys for the application "'.$app.'" for user "'.$_FLY['USER']['NAME'].'" ('.$_FLY['USER']['ID'].').');
+			FlyCommandReturn('false');
+		}
+		break;
+
+	case 'ggetkeys':
+		$keys = FlyGlobalRegistryGetKeys($cmd[1]);
+		if (empty($cmd[1])) {
+			$app = $_FLY['APP']['ID'];
+		} else {
+			$app = $cmd[1];
+		}
+		if ($keys) {
+			foreach ($keys as $k => $v) {
+				if ($v == 'true') {
+					$v = true;
+				}
+				if ($v == 'false') {
+					$v = false;
+				}
+			}
+			FlyCommandReturn(json_encode($keys));
+			$display = str_freplace('Array',$cmd[1],print_r($keys,true));
+			FlyCommandDisplay($display);
+		} else {
+			FlyCommandDisplay('An error occurred while retrieving the global registry keys for the application "'.$app.'" for user "'.$_FLY['USER']['NAME'].'" ('.$_FLY['USER']['ID'].').');
+			FlyCommandReturn('false');
+		}
+		break;
+
 	default:
 		FlyCommandDisplay('Invalid parameter! Expecting "get", "set", "remove", "getkeys", "listkeys", "gget", "gset", "gremove", "ggetkeys", or "glistkeys".');
 		FlyCommandReturn('false');
