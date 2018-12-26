@@ -12,7 +12,7 @@ switch($cmd[0]) {
 		}
 		FlyCommandDisplay($value);
 		FlyCommandReturn($value);
-		break;
+	break;
 	
 	case 'gget':
 		$value = FlyGlobalRegistryGet($cmd[1],$cmd[2]);
@@ -21,7 +21,7 @@ switch($cmd[0]) {
 		}
 		FlyCommandDisplay($value);
 		FlyCommandReturn($value);
-		break;
+	break;
 
 	case 'set':
 		// 0: "set", 1: key, 2: value
@@ -33,7 +33,7 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while setting the registry key.');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
 	case 'gset':
 		$return = FlyGlobalRegistrySet($cmd[1],$cmd[2]);
@@ -44,7 +44,7 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while setting the registry key.');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
 	case 'remove':
 		// 0: "remove", 1: key, 2: application
@@ -61,7 +61,7 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while removing the registry key.');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
 
 	case 'gremove':
@@ -78,7 +78,7 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while removing the registry key.');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
 	case 'listkeys':
 		// 0: "listkeys", 1: application
@@ -100,7 +100,7 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while retrieving the user registry keys for the application "'.$app.'" for user "'.$_FLY['USER']['NAME'].'" ('.$_FLY['USER']['ID'].').');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
 	case 'glistkeys':
 		$keys = FlyGlobalRegistryListKeys($cmd[1]);
@@ -121,9 +121,9 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while retrieving the global registry keys for the application "'.$app.'" for user "'.$_FLY['USER']['NAME'].'" ('.$_FLY['USER']['ID'].').');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
-		case 'getkeys':
+	case 'getkeys':
 		// 0: "getkeys", 1: application
 		$keys = FlyRegistryGetKeys($cmd[1]);
 		if (empty($cmd[1])) {
@@ -139,7 +139,7 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while retrieving the user registry keys for the application "'.$app.'" for user "'.$_FLY['USER']['NAME'].'" ('.$_FLY['USER']['ID'].').');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
 	case 'ggetkeys':
 		$keys = FlyGlobalRegistryGetKeys($cmd[1]);
@@ -164,7 +164,7 @@ switch($cmd[0]) {
 			FlyCommandDisplay('An error occurred while retrieving the global registry keys for the application "'.$app.'" for user "'.$_FLY['USER']['NAME'].'" ('.$_FLY['USER']['ID'].').');
 			FlyCommandReturn('false');
 		}
-		break;
+	break;
 
 	default:
 		FlyCommandDisplay('Invalid parameter! Expecting "get", "set", "remove", "getkeys", "listkeys", "gget", "gset", "gremove", "ggetkeys", or "glistkeys".');
