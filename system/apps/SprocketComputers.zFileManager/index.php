@@ -21,6 +21,7 @@ var Addressbar;
 var Panes = {};
 function Load() {
 	ToolbarInit();
+	<?php if (FlyRegistryGet('ShowStatusBar') == 'true') { echo 'StatusBar.show();'; } ?>
 	Nav(atob('<?php echo $p; ?>'));
 }
 function ToolbarInit() {
@@ -74,7 +75,7 @@ function ToolbarInit() {
 		['Image Previews',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
 		['File Extensions',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
 		[''],
-		['Status Bar'],
+		['Status Bar',function(){StatusBar.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>index.svg'}],
 		[''],
 		['Panes',[
 			['Search',function(){Pane.toggle('search');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg'}],
@@ -218,7 +219,7 @@ var Pane = {
 			Navbar.style.right = '160px';
 			Pane.visiblePane = pane;
 			Pane.visible = true;
-			Pane.timeout = setTimeout(function() {document.getElementById('frame-pane').style.display = 'block';},200);
+			Pane.timeout = setTimeout(function() {document.getElementById('pane').style.display = 'block';},200);
 			document.getElementById('frame-pane').onload = function() {};
 		}
 	},
@@ -237,12 +238,58 @@ var Pane = {
 		Navbar.style.right = '0px';
 		clearTimeout(Pane.timeout);
 		document.getElementById('frame-pane').src = '';
-		document.getElementById('frame-pane').style.display = 'none';
+		document.getElementById('pane').style.display = 'none';
 	},
 	visible: false,
 	visiblePane: '',
 	timeout: false
 };
+
+var StatusBar = {
+	visible: false,
+	show: function() {
+		var frame = document.getElementById('main');
+		var pane = document.getElementById('pane');
+		var bar = document.getElementById('statusbar');
+
+		frame.style.bottom = '24px';
+		pane.style.bottom = '24px';
+		bar.style.display = 'block';
+		StatusBar.visible = true;
+		Menubar.buttons[2].menu.options[6].toggleOn();
+
+		FlyCommand('registry:set,ShowStatusBar,true',function(a) {
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
+	},
+	hide: function() {
+		var frame = document.getElementById('main');
+		var pane = document.getElementById('pane');
+		var bar = document.getElementById('statusbar');
+
+		frame.style.bottom = '0px';
+		pane.style.bottom = '0px';
+		bar.style.display = 'block';
+		StatusBar.visible = false;
+		Menubar.buttons[2].menu.options[6].toggleOff();
+
+		FlyCommand('registry:set,ShowStatusBar,false',function(a) {
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
+	},
+	toggle: function() {
+		if (StatusBar.visible) {
+			StatusBar.hide();
+		} else {
+			StatusBar.show();
+		}
+	}
+}
+
 var Dialog = {
 	open: function(url='dialogs.php',title='<?php echo $_FLY['APP']['NAME']; ?>',width=300,height=300) {
 		var pos = Fly.window.position.get();
@@ -280,7 +327,7 @@ function FrameLoad() {
 	top: 68px;
 	left: 0px;
 	right: 0px;
-	bottom: 24px;
+	bottom: 0px;
 	transition: right 0.2s ease-in-out;
 	background: #fff;
 	z-index: 2;
@@ -338,13 +385,18 @@ function FrameLoad() {
 	width: 100%;
 	height: 100%;
 }
-#frame-pane {
-	width: 160px;
-	height: calc(100% - 34px);
+#pane {
+	right: 0px;
+	bottom: 0px;
+	top: 34px;
 	position: absolute;
 	top: 34px;
 	left: calc(100% - 160px);
 	display: none;
+}
+#frame-pane {
+	width: 100%;
+	height: 100%;
 }
 #statusbar {
 	position: absolute;
@@ -355,12 +407,15 @@ function FrameLoad() {
 	box-sizing: border-box;
 	font-size: 12px;
 	padding: 6px;
+	display: none;
 }
 </style>
 </head>
 <body onload="Load()">
 
-<iframe id="frame-pane" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
+<div id="pane">
+	<iframe id="frame-pane" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
+</div>
 <div id="main">
 <iframe id="frame-main" onload="FrameLoad();" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
 </div>
