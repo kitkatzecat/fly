@@ -64,12 +64,16 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 	} else {
 		$COMMAND_APP = '';
 	}
-	file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n"."\r\n".date("m-d-Y h:i:s A e")."\r\n".$COMMAND_APP.$_GET['cmd'],FILE_APPEND);
+	file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n"."\r\n".date("m-d-Y h:i:s A e")."\r\n".$COMMAND_APP.$cmd,FILE_APPEND);
 	
 	$cmd = explode(':',$cmd,2);
 	$do = $cmd[0];
-	$cmd = FlyVarsReplace(FlyStringReplaceConstants($cmd[1]));
-	$cmd = explode(',',$cmd);
+	if (!empty($cmd[1])) {
+		$cmd = FlyVarsReplace(FlyStringReplaceConstants($cmd[1]));
+		$cmd = explode(',',$cmd);
+	} else {
+		$cmd = [];
+	}
 
 	$cmd = array_diff($cmd,[""]);
 	
