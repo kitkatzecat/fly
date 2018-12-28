@@ -3,6 +3,10 @@
 include 'Fly.Registry.php';
 include 'Fly.FileProcessor.php';
 
+if (!$_FLY['IS_USER'] && substr($ARGUMENTS[0],0,1) != 'g') {
+	$ARGUMENTS[0] = 'g'.$ARGUMENTS[0];
+} 
+
 switch($ARGUMENTS[0]) {
 	case 'get':
 		// 0: "get", 1: key, 2: applicaition
