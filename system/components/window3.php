@@ -202,7 +202,13 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			attributes.x = task.autoPos;
 			attributes.y = task.autoPos;
 		}
-	}	
+	}
+	if (attributes.x == 'center') {
+		attributes.x = (window.innerWidth/2)-(attributes.width/2);
+	}
+	if (attributes.y == 'center') {
+		attributes.y = (window.innerHeight/2)-(attributes.height/2);
+	}
 	frame.style.position = 'absolute';
 	frame.style.left = attributes.x + 'px';
 	frame.style.top = attributes.y + 'px';
