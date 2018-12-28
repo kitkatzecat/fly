@@ -97,8 +97,13 @@ function FlyFileStringProcessor($item) {
 	}
 	
 	if (file_exists($filePath) === false) {
-		$appCheck = explode('.',$filePath)[0].'.'.explode('.',$filePath)[1];
-		if (file_exists($_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck)) { // APPLICATION ------------------------------------------------
+		$appCheckEx = explode('.',$filePath);
+		if (!empty($appCheckEx[0]) && !empty($appCheckEx[1])) {
+			$appCheck = $appCheckEx[0].'.'.$appCheckEx[1];
+		} else {
+			$appCheck = false;
+		}
+		if (file_exists($_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck) && $appCheck) { // APPLICATION ------------------------------------------------
 			$type = 'application';
 			$icon = $protocol.$_SERVER['HTTP_HOST'].'/system/resources/icon/application.svg';
 			
