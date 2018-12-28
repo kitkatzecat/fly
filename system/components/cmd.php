@@ -74,6 +74,7 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 	$cmd = array_diff($cmd,[""]);
 	
 	$COMMAND = $cmd;
+	$ARGUMENTS = $cmd;
 
 	$process = FlyFileStringProcessor($do);
 	
