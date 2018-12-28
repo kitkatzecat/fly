@@ -31,6 +31,10 @@ function FlyUserRegistrySet( $key, $value ) {
 		mkdir($user.$pub.'/'.$app);
 	}
 	
+	if ($key == '') {
+		return false;
+	}
+
 	if (file_put_contents($user.$pub.'/'.$app.'/'.$key,$value)) {
 		return true;
 	} else {
@@ -59,6 +63,10 @@ function FlyGlobalRegistrySet( $key, $value ) {
 	}
 	if (!is_dir($user.$pub.'/'.$app)) {
 		mkdir($user.$pub.'/'.$app);
+	}
+	
+	if ($key == '') {
+		return false;
 	}
 	
 	if (file_put_contents($user.$pub.'/'.$app.'/'.$key,$value)) {
