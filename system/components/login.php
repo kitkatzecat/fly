@@ -60,7 +60,7 @@ function drawUsers($array) {
 	$return = '';
 	foreach($array as $id => $userXML) {
 		if ((string)$userXML->user->password == '') {
-			$onclick = 'window.top.login(\''.$id.'\',\'\')';
+			$onclick = 'Fly.window.close();window.top.login(\''.$id.'\',\'\')';
 		} else {
 			$onclick = 'login(\''.$id.'\')';
 		}
