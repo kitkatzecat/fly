@@ -247,7 +247,10 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		msgbox.style.left = '50%';
 		msgbox.style.transform = 'translateX(-50%)';
 		msgbox.style.maxWidth = '100%';
-		msgbox.style.padding = '8px';
+		msgbox.style.paddingTop = '8px';
+		msgbox.style.paddingBottom = '8px';
+		msgbox.style.paddingLeft = '12px';
+		msgbox.style.paddingRight = '12px';
 		msgbox.style.textAlign = 'center';
 		msgbox.style.pointerEvents = 'none';
 		msgbox.style.animation = 'FlyWindowMsgShow 0.25s linear 0s 1';
