@@ -184,6 +184,7 @@ date_default_timezone_set("America/Chicago");
 include 'Fly.Constants.php';
 include 'Fly.Core.php';
 include 'Fly.FileProcessor.php';
+include 'Fly.Command.php';
 
 // LOAD CONFIG
 $config_system = $_FLY_CONFIG; // System config
@@ -195,6 +196,7 @@ include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'window3.php'; // Window manag
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'sound.php'; // Fly shell - sound
 
 // EXECUTE SYSTEM FUNCTIONS
+FlyCommand('clearlog');
 FlyLoadTheme('window body text', $config_user);
 audio_sound_init($config_user);
 
