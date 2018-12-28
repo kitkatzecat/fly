@@ -6,7 +6,12 @@ FlyIncludeRegister('FLY.REGISTRY');
 
 if (!function_exists('FlyRegistrySet')) {
 function FlyRegistrySet( $key, $value ) {
-	return FlyUserRegistrySet($key,$value);
+	global $_FLY;
+	if ($_FLY['IS_USER']) {
+		return FlyUserRegistrySet($key,$value);
+	} else {
+		return FlyGlobalRegistrySet($key,$value);
+	}
 }
 
 function FlyUserRegistrySet( $key, $value ) {
@@ -78,7 +83,12 @@ function FlyGlobalRegistrySet( $key, $value ) {
 }
 
 function FlyRegistryGet( $key, $application='' ) {
-	return FlyUserRegistryGet($key,$application);
+	global $_FLY;
+	if ($_FLY['IS_USER']) {
+		return FlyUserRegistryGet($key,$application);
+	} else {
+		return FlyGlobalRegistryGet($key,$application);
+	}
 }
 
 function FlyUserRegistryGet( $key, $application='' ) {
@@ -128,7 +138,12 @@ function FlyGlobalRegistryGet( $key, $application='' ) {
 }
 
 function FlyRegistryRemove( $key, $application='' ) {
-	return FlyUserRegistryRemove($key,$application);
+	global $_FLY;
+	if ($_FLY['IS_USER']) {
+		return FlyUserRegistryRemove($key,$application);
+	} else {
+		return FlyGlobalRegistryRemove($key,$application);
+	}
 }
 
 function FlyUserRegistryRemove( $key, $application='' ) {
@@ -178,7 +193,12 @@ function FlyGlobalRegistryRemove( $key, $application='' ) {
 }
 
 function FlyRegistryGetKeys( $application='' ) {
-	return FlyUserRegistryGetKeys($application);
+	global $_FLY;
+	if ($_FLY['IS_USER']) {
+		return FlyUserRegistryGetKeys($application);
+	} else {
+		return FlyGlobalRegistryGetKeys($application);
+	}
 }
 
 function FlyUserRegistryGetKeys( $application='' ) {
@@ -273,7 +293,12 @@ function FlyGlobalRegistryGetKeys( $application='' ) {
 
 
 function FlyRegistryListKeys( $application='' ) {
-	return FlyUserRegistryListKeys($application);
+	global $_FLY;
+	if ($_FLY['IS_USER']) {
+		return FlyUserRegistryListKeys($application);
+	} else {
+		return FlyGlobalRegistryListKeys($application);
+	}
 }
 
 function FlyUserRegistryListKeys( $application='' ) {
