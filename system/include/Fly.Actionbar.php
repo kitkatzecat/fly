@@ -18,6 +18,7 @@ Fly.actionbar = function() {
 	actionbar.style.height = '34px';
 	actionbar.style.width = '100%';
 	actionbar.oncontextmenu = function() {return false};
+	actionbar.buttons = [];
 	
 	actionbar.add = function(options) {
 		if (options.type === undefined || options.type == '') {
@@ -671,6 +672,7 @@ Fly.actionbar = function() {
 		}
 		
 		actionbar.appendChild(button);
+		actionbar.buttons.push(button);
 		return button;
 	}
 	
