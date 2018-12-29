@@ -180,7 +180,7 @@ function Nav(path) {
 	Addressbar.value = '';
 	document.getElementById('statusbar').innerHTML = 'Loading...';
 	document.getElementById('frame-main').style.display = 'none';
-	FlyCommand('fileprocess:'+path,function(pth){
+	Fly.command('fileprocess:'+path,function(pth){
 		if (pth['return'].hasOwnProperty('ffile')) {
 			Addressbar.value = pth['return']['ffile'];
 			Fly.window.title.set('File Manager - '+pth['return']['fname']);
@@ -258,7 +258,7 @@ var StatusBar = {
 		StatusBar.visible = true;
 		Menubar.buttons[2].menu.options[6].toggleOn();
 
-		FlyCommand('registry:set,ShowStatusBar,true',function(a) {
+		Fly.command('registry:set,ShowStatusBar,true',function(a) {
 			if (!a.return) {
 				Fly.window.message.show('An error occurred while saving your options to the registry');
 			}
@@ -275,7 +275,7 @@ var StatusBar = {
 		StatusBar.visible = false;
 		Menubar.buttons[2].menu.options[6].toggleOff();
 
-		FlyCommand('registry:set,ShowStatusBar,false',function(a) {
+		Fly.command('registry:set,ShowStatusBar,false',function(a) {
 			if (!a.return) {
 				Fly.window.message.show('An error occurred while saving your options to the registry');
 			}
