@@ -66,6 +66,10 @@ FlyCommand.response = function() {
       }
    }
 }
+
+if (typeof Fly != "undefined") {
+	Fly.command = FlyCommand;
+}
 </script>
 ';
 
