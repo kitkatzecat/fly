@@ -1,19 +1,4 @@
 <?php
-if (in_array($_GET['wordwrap'],['true','on','yes','no','off','false'])) {
-	include 'registry.php';
-	FlyRegistrySet('WordWrap',$_GET['wordwrap']);
-	exit;
-}
-if (isset($_GET['font'])) {
-	include 'registry.php';
-	FlyRegistrySet('FontFamily',$_GET['font']);
-	exit;
-}
-if (isset($_GET['fontcolor'])) {
-	include 'registry.php';
-	FlyRegistrySet('FontColor',$_GET['fontcolor']);
-	exit;
-}
 if (isset($_GET['save'])) {
 	include 'constants.php';
 	$save = file_put_contents($_GET['save'],$_POST['content']);
@@ -255,10 +240,12 @@ function Font() {
 }
 function FontSet(font) {
 	var textarea = document.getElementById('TextArea');
-	var frame = document.getElementById('Frame');
 	textarea.style.fontFamily = font+',monospace';
-	frame.src = 'index.php?font='+font;
-	
+	FlyCommand('registry:set,FontFamily,'+font,function(a) {
+		if (!a.return) {
+			Fly.window.message.show('An error occurred while saving your options to the registry');
+		}
+	});
 }
 function FontColor() {
 	document.getElementById('ColorPicker').choose();
@@ -266,9 +253,12 @@ function FontColor() {
 function FontColor_set() {
 	var picker = document.getElementById('ColorPicker');
 	var textarea = document.getElementById('TextArea');
-	var frame = document.getElementById('Frame');
 	
-	frame.src = 'index.php?fontcolor='+picker.color.hex.replace('#','');
+	FlyCommand('registry:set,FontColor,'+picker.color.hex.replace('#',''),function(a) {
+		if (!a.return) {
+			Fly.window.message.show('An error occurred while saving your options to the registry');
+		}
+	});
 	textarea.style.color = picker.color.hex;
 }
 function Properties() {
@@ -278,16 +268,23 @@ var WordWrapEnabled = false;
 function WordWrap() {
 	var textarea = document.getElementById('TextArea');
 	var wordwrap = ViewMenu.menu.options[0];
-	var frame = document.getElementById('Frame');
 	if (WordWrapEnabled) {
 		textarea.style.whiteSpace = 'nowrap';
 		wordwrap.toggleOff();
-		frame.src = 'index.php?wordwrap=false';
+		FlyCommand('registry:set,WordWrap,false',function(a) {
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
 		WordWrapEnabled = false;
 	} else {
 		textarea.style.whiteSpace = 'normal';
 		wordwrap.toggleOn();
-		frame.src = 'index.php?wordwrap=true';
+		FlyCommand('registry:set,WordWrap,true',function(a) {
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
 		WordWrapEnabled = true;
 	}
 }
