@@ -289,6 +289,9 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			if (frame.window.isExpand) {
 				ui.toolbar.windowRestored();
 			}
+			frame.window.checkIfBehind = function() {};
+			frame.style.zIndex = '99999999';
+			frame.style.pointerEvents = 'none';
 			<?php
 				echo 'frame.style.animation = "FlyWindowCloseAnimation '.$theme->window->animations->close["length"].'s '.$theme->window->animations->close["timing"].' '.$theme->window->animations->close["delay"].'s '.$theme->window->animations->close["repeat"].'";';
 
