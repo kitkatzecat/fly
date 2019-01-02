@@ -1078,7 +1078,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			
 			setTimeout(function(){frame.window.content.contentWindow.focus();},10);
 			try {
-				frame.window.onLoad();
+				frame.window.onLoad(frame);
 			}
 			catch(err) {
 				shell.dialog('Window error','Window load function error:<pre>'+err+'</pre>','Window Error');
