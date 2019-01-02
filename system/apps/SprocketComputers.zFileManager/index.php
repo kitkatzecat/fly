@@ -132,7 +132,7 @@ function ToolbarInit() {
 	Addressbar = document.createElement("input");
 	Addressbar.type = 'text';
 	Addressbar.className = 'addressbar transparent-white FlyUiTextHighlight';
-	Addressbar.onkeydown = function() {
+	Addressbar.onkeydown = function(event) {
 		if (event.keyCode == 13) {
 			Go();
 		}
