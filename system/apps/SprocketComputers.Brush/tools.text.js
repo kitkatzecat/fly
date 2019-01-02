@@ -9,7 +9,7 @@ Tools.Text = function() {
 		} catch(err) {}
 	});
 	
-	Actionbars.Toolsbar.buttons.text.toggleOn();
+	Actionbars.Toolsbar.buttonsList.text.toggleOn();
 	document.body.appendChild(Tools.Text.bar);
 
 	ColorChange = Tools.Text.setColor;

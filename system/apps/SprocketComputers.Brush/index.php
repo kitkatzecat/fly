@@ -109,9 +109,9 @@ function OnLoad() {
 	Actionbars.Menubar.style.top = '0px';
 	Actionbars.Menubar.style.width = 'auto';
 	Actionbars.Menubar.style.left = '0px';
-	Actionbars.Menubar.buttons = {};
+	Actionbars.Menubar.buttonsList = {};
 	
-	Actionbars.Menubar.buttons.file = Actionbars.Menubar.add({text:'File',type:'dropdown',menu:[
+	Actionbars.Menubar.buttonsList.file = Actionbars.Menubar.add({text:'File',type:'dropdown',menu:[
 		['New',[
 			['Blank image',New.blank],
 			['From file...',New.file]
@@ -124,7 +124,7 @@ function OnLoad() {
 		[''],
 		['Close',Close,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'}],
 	]});
-	Actionbars.Menubar.buttons.edit = Actionbars.Menubar.add({text:'Edit',type:'dropdown',menu:[
+	Actionbars.Menubar.buttonsList.edit = Actionbars.Menubar.add({text:'Edit',type:'dropdown',menu:[
 		['Undo',Undo,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>undo.svg'}],
 		['Redo',Redo,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>redo.svg'}],
 		[''],
@@ -132,10 +132,10 @@ function OnLoad() {
 		[''],
 		['Options',function(){Dialog.open('dialogs.php?dialog=options','Brush - Options');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>options.svg'}],
 	]});
-	Actionbars.Menubar.buttons.edit.menu.options[0].disable();
-	Actionbars.Menubar.buttons.edit.menu.options[1].disable();
+	Actionbars.Menubar.buttonsList.edit.menu.options[0].disable();
+	Actionbars.Menubar.buttonsList.edit.menu.options[1].disable();
 	
-	Actionbars.Menubar.buttons.canvas = Actionbars.Menubar.add({	'text':'Canvas','type':'dropdown','menu':[
+	Actionbars.Menubar.buttonsList.canvas = Actionbars.Menubar.add({	'text':'Canvas','type':'dropdown','menu':[
 		['Clear',ClearCanvas,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'}],
 		['Resize...',function(){ResizeCanvas(200,200);},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left-up.svg'}],
 		['Scale...',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrows-in.svg'}],
@@ -160,9 +160,9 @@ function OnLoad() {
 			},{icon:'opaque.svg'}],
 		]],
 		['Filter', [
-			['Invert',Filter.invert],
-			['Grayscale',Filter.grayscale],
-			['Sepia',Filter.sepia],
+			['Invert',Filter.invert,{icon:'<?php echo WORKING_URL; ?>filter.invert.svg'}],
+			['Grayscale',Filter.grayscale,{icon:'<?php echo WORKING_URL; ?>filter.grayscale.svg'}],
+			['Sepia',Filter.sepia,{icon:'<?php echo WORKING_URL; ?>filter.sepia.svg'}],
 		]],
 		['Overlay',[
 			['Set...',Overlay.open],
@@ -184,26 +184,27 @@ function OnLoad() {
 		]],
 	]});
 		
-	Actionbars.Menubar.buttons.edit.overlayOpacity = [
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[0], // 90%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[1], // 80%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[2], // 70%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[3], // 60%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[4], // 50%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[5], // 40%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[6], // 30%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[7], // 20%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[8], // 10%
-		Actionbars.Menubar.buttons.canvas.menu.options[7].menu.options[3].menu.options[9]  // 0%
+	Actionbars.Menubar.buttonsList.canvas.overlayOpacity = [
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[0], // 100%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[1], // 90%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[2], // 80%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[3], // 70%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[4], // 60%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[5], // 50%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[6], // 40%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[7], // 30%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[8], // 20%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[9],  // 10%
+		Actionbars.Menubar.buttonsList.canvas.menu.options[7].menu.options[3].menu.options[10]  // 0%
 	];
-	Actionbars.Menubar.buttons.edit.overlayOpacityReset = function () {
-		Actionbars.Menubar.buttons.canvas.overlayOpacity.forEach(function(option) {
+	Actionbars.Menubar.buttonsList.canvas.overlayOpacityReset = function () {
+		Actionbars.Menubar.buttonsList.canvas.overlayOpacity.forEach(function(option) {
 			option.toggleOff();
 		});
 	}
-	Actionbars.Menubar.buttons.edit.overlayOpacity[6].toggleOn();
+	Actionbars.Menubar.buttonsList.canvas.overlayOpacity[7].toggleOn();
 
-	Actionbars.Menubar.buttons.view = Actionbars.Menubar.add({text:'View',type:'dropdown',menu:[
+	Actionbars.Menubar.buttonsList.view = Actionbars.Menubar.add({text:'View',type:'dropdown',menu:[
 		['Zoom In',ZoomIn,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-plus.svg'}],
 		['Zoom Out',ZoomOut,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-minus.svg'}],
 		['Actual Size',ZoomActual],
@@ -222,31 +223,31 @@ function OnLoad() {
 	Actionbars.Colorbar.style.top = '0px';
 	Actionbars.Colorbar.style.width = 'auto';
 	Actionbars.Colorbar.style.right = '0px';
-	Actionbars.Colorbar.buttons = {};
+	Actionbars.Colorbar.buttonsList = {};
 	
-	Actionbars.Colorbar.buttons.black = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#000000;"></div>',action:function(){SetColor('#000000');}});
-	Actionbars.Colorbar.buttons.white = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ffffff;"></div>',action:function(){SetColor('#ffffff');}});
-	Actionbars.Colorbar.buttons.red = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ff0000;"></div>',action:function(){SetColor('#ff0000');}});
-	Actionbars.Colorbar.buttons.yellow = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ffff00;"></div>',action:function(){SetColor('#ffff00');}});
-	Actionbars.Colorbar.buttons.green = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#00ff00;"></div>',action:function(){SetColor('#00ff00');}});
-	Actionbars.Colorbar.buttons.cyan = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#00ffff;"></div>',action:function(){SetColor('#00ffff');}});
-	Actionbars.Colorbar.buttons.blue = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#0000ff;"></div>',action:function(){SetColor('#0000ff');}});
-	Actionbars.Colorbar.buttons.magenta = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ff00ff;"></div>',action:function(){SetColor('#ff00ff');}});
+	Actionbars.Colorbar.buttonsList.black = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#000000;"></div>',action:function(){SetColor('#000000');}});
+	Actionbars.Colorbar.buttonsList.white = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ffffff;"></div>',action:function(){SetColor('#ffffff');}});
+	Actionbars.Colorbar.buttonsList.red = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ff0000;"></div>',action:function(){SetColor('#ff0000');}});
+	Actionbars.Colorbar.buttonsList.yellow = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ffff00;"></div>',action:function(){SetColor('#ffff00');}});
+	Actionbars.Colorbar.buttonsList.green = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#00ff00;"></div>',action:function(){SetColor('#00ff00');}});
+	Actionbars.Colorbar.buttonsList.cyan = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#00ffff;"></div>',action:function(){SetColor('#00ffff');}});
+	Actionbars.Colorbar.buttonsList.blue = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#0000ff;"></div>',action:function(){SetColor('#0000ff');}});
+	Actionbars.Colorbar.buttonsList.magenta = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#ff00ff;"></div>',action:function(){SetColor('#ff00ff');}});
 	Actionbars.Colorbar.add({type:'divider'});
-	Actionbars.Colorbar.buttons.custom1 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttons.custom1.hex);}});
-	Actionbars.Colorbar.buttons.custom1.hex = '#c0c0c0';
-	Actionbars.Colorbar.buttons.custom2 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttons.custom2.hex);}});
-	Actionbars.Colorbar.buttons.custom2.hex = '#c0c0c0';
-	Actionbars.Colorbar.buttons.custom3 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttons.custom3.hex);}});
-	Actionbars.Colorbar.buttons.custom3.hex = '#c0c0c0';
+	Actionbars.Colorbar.buttonsList.custom1 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom1.hex);}});
+	Actionbars.Colorbar.buttonsList.custom1.hex = '#c0c0c0';
+	Actionbars.Colorbar.buttonsList.custom2 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom2.hex);}});
+	Actionbars.Colorbar.buttonsList.custom2.hex = '#c0c0c0';
+	Actionbars.Colorbar.buttonsList.custom3 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom3.hex);}});
+	Actionbars.Colorbar.buttonsList.custom3.hex = '#c0c0c0';
 	Actionbars.Colorbar.add({type:'divider'});
-	Actionbars.Colorbar.buttons.color = Actionbars.Colorbar.add({text:'Custom',action:function(){document.getElementById('ColorPicker').choose()}});
+	Actionbars.Colorbar.buttonsList.color = Actionbars.Colorbar.add({text:'Custom',action:function(){document.getElementById('ColorPicker').choose()}});
 	
-	Actionbars.Colorbar.buttons.red.toggleOn();
+	Actionbars.Colorbar.buttonsList.red.toggleOn();
 	
 	Actionbars.Colorbar.toggleAllOff = function() {
-		Object.keys(Actionbars.Colorbar.buttons).forEach(function(key,index) {
-		    Actionbars.Colorbar.buttons[key].toggleOff();
+		Object.keys(Actionbars.Colorbar.buttonsList).forEach(function(key,index) {
+		    Actionbars.Colorbar.buttonsList[key].toggleOff();
 		});
 	}
 	
@@ -255,23 +256,23 @@ function OnLoad() {
 	Actionbars.Toolsbar.style.bottom = '0px';
 	Actionbars.Toolsbar.style.width = 'auto';
 	Actionbars.Toolsbar.style.left = '0px';
-	Actionbars.Toolsbar.buttons = {};
+	Actionbars.Toolsbar.buttonsList = {};
 	
-	Actionbars.Toolsbar.buttons.pencil = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',action:Tools.Pencil});
-	Actionbars.Toolsbar.buttons.paint = Actionbars.Toolsbar.add({type:'dropdown',icon:'<?php echo WORKING_URL; ?>paint.svg',menu:[
+	Actionbars.Toolsbar.buttonsList.pencil = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',action:Tools.Pencil});
+	Actionbars.Toolsbar.buttonsList.paint = Actionbars.Toolsbar.add({type:'dropdown',icon:'<?php echo WORKING_URL; ?>paint.svg',menu:[
 		['Paint',Tools.Brush],
 		['Watercolor',Tools.Watercolor]
 	]});
-	Actionbars.Toolsbar.buttons.brush = Actionbars.Toolsbar.buttons.paint.menu.options[0];
-	Actionbars.Toolsbar.buttons.watercolor = Actionbars.Toolsbar.buttons.paint.menu.options[1];
-	Actionbars.Toolsbar.buttons.bucket = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>brush.svg',action:Tools.Bucket});
-	Actionbars.Toolsbar.buttons.text = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>txt.svg',action:Tools.Text});
-	Actionbars.Toolsbar.buttons.eyedropper = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>eyedropper.svg',action:Tools.Eyedropper});
+	Actionbars.Toolsbar.buttonsList.brush = Actionbars.Toolsbar.buttonsList.paint.menu.options[0];
+	Actionbars.Toolsbar.buttonsList.watercolor = Actionbars.Toolsbar.buttonsList.paint.menu.options[1];
+	Actionbars.Toolsbar.buttonsList.bucket = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>brush.svg',action:Tools.Bucket});
+	Actionbars.Toolsbar.buttonsList.text = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>txt.svg',action:Tools.Text});
+	Actionbars.Toolsbar.buttonsList.eyedropper = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>eyedropper.svg',action:Tools.Eyedropper});
 	
 
 	Actionbars.Toolsbar.toggleAllOff = function() {
-		Object.keys(Actionbars.Toolsbar.buttons).forEach(function(key,index) {
-		    Actionbars.Toolsbar.buttons[key].toggleOff();
+		Object.keys(Actionbars.Toolsbar.buttonsList).forEach(function(key,index) {
+		    Actionbars.Toolsbar.buttonsList[key].toggleOff();
 		});
 	}
 	
@@ -298,8 +299,8 @@ function ShortcutInit() {
 		//New (ctrl+n)
 		if (e.keyCode == 78 && e.ctrlKey) {
 			e.preventDefault();
-			Actionbars.Menubar.buttons.file.onclick();
-			setTimeout(Actionbars.Menubar.buttons.file.menu.options[0].onclick,100);
+			Actionbars.Menubar.buttonsList.file.onclick();
+			setTimeout(Actionbars.Menubar.buttonsList.file.menu.options[0].onclick,100);
 		}
 		
 		//Open (ctrl+o)
@@ -553,27 +554,29 @@ var Overlay = {
 	setOpacity: function(opacity) {
 		ovrlay.style.opacity = opacity;
 		Overlay.opacity = opacity;
-		Actionbars.Menubar.buttons.edit.overlayOpacityReset();
-		if (opacity == 0.9) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[0].toggleOn();
+		Actionbars.Menubar.buttonsList.canvas.overlayOpacityReset();
+		if (opacity == 1) {
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[0].toggleOn();
+		} else if (opacity == 0.9) {
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[1].toggleOn();
 		} else if (opacity == 0.8) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[1].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[2].toggleOn();
 		} else if (opacity == 0.7) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[2].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[3].toggleOn();
 		} else if (opacity == 0.6) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[3].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[4].toggleOn();
 		} else if (opacity == 0.5) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[4].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[5].toggleOn();
 		} else if (opacity == 0.4) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[5].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[6].toggleOn();
 		} else if (opacity == 0.3) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[6].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[7].toggleOn();
 		} else if (opacity == 0.2) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[7].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[8].toggleOn();
 		} else if (opacity == 0.1) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[8].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[9].toggleOn();
 		} else if (opacity == 0) {
-			Actionbars.Menubar.buttons.edit.overlayOpacity[9].toggleOn();
+			Actionbars.Menubar.buttonsList.canvas.overlayOpacity[10].toggleOn();
 		}
 	},
 	clear: function() {
@@ -684,35 +687,35 @@ function SetColor(hex) {
 	ColorChange();
 	
 	if (hex == '#000000') {
-		Actionbars.Colorbar.buttons.black.toggleOn();
+		Actionbars.Colorbar.buttonsList.black.toggleOn();
 	} else if (hex == '#ffffff') {
-		Actionbars.Colorbar.buttons.white.toggleOn();
+		Actionbars.Colorbar.buttonsList.white.toggleOn();
 	} else if (hex == '#ff0000') {
-		Actionbars.Colorbar.buttons.red.toggleOn();
+		Actionbars.Colorbar.buttonsList.red.toggleOn();
 	} else if (hex == '#ffff00') {
-		Actionbars.Colorbar.buttons.yellow.toggleOn();
+		Actionbars.Colorbar.buttonsList.yellow.toggleOn();
 	} else if (hex == '#00ff00') {
-		Actionbars.Colorbar.buttons.green.toggleOn();
+		Actionbars.Colorbar.buttonsList.green.toggleOn();
 	} else if (hex == '#00ffff') {
-		Actionbars.Colorbar.buttons.cyan.toggleOn();
+		Actionbars.Colorbar.buttonsList.cyan.toggleOn();
 	} else if (hex == '#0000ff') {
-		Actionbars.Colorbar.buttons.blue.toggleOn();
+		Actionbars.Colorbar.buttonsList.blue.toggleOn();
 	} else if (hex == '#ff00ff') {
-		Actionbars.Colorbar.buttons.magenta.toggleOn();
-	} else if (hex == Actionbars.Colorbar.buttons.custom1.hex) {
-		Actionbars.Colorbar.buttons.custom1.toggleOn();
-	} else if (hex == Actionbars.Colorbar.buttons.custom2.hex) {
-		Actionbars.Colorbar.buttons.custom2.toggleOn();
-	} else if (hex == Actionbars.Colorbar.buttons.custom3.hex) {
-		Actionbars.Colorbar.buttons.custom3.toggleOn();
+		Actionbars.Colorbar.buttonsList.magenta.toggleOn();
+	} else if (hex == Actionbars.Colorbar.buttonsList.custom1.hex) {
+		Actionbars.Colorbar.buttonsList.custom1.toggleOn();
+	} else if (hex == Actionbars.Colorbar.buttonsList.custom2.hex) {
+		Actionbars.Colorbar.buttonsList.custom2.toggleOn();
+	} else if (hex == Actionbars.Colorbar.buttonsList.custom3.hex) {
+		Actionbars.Colorbar.buttonsList.custom3.toggleOn();
 	} else {
-		Actionbars.Colorbar.buttons.custom3.innerHTML = Actionbars.Colorbar.buttons.custom2.innerHTML;
-		Actionbars.Colorbar.buttons.custom3.hex = Actionbars.Colorbar.buttons.custom2.hex;
-		Actionbars.Colorbar.buttons.custom2.innerHTML = Actionbars.Colorbar.buttons.custom1.innerHTML;
-		Actionbars.Colorbar.buttons.custom2.hex = Actionbars.Colorbar.buttons.custom1.hex;
-		Actionbars.Colorbar.buttons.custom1.innerHTML = '<div class="color-button" style="background-color:'+hex+';"></div>';
-		Actionbars.Colorbar.buttons.custom1.hex = hex;
-		Actionbars.Colorbar.buttons.custom1.toggleOn();
+		Actionbars.Colorbar.buttonsList.custom3.innerHTML = Actionbars.Colorbar.buttonsList.custom2.innerHTML;
+		Actionbars.Colorbar.buttonsList.custom3.hex = Actionbars.Colorbar.buttonsList.custom2.hex;
+		Actionbars.Colorbar.buttonsList.custom2.innerHTML = Actionbars.Colorbar.buttonsList.custom1.innerHTML;
+		Actionbars.Colorbar.buttonsList.custom2.hex = Actionbars.Colorbar.buttonsList.custom1.hex;
+		Actionbars.Colorbar.buttonsList.custom1.innerHTML = '<div class="color-button" style="background-color:'+hex+';"></div>';
+		Actionbars.Colorbar.buttonsList.custom1.hex = hex;
+		Actionbars.Colorbar.buttonsList.custom1.toggleOn();
 	}
 }
 function SetTransparentColor(r,g,b) {
@@ -839,8 +842,8 @@ function UpdateState() {
 	Redos = [];
 	Undos.unshift(CurrentState);
 	CurrentState = {canvas:canvas.toDataURL(),width:canvas.width,height:canvas.height};
-	Actionbars.Menubar.buttons.edit.menu.options[0].enable();
-	Actionbars.Menubar.buttons.edit.menu.options[1].disable();
+	Actionbars.Menubar.buttonsList.edit.menu.options[0].enable();
+	Actionbars.Menubar.buttonsList.edit.menu.options[1].disable();
 	while (Undos.length > MaxUndos) {
 		Undos.pop();
 	}
@@ -850,10 +853,10 @@ function Undo() {
 		Redos.unshift(CurrentState);
 		CurrentState = Undos.shift();
 		
-		Actionbars.Menubar.buttons.edit.menu.options[1].enable();
+		Actionbars.Menubar.buttonsList.edit.menu.options[1].enable();
 		
 		if (Undos.length == 0) {
-			Actionbars.Menubar.buttons.edit.menu.options[0].disable();
+			Actionbars.Menubar.buttonsList.edit.menu.options[0].disable();
 		}
 		
 		var img = new Image;
@@ -876,9 +879,9 @@ function Redo() {
 		}
 
 		CurrentState = Redos.shift();
-		Actionbars.Menubar.buttons.edit.menu.options[0].enable();
+		Actionbars.Menubar.buttonsList.edit.menu.options[0].enable();
 		if (Redos.length == 0) {
-			Actionbars.Menubar.buttons.edit.menu.options[1].disable();
+			Actionbars.Menubar.buttonsList.edit.menu.options[1].disable();
 		}
 				
 		var img = new Image;

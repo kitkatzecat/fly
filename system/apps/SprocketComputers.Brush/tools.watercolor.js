@@ -9,8 +9,8 @@ Tools.Watercolor = function() {
 		} catch(err) {}
 	});
 	
-	Actionbars.Toolsbar.buttons.paint.toggleOn();
-	Actionbars.Toolsbar.buttons.watercolor.toggleOn();
+	Actionbars.Toolsbar.buttonsList.paint.toggleOn();
+	Actionbars.Toolsbar.buttonsList.watercolor.toggleOn();
 	document.body.appendChild(Tools.Watercolor.bar);
 	
 	ColorChange = Tools.Watercolor.setColor;

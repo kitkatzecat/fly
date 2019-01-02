@@ -9,7 +9,7 @@ Tools.Eyedropper = function() {
 		} catch(err) {}
 	});
 	
-	Actionbars.Toolsbar.buttons.eyedropper.toggleOn();
+	Actionbars.Toolsbar.buttonsList.eyedropper.toggleOn();
 	document.body.appendChild(Tools.Eyedropper.bar);
 
 	ColorChange = function() {};

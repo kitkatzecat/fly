@@ -9,7 +9,7 @@ Tools.Bucket = function() {
 		} catch(err) {}
 	});
 	
-	Actionbars.Toolsbar.buttons.bucket.toggleOn();
+	Actionbars.Toolsbar.buttonsList.bucket.toggleOn();
 	document.body.appendChild(Tools.Bucket.bar);
 
 	ColorChange = function() {};

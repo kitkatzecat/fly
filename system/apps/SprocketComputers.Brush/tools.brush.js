@@ -9,8 +9,8 @@ Tools.Brush = function() {
 		} catch(err) {}
 	});
 	
-	Actionbars.Toolsbar.buttons.paint.toggleOn();
-	Actionbars.Toolsbar.buttons.brush.toggleOn();
+	Actionbars.Toolsbar.buttonsList.paint.toggleOn();
+	Actionbars.Toolsbar.buttonsList.brush.toggleOn();
 	document.body.appendChild(Tools.Brush.bar);
 	
 	ColorChange = Tools.Brush.setColor;

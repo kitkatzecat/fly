@@ -9,7 +9,7 @@ Tools.Pencil = function() {
 		} catch(err) {}
 	});
 	
-	Actionbars.Toolsbar.buttons.pencil.toggleOn();
+	Actionbars.Toolsbar.buttonsList.pencil.toggleOn();
 	document.body.appendChild(Tools.Pencil.bar);
 
 	ColorChange = Tools.Pencil.setColor;
