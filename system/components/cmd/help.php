@@ -3,7 +3,7 @@ function getCommands() {
 global $_FLY;
 
 $path = $_FLY['RESOURCE']['PATH']['CMD'];
-$return = '';
+$return = [];
 
 $ignore = array( 'cgi-bin', '.', '..' ); 
 
@@ -16,7 +16,7 @@ while( false !== ( $file = readdir( $dh ) ) ){
         if( !is_dir( "$path/$file" ) ){ 
 			$process = FlyFileStringProcessor("$path/$file");
 			if ($process != false) {
-				$return .= str_lreplace('.php','',$file).':, ';
+				array_push($return,str_lreplace('.php','',$file));
 			}
 		}
 
@@ -24,11 +24,17 @@ while( false !== ( $file = readdir( $dh ) ) ){
 
 }
 closedir( $dh ); 
-$return = str_lreplace(', ','',$return);
 return $return;
 }
 $commands = getCommands();
 
-FlyCommandError('shell.dialog(\'Available commands\',\''.$commands.'<small><br><br>Fly Command Interpreter '.$FlyCommandVersion.'</small>\',\'Available Commands\',\''.$_FLY['RESOURCE']['URL']['ICONS'].'info.svg\')');
-FlyCommandDisplay('Available commands: '.$commands);
+$display = '';
+foreach ($commands as $c) {
+	$display .= $c.':, ';
+}
+$display = str_lreplace(', ','',$display);
+
+FlyCommandReturn(json_encode($commands));
+FlyCommandError('shell.dialog(\'Available commands\',\''.$display.'<small><br><br>Fly Command Interpreter '.$FlyCommandVersion.'</small>\',\'Available Commands\',\''.$_FLY['RESOURCE']['URL']['ICONS'].'info.svg\')');
+FlyCommandDisplay('Available commands: '.$display);
 ?>
