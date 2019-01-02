@@ -458,8 +458,14 @@ function Properties() {
 }
 function Close() {
 	if (Changes) {
-		Fly.control.confirm('Close current file','Are you sure you want to close the file "'+FileName+'"? Any unsaved changes will be lost.','Brush','<?php echo $_FLY['RESOURCE']['URL']['ICONS'];?>warning.svg',function(){setTimeout(Fly.window.close,10)});
+		Fly.control.confirm('Discard changes','Are you sure you want to close the file "'+FileName+'"? Any unsaved changes will be lost.','Brush','<?php echo $_FLY['RESOURCE']['URL']['ICONS'];?>warning.svg',function(){
+			setTimeout(function(){
+				Changes = false;
+				Close();
+			},0);
+		});
 	} else {
+		Dialog.closeAll();
 		Fly.window.close();
 	}
 }
@@ -619,8 +625,28 @@ var Dialog = {
 		var size = Fly.window.size.get();
 		var x = parseInt(pos[0])+parseInt((size[0]/2)-(width/2));
 		var y = parseInt(pos[1])+parseInt((size[1]/2)-(height/2));
-		url = '<?php echo $_FLY['WORKING_URL'];?>'+url+'&parent_id='+Fly.window.id;
-		return window.top.task.create('<?php echo $_FLY['APP']['ID']; ?>',{name:title,title:title,width:width,height:height,icon:'<?php echo $_FLY['APP']['ICON_URL']; ?>',x:x,y:y,location:url});
+		url = '<?php echo $_FLY['WORKING_URL'];?>'+url;
+
+		var opened = window.top.task.create('<?php echo $_FLY['APP']['ID']; ?>',{name:title,title:title,width:width,height:height,icon:'<?php echo $_FLY['APP']['ICON_URL']; ?>',x:x,y:y,location:url,load:function(w){
+			var win = w.window.content.contentWindow;
+			win.Fly.window.focus.take(Fly.window.id);
+			win.Parent = window;
+			win.Fly.window.onclose = function() {
+				win.Fly.window.focus.give(Fly.window.id);
+				Fly.window.bringToFront();
+				win.Fly.window.close();
+			}
+		}});
+		Dialog.opened.push(opened);
+		return opened;
+	},
+	opened: [],
+	closeAll: function() {
+		Dialog.opened.forEach(function(a){
+			try {
+				a.window.forceClose();
+			} catch(err) {console.log(err);}
+		});
 	}
 };
 function CanvasContext(pos) {
@@ -895,6 +921,9 @@ function Redo() {
 			CurrentTool();
 		}
 	}
+}
+function UpdateOptions() {
+
 }
 </script>
 <style>
