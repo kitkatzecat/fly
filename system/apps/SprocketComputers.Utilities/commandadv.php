@@ -163,7 +163,9 @@ function init() {
 				picker.onchange = color_text;
 				picker.choose();
 			}],
-		],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>colors.svg'}]
+		],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>colors.svg'}],
+		[''],
+		['Command Builder',builder,{icon:'<?php echo $_FLY['WORKING_URL']; ?>command.svg'}]
 	]});
 	actionbar.add({text:'Mode',type:'dropdown',menu:[
 		['Output',function() {mode();}],
@@ -191,14 +193,37 @@ function color_text() {
 	main.style.color = picker.color.hex;
 }
 function mode() {
+	if (!!child) {
+		child.Fly.window.close();
+	}
 	window.location.href = 'command.php';
+}
+Fly.window.onclose = function() {
+	if (!!child) {
+		child.Fly.window.close();
+	}
+	Fly.window.close();
+}
+var child = false;
+function builder() {
+	if (!child) {
+		var pos = Fly.window.position.get();
+		pos[0] = parseInt(pos[0])+32;
+		pos[1] = parseInt(pos[1])+32;
+		window.top.task.create('SprocketComputers.Utilities.CommandPrompt',{name:'Command Builder',title:'Command Builder',load:function(w) {
+			w.window.content.contentWindow.cmd.parent = window;
+			child = w.window.content.contentWindow;
+		},icon:'<?php echo $_FLY['WORKING_URL']; ?>command.svg',resize:true,expand:false,minwidth:300,minheight:100,width:500,height:240,x:pos[0],y:pos[1],location:'<?php echo $_FLY['WORKING_URL']; ?>commandbld.php'});
+	} else {
+		child.Fly.window.bringToFront();
+	}
 }
 </script>
 </head>
 <body>
 
 <div id="main"><br>Enter a command to view detailed output</div>
-<div id="carat" class="FlyUiTextHighlight FlyUiNoSelect">&gt;</div><input disabled onkeypress="eva(event)" type="text" id="input"><button class="FlyUiNoSelect" onclick="enter()" disabled id="button">Execute</button>
+<div id="carat" onclick="builder()" class="FlyUiTextHover FlyUiNoSelect">&gt;</div><input disabled onkeypress="eva(event)" type="text" id="input"><button class="FlyUiNoSelect" onclick="enter()" disabled id="button">Execute</button>
 
 <div id="ColorPicker" style="display:none;"></div>
 <script>
