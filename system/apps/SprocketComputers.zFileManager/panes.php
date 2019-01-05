@@ -133,19 +133,19 @@ echo '<div id="main">
 <ul style="margin-left:8px;margin-top:6px;" id="folders">
 <li class="FlyUiTextHover FlyUiNoSelect item" ondblclick=""><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</li>
 <hr style="margin-top:10px;margin-bottom:10px;">
-<li onclick="toggle(\'root-desktop\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick=""><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'desktop.svg">Desktop</li>
+<li onclick="toggle(\'root-desktop\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick="window.parent.Nav(atob(\''.base64_encode($_FLY['USER']['PATH'].'Desktop').'\'));"><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'desktop.svg">Desktop</li>
 <ul style="margin-left:12px;display:block;" id=\'root-desktop\'>';
 echo getFolders($_FLY['USER']['PATH'].'/Desktop',4);
 echo '</ul>
-<li onclick="toggle(\'root-documents\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick=""><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/docsfolder.svg">Documents</li>
+<li onclick="toggle(\'root-documents\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick="window.parent.Nav(atob(\''.base64_encode($_FLY['USER']['PATH'].'Documents').'\'));"><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/docsfolder.svg">Documents</li>
 <ul style="margin-left:12px;display:block;" id=\'root-documents\'>';
 echo getFolders($_FLY['USER']['PATH'].'/Documents',4);
 echo '</ul>
-<li onclick="toggle(\'root-media\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick=""><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/mediafolder.svg">Media</li>
+<li onclick="toggle(\'root-media\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick="window.parent.Nav(atob(\''.base64_encode($_FLY['USER']['PATH'].'Media').'\'));"><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/mediafolder.svg">Media</li>
 <ul style="margin-left:12px;display:block;" id=\'root-media\'>';
 echo getFolders($_FLY['USER']['PATH'].'/Media',4);
 echo '</ul><hr style="margin-top:10px;margin-bottom:10px;">
-<li onclick="toggle(\'root-computer\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick=""><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'computer.svg">Computer</li>
+<li onclick="toggle(\'root-computer\')" class="FlyUiTextHover FlyUiNoSelect item" ondblclick="window.parent.Nav(atob(\''.base64_encode($_FLY['PATH']).'\'));"><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'computer.svg">Computer</li>
 <ul style="margin-left:12px;display:none;" id=\'root-computer\'>';
 echo getFolders($_FLY['PATH'],4);
 echo '</ul>
