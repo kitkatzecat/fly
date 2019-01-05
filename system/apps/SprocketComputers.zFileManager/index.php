@@ -215,6 +215,11 @@ var Pane = {
 		document.getElementById('frame-pane').src = Panes[pane].url;
 			Panes[pane].button.toggleOn();
 		document.getElementById('frame-pane').onload = function() {
+			Object.keys(Panes).map(function(key) {
+				Panes[key].button.toggleOff();
+			});
+			Panes[pane].button.toggleOn();
+
 			document.getElementById('main').style.right = '160px';
 			Navbar.style.right = '160px';
 			Pane.visiblePane = pane;
