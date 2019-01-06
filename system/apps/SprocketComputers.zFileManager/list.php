@@ -45,6 +45,7 @@ if (is_dir($Path)) {
 		<script>
 		var Folder = JSON.parse(atob(\''.base64_encode(json_encode($FolderProcess)).'\'));
 		var List = false;
+		var Files = [];
 		</script>
 		';
 	} else {
@@ -57,6 +58,7 @@ if (is_dir($Path)) {
 		<script>
 		var Folder = JSON.parse(atob(\''.base64_encode(json_encode($FolderProcess)).'\'));
 		var List = JSON.parse(atob(\''.base64_encode(json_encode($FolderListArray)).'\'));
+		var Files = JSON.parse(atob(\''.base64_encode($FolderList['return']).'\'));
 		</script>
 		';
 	}
@@ -72,6 +74,7 @@ if (is_dir($Path)) {
 		<script>
 		var Folder = false;
 		var List = false;
+		var Files = false;
 		</script>
 		';
 	}
@@ -98,6 +101,8 @@ function Load() {
 		window.parent.ImagePreviews.toggleOff();
 	}
 	window.parent.ImagePreviews.visible = ImagePreviews;
+
+	CheckInterval = setInterval(Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
 
 	document.body.addEventListener('mousedown',function() {Deselect();});
 }
@@ -155,6 +160,14 @@ function Icon(file) {
 	return icon;
 }
 
+var CheckInterval;
+function Check() {
+	Fly.command('list:'+Folder['file'],function(a){
+		if (JSON.stringify(a.return) != JSON.stringify(Files) && !!a.return) {
+			window.parent.Refresh(window.pageYOffset);
+		}
+	});
+}
 </script>
 <script src="view/<?php echo $View; ?>.js?r=<?php echo rand(); ?>"></script>
 <style>
