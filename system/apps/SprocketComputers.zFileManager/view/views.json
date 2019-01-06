@@ -1,0 +1,6 @@
+{
+	"Tiles": {
+		"icon": "%FLY.WORKING_URL%icon.ls.svg",
+		"src": "tiles.js"
+	}
+}
