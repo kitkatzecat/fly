@@ -22,7 +22,7 @@ function View() {
 		item.style.textAlign = 'left';
 		item.style.fontSize = '16px';
 
-		// Icon object
+		/* Icon object
 		var icon = document.createElement('img');
 		icon.className = 'FlyUiNoSelect';
 
@@ -32,16 +32,23 @@ function View() {
 		icon.style.verticalAlign = 'middle';
 		icon.style.marginRight = '6px';
 		icon.style.marginBottom = '4px';
+		*/
 
 		for (var i = 0; i < List.length; i++) {
 			var itm = item.cloneNode(true);
-			var icn = icon.cloneNode(true);
+			//var icn = icon.cloneNode(true);
+			var icn;
 			
 			itm.id = i;
 			
-			icn.src = List[i]['icon'];
-			icn.draggable = false;
+			icn = Icon(List[i]);
+			icn.style.width = '48px';
+			icn.style.height = '48px';
+			icn.style.verticalAlign = 'middle';
+			icn.style.marginRight = '6px';
+			icn.style.marginBottom = '4px';
 			itm.appendChild(icn);
+
 			itm.innerHTML += List[i]['fname'];
 			itm.title = List[i]['name'];
 			itm.draggable = true;
