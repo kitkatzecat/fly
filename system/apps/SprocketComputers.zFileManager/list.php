@@ -92,6 +92,13 @@ function Load() {
 		console.log(e);
 		document.body.innerHTML += '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg">An error occurred while loading this view.</div><p class="description">Try refreshing. If the problem persists, change the view.</p><p>'+e+'</p>';
 	}
+	if (ImagePreviews) {
+		window.parent.ImagePreviews.toggleOn();
+	} else {
+		window.parent.ImagePreviews.toggleOff();
+	}
+	window.parent.ImagePreviews.visible = ImagePreviews;
+
 	document.body.addEventListener('mousedown',function() {Deselect();});
 }
 
@@ -128,6 +135,26 @@ function Click(obj) {
 		window.top.system.command('run:'+obj['file']);
 	}
 }
+
+ImagePreviews = eval('<?php echo FlyRegistryGet('ShowImagePreviews'); ?>');
+
+function Icon(file) {
+	var icon = document.createElement('div');
+	icon.className = 'FlyUiNoSelect';
+	icon.style.display = 'inline-block';
+
+	if (file['mime'].indexOf('image/') != -1 && !!ImagePreviews) {
+		icon.style.boxShadow = '0px 1px 4px #888';
+		icon.style.backgroundSize = 'contain';
+		icon.style.backgroundRepeat = 'no-repeat';
+		icon.style.backgroundPosition = 'center center';
+		icon.style.backgroundImage = 'url(\''+file['URL']+'\')';
+	} else {
+		icon.innerHTML = '<img style="width:100%;height:100%;" src="'+file['icon']+'">';
+	}
+	return icon;
+}
+
 </script>
 <script src="view/<?php echo $View; ?>.js?r=<?php echo rand(); ?>"></script>
 <style>

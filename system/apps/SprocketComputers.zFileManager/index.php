@@ -72,7 +72,7 @@ function ToolbarInit() {
 			[''],
 			['Custom...',function(){}]
 		],{icon:'icon.xl.svg'}],
-		['Image Previews',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
+		['Image Previews',function(){ImagePreviews.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
 		['File Extensions',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
 		[''],
 		['Status Bar',function(){StatusBar.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>index.svg'}],
@@ -197,7 +197,15 @@ Nav.current = false;
 function Up() {
 	Nav(Nav.current['fpath']);
 }
-function Refresh() {
+function Refresh(pos=false) {
+	if (!!pos) {
+		var frame = document.getElementById('frame-main');
+		var a = function() {
+			frame.contentWindow.scrollTo(0,pos);
+			frame.removeEventListener('load',a);
+		}
+		frame.addEventListener('load',a);
+	}
 	Nav(Nav.current['file']);
 }
 
@@ -291,6 +299,45 @@ var StatusBar = {
 			StatusBar.hide();
 		} else {
 			StatusBar.show();
+		}
+	}
+}
+
+var ImagePreviews = {
+	visible: false,
+	show: function() {
+		ImagePreviews.visible = true;
+		ImagePreviews.toggleOn();
+
+		Fly.command('registry:set,ShowImagePreviews,true',function(a) {
+			Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
+	},
+	hide: function() {
+		ImagePreviews.visible = false;
+		ImagePreviews.toggleOff();
+
+		Fly.command('registry:set,ShowImagePreviews,false',function(a) {
+			Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
+	},
+	toggleOn: function() {
+		Menubar.buttons[2].menu.options[3].toggleOn();
+	},
+	toggleOff: function() {
+		Menubar.buttons[2].menu.options[3].toggleOff();
+	},
+	toggle: function() {
+		if (ImagePreviews.visible) {
+			ImagePreviews.hide();
+		} else {
+			ImagePreviews.show();
 		}
 	}
 }
