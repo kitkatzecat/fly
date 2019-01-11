@@ -801,11 +801,17 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		document.body.onmousemove = frame.window.composition.saveMouseMove;
 	}
 	
-	// Window onload function
+	// Window onload function - run once, on initial load
 	if (typeof attributes.load == 'function') {
 		frame.window.onLoad = attributes.load;
 	} else {
 		frame.window.onLoad = function() {};
+	}
+	// Window onreload function - run every time a page is loaded
+	if (typeof attributes.reload == 'function') {
+		frame.window.onReload = attributes.reload;
+	} else {
+		frame.window.onReload = function() {};
 	}
 	
 	// Set window events
@@ -1087,6 +1093,13 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 				shell.dialog('Window error','Window load function error:<pre>'+err+'</pre>','Window Error');
 			}
 			frame.window.setSize(attributes.width,attributes.height);
+		}
+
+		try {
+			frame.window.onReload(frame);
+		}
+		catch(err) {
+			shell.dialog('Window error','Window reload function error:<pre>'+err+'</pre>','Window Error');
 		}
 
 		if (typeof frame.window.content.contentWindow.Fly.window != 'undefined') {
