@@ -136,11 +136,14 @@ function gadget() {
 }
 function wmp() {
 	var frame;
-	frame = window.top.task.create('public',{name:'Windows Media Player',title:'Windows Media Player',x:'auto',y:'auto',width:670,height:482,location:'<?php echo $_FLY['URL']; ?>system/users/1/Media/wmplayer.png',expand:false,minimize:true,resize:false,close:true,background:false,load:function() {
+	frame = window.top.task.create('public',{name:'Windows Media Player',title:'Windows Media Player',x:'auto',y:'auto',width:670,height:482,location:'<?php echo $_FLY['URL']; ?>users/1/Media/wmplayer.png',expand:false,minimize:true,resize:false,close:true,background:false,load:function() {
 		frame.window.content.contentWindow.document.body.style.margin = '0px';
 		frame.window.hideBorder();
 		frame.window.composition.secondaryMovement.set(0,0,670,32);
 	}});
+}
+function openw() {
+	Fly.window.open({modal:true});
 }
 </script>
 <style>
@@ -184,7 +187,9 @@ function wmp() {
 <br><br>
 <div class="FlyUiProgressWaitContainer"><div class="FlyUiWaitBar"></div></div>
 <br><br>
-<button onclick="Fly.control.wait('Here is a very very','Looood',returrr);setInterval(function(){gelp.position(Math.floor((Math.random() * 100) + 1));},1000);">Make a progress bar</button>
+<button onclick="Fly.control.progress('Here is a very very','Looood',returrr);setInterval(function(){gelp.position(Math.floor((Math.random() * 100) + 1));},1000);">Make a progress bar</button>
+<a onclick="openw()">open</a>
+<br><br>
 <button onclick="gellppp()">gelp</button>
 <button onclick="nellppp()">nelp</button>
 <br>
