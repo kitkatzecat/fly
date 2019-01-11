@@ -172,7 +172,7 @@ function Check() {
 <script src="view/<?php echo $View; ?>.js?r=<?php echo rand(); ?>"></script>
 <style>
 html,body {
-	height: 100%
+	min-height: 100%
 }
 .title {
 	font-size: 1.2em;
