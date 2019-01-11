@@ -31,7 +31,7 @@ system.command = function(cmd='') {
 		ui.loading.show();
 	} catch(err) {}
 	
-    request.open("GET", '/system/components/cmd.php?time='+dateTime+'&cmd='+encodeURIComponent(cmd), false);
+    request.open("GET", '/system/components/cmd.php?time='+dateTime+'&cmd='+encodeURIComponent(cmd), true);
     request.onreadystatechange = system.command.response;
     request.setRequestHeader("Cache-Control", "no-cache");
     request.send(null);
@@ -186,19 +186,22 @@ shell.checkSystemConnectivity = function() {
 	var file = '<?php echo DOCUMENT_ROOT.'system/components/syscheck.php'; ?>';
 	var randomNum = Math.round(Math.random() * 10000);
 	 
-	xhr.open('HEAD', file + "?rand=" + randomNum, false);
+	xhr.open('HEAD', file + "?rand=" + randomNum, true);
+
+	xhr.onreadystatechange = function() {
+		if (!(xhr.status >= 200 && xhr.status < 304)) {
+			shell.fatal('The system cannot connect to the back end. (0d100)');
+			clearInterval(shell.checkSystemConnectivityInterval);
+		}
+	}
 	 
 	try {
-		xhr.send();
-		 
-		if (xhr.status >= 200 && xhr.status < 304) {
-			return true;
-		} else {
-			return false;
-		}
+		xhr.send(null);
 	} catch (e) {
+		console.log(e);
 		return false;
 	}
+	return true;
 }
 
 shell.checkSystemConnectivityInterval = setInterval(function() {if (!shell.checkSystemConnectivity()) { shell.fatal('The system cannot connect to the back end. (0d100)');clearInterval(shell.checkSystemConnectivityInterval);}}, 10000);

@@ -37,7 +37,7 @@ Fly.actionbar = function() {
 					var exists = true;
 				} else {
 				    var http = new XMLHttpRequest();
-				    http.open('HEAD', options.icon+'?rand='+Math.floor( Math.random() * 10000 ), false);
+				    http.open('HEAD', options.icon+'?rand='+Math.floor( Math.random() * 10000 ), true);
 				    http.send();
 				    if (http.status!=404) {
 						var exists = true;

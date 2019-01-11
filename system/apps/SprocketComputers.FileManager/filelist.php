@@ -366,7 +366,7 @@ var request = new XMLHttpRequest();
 
 function checkFiles(cmd) {
 	var rand = Math.floor( Math.random() * 1000 );
-    request.open("GET", window.location.href+"&list=true&rand="+rand, false);
+    request.open("GET", window.location.href+"&list=true&rand="+rand, true);
     request.onreadystatechange = checkResponse;
     request.setRequestHeader("Cache-Control", "no-cache");
     request.send(null);
