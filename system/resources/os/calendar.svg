@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0,0,48,48"
+   id="svg2"
+   onload="Start(evt)"
+   version="1.1"
+   inkscape:version="0.91 r13725"
+   sodipodi:docname="calendar.svg"
+   width="100%"
+   height="100%">
+  <script
+     type="text/ecmascript"
+     id="script2259">
+
+    // Keep track of old time... so we don't update the display if not necessary.  
+    // This is a mechanical clock so it's OK to move the second hand once every second.
+    var old_time = 0;
+
+    // The gear groups
+    //var second_hand;
+    //var minute_hand;
+    //var hour_hand;
+
+    function Start(evt) {
+      date_year = evt.target.ownerDocument.getElementById('dateYear');
+      date_day = evt.target.ownerDocument.getElementById('dateDay');
+      date_month = evt.target.ownerDocument.getElementById('dateMonth');
+
+      Run();
+    }
+
+    function Run() {
+
+      // Get computer clock time
+      var date = new Date();
+	  var year = date.getFullYear();
+	  var day = date.getDate();
+	  var monthname = date.getMonth();
+      var month = new Array();
+      month[0] = &quot;January&quot;;
+      month[1] = &quot;February&quot;;
+      month[2] = &quot;March&quot;;
+      month[3] = &quot;April&quot;;
+      month[4] = &quot;May&quot;;
+      month[5] = &quot;June&quot;;
+      month[6] = &quot;July&quot;;
+      month[7] = &quot;August&quot;;
+      month[8] = &quot;September&quot;;
+      month[9] = &quot;October&quot;;
+      month[10] = &quot;November&quot;;
+      month[11] = &quot;December&quot;;
+      monthname = month[monthname]; 
+      if( old_time != day ) {
+
+        date_day.firstChild.nodeValue = day;
+        date_year.firstChild.nodeValue = year;
+	    date_month.firstChild.nodeValue = monthname;
+
+      }
+
+      old_time = day;
+
+      // Repeat every 10th of a second.
+      setTimeout('Run()', 100)
+    }
+
+    window.Run = Run
+  </script>
+  <defs
+     id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient7445">
+      <stop
+         style="stop-color:#9045b4;stop-opacity:1"
+         offset="0"
+         id="stop7447" />
+      <stop
+         id="stop7953"
+         offset="0.47503456"
+         style="stop-color:#8447a1;stop-opacity:1" />
+      <stop
+         style="stop-color:#a55bc9;stop-opacity:1;"
+         offset="0.47503456"
+         id="stop7955" />
+      <stop
+         style="stop-color:#e09fff;stop-opacity:1"
+         offset="1"
+         id="stop7449" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5736">
+      <stop
+         style="stop-color:#c3c3c3;stop-opacity:1"
+         offset="0"
+         id="stop5738" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop5740" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5736"
+       id="linearGradient5742"
+       x1="37.976562"
+       y1="41.769531"
+       x2="9.9570312"
+       y2="8.078125"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5736-8"
+       id="linearGradient5796-6"
+       x1="36.402351"
+       y1="1012.6989"
+       x2="29.488289"
+       y2="1019.0466"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient5736-8">
+      <stop
+         style="stop-color:#c3c3c3;stop-opacity:1"
+         offset="0"
+         id="stop5738-9" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop5740-8" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5736-5"
+       id="linearGradient5742-5"
+       x1="37.976562"
+       y1="41.769531"
+       x2="9.9570312"
+       y2="8.078125"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       id="linearGradient5736-5">
+      <stop
+         style="stop-color:#c3c3c3;stop-opacity:1"
+         offset="0"
+         id="stop5738-8" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop5740-4" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient5736-8"
+       id="linearGradient7435"
+       x1="25.760357"
+       y1="1004.9913"
+       x2="25.760357"
+       y2="1037.177"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.1708803,0,0,1.1708803,-4.3000828,-174.32731)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient7445"
+       id="linearGradient7451"
+       x1="25.573286"
+       y1="13.586461"
+       x2="25.573286"
+       y2="5.9112482"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.1708803,0,0,1.1708803,-4.3000828,1001.6606)" />
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter7820"
+       x="-0.045530457"
+       width="1.0910609"
+       y="-0.050752799"
+       height="1.1015056">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.70218269"
+         id="feGaussianBlur7822" />
+    </filter>
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.313708"
+     inkscape:cx="27.366115"
+     inkscape:cy="27.207723"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1280"
+     inkscape:window-height="793"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true" />
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-1004.3622)">
+    <rect
+       style="opacity:1;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.09828549;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter7820)"
+       id="rect7008-80"
+       width="37.013432"
+       height="33.204838"
+       x="5.4932847"
+       y="1011.7598"
+       rx="2.0000927"
+       ry="1.9319179"
+       transform="matrix(1.1708803,0,0,1.1708803,-4.1011265,-175.72682)" />
+    <rect
+       style="opacity:1;fill:url(#linearGradient7435);fill-opacity:1;stroke:none;stroke-width:0.09828549;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect7008"
+       width="43.338295"
+       height="38.878891"
+       x="2.3308523"
+       y="1008.9228"
+       rx="2.3418691"
+       ry="2.2620447" />
+    <path
+       style="opacity:1;fill:url(#linearGradient7451);fill-opacity:1;stroke:none;stroke-width:0.1;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="m 4.6736169,1008.9237 c -1.2973354,0 -2.3417606,1.0444 -2.3417606,2.3418 l 0,6.3484 43.3362917,0 0,-6.3484 c 0,-1.2974 -1.044426,-2.3418 -2.341761,-2.3418 l -38.6527701,0 z"
+       id="rect7008-8"
+       inkscape:connector-curvature="0" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:6.26724482px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;opacity:0.85700001;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="24.095358"
+       y="1015.2353"
+       id="text7981"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="dateMonth"
+         x="24.095358"
+         y="1015.2353"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#ffffff;fill-opacity:1">July</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:26.30732536px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="22.704632"
+       y="1039.156"
+       id="text7981-5"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="dateDay"
+         x="24.654633"
+         y="1039.156"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-family:Arial;-inkscape-font-specification:'Arial Bold';text-align:center;letter-spacing:-0.1px;text-anchor:middle;fill:#000000;fill-opacity:1">29</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:5.4656415px;line-height:125%;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       x="24.028236"
+       y="1045.8516"
+       id="text7981-6"
+       sodipodi:linespacing="125%"><tspan
+         sodipodi:role="line"
+         id="dateYear"
+         x="24.028236"
+         y="1045.8516"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-family:Arial;-inkscape-font-specification:Arial;text-align:center;text-anchor:middle;fill:#000000;fill-opacity:1">2015</tspan></text>
+  </g>
+</svg>
