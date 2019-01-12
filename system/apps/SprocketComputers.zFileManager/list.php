@@ -147,6 +147,7 @@ function Icon(file) {
 	var icon = document.createElement('div');
 	icon.className = 'FlyUiNoSelect';
 	icon.style.display = 'inline-block';
+	icon.style.position = 'relative';
 
 	if (file['mime'].indexOf('image/') != -1 && !!ImagePreviews) {
 		icon.style.boxShadow = '0px 1px 4px #888';
@@ -154,6 +155,8 @@ function Icon(file) {
 		icon.style.backgroundRepeat = 'no-repeat';
 		icon.style.backgroundPosition = 'center center';
 		icon.style.backgroundImage = 'url(\''+file['URL']+'\')';
+	} else if (file['extension'] == 'als') {
+		icon.innerHTML = '<img style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['WORKING_URL']; ?>alias.svg">';
 	} else {
 		icon.innerHTML = '<img style="width:100%;height:100%;" src="'+file['icon']+'">';
 	}
