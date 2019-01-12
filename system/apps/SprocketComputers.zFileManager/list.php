@@ -104,7 +104,7 @@ function Load() {
 
 	CheckInterval = setInterval(Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
 
-	document.body.addEventListener('mousedown',function() {Deselect();});
+	document.addEventListener('mousedown',function() {Deselect();});
 }
 
 function Deselect(item=false) {
