@@ -279,6 +279,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	frame.window.forceClose = function() {
 		if (frame.window.isMinimized) {
 			frame.window.composition.minimizeObj.remove();
+			frame.window.content.contentWindow.document.write('');
 			frame.parentNode.removeChild(frame);
 		} else {
 			if (frame.window.isActive) {
@@ -295,7 +296,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			<?php
 				echo 'frame.style.animation = "FlyWindowCloseAnimation '.$theme->window->animations->close["length"].'s '.$theme->window->animations->close["timing"].' '.$theme->window->animations->close["delay"].'s '.$theme->window->animations->close["repeat"].'";';
 
-				echo 'setTimeout(function() {frame.parentNode.removeChild(frame);}, '.((((float)$theme->window->animations->close["length"]*(int)$theme->window->animations->close["repeat"])+(float)$theme->window->animations->close["delay"])*1000).');';
+				echo 'setTimeout(function() {frame.window.content.contentWindow.document.write(\'\');frame.parentNode.removeChild(frame);}, '.((((float)$theme->window->animations->close["length"]*(int)$theme->window->animations->close["repeat"])+(float)$theme->window->animations->close["delay"])*1000).');';
 			?>
 		}
 	}
