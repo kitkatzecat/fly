@@ -40,16 +40,21 @@ if ($_GET['cmd']==="" || $_GET['cmd']=="undefined") {
 	if ($_GET['req']=='true') {
 		$_FLY = FlyCoreVars($_GET['cp']);
 	}
+	if ($_GET['silent'] == 'true') {
+		$silent = true;
+	} else {
+		$silent = false;
+	}
 	if ($_GET['json']=='true') {
-		$command = FlyCommand($cmd);
+		$command = FlyCommand($cmd,false,false,$silent);
 		echo $command['json'];
 	} else {
-		FlyCommand($cmd,true,true);
+		FlyCommand($cmd,true,true,$silent);
 	}
 }
 }
 
-function FlyCommand($cmd,$execute=false,$error=false) {
+function FlyCommand($cmd,$execute=false,$error=false,$silent=false) {
 	global $COMMAND_ECHO;
 	global $COMMAND_DISPLAY;
 	global $COMMAND_ERROR;
@@ -64,7 +69,9 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 	} else {
 		$COMMAND_APP = '';
 	}
-	file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n"."\r\n".date("m-d-Y h:i:s A e")."\r\n".$COMMAND_APP.$cmd,FILE_APPEND);
+	if (!$silent) {
+		file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n"."\r\n".date("m-d-Y h:i:s A e")."\r\n".$COMMAND_APP.$cmd,FILE_APPEND);
+	}
 	
 	$cmd = explode(':',$cmd,2);
 	$do = $cmd[0];
@@ -92,7 +99,9 @@ function FlyCommand($cmd,$execute=false,$error=false) {
 		FlyCommandDisplay('"'.$do.'" is not a recognized command. (Fly error code 1d400)');
 	}
 	ext:
-	file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n".$COMMAND_ECHO."\r\n".$COMMAND_DISPLAY,FILE_APPEND);
+	if (!$silent) {
+		file_put_contents($_FLY['RESOURCE']['PATH']['SYSTEM'].'cmd.log',"\r\n".$COMMAND_ECHO."\r\n".$COMMAND_DISPLAY,FILE_APPEND);
+	}
 	if ($execute == true) {
 		echo $COMMAND_ECHO;	
 	}

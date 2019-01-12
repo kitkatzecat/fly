@@ -10,7 +10,7 @@ include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'cmd.php';
 
 echo '
 <script>
-var FlyCommand = function(cmd=\'\',callback=function(){}) {
+var FlyCommand = function(cmd=\'\',callback=function(){},options={}) {
 	var now     = new Date(); 
 	var year    = now.getFullYear();
 	var month   = now.getMonth()+1; 
@@ -38,7 +38,13 @@ var FlyCommand = function(cmd=\'\',callback=function(){}) {
 	
 	FlyCommand.callback = callback;
 	
-    FlyCommand.request.open("GET", \''.$_FLY['RESOURCE']['URL']['COMPONENTS'].'cmd.php?time=\'+dateTime+\'&json=true&req=true&cp='.$_FLY['CURRENT_PATH'].'&cmd=\'+encodeURIComponent(cmd), true);
+	if (typeof options.silent != \'undefined\' && options.silent) {
+		var opt = \'&silent=true\';
+	} else {
+		var opt = \'\';
+	}
+
+    FlyCommand.request.open("GET", \''.$_FLY['RESOURCE']['URL']['COMPONENTS'].'cmd.php?time=\'+dateTime+\'&json=true&req=true\'+opt+\'&cp='.$_FLY['CURRENT_PATH'].'&cmd=\'+encodeURIComponent(cmd), true);
     FlyCommand.request.onreadystatechange = FlyCommand.response;
     FlyCommand.request.setRequestHeader("Cache-Control", "no-cache");
     FlyCommand.request.send(null);
