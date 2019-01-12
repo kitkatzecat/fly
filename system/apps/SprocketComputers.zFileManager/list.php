@@ -66,7 +66,15 @@ if (is_dir($Path)) {
 	// Path given is not to a directory
 	if ($FolderProcess['type'] == 'file') {
 		// Path given is to a file
-		echo '<script>window.top.eval(atob(\''.base64_encode('system.command(\'run:'.$FolderProcess['file'].'\');').'\'));window.parent.Fly.window.message(\'"\'+atob(\''.base64_encode($FolderProcess['fname']).'\')+\'" has been opened\');window.parent.Nav(\''.$FolderProcess['path'].'\');</script>';
+		if ($FolderProcess['extension'] == 'als') {
+			$als = simpleXML_load_file($FolderProcess['file']);
+			$ALSProcess = FlyFileStringProcessor(FlyVarsReplace($als->link));
+			if (!!$ALSProcess && $ALSProcess['type'] == 'folder') {
+				echo '<script>window.parent.Nav(\''.$ALSProcess['file'].'\');</script>';
+			} else {
+				echo '<script>window.top.eval(atob(\''.base64_encode('system.command(\'run:'.$FolderProcess['file'].'\');').'\'));window.parent.Fly.window.message(\'"\'+atob(\''.base64_encode($FolderProcess['fname']).'\')+\'" has been opened\');window.parent.Nav(\''.$FolderProcess['path'].'\');</script>';
+			}
+		}
 	} else {
 		// Directory does not exist
 		$Output = '<script>window.parent.Fly.window.title.set(\'File Manager - Not Found\');</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified directory could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
@@ -135,6 +143,8 @@ var Selected = false;
 
 function Click(obj) {
 	if (obj['isdir']) {
+		window.parent.Nav(obj['file']);
+	} else if (obj['extension'] == 'als') {
 		window.parent.Nav(obj['file']);
 	} else {
 		window.top.system.command('run:'+obj['file']);
