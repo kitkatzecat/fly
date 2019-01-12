@@ -75,6 +75,8 @@ FlyCommand.response = function() {
 
 if (typeof Fly != "undefined") {
 	Fly.command = FlyCommand;
+} else {
+	var Fly = {};
 }
 </script>
 ';

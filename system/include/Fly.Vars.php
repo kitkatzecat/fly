@@ -63,6 +63,13 @@ FlyVars.response = function() {
       }
    }
 }
+
+if (typeof Fly != \'undefined\') {
+	Fly.vars = FlyVars;
+} else {
+	var Fly = {};
+	Fly.vars = FlyVars;
+}
 </script>
 ';
 

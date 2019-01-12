@@ -8,6 +8,10 @@ if (!FlyIncludeCheck('FLY.ACTIONMENU')) {
 FlyIncludeRegister('FLY.CONTROLS');
 echo '
 <script>
+if (typeof Fly == \'undefined\') {
+	var Fly = {};
+}
+
 Fly.control = {};
 
 Fly.control.progressBar = function(element,options) {
@@ -130,6 +134,11 @@ Fly.control.wait = function(msg="Loading...",title="Loading",callback=function()
 	var frame = window.top.task.create(\'public\', {title:Fly.window.name.get()+\' - \'+title, name:Fly.window.name.get(), x:Fly.window.position.get()[0], y:Fly.window.position.get()[1], width:300, height:64, location:\'/system/components/dialog.php?type=wait&content=\'+encodeURIComponent(window.btoa(msg))+\'&windowid=\'+encodeURIComponent(window.btoa(Fly.window.id)), icon:Fly.window.icon.get(),load:init});
 	return frame;
 }
+
+Fly.control.openFile = function(options={},callback=function(){}) {
+
+}
+
 </script>
 ';
 ?>

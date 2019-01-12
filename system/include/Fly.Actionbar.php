@@ -10,7 +10,7 @@ if (!FlyIncludeCheck('FLY.ACTIONMENU')) {
 ?>
 <script>
 if (typeof Fly == "undefined") {
-	function Fly() {};
+	var Fly = {};
 }
 
 Fly.actionbar = function() {

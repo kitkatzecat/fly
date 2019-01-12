@@ -7,7 +7,7 @@ FlyIncludeRegister('FLY.ACTIONMENU');
 ?>
 <script>
 if (typeof Fly == "undefined") {
-	function Fly() {};
+	var Fly = {};
 }
 
 Fly.actionmenu = function(pos,moptions,onclose=function(){},show=true) {

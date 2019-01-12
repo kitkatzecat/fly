@@ -6,6 +6,10 @@ FlyIncludeRegister('FLY.EXTENSIONS');
 
 echo '
 <script>
+if (typeof Fly == \'undefined\') {
+	var Fly = {};
+}
+
 Fly.extension = function() {};
 Fly.extension.replace = function(id,app,type) {
 	ext = app.replace(/\./g,"_")+\'_\'+type;
