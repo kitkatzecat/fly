@@ -426,6 +426,14 @@ function FlyFileTypeLookup($string) {
 	
 }
 
+function FlyFileTypeAppLookup($type) {
+	if (strpos($type,'/') != false) {
+
+	} else {
+		
+	}
+}
+
 function FlyGetFileContextMenu($file,$process=false) {
 	if (!$process) {
 		$process = FlyFileStringProcessor($file);
