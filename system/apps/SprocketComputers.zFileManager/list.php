@@ -13,10 +13,10 @@ include 'Fly.Command.php';
 include 'Fly.FileProcessor.php';
 include 'Fly.Registry.php';
 
-if (file_exists('views/'.$_GET['v'].'.js')) {
+if (file_exists('views/'.$_GET['v'])) {
 	$View = $_GET['v'];
 } else {
-	$View = FlyUserRegistryGet('View','SprocketComputers.FileManager');
+	$View = FlyRegistryGet('View');
 }
 
 $Output = '';
@@ -172,7 +172,7 @@ function Check() {
 	},{silent:true});
 }
 </script>
-<script src="view/<?php echo $View; ?>.js?r=<?php echo rand(); ?>"></script>
+<script src="view/<?php echo $View; ?>?r=<?php echo rand(); ?>"></script>
 <style>
 html,body {
 	min-height: 100%
