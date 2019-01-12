@@ -12,6 +12,26 @@ if (isset($_GET['p'])) {
 	$p = '%FLY.PATH%';
 }
 $p = base64_encode($p);
+
+$views = json_decode(file_get_contents($_FLY['WORKING_PATH'].'view/views.json'),true);
+$cv = FlyRegistryGet('View');
+$vm = '';
+$vl = '{';
+$vc = 0;
+foreach ($views as $k => $v) {
+	if ($v['src'] == $cv) {
+		$vm .= '[\''.$k.'\',function(){View.set(\''.$v['src'].'\');},{icon:\''.FlyVarsReplace($v['icon']).'\',toggled:true}],';
+	} else {
+		$vm .= '[\''.$k.'\',function(){View.set(\''.$v['src'].'\');},{icon:\''.FlyVarsReplace($v['icon']).'\'}],';
+	}
+	$vl .= '\''.$v['src'].'\':'.$vc.',';
+	$vc++;
+}
+$vl .= '}';
+$vl = str_lreplace(',','',$vl);
+
+$vm = str_lreplace(',','',$vm);
+
 ?>
 <script>
 var Menubar;
@@ -61,16 +81,7 @@ function ToolbarInit() {
 		['Home',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
 		[''],
 		['Icon Size',[
-			['Huge',function(){},{icon:'icon.hg.svg'}],
-			['Extra Large',function(){},{icon:'icon.xl.svg'}],
-			['Large',function(){},{icon:'icon.lg.svg'}],
-			['Medium',function(){},{icon:'icon.md.svg'}],
-			['Small',function(){},{icon:'icon.sm.svg'}],
-			['Tiny',function(){},{icon:'icon.tn.svg'}],
-			['Tiles',function(){},{icon:'icon.ls.svg'}],
-			['List',function(){},{icon:'icon.ls.svg'}],
-			[''],
-			['Custom...',function(){}]
+			<?php echo $vm; ?>
 		],{icon:'icon.xl.svg'}],
 		['Image Previews',function(){ImagePreviews.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
 		['File Extensions',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
@@ -258,6 +269,28 @@ var Pane = {
 	visible: false,
 	visiblePane: '',
 	timeout: false
+};
+
+var View = {
+	set: function(view) {
+		Fly.command('registry:set,View,'+view,View.callback);
+		View.setting = view;
+	},
+	callback: function(a) {
+		if (!a.return) {
+			Fly.window.message.show('An error occurred while saving your options to the registry');
+			View.setting = false;
+		} else {
+			Menubar.buttons[2].menu.options[2].menu.options[View.list[View.current]].toggleOff();
+			Menubar.buttons[2].menu.options[2].menu.options[View.list[View.setting]].toggleOn();
+			View.current = View.setting;
+			View.setting = false;
+		}
+		Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+	},
+	list: <?php echo $vl; ?>,
+	current: '<?php echo $cv; ?>',
+	setting: false
 };
 
 var StatusBar = {
