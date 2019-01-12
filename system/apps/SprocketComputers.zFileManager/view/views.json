@@ -1,4 +1,28 @@
 {
+	"Huge Icons": {
+		"icon": "%FLY.WORKING_URL%icon.hg.svg",
+		"src": "huge.js"
+	},
+	"Extra Large Icons": {
+		"icon": "%FLY.WORKING_URL%icon.xl.svg",
+		"src": "exlarge.js"
+	},
+	"Large Icons": {
+		"icon": "%FLY.WORKING_URL%icon.lg.svg",
+		"src": "large.js"
+	},
+	"Medium Icons": {
+		"icon": "%FLY.WORKING_URL%icon.md.svg",
+		"src": "medium.js"
+	},
+	"Small Icons": {
+		"icon": "%FLY.WORKING_URL%icon.sm.svg",
+		"src": "small.js"
+	},
+	"Tiny Icons": {
+		"icon": "%FLY.WORKING_URL%icon.tn.svg",
+		"src": "tiny.js"
+	},
 	"Tiles": {
 		"icon": "%FLY.WORKING_URL%icon.ls.svg",
 		"src": "tiles.js"
