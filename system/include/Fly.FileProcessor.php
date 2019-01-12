@@ -255,7 +255,7 @@ function FlyFileStringProcessor($item) {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'computer.svg';
 			}
 			$description = 'Folder';
-			$action = 'system.command(\'run:SprocketComputers.FileManager,path='.$filePath.'\')';
+			$action = 'system.command(\'run:SprocketComputers.zFileManager,p='.$filePath.'\')';
 			$path = trimslashes(str_lreplace(basename($filePath),'',$filePath));
 			$ffile = trimslashes(str_freplace($_SERVER['DOCUMENT_ROOT'],'.',$filePath));
 			$fpath = trimslashes(str_freplace($_SERVER['DOCUMENT_ROOT'],'.',str_lreplace(basename('/'.$filePath),'',$filePath)));
