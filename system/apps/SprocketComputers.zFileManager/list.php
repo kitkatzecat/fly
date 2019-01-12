@@ -166,7 +166,7 @@ function Check() {
 		if (JSON.stringify(a.return) != JSON.stringify(Files) && !!a.return) {
 			window.parent.Refresh(window.pageYOffset);
 		}
-	});
+	},{silent:true});
 }
 </script>
 <script src="view/<?php echo $View; ?>.js?r=<?php echo rand(); ?>"></script>
