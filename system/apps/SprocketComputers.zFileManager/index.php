@@ -183,10 +183,12 @@ function Nav(path) {
 	Fly.command('fileprocess:'+path,function(pth){
 		if (pth['return'].hasOwnProperty('ffile')) {
 			Addressbar.value = pth['return']['ffile'];
-			Fly.window.title.set('File Manager - '+pth['return']['fname']);
+			Fly.window.icon.set(pth['return']['icon']);
+			Fly.window.title.set(pth['return']['fname']);
 		} else {
 			Addressbar.value = path;
-			Fly.window.title.set('File Manager - Not Found');
+			Fly.window.icon.set('<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg');
+			Fly.window.title.set('Not Found');
 		}
 		Nav.current = pth['return'];
 	})
