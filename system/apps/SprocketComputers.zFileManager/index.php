@@ -80,7 +80,7 @@ function ToolbarInit() {
 	Menubar.add({text:'View',type:'dropdown',menu:[
 		['Home',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
 		[''],
-		['Icon Size',[
+		['Icon View',[
 			<?php echo $vm; ?>
 		],{icon:'icon.xl.svg'}],
 		['Image Previews',function(){ImagePreviews.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
