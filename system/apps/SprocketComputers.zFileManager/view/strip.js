@@ -69,12 +69,12 @@ function View() {
 		title.style.whiteSpace = 'nowrap';
 		title.style.textOverflow = 'ellipsis';
 		title.style.overflow = 'hidden';
-		title.innerHTML = 'Select an image to see a preview';
+		title.innerHTML = '<span style="color:#888;">Select an image to see a preview</span>';
 		document.body.appendChild(title);
 
 		View.ondeselect = function() {
 			preview.style.backgroundImage = 'none';
-			title.innerHTML = 'Select an image to see a preview';
+			title.innerHTML = '<span style="color:#888;">Select an image to see a preview</span>';
 		}
 
 		for (var i = 0; i < List.length; i++) {
