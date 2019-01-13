@@ -26,5 +26,9 @@
 	"Tiles": {
 		"icon": "%FLY.WORKING_URL%icon.ls.svg",
 		"src": "tiles.js"
+	},
+	"Filmstrip": {
+		"icon": "%FLY.WORKING_URL%icon.fs.svg",
+		"src": "strip.js"
 	}
 }
