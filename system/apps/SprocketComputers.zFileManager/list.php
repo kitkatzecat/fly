@@ -124,6 +124,9 @@ function Deselect(item=false) {
 		Selected.className = Selected.className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
 		Selected = false;
 		window.parent.SelectedFile = window.parent.CurrentLocation;
+		try {
+			View.ondeselect();
+		} catch(e) {console.log(e);}
 	} else {
 		item.className = item.className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
 	}
