@@ -99,8 +99,8 @@ function onload() {
 		]]
 	]});
 	Toolbar.add({type:'divider'});
-	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg',action:Save});
-	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',action:Open});
+	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg',title:'Save',action:Save});
+	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',title:'Open',action:Open});
 	
 	document.body.appendChild(Toolbar);
 	
