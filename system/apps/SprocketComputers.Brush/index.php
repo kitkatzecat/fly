@@ -258,16 +258,16 @@ function OnLoad() {
 	Actionbars.Toolsbar.style.left = '0px';
 	Actionbars.Toolsbar.buttonsList = {};
 	
-	Actionbars.Toolsbar.buttonsList.pencil = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',action:Tools.Pencil});
-	Actionbars.Toolsbar.buttonsList.paint = Actionbars.Toolsbar.add({type:'dropdown',icon:'<?php echo WORKING_URL; ?>paint.svg',menu:[
+	Actionbars.Toolsbar.buttonsList.pencil = Actionbars.Toolsbar.add({type:'button',title:'Pencil',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',action:Tools.Pencil});
+	Actionbars.Toolsbar.buttonsList.paint = Actionbars.Toolsbar.add({type:'dropdown',title:'Brush',icon:'<?php echo WORKING_URL; ?>paint.svg',menu:[
 		['Paint',Tools.Brush],
 		['Watercolor',Tools.Watercolor]
 	]});
 	Actionbars.Toolsbar.buttonsList.brush = Actionbars.Toolsbar.buttonsList.paint.menu.options[0];
 	Actionbars.Toolsbar.buttonsList.watercolor = Actionbars.Toolsbar.buttonsList.paint.menu.options[1];
-	Actionbars.Toolsbar.buttonsList.bucket = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>brush.svg',action:Tools.Bucket});
-	Actionbars.Toolsbar.buttonsList.text = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>txt.svg',action:Tools.Text});
-	Actionbars.Toolsbar.buttonsList.eyedropper = Actionbars.Toolsbar.add({type:'button',icon:'<?php echo WORKING_URL; ?>eyedropper.svg',action:Tools.Eyedropper});
+	Actionbars.Toolsbar.buttonsList.bucket = Actionbars.Toolsbar.add({type:'button',title:'Bucket',icon:'<?php echo WORKING_URL; ?>brush.svg',action:Tools.Bucket});
+	Actionbars.Toolsbar.buttonsList.text = Actionbars.Toolsbar.add({type:'button',title:'Text',icon:'<?php echo WORKING_URL; ?>txt.svg',action:Tools.Text});
+	Actionbars.Toolsbar.buttonsList.eyedropper = Actionbars.Toolsbar.add({type:'button',title:'Eyedropper',icon:'<?php echo WORKING_URL; ?>eyedropper.svg',action:Tools.Eyedropper});
 	
 
 	Actionbars.Toolsbar.toggleAllOff = function() {
