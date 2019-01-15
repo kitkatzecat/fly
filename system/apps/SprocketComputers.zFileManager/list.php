@@ -13,7 +13,7 @@ include 'Fly.Command.php';
 include 'Fly.FileProcessor.php';
 include 'Fly.Registry.php';
 
-if (file_exists('views/'.$_GET['v'])) {
+if (!empty($_GET['v']) && file_exists('view/'.$_GET['v'])) {
 	$View = $_GET['v'];
 } else {
 	$View = FlyRegistryGet('View');
@@ -104,11 +104,17 @@ function Load() {
 		document.body.innerHTML += '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg">An error occurred while loading this view.</div><p class="description">Try refreshing. If the problem persists, change the view.</p><p>'+e+'</p>';
 	}
 	if (ImagePreviews) {
-		window.parent.ImagePreviews.toggleOn();
+		try {
+			window.parent.ImagePreviews.toggleOn();
+		} catch(e) {console.log(e);}
 	} else {
-		window.parent.ImagePreviews.toggleOff();
+		try {
+			window.parent.ImagePreviews.toggleOff();
+		} catch(e) {console.log(e);}
 	}
-	window.parent.ImagePreviews.visible = ImagePreviews;
+	try {
+		window.parent.ImagePreviews.visible = ImagePreviews;
+	} catch(e) {console.log(e);}
 
 	CheckInterval = setInterval(Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
 
