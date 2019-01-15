@@ -344,7 +344,7 @@ function FlyFileStringProcessor($item) {
 			$fpath = preg_replace('#/+#','/',str_ireplace($_SERVER['DOCUMENT_ROOT'],'.',str_replace('/'.basename($filePath),'',$filePath)));
 			$mime = mime_content_type($path.'/'.basename($filePath));
 			
-			if (FlyUserRegistryGet('HideFileExtensions','SprocketComputers.FileManager') == 'true' || (FlyUserRegistryGet('ShowExtensionALS','SprocketComputers.FileManager') == 'false' && $extension == 'als')) {
+			if (FlyUserRegistryGet('HideFileExtensions','SprocketComputers.zFileManager') == 'true' || (FlyUserRegistryGet('ShowExtensionALS','SprocketComputers.zFileManager') == 'false' && $extension == 'als')) {
 				$fname = str_lreplace('.'.end(explode('.',basename($filePath))),'',basename($filePath));
 				if ($fname == '') {
 					$fname = basename($filePath);
