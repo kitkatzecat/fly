@@ -291,6 +291,8 @@
 				border-width: 1px;
 				border-style: solid;
 				background: linear-gradient(0deg, rgba(180, 180, 255, .5), rgba(220, 220, 255, .5));
+				backdrop-filter: blur(2px);
+				-webkit-backdrop-filter: blur(2px);
 			]]></hover>
 			<active><![CDATA[
 				border-radius: 3px;
@@ -298,6 +300,8 @@
 				border-width: 1px;
 				border-style: solid;
 				background: linear-gradient(0deg, rgba(150, 150, 225, .5), rgba(190, 190, 255, .5));
+				backdrop-filter: blur(2px);
+				-webkit-backdrop-filter: blur(2px);
 			]]></active>
 			<disabled><![CDATA[
 				color: #A0A0A0;
