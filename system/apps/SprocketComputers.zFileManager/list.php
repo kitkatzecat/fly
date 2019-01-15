@@ -186,9 +186,13 @@ var CheckInterval;
 function Check() {
 	Fly.command('list:'+Folder['file'],function(a){
 		if (JSON.stringify(a.return) != JSON.stringify(Files) && !!a.return) {
-			window.parent.Refresh(window.pageYOffset);
+			Refresh(window.pageYOffset);
 		}
 	},{silent:true});
+}
+
+function Refresh(a) {
+	window.parent.Refresh(a);
 }
 </script>
 <script src="view/<?php echo $View; ?>?r=<?php echo rand(); ?>"></script>
