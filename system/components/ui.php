@@ -34,17 +34,33 @@ ui.init = function() {
 		ui.loading.style.left = '32px';
 		ui.loading.style.textAlign = 'center';
 		ui.loading.style.padding = '10px';
+		ui.loading.style.zIndex = '999999999';
 		ui.loading.className = 'FlyUiControlNonScaled FlyUiTextHighlightControl';
 		ui.loading.style.animation = 'FlyTrayIconAnimation 0.2s linear';
 		ui.loading.innerHTML = 'Loading...';
 		ui.loading.style.display = 'none';
+
+		ui.loadingCursor = document.createElement("div");
+		ui.loadingCursor.style.position = 'fixed';
+		ui.loadingCursor.style.bottom = '0';
+		ui.loadingCursor.style.left = '0';
+		ui.loadingCursor.style.right = '0';
+		ui.loadingCursor.style.top = '0';
+		ui.loadingCursor.style.opacity = '0';
+		ui.loadingCursor.style.cursor = 'wait';
+		ui.loadingCursor.style.zIndex = '999999999';
+		ui.loadingCursor.style.display = 'none';
+
 		document.body.appendChild(ui.loading);
+		document.body.appendChild(ui.loadingCursor);
 		
 		ui.loading.show = function() {
 			ui.loading.style.display = 'block';
+			ui.loadingCursor.style.display = 'block';
 		}
 		ui.loading.hide = function() {
 			ui.loading.style.display = 'none';
+			ui.loadingCursor.style.display = 'none';
 		}
 		ui.loading.onclick = ui.loading.hide;
 		
