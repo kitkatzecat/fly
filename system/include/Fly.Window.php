@@ -4,7 +4,7 @@ if (!isset($_FLY)) {
 }
 FlyIncludeRegister('FLY.WINDOW');
 
-echo '
+?>
 <script>
 if (typeof Fly == "undefined") {
 	var Fly = {};
@@ -12,8 +12,8 @@ if (typeof Fly == "undefined") {
 
 if (typeof Fly.window == "undefined") {
 	Fly.window = {};
-	Fly.window.id = \''.$_GET['Fly_Id'].'\';
-	if (Fly.window.id == \'\') {
+	Fly.window.id = '<?php echo $_GET['Fly_Id']?>';
+	if (Fly.window.id == '') {
 		try {
 			Fly.window.id = window.parent.Fly.window.id;
 		} catch(err) {}
@@ -94,12 +94,12 @@ if (typeof Fly.window == "undefined") {
 		if (window.top.document.getElementById(Fly.window.id).window.isExpand) {
 			return [0,0];
 		} else {
-			return [window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,\'\'),window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,\'\')];
+			return [window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,''),window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,'')];
 		}
 	}
 	Fly.window.position.set = function(x=32,y=32) {
 		window.top.document.getElementById(Fly.window.id).window.setPosition(x,y);
-		return [window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,\'\'),window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,\'\')];
+		return [window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,''),window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,'')];
 	}
 
 	Fly.window.size = function() {
@@ -110,7 +110,7 @@ if (typeof Fly.window == "undefined") {
 	}
 	Fly.window.size.set = function(width=320,height=240) {
 		window.top.document.getElementById(Fly.window.id).window.setSize(width,height);
-		return [window.top.document.getElementById(Fly.window.id).window.content.style.width.replace(/\\D/g,\'\'),window.top.document.getElementById(Fly.window.id).window.content.style.height.replace(/\\D/g,\'\')];
+		return [window.top.document.getElementById(Fly.window.id).window.content.style.width.replace(/\\D/g,''),window.top.document.getElementById(Fly.window.id).window.content.style.height.replace(/\\D/g,'')];
 	}
 	Fly.window.resize = function() {
 		return Fly.window.resize.enable();
@@ -199,40 +199,40 @@ if (typeof Fly.window == "undefined") {
 	Fly.window.child = function(a) {
 		return Fly.window.child.open(a);
 	}
-	Fly.window.child.open = function(options={modal:false,attributes:{title:\'Untitled\', name:\'Untitled\', icon:\'\', x:\'auto\', y:\'auto\', width:320, height:240, location:\'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==\', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false}}) {
-		if (typeof options.attributes != \'undefined\') {
+	Fly.window.child.open = function(options={modal:false,attributes:{title:'Untitled', name:'Untitled', icon:'', x:'auto', y:'auto', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false}}) {
+		if (typeof options.attributes != 'undefined') {
 			attributes = options.attributes;
 		} else {
-			attributes = {title:\'Untitled\', name:\'Untitled\', icon:\'\', x:\'center\', y:\'center\', width:320, height:240, location:\'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==\', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false};
+			attributes = {title:'Untitled', name:'Untitled', icon:'', x:'center', y:'center', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false};
 		}
 
 		attributes.reload = function(frame) {
-			Fly.window.child.children[frame.id][\'window\'] = frame.window.content.contentWindow;
+			Fly.window.child.children[frame.id]['window'] = frame.window.content.contentWindow;
 			frame.window.hideTitlebar();
 		}
 
-		if ((typeof attributes.x != \'undefined\' && attributes.x == \'auto\') || (typeof attributes.y != \'undefined\' && attributes.y == \'auto\')) {
+		if ((typeof attributes.x != 'undefined' && attributes.x == 'auto') || (typeof attributes.y != 'undefined' && attributes.y == 'auto')) {
 			pos = Fly.window.position.get();
 			attributes.x = parseInt(pos[0])+32;
 			attributes.y = parseInt(pos[1])+32;
 		}
-		if ((typeof attributes.x != \'undefined\' && attributes.x == \'center\') || (typeof attributes.y != \'undefined\' && attributes.y == \'center\')) {
+		if ((typeof attributes.x != 'undefined' && attributes.x == 'center') || (typeof attributes.y != 'undefined' && attributes.y == 'center')) {
 			pos = Fly.window.position.get();
 			size = Fly.window.size.get();
 			attributes.x = parseInt(pos[0])+((parseInt(size[0])/2)-(attributes.width/2));
 			attributes.y = parseInt(pos[1])+((parseInt(size[1])/2)-(attributes.height/2));
 		}
 
-		if (typeof options.modal != \'undefined\' && options.modal) {
+		if (typeof options.modal != 'undefined' && options.modal) {
 			attributes.load = function(frame) {
 				Fly.window.child.children[frame.id] = {};
-				Fly.window.child.children[frame.id][\'frame\'] = frame;
+				Fly.window.child.children[frame.id]['frame'] = frame;
 				Fly.window.focus.set(frame.id);
 			}
 		} else {
 			attributes.load = function(frame) {
 				Fly.window.child.children[frame.id] = {};
-				Fly.window.child.children[frame.id][\'frame\'] = frame;
+				Fly.window.child.children[frame.id]['frame'] = frame;
 			}
 		}
 		window.top.task.create(window.top.document.getElementById(Fly.window.id).window.id,attributes);
@@ -245,5 +245,3 @@ if (typeof Fly.window == "undefined") {
 
 }
 </script>
-';
-?>
