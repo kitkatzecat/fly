@@ -451,19 +451,19 @@ function FrameLoad() {
 	color: #808080 !important;
 }
 .transparent-white {
-	border: .1px solid rgba(255,255,255,0.3) !important;
+	border: 1px solid rgba(255,255,255,0.3) !important;
 }
 .transparent-white:hover {
 	background-color: rgba(255,255,255,0.2);
 }
 .white {
-	border: .1px solid rgb(255,255,255) !important;
+	border: 1px solid rgb(255,255,255) !important;
 }
 .white:hover {
 	background-color: rgba(255,255,255,0.2);
 }
 .black {
-	border: .1px solid rgb(0,0,0) !important;
+	border: 1px solid rgb(0,0,0) !important;
 }
 .black:hover {
 	background-color: rgba(255,255,255,0.2);

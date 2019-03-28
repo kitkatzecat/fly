@@ -67,8 +67,7 @@ Fly.actionmenu = function(pos,moptions,onclose=function(){},show=true) {
 			menuobject.options[index].style.marginLeft = '5px';
 			menuobject.options[index].style.marginTop = '4px';
 			menuobject.options[index].style.marginBottom = '4px';
-			menuobject.options[index].style.borderTop = '.1px solid #c0c0c0';
-			menuobject.options[index].style.borderBottom = '.1px solid #808080';
+			menuobject.options[index].style.borderTop = '1px solid rgba(0,0,0,0.5)';
 			menuobject.options[index].type = 'divider';
 		} else if (typeof key[1] == 'function') {
 			menuobject.options[index].className = 'FlyUiMenuItem FlyUiText FlyUiNoSelect';

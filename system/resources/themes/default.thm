@@ -50,10 +50,10 @@
 			border-radius: 5px;
 			opacity: 1;
 			box-shadow: 0px 4px 30px #000000;
-			border-top: solid .1px rgba(255,255,255,0.2);
-			border-left: solid .1px rgba(255,255,255,0.2);
-			border-right: solid .1px rgba(170,170,170,0.2);
-			border-bottom: solid .1px rgba(170,170,170,0.2);
+			border-top: solid 1px rgba(255,255,255,0.2);
+			border-left: solid 1px rgba(255,255,255,0.2);
+			border-right: solid 1px rgba(170,170,170,0.2);
+			border-bottom: solid 1px rgba(170,170,170,0.2);
 			-webkit-backdrop-filter: blur(3px);
 			backdrop-filter: blur(3px);
 		]]></active>
@@ -66,10 +66,10 @@
 			border-radius: 5px;
 			opacity: 1;
 			box-shadow: 0px 0px 30px #000000;
-			border-top: solid .1px rgba(255,255,255,0.2);
-			border-left: solid .1px rgba(255,255,255,0.2);
-			border-right: solid .1px rgba(170,170,170,0.2);
-			border-bottom: solid .1px rgba(170,170,170,0.2);
+			border-top: solid 1px rgba(255,255,255,0.2);
+			border-left: solid 1px rgba(255,255,255,0.2);
+			border-right: solid 1px rgba(170,170,170,0.2);
+			border-bottom: solid 1px rgba(170,170,170,0.2);
 			-webkit-backdrop-filter: blur(3px);
 			backdrop-filter: blur(3px);
 		]]></control>
@@ -82,10 +82,10 @@
 			padding: 5px;
 			border-radius: 5px;
 			box-shadow: 0px 4px 15px #000000;
-			border-top: solid .1px rgba(255,255,255,0.2);
-			border-left: solid .1px rgba(255,255,255,0.2);
-			border-right: solid .1px rgba(170,170,170,0.2);
-			border-bottom: solid .1px rgba(170,170,170,0.2);
+			border-top: solid 1px rgba(255,255,255,0.2);
+			border-left: solid 1px rgba(255,255,255,0.2);
+			border-right: solid 1px rgba(170,170,170,0.2);
+			border-bottom: solid 1px rgba(170,170,170,0.2);
 			-webkit-backdrop-filter: blur(3px);
 			backdrop-filter: blur(3px);
 		]]></inactive>
@@ -209,10 +209,10 @@
 			transition: opacity .15s linear;
 			padding: 3px;
 			border-radius: 2px;
-			border-top: solid .1px rgba(255,255,255,0.2);
-			border-left: solid .1px rgba(255,255,255,0.2);
-			border-right: solid .1px rgba(170,170,170,0.2);
-			border-bottom: solid .1px rgba(170,170,170,0.2);
+			border-top: solid 1px rgba(255,255,255,0.2);
+			border-left: solid 1px rgba(255,255,255,0.2);
+			border-right: solid 1px rgba(170,170,170,0.2);
+			border-bottom: solid 1px rgba(170,170,170,0.2);
 			background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(188,188,188,1) 100%);
 			box-shadow: 3px 3px 4px #303030;
 		]]></normal>
@@ -222,14 +222,14 @@
 			<normal><![CDATA[
 				background-image: linear-gradient(to bottom, rgb(255,255,255) 0%,rgb(241,241,241) 50%,rgb(225,225,225) 51%,rgb(246,246,246) 100%);
 				background-color: rgb(241,241,241);
-				border: .1px solid #c0c0c0;
+				border: 1px solid #c0c0c0;
 				border-radius: 4px;
 				color: #000000;
 			]]></normal>
 			<disabled><![CDATA[
 				background-image: linear-gradient(to bottom, rgb(225,225,225) 0%,rgb(211,211,211) 50%,rgb(195,195,195) 51%,rgb(216,216,216) 100%);
 				background-color: rgb(241,241,241);
-				border: .1px solid #c0c0c0;
+				border: 1px solid #c0c0c0;
 				border-radius: 4px;
 				color: #808080;
 			]]></disabled>
@@ -239,7 +239,7 @@
 				transition: box-shadow .15s linear;
 				background-color: #C0C0C0;
 				background-image: linear-gradient(to bottom, rgb(225,225,225) 0%,rgb(211,211,211) 52%,rgb(195,195,195) 53%,rgb(216,216,216) 100%);
-				border: .1px solid #808080;
+				border: 1px solid #808080;
 				box-shadow: inset 0px 0px 2px #808080; 
 			]]></active>
 		</button>
@@ -247,17 +247,17 @@
 			<normal><![CDATA[
 				color: #FFFFFF;
 				text-shadow: 0px 0px 9px 1px %shade_color%;
-				border: .1px solid transparent;
+				border: 1px solid transparent;
 				border-radius: 3px;
 			]]></normal>
 			<hover><![CDATA[
 				text-shadow: none;
 				background: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%,rgba(255,255,255,0.3) 49%,rgba(255,255,255,0.2) 50%,rgba(255,255,255,0.3) 100%);
-				border: .1px outset rgba(255,255,255,.5);
+				border: 1px outset rgba(255,255,255,.5);
 			]]></hover>
 			<active><![CDATA[
 				text-shadow: none;
-				border: .1px inset rgba(255,255,255,.5);
+				border: 1px inset rgba(255,255,255,.5);
 				background: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.2) 51%,rgba(255,255,255,0.1) 52%,rgba(255,255,255,0.2) 100%);
 			]]></active>
 		</toolbaritem>
@@ -321,7 +321,7 @@
 			]]></wait>
 			<container><![CDATA[
 				background-image:  linear-gradient(to bottom, rgba(246,248,249,1) 0%,rgba(229,235,238,1) 50%,rgba(215,222,227,1) 51%,rgba(245,247,249,1) 100%);
-				border: .1px solid #c0c0c0;
+				border: 1px solid #c0c0c0;
 				border-radius: 4px;
 			]]></container>
 		</progress>
