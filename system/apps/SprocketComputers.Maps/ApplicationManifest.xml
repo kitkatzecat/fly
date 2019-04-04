@@ -1,0 +1,23 @@
+<manifest>
+	<id>SprocketComputers.Maps</id>
+	<name>Maps</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>0.1</version>
+	<icon>%FLY.WORKING_URL%maps.svg</icon>
+	<date>1554405000</date>
+	<index>index.php</index>
+	<description><![CDATA[TODO]]></description>
+	<window>
+		<title>Maps</title>
+		<width>60%</width>
+		<height>60%</height>
+		<minwidth>400</minwidth>
+		<minheight>160</minheight>
+		<maxinitwidth>1280</maxinitwidth>
+		<maxinitheight>720</maxinitheight>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>
