@@ -8,7 +8,7 @@
 	<desktop>
 		<image><![CDATA[ Trail.jpg ]]></image>
 		<color><![CDATA[ #C0C0C0 ]]></color>
-		<font><![CDATA[ Roboto, Microsoft Sans Serif, Arial, sans-serif ]]></font>
+		<font><![CDATA[ Droid Sans, Droid_Sans, sans-serif ]]></font>
 	</desktop>
 	<content><![CDATA[
 		background-color: #fff;
