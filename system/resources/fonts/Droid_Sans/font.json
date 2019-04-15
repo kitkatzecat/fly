@@ -1,0 +1,10 @@
+{
+	"name": "Droid Sans",
+	"author": "Ascender Corporation",
+	"version": "1.00",
+	"license": "https://www.apache.org/licenses/LICENSE-2.0.html",
+	"resources": {
+		"normal": "DroidSans.ttf",
+		"bold": "DroidSans-Bold.ttf"
+	}
+}
