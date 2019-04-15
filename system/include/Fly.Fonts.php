@@ -61,6 +61,7 @@ function FlyFontInfo($name) {
 }
 
 // Checks if a font is installed
+// ------------------------------------------------------ this needs to be fixed to check actual names in the JSON!!!!
 function FlyFontCheck($name) {
 	global $_FLY;
 	
