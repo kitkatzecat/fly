@@ -27,7 +27,9 @@ function getFolders( $path = '.' , $level = 3){
 				$return .= '<ul style="margin-left:'.$margin.'px;display:none;" id=\''.$rand.'\'>';
 				$return .= getFolders("$path/$file", ($level+1));
 				$return .= '</ul>';
-			} 
+			} else {
+				$return .= '<li onclick="window.top.system.command(\'run:SprocketComputers.Memo,file='."$path/$file".'\');" class="FlyUiTextHover FlyUiNoSelect item"><img class="icon FlyUiNoSelect" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/setting.svg">'.$file.'</li>';
+			}
 	
 		} 
 	
@@ -44,6 +46,9 @@ function toggle(id) {
 	} else {
 		obj.style.display = 'none';
 	}
+}
+Fly.window.ready = function() {
+	setTimeout(function() {Fly.window.message.show('Warning: Use caution when editing the registry. Changing the contents of these files can harm your computer.', 10)},300);
 }
 </script>
 <style>
@@ -67,6 +72,14 @@ ul {
 	height: 16px;
 	margin-right: 2px;
 	vertical-align: middle;
+}
+#index {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: auto;
 }
 </style>
 </head>
