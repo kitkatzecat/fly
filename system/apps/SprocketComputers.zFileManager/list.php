@@ -103,8 +103,8 @@ function Load() {
 	try {
 		window.View();
 	} catch(e) {
-		console.log(e);
-		document.body.innerHTML += '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg">An error occurred while loading this view.</div><p class="description">Try refreshing. If the problem persists, change the view.</p><p style="font-family:monospace;">'+e+'</p>';
+		console.log(e); // Change the = below to a += for debugging directories that always break views
+		document.body.innerHTML = '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg">An error occurred while loading this view.</div><p class="description">Try refreshing. If the problem persists, change the view.</p><p style="font-family:monospace;">'+e+'</p>';
 	}
 	if (ImagePreviews) {
 		try {
