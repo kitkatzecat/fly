@@ -172,6 +172,19 @@
 				<y>auto</y>
 			</window>
 		</mask>
+		<mask id="PinJump" hidden="true">
+			<name>Pin to Jump</name>
+			<icon>%FLY.RESOURCE.URL.ICONS%fly.svg</icon>
+			<index>pinjump.php</index>
+			<window>
+				<x>32</x>
+				<y>32</y>
+				<width>500</width>
+				<height>100</height>
+				<title>Pin to Jump</title>
+				<minimize>false</minimize>
+			</window>
+		</mask>
 		<mask id="Applications" hidden="false">
 			<icon>%FLY.RESOURCE.URL.ICONS%application.svg</icon>
 			<name>Applications</name>
