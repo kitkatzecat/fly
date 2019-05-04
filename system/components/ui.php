@@ -673,6 +673,7 @@ ui.updateTime = function() {
 	var year    = currentTime.getFullYear();
 	var month   = currentTime.getMonth()+1; 
 	var day     = currentTime.getDate();
+	var dstring  = currentTime.toDateString();
 	<?php
 	echo $script_show_military;
 	?>
@@ -686,6 +687,7 @@ ui.updateTime = function() {
 	var td = "<b>" + hours + ":" + minutes + ":" + seconds + hr + "</b><br>" + (month/1) + "/" + (day/1) + "/" + year;
 	setTimeout("ui.updateTime()",1000);
 	ui.toolbar.time.innerHTML=v;
+	ui.toolbar.time.title = dstring;
 	ui.time.content.timedate.innerHTML=td;
 }
 </script>
