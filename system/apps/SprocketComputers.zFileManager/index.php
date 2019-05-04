@@ -143,6 +143,7 @@ function ToolbarInit() {
 	}
 	Addressbar.onfocus = function() {
 		Addressbar.className = 'addressbar-focus';
+		setTimeout(function(){Addressbar.select()},100);
 	}
 	Addressbar.onblur = function() {
 		Addressbar.className = 'addressbar transparent-white FlyUiTextHighlight';
