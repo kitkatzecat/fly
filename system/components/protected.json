@@ -1,0 +1,11 @@
+[
+	"./system",
+	"./system/apps",
+	"./system/components",
+	"./system/components/cmd",
+	"./system/include",
+	"./system/reg",
+	"./system/resources",
+	"./system/config.xml",
+	"./users"
+]
