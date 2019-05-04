@@ -375,7 +375,7 @@ function FlyFileTypeLookup($string) {
 	if (isset($types[$extension])) {
 		$icon = FlyVarsReplace(FlyStringReplaceConstants($types[$extension]['icon']));
 		if ($icon ==  '') {
-			$icon = $protocol.$_SERVER['HTTP_HOST'].'/system/resources/icons/type/unknown.svg';
+			$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/unknown.svg';
 		}
 		
 		$description = (string)$types[$extension]['description'];
@@ -432,16 +432,6 @@ function FlyFileTypeAppLookup($type) {
 	} else {
 		
 	}
-}
-
-function FlyGetFileContextMenu($file,$process=false) {
-	if (!$process) {
-		$process = FlyFileStringProcessor($file);
-		if (!$process) {
-			return false;
-		}
-	}
-	// more coming soon...
 }
 
 function FlyGetApps() {
