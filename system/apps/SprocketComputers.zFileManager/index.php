@@ -101,25 +101,25 @@ function ToolbarInit() {
 	
 	Panes.search = {};
 	Panes.search.url = 'panes.php?pane=search';
-	Panes.search.button = Panebar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg',action:function(){Pane.toggle('search');}});
+	Panes.search.button = Panebar.add({text:'',title:'Search',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg',action:function(){Pane.toggle('search');}});
 	//Panes.search.button.style.borderRadius = '50px';
 	//Panes.search.button.style.lineHeight = '12px';
 	
 	Panes.properties = {};
 	Panes.properties.url = 'panes.php?pane=properties';
-	Panes.properties.button = Panebar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>properties.svg',action:function(){Pane.toggle('properties');}});
+	Panes.properties.button = Panebar.add({text:'',title:'Properties',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>properties.svg',action:function(){Pane.toggle('properties');}});
 	//Panes.properties.button.style.borderRadius = '50px';
 	//Panes.properties.button.style.lineHeight = '12px';
 	
 	Panes.bookmarks = {};
 	Panes.bookmarks.url = 'panes.php?pane=bookmarks';
-	Panes.bookmarks.button = Panebar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-star.svg',action:function(){Pane.toggle('bookmarks');}});
+	Panes.bookmarks.button = Panebar.add({text:'',title:'Bookmarks',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-star.svg',action:function(){Pane.toggle('bookmarks');}});
 	//Panes.bookmarks.button.style.borderRadius = '50px';
 	//Panes.bookmarks.button.style.lineHeight = '12px';
 	
 	Panes.folders = {};
 	Panes.folders.url = 'panes.php?pane=folders';
-	Panes.folders.button = Panebar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',action:function(){Pane.toggle('folders');}});
+	Panes.folders.button = Panebar.add({text:'',title:'Folders',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',action:function(){Pane.toggle('folders');}});
 	//Panes.folder.button.style.borderRadius = '50px';
 	//Panes.folder.button.style.lineHeight = '12px';
 	
@@ -151,11 +151,11 @@ function ToolbarInit() {
 		else if (document.selection) {document.selection.empty();}
 	}
 	
-	Navbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
-	Navbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-up.svg',action:Up});
+	Navbar.add({text:'',title:'Back',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
+	Navbar.add({text:'',title:'Up',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-up.svg',action:Up});
 	var ab = Navbar.add({type:'custom',content:Addressbar});
 	ab.style.width = 'calc(100% - 164px)';
-	Navbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg',action:Refresh,align:'right'});
+	Navbar.add({text:'',title:'Refresh',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg',action:Refresh,align:'right'});
 	Navbar.add({text:'Go',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',action:Go,align:'right'});
 	
 	document.body.appendChild(Navbar);
