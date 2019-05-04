@@ -39,11 +39,17 @@ var Navbar;
 var Panebar;
 var Addressbar;
 var Panes = {};
-function Load() {
+Fly.window.ready = function() {
 	ToolbarInit();
 	<?php if (FlyRegistryGet('ShowStatusBar') == 'true') { echo 'StatusBar.show();'; } ?>
 	Nav(atob('<?php echo $p; ?>'));
 }
+
+Fly.window.onclose = function() {
+	Dialog.closeAll();
+	Fly.window.close();
+}
+
 function ToolbarInit() {
 	Menubar = new Fly.actionbar();
 	Menubar.style.position = 'absolute';
@@ -52,30 +58,17 @@ function ToolbarInit() {
 	Menubar.style.width = 'auto';
 	
 	Menubar.add({text:'File',type:'dropdown',menu:[
-		['New',[
-			['Text Document',New.text,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/text.svg'}],
-			['PNG Image',New.image,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
-			[''],
-			['More',[
-				['Many'],
-				['Many'],
-				['More'],
-				['Types'],
-				['But'],
-				['Probably'],
-				['In'],
-				['A'],
-				['Window']
-			]]
-		],{icon:'<?php echo FLY_ICONS_URL; ?>file.svg'}],
+		['New...',function() {Dialog.open('dialogs.php?','New',300,300,false);},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
 		[''],
 		['Properties',Properties,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>properties.svg'}],
 		[''],
-		['Close',Close,{icon:'<?php echo FLY_ICONS_URL; ?>mark-x.svg'}]
+		['Close',Close,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'}]
 	]});
 	Menubar.add({text:'Edit',type:'dropdown',menu:[
 		['Copy to',function(){},{disabled:true}],
 		['Move to',function(){},{disabled:true}],
+		[''],
+		['Keywords...',function(){Dialog.open('dialogs.php?dialog=keywords_manage','Manage Keywords',500,400,false);},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'}]
 	]});
 	Menubar.add({text:'View',type:'dropdown',menu:[
 		['Home',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
@@ -376,17 +369,41 @@ var ImagePreviews = {
 		}
 	}
 }
-
 var Dialog = {
-	open: function(url='dialogs.php',title='<?php echo $_FLY['APP']['NAME']; ?>',width=300,height=300) {
+	open: function(url='dialogs.php?',title='<?php echo $_FLY['APP']['NAME']; ?>',width=300,height=300,linked=true) {
 		var pos = Fly.window.position.get();
 		var size = Fly.window.size.get();
 		var x = parseInt(pos[0])+parseInt((size[0]/2)-(width/2));
 		var y = parseInt(pos[1])+parseInt((size[1]/2)-(height/2));
-		url = '<?php echo $_FLY['WORKING_URL']; ?>'+url+'&parent_id='+Fly.window.id;
-		return window.top.task.create('<?php echo $_FLY['APP']['ID']; ?>',{name:title,title:title,width:width,height:height,icon:'<?php echo $_FLY['APP']['ICON_URL']; ?>',x:x,y:y,location:url});
+		url = '<?php echo $_FLY['WORKING_URL'];?>'+url;
+
+		var opened = window.top.task.create('<?php echo $_FLY['APP']['ID']; ?>',{name:title,title:title,width:width,height:height,icon:'<?php echo $_FLY['APP']['ICON_URL']; ?>',x:x,y:y,location:url,load:function(w){
+			if (linked) {
+				var win = w.window.content.contentWindow;
+				win.Fly.window.focus.take(Fly.window.id);
+				win.Parent = window;
+				win.Fly.window.onclose = function() {
+					win.Fly.window.focus.give(Fly.window.id);
+					Fly.window.bringToFront();
+					win.Fly.window.close();
+				}
+			}
+		}});
+		if (linked) {
+			Dialog.opened.push(opened);
+		}
+		return opened;
+	},
+	opened: [],
+	closeAll: function() {
+		Dialog.opened.forEach(function(a){
+			try {
+				a.window.forceClose();
+			} catch(err) {console.log(err);}
+		});
 	}
 };
+
 var CurrentLocation = {
 	basename: 'system',
 	icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',

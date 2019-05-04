@@ -24,6 +24,9 @@ $Output = '';
 $Path = $_GET['p'];
 
 $Keywords = json_decode(file_get_contents($_FLY['WORKING_PATH'].'keywords.json'),true);
+if ($_FLY['IS_USER'] && file_exists($_FLY['APP']['DATA_PATH'].'keywords.json')) {
+	$Keywords = array_merge($Keywords,json_decode(file_get_contents($_FLY['APP']['DATA_PATH'].'keywords.json'),true));
+}
 
 if (array_key_exists($_GET['p'],$Keywords)) {
 	echo '<script>window.parent.Nav(\''.$Keywords[$_GET['p']].'\');</script>';
