@@ -12,6 +12,10 @@ if (!FlyIncludeCheck('FLY.REGISTRY')) {
 	include 'Fly.Registry.php';
 }
 
+if (!FlyIncludeCheck('FLY.CONSTANTS')) {
+	include 'Fly.Constants.php';
+}
+
 if (!function_exists('FlyConvertURLtoPath')) {
 
 function FlyConvertURLtoPath($link) {
@@ -206,7 +210,7 @@ function FlyFileStringProcessor($item) {
 				$location = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/';
 				$manifest = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/ApplicationManifest.xml';
 				$action = 'task.create(\''.$id.'\', {title:\''.$manifestXML->window->title.'\', name:\''.$name.'\', x:\''.$appX.'\', y:\''.$appY.'\', width:\''.$manifestXML->window->width.'\', height:\''.$manifestXML->window->height.'\', minwidth:\''.$minWidth.'\', minheight:\''.$minHeight.'\', maxwidth:\''.$maxWidth.'\', maxheight:\''.$maxHeight.'\', maxinitwidth:'.$maxInitWidth.', maxinitheight:'.$maxInitHeight.', location:\''.$window.'\', icon:\''.$icon.'\', expand:'.$expand.', minimize:'.$minimize.', close:'.$close.', resize:'.$resize.'})';
-				return ["file"=>$filePath,"type"=>$type,"name"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"location"=>$location,"manifest"=>$manifest];
+				return ["file"=>$filePath,"type"=>$type,"name"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"location"=>$location,"manifest"=>$manifest];
 			} else {
 				return false;
 			}
