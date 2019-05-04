@@ -59,8 +59,19 @@ function View() {
 				window.top.system.command('run:'+List[this.id]['file']);
 				Deselect();
 			}
-			
+			itm.oncontextmenu = function(e) {
+				Select(this,e,List[this.id]);
+				ContextMenu(List[this.id],e);
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}			
 			document.body.appendChild(itm);
+		}
+		document.oncontextmenu = function(e) {
+			ContextMenu(Folder,e);
+			e.preventDefault();
+			return false;
 		}
 
 		document.addEventListener('mousedown',function() {

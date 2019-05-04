@@ -44,8 +44,21 @@ function View() {
 			itm.ondblclick = function() {
 				Click(List[this.id]);
 			}
+			itm.oncontextmenu = function(e) {
+				Select(this,e,List[this.id]);
+				ContextMenu(List[this.id],e);
+				e.preventDefault();
+				e.stopPropagation();
+				return false;
+			}
 			
 			document.body.appendChild(itm);
+		}
+
+		document.oncontextmenu = function(e) {
+			ContextMenu(Folder,e);
+			e.preventDefault();
+			return false;
 		}
 	} else {
 		document.body.innerHTML += Output;
