@@ -9,6 +9,7 @@
 */
 
 include 'Fly.Standard.php';
+include 'Fly.Actionmenu.php';
 include 'Fly.Command.php';
 include 'Fly.FileProcessor.php';
 include 'Fly.Registry.php';
@@ -160,6 +161,142 @@ function Click(obj) {
 		window.parent.Nav(obj['file']);
 	} else {
 		window.top.system.command('run:'+obj['file']);
+	}
+}
+
+function ContextMenu(obj,e,ret=false) {
+	var menu = [];
+
+	var protected = <?php echo json_encode(json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['COMPONENTS'].'protected.json'),true)); ?>;
+
+	// Opening/running
+	if (obj['file'] != Folder['file']) {
+		if (!obj['action'] || obj['action']=='') {
+			menu.push([
+				'<b>Open with...</b>',
+				function() {Click(obj);},
+				{
+					icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>run.svg'
+				}
+			],['']);
+		} else {
+			if (obj['isdir']) {
+				menu.push([
+					'<b>Open</b>',
+					function() {Click(obj);},
+					{
+						icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>run.svg'
+					}
+				],['']);
+			} else {
+				menu.push([
+					'<b>Open</b>',
+					function() {Click(obj);},
+					{
+						icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>run.svg'
+					}
+				],[
+					'Open with...',
+					function() {window.top.system.command('run:SprocketComputers.Utilities.OpenWith,file='+encodeURIComponent(obj['file']));}
+				],['']);
+			}
+		}
+	}
+
+	if (obj['file'] == Folder['file']) {
+		menu.push([
+				'Refresh',
+				function() {Refresh();},
+				{
+					icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg'
+				}
+			],['']);
+	}
+
+	// File/dir operations
+	var fileoperations = false;
+	if (protected.indexOf(obj['ffile']) != -1) {
+		fileoperations = true;
+	}
+	menu.push([
+		'Delete',
+		function() {window.top.system.command('run:SprocketComputers.FileManager.Delete,file='+encodeURIComponent(obj['file']));},
+		{
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg',
+			disabled: fileoperations
+		}
+	],[
+		'Rename',
+		function() {window.top.system.command('run:SprocketComputers.FileManager.Rename,file='+encodeURIComponent(obj['file']));},
+		{
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',
+			disabled: fileoperations
+		}
+	]);
+
+	// More
+	var more = [];
+	
+	more.push([
+		'Pin to Jump',
+		function() {window.top.system.command('run:SprocketComputers.Utilities.PinJump,file='+encodeURIComponent(obj['file']));},
+		{
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>fly.svg'
+		}
+	],[
+		'Create alias...',
+		function() {},
+		{
+			icon: '<?php echo $_FLY['WORKING_URL']; ?>alias.svg',
+			disabled: true
+		}
+	]);
+
+	if (obj['isdir']) {
+		more.push([
+			'Create keyword...',
+			function() {},
+			{
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',
+				disabled: true
+			}
+		],[''],[
+			'Open in new window',
+			function() {window.top.system.command('run:'+obj['file']);},
+			{
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>popout.svg'
+			}
+		]);
+	}
+
+	more.push([''],[
+		'Open with Memo',
+		function() {window.top.system.command('run:SprocketComputers.Memo,file='+encodeURIComponent(obj['file']));},
+		{
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.Memo/memo.svg'
+		}
+	]); // Temporary - until actual Open With dialog is fully functional
+
+	if (more.length > 0) {
+		menu.push([
+			'More',
+			more
+		]);
+	}
+
+	// Properties
+	menu.push([''],[
+		'Properties',
+		function() {window.top.system.command('run:SprocketComputers.FileManager.Properties,file='+encodeURIComponent(obj['file']));},
+		{
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>properties.svg'
+		}
+	]);
+	
+	if (ret) {
+		return menu;
+	} else {
+		Fly.actionmenu(e,menu);
 	}
 }
 
