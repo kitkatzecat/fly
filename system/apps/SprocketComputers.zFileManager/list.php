@@ -50,6 +50,12 @@ if (is_dir($Path)) {
 		var Folder = JSON.parse(atob(\''.base64_encode(json_encode($FolderProcess)).'\'));
 		var List = false;
 		var Files = [];
+		
+		document.oncontextmenu = function(e) {
+			ContextMenu(Folder,e);
+			e.preventDefault();
+			return false;
+		}
 		</script>
 		';
 	} else {
