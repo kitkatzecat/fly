@@ -41,6 +41,7 @@ var Addressbar;
 var Panes = {};
 Fly.window.ready = function() {
 	ToolbarInit();
+	Fly.window.disableContext();
 	<?php if (FlyRegistryGet('ShowStatusBar') == 'true') { echo 'StatusBar.show();'; } ?>
 	Nav(atob('<?php echo $p; ?>'));
 }
