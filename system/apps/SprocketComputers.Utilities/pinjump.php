@@ -46,16 +46,35 @@ if (!$process) {
 	exit;
 }
 
+$message = '';
+
+if ($process['extension'] == 'als' && !$_GET['noreplace'] == 'true') {
+	$als = simpleXML_load_file($process['file']);
+	if ($als) {
+		$alsprocess = FlyFileStringProcessor(FlyVarsReplace((string)$als->link));
+		if ($alsprocess) {
+			$process = $alsprocess;
+			$message = '<p class="hint">The file specified is an alias. The item that this alias links to will be ';
+		}
+	}
+}
+
 if (in_array($process['ffile'],$reg)) {
 	$title = 'Unpin from Jump';
 	$question = 'Do you want to unpin this '.$process['type'].' from your Jump menu?';
 	$pin = 'pin-no.svg';
 	$mode = 'remove';
+	if ($message !== '') {
+		$message .= 'unpinned from Jump.</p>';
+	}
 } else {
 	$title = 'Pin to Jump';
 	$question = 'Do you want to pin this '.$process['type'].' to your Jump menu?';
 	$pin = 'pin.svg';
 	$mode = 'add';
+	if ($message !== '') {
+		$message .= 'pinned to Jump.</p>';
+	}
 }
 
 ?>
@@ -103,7 +122,7 @@ p.description {
 p.hint {
 	font-size: 0.8em;
 	opacity: 0.8;
-	margin-top: -16px;
+	margin-top: -12px;
 	padding-left: 44px;
 }
 p.shead {
@@ -147,7 +166,7 @@ img.button-image {
 <div id="Content">
 
 <div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS'].$pin; ?>"><?php echo $title; ?></div>
-<p class="description"><?php echo $question; ?></p>
+<p class="description"><?php echo $question; ?></p><?php echo $message; ?>
 <p><div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="width:289px;margin-left:8%;" onclick="window.top.system.command('run:<?php echo $process['file']; ?>');"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div></p>
 </div>
 
