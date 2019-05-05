@@ -261,10 +261,9 @@ function ContextMenu(obj,e,ret=false) {
 	if (obj['isdir']) {
 		more.push([
 			'Create keyword...',
-			function() {},
+			function() {window.top.system.command('run:SprocketComputers.zFileManager.CreateKeyword,path='+encodeURIComponent(obj['ffile']));},
 			{
-				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',
-				disabled: true
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'
 			}
 		],[''],[
 			'Open in new window',
