@@ -25,17 +25,16 @@ function toggle() {
 	setTimeout(function() {window.top.ui.jump.coverDiv.style.backgroundColor='rgba(0,0,0,.3)';}, 10);
 }
 </script>
-<body onload="toggle()">
+<body onload="toggle()" class="FlyUiNoSelect">
 <?php
 include 'Fly.Core.php';
 include 'Fly.Constants.php';
 include 'Fly.FileProcessor.php';
-include 'Fly.Theme.php';
+include 'Fly.Standard.php';
 include 'Fly.Actionmenu.php';
+include 'Fly.Registry.php';
 
-FlyLoadTheme('text controls');
-
-$jumpXML = new DOMDocument();
+/*$jumpXML = new DOMDocument();
 $jumpXML->load($_FLY['USER']['XML']);
 $feed = array();
 foreach ($jumpXML->getElementsByTagName('item') as $node) {
@@ -43,24 +42,30 @@ foreach ($jumpXML->getElementsByTagName('item') as $node) {
 		'url' => $node->nodeValue,
 		);
 	array_push($feed, $item);
-}
-
+}*/
 $list = '';
 
-for ($x = 0; $x < count($feed); $x++) {
-	$url = FlyVarsReplace(FlyStringReplaceConstants($feed[$x]['url']));
-	if ($url == 'separator' || $url == 'divider') {
+$pinned = json_decode(FlyUserRegistryGet('Jump','SprocketComputers.Utilities'),true);
+foreach ($pinned as $item) {
+	if ($item == 'separator' || $item == 'divider' || $item == '') {
 		$list .= '<hr>';
 	} else {
-		$process = FlyFileStringProcessor($url);
+		$process = FlyFileStringProcessor(FlyVarsReplace(FlyStringReplaceConstants($item)));
 		$rand = rand();
-		$list .= '<div id="'.$rand.'" oncontextmenu="Fly.actionmenu(event,[[\'<b>Open</b>\',function() {document.getElementById(\''.$rand.'\').onclick();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'run.svg\'}],[\'Unpin from Jump\',function() {},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pin-no.svg\'}],[\'\'],[\'Applications Options\',function(){window.top.system.command(\'run:SprocketComputers.Options,page=filesapps,action=installed\');window.top.ui.jump.toggle();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg\'}]]);return false;" onclick="window.top.ui.jump.toggle();window.top.system.eval64(\''.base64_encode('system.command(\'run:'.$url.'\')').'\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$process["icon"].'">'.htmlentities($process["name"]).'</div>';
+		if ($process) {
+			$list .= '<div id="'.$rand.'" oncontextmenu="Fly.actionmenu(event,[[\'<b>Open</b>\',function() {document.getElementById(\''.$rand.'\').onclick();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'run.svg\'}],[\'Unpin from Jump\',function() {window.top.ui.jump.toggle();window.top.system.command(\'run:SprocketComputers.Utilities.PinJump,file='.$item.'\');},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pin-no.svg\'}],[\'\'],[\'Applications Options\',function(){window.top.system.command(\'run:SprocketComputers.Options,page=filesapps,action=installed\');window.top.ui.jump.toggle();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg\'}]]);return false;" onclick="window.top.ui.jump.toggle();window.top.system.eval64(\''.base64_encode('system.command(\'run:'.$item.'\')').'\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$process["icon"].'">'.htmlentities($process["fname"]).'</div>';
+		} else {
+			$list .= '<div id="'.$rand.'" oncontextmenu="Fly.actionmenu(event,[[\'<b>Open</b>\',function() {document.getElementById(\''.$rand.'\').onclick();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'run.svg\'}],[\'Unpin from Jump\',function() {window.top.ui.jump.toggle();window.top.system.command(\'run:SprocketComputers.Utilities.PinJump,file='.$item.'\');},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pin-no.svg\'}],[\'\'],[\'Applications Options\',function(){window.top.system.command(\'run:SprocketComputers.Options,page=filesapps,action=installed\');window.top.ui.jump.toggle();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg\'}]]);return false;" onclick="window.top.ui.jump.toggle();window.top.system.eval64(\''.base64_encode('system.command(\'run:'.$item.'\')').'\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/unknown.svg">'.htmlentities(basename($item)).'</div>';
+		}
 	}
+}
+if (count($pinned) > 0) {
+	$list .= '<hr>';
 }
 
 date_default_timezone_set("America/Chicago");
 $flyconfig = $_FLY_CONFIG;
-$list .= '<hr><div oncontextmenu="return false;" onclick="window.scrollTo(295,0);document.getElementById(\'applications\').src=\''.CURRENT_URL.'?list=true\'" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'arrow-right.svg">All applications</div>';
+$list .= '<div oncontextmenu="return false;" onclick="window.scrollTo(295,0);document.getElementById(\'applications\').src=\''.CURRENT_URL.'?list=true\'" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'arrow-right.svg">All applications</div>';
 $list .= '<hr><div oncontextmenu="return false;" onclick="window.top.ui.jump.toggle();window.top.system.logout();" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'lock.svg">Log out '.htmlspecialchars($_FLY['USER']['NAME']).'</div>';
 $list .= '<div oncontextmenu="return false;" onclick="window.top.ui.jump.toggle();window.top.system.command(\'run:SprocketComputers.Utilities.AboutFly\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'fly.svg">About Fly</div>';
 
