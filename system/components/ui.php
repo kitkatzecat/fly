@@ -369,7 +369,17 @@ ui.init = function() {
 		ui.desktop.style.zIndex = '-1';
 		ui.desktop.style.transition = 'opacity .3s linear';
 		ui.desktop.style.opacity = '0';
-		setTimeout(function(){ui.desktop.innerHTML = '<iframe id="FlyUiDesktopFrame" style="width:100%;height:100%;" frameborder="0" allowtransparency="true" scrolling="no" src="<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.zFileManager/list.php?v=<?php echo FlyVarsReplace(FlyUserRegistryGet('ViewDesktop','SprocketComputers.zFileManager')); ?>&p=<?php echo FlyVarsReplace(FlyUserRegistryGet('DesktopPath','SprocketComputers.Options')); ?>"></iframe>';},2000);		
+		setTimeout(function(){
+			ui.desktop.innerHTML = '<iframe id="FlyUiDesktopFrame" style="width:100%;height:100%;" frameborder="0" allowtransparency="true" scrolling="no" src="<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.zFileManager/list.php?v=<?php echo FlyVarsReplace(FlyUserRegistryGet('ViewDesktop','SprocketComputers.zFileManager')); ?>&p=<?php echo FlyVarsReplace(FlyUserRegistryGet('DesktopPath','SprocketComputers.Options')); ?>"></iframe>';
+			document.getElementById('FlyUiDesktopFrame').addEventListener('load',function() {
+				setTimeout(function() {
+					if (ui.desktop.style.opacity == '0') {
+						ui.desktop.style.opacity = '1';
+						shell.dialog('Desktop load error','The desktop file view has failed to load correctly. This could be due to an unsupported view.','Desktop Load Error');
+					}
+				},10000);
+			});
+		},2000);		
 		document.body.appendChild(ui.desktop);
 		
 		ui.time = document.createElement("div");
