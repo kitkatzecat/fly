@@ -187,7 +187,7 @@ if ($_GET['file'] !== '') {
 	$reg = json_decode(FlyUserRegistryGet('Jump','SprocketComputers.Utilities'),true);
 	array_push($reg,$_GET['file']);
 	FlyUserRegistrySet('Jump',json_encode($reg));
-	echo '<script>window.parent.Fly.window.close();</script>';
+	echo '<script>window.top.ui.jump.toggle();window.parent.Fly.window.close();</script>';
 } 
 
 exit;
@@ -206,7 +206,7 @@ if ($_GET['file'] !== '') {
 	}
 
 	FlyUserRegistrySet('Jump',json_encode($reg));
-	echo '<script>window.parent.Fly.window.close();</script>';
+	echo '<script>window.top.ui.jump.toggle();window.parent.Fly.window.close();</script>';
 } 
 
 exit;
