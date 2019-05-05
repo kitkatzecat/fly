@@ -1,9 +1,18 @@
+<?php
+if ($_GET['mode'] == 'add') {
+	goto add;
+}
+if ($_GET['mode'] == 'remove') {
+	goto remove;
+}
+?>
 <!DOCTYPE html >
 <html>
 <head>
 <?php
 include 'Fly.Standard.php';
 include 'Fly.FileProcessor.php';
+include 'Fly.Registry.php';
 ?>
 <style>
 body {
@@ -24,6 +33,8 @@ if ($_GET['file']=='') {
 	exit;
 }
 
+$reg = json_decode(FlyUserRegistryGet('Jump','SprocketComputers.Utilities'),true);
+
 $process = FlyFileStringProcessor(FlyVarsReplace($_GET['file']));
 if (!$process) {
 	echo '
@@ -34,6 +45,19 @@ if (!$process) {
 	';
 	exit;
 }
+
+if (in_array($process['ffile'],$reg)) {
+	$title = 'Unpin from Jump';
+	$question = 'Do you want to unpin this '.$process['type'].' from your Jump menu?';
+	$pin = 'pin-no.svg';
+	$mode = 'remove';
+} else {
+	$title = 'Pin to Jump';
+	$question = 'Do you want to pin this '.$process['type'].' to your Jump menu?';
+	$pin = 'pin.svg';
+	$mode = 'add';
+}
+
 ?>
 <script>
 	Fly.window.ready = function() {
@@ -41,12 +65,17 @@ if (!$process) {
 
 		Fly.window.size.set(500,height);
 		Fly.window.position.set(((window.top.window.innerWidth/2)-258),((window.top.window.innerHeight/2)-((height+64)/2)));
-		console.log(height);
+
+		document.getElementById('ButtonOk').disabled = false;
+		document.getElementById('ButtonCancel').disabled = false;
 	}
 
 	var dialog = function() {};
 	dialog.submit = function() {
-		
+		document.getElementById('ButtonOk').disabled = true;
+		document.getElementById('ButtonCancel').disabled = true;
+
+		document.getElementById('save').src = 'pinjump.php?mode=<?php echo $mode; ?>&file=<?php echo urlencode($process['ffile']); ?>';
 	}
 	dialog.cancel = function() {
 		Fly.window.close();
@@ -117,18 +146,49 @@ img.button-image {
 
 <div id="Content">
 
-<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>fly.svg">Pin to Jump</div>
-<p class="description">Do you want to pin this <?php echo $process['type']; ?> to your Jump menu?</p>
-<p>
-<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="width:289px;margin-left:8%;" onclick="window.top.system.command('run:<?php echo $process['file']; ?>');"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div>
-</p>
+<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS'].$pin; ?>"><?php echo $title; ?></div>
+<p class="description"><?php echo $question; ?></p>
+<p><div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="width:289px;margin-left:8%;" onclick="window.top.system.command('run:<?php echo $process['file']; ?>');"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div></p>
 </div>
 
-<button onclick="dialog.submit();" id="ButtonOk" style="width:100px;position:absolute;bottom:9px;right:9px;"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg" style="width:16px;height:16px;vertical-align:middle;margin-right:0px;pointer-events:none;"></button>
-<button onclick="dialog.cancel();" id="ButtonCancel" style="width:100px;position:absolute;bottom:9px;right:117px;"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg" style="width:16px;height:16px;vertical-align:middle;margin-right:0px;pointer-events:none;"></button>
+<button onclick="dialog.submit();" disabled id="ButtonOk" style="width:100px;position:absolute;bottom:9px;right:9px;"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg" style="width:16px;height:16px;vertical-align:middle;margin-right:0px;pointer-events:none;"></button>
+<button onclick="dialog.cancel();" disabled id="ButtonCancel" style="width:100px;position:absolute;bottom:9px;right:117px;"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg" style="width:16px;height:16px;vertical-align:middle;margin-right:0px;pointer-events:none;"></button>
 
+<iframe src="" style="display:none;" id="save"></iframe>
 </body>
 </html>
+<?php
+exit;
 
-</body>
-</html>
+add:
+
+include 'Fly.Registry.php';
+
+if ($_GET['file'] !== '') {
+	$reg = json_decode(FlyUserRegistryGet('Jump','SprocketComputers.Utilities'),true);
+	array_push($reg,$_GET['file']);
+	FlyUserRegistrySet('Jump',json_encode($reg));
+	echo '<script>window.parent.Fly.window.close();</script>';
+} 
+
+exit;
+
+remove:
+
+include 'Fly.Registry.php';
+
+if ($_GET['file'] !== '') {
+	$reg = json_decode(FlyUserRegistryGet('Jump','SprocketComputers.Utilities'),true);
+	$pos = array_search($_GET['file'],$reg);
+
+	if ($pos !== false) {
+		unset($reg[$pos]);
+		$reg = array_values($reg);
+	}
+
+	FlyUserRegistrySet('Jump',json_encode($reg));
+	echo '<script>window.parent.Fly.window.close();</script>';
+} 
+
+exit;
+?>
