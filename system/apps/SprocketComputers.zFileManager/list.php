@@ -87,7 +87,7 @@ if (is_dir($Path)) {
 		}
 	} else {
 		// Directory does not exist
-		$Output = '<script>window.parent.Fly.window.title.set(\'File Manager - Not Found\');</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified directory could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
+		$Output = '<script>window.parent.Fly.window.title.set(\'File Manager - Not Found\');</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified directory or keyword could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
 		echo '
 		<script>
 		var Folder = false;
@@ -261,7 +261,7 @@ function ContextMenu(obj,e,ret=false) {
 	if (obj['isdir']) {
 		more.push([
 			'Create keyword...',
-			function() {window.top.system.command('run:SprocketComputers.zFileManager.CreateKeyword,path='+encodeURIComponent(obj['ffile']));},
+			function() {window.top.system.command('run:SprocketComputers.zFileManager.CreateKeyword,keyword='+encodeURIComponent(obj['fname'])+',path='+encodeURIComponent(obj['ffile']));},
 			{
 				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'
 			}
