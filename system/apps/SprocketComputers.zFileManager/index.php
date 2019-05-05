@@ -213,7 +213,7 @@ function Refresh(pos=false) {
 		}
 		frame.addEventListener('load',a);
 	}
-	Nav(Nav.current['file']);
+	Nav(Nav.current['ffile']);
 }
 
 var Pane = {
