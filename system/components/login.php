@@ -75,6 +75,12 @@ var interval;
 function onload() {
 	Fly.window.buttons.hide();
 	interval = setInterval(position,1000);
+
+	document.oncontextmenu = function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	}
 }
 function position() {
 	Fly.window.position.set(((window.top.window.innerWidth/2)-200), ((window.top.window.innerHeight/2)-175));
@@ -216,7 +222,7 @@ body {
 }
 </style>
 </head>
-<body onload="onload()">
+<body onload="onload()" class="FlyUiNoSelect">
 
 <script>
 	Fly.window.ready = function() {
@@ -238,6 +244,12 @@ body {
 		document.body.addEventListener('click',function() {
 			document.getElementById('TextInput').focus();
 		});
+
+		document.oncontextmenu = function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		}
 	}
 
 	var dialog = function() {};

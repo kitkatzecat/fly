@@ -236,6 +236,12 @@ var lwindow;
 function onload() {
 	document.body.style.cursor = 'none';
 	
+	document.oncontextmenu = function(e) {
+		e.preventDefault();
+		e.stopPropagation();
+		return false;
+	}
+
 	task.init();
 	
 	history.replaceState( {} , 'Fly', '/' );
