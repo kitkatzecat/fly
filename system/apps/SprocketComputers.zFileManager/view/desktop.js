@@ -94,7 +94,9 @@ function View() {
 			
 			window.top.ui.desktop.style.opacity = '0';
 			setTimeout(function() {
-				window.location.reload();
+				Fly.command('registry:get,ViewDesktop,SprocketComputers.zFileManager',function(a) {
+					window.location.href = '?p='+Folder['file']+'&v='+a.return;
+				});
 			},500);
 		}
 	} else {
