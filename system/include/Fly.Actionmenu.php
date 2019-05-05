@@ -28,7 +28,7 @@ Fly.actionmenu = function(pos,moptions,onclose=function(){},show=true) {
 	menu.className = 'FlyUiMenu FlyUiNoSelect';
 	menu.style.padding = '2px';
 	menu.style.zIndex = '1000000000';
-	menu.oncontextmenu = function() {return false};
+	menu.oncontextmenu = function(e) {e.preventDefault(); e.stopPropagation(); return false};
 	menu.extrapadding = false;
 	menu.onclose = onclose;
 
