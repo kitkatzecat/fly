@@ -68,6 +68,7 @@ include 'Fly.FileProcessor.php';
 <script>
 Fly.window.ready = function() {
 	Fly.window.resize.enable();
+	Fly.window.disableContext();
 }
 function Remove(keyword) {
 	Fly.control.confirm('Delete keyword','Are you sure you want to delete the keyword "'+keyword+'"?','Delete Keyword','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg',function(){
@@ -255,6 +256,15 @@ keywords_add:
 include 'Fly.Standard.php';
 include 'Fly.FileProcessor.php';
 include 'Fly.Registry.php';
+
+if (file_exists($_FLY['APP']['DATA_PATH'].'keywords.json')) {
+	$file = file_get_contents($_FLY['APP']['DATA_PATH'].'keywords.json');
+} else {
+	$file = '{}';
+}
+$keywords = json_decode($file,true);
+$file = file_get_contents($_FLY['WORKING_PATH'].'keywords.json');
+$keywords = array_merge($keywords,json_decode($file,true));
 ?>
 <style>
 body {
@@ -273,6 +283,11 @@ body {
 
 		document.getElementById('ButtonOk').disabled = false;
 		document.getElementById('ButtonCancel').disabled = false;
+
+		document.getElementById('Keyword').focus();
+		document.getElementById('Keyword').select();
+
+		Fly.window.disableContext();
 	}
 
 	var Dialog = function() {};
@@ -283,7 +298,26 @@ body {
 		var Path = document.getElementById('Path').value;
 		var Keyword = document.getElementById('Keyword').value;
 
-		document.getElementById('save').src = 'dialogs.php?dialog=keyword_add&path='+encodeURIComponent(Path)+'&keyword='+encodeURIComponent(Keyword);
+		var cont = true;
+
+		if (Keyword == '') {
+			document.getElementById('KeywordHint').innerHTML = '<span style="color:#f00;">Please enter a keyword.</span>';
+			cont = false;
+		} else if (Existing.hasOwnProperty(Keyword)) {
+			document.getElementById('KeywordHint').innerHTML = '<span style="color:#f00;">That keyword already exists.</span>';		
+			cont = false;	
+		}
+
+		if (cont) {
+			document.getElementById('Save').src = 'dialogs.php?dialog=keyword_add&path='+encodeURIComponent(Path)+'&keyword='+encodeURIComponent(Keyword);
+		} else {
+			if (typeof window.top.shell.sound !== "undefined") {
+				window.top.shell.sound.system('alert');
+			}
+			Fly.window.flash();
+			document.getElementById('ButtonOk').disabled = false;
+			document.getElementById('ButtonCancel').disabled = false;
+		}
 	}
 	Dialog.cancel = function() {
 		Fly.window.close();
@@ -291,6 +325,8 @@ body {
 	if (typeof window.top.shell.sound !== "undefined") {
 		window.top.shell.sound.system('question');
 	}
+
+	var Existing = JSON.parse(atob('<?php echo base64_encode(json_encode($keywords)); ?>'));
 </script>
 <style>
 h1,h2,h3,h4,h5,h6,p {
@@ -373,19 +409,19 @@ button#ButtonHelp {
 <p class="description">Choose a keyword and the path for it to jump to.</p>
 
 <p class="shead">Path</p>
-<p><input id="Path" type="text" style="height:32px;width:360px;" value="<?php echo $_GET['path']; ?>"></p>
+<p><input id="Path" type="text" onkeypress="if (event.keyCode == 13) {document.getElementById('Keyword').focus();}" autocomplete="off" style="height:32px;width:360px;" value="<?php echo $_GET['path']; ?>"></p>
 
 <p class="shead">Keyword</p>
-<p><input id="Keyword" type="text" style="height:32px;width:360px;" value="<?php echo $_GET['keyword']; ?>"></p>
+<p><input id="Keyword" type="text" onkeypress="if (event.keyCode == 13) {Dialog.submit();}" autocomplete="off" style="height:32px;width:360px;" value="<?php echo $_GET['keyword']; ?>"></p>
 
-<p class="hint" style="margin-bottom:16px;">Keywords are case-sensitive.</p>
+<p class="hint" id="KeywordHint" style="margin-bottom:16px;">Keywords are case-sensitive.</p>
 </div>
 
 <button onclick="window.top.system.command('run:SprocketComputers.zFileManager.ManageKeywords');" id="ButtonHelp"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg" class="button-image"></button>
 <button onclick="Dialog.submit();" disabled id="ButtonOk"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg" class="button-image"></button>
 <button onclick="Dialog.cancel();" disabled id="ButtonCancel"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg" class="button-image"></button>
 
-<iframe src="" style="display:none;" id="save"></iframe>
+<iframe src="" style="display:none;" id="Save"></iframe>
 </body>
 </html>
 <?php
