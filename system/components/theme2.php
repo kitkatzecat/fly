@@ -474,7 +474,7 @@ if (strpos($settings, 'controls') !== false || strpos($settings, 'all') !== fals
 	input[type=text], input[type=password] {
 		padding-left: 4px;
 		padding-right: 4px;
-		border: .1px solid #000000;
+		border: 1px solid #000000;
 		border-radius: 4px;
 		height: 28px;
 		box-sizing: border-box;
@@ -485,7 +485,7 @@ if (strpos($settings, 'controls') !== false || strpos($settings, 'all') !== fals
 		background-image: linear-gradient(to bottom, rgb(255,255,255) 0%,rgb(241,241,241) 50%,rgb(225,225,225) 51%,rgb(246,246,246) 100%);
 		background-color: rgb(241,241,241);
 		padding: 4px;
-		border: .1px solid #c0c0c0;
+		border: 1px solid #c0c0c0;
 		border-radius: 4px;
 		font-family: '.$theme->desktop->font.', sans-serif;
 	}
