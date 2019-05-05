@@ -256,5 +256,13 @@ if (typeof Fly.window == "undefined") {
 	}
 	Fly.window.open = Fly.window.child.open;
 
+	Fly.window.disableContext = function() {
+		document.addEventListener('contextmenu',function(e) {
+			e.preventDefault();
+			e.stopPropagation();
+			return false;
+		});
+	}
+
 }
 </script>
