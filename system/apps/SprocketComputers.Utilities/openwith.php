@@ -299,7 +299,7 @@ Fly.window.ready = function() {
 <div class="main FlyUiText FlyUiNoSelect FlyUiContent">
 <div id="content">
 <div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-bottom:4px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['name']; ?></div>
-<p class="hint">Choose an application open this file with:</p>
+<p class="hint">Choose an application to open this file:</p>
 </div>
 </div>
 
