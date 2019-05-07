@@ -13,7 +13,7 @@ function View() {
 		item.style.overflow = 'hidden';
 
 		item.style.height = 'auto';
-		item.style.width = '72px';
+		item.style.width = '76px';
 
 		item.style.verticalAlign = 'top';
 		item.style.wordWrap = 'break-word';

@@ -24,8 +24,8 @@ function View() {
 		item.style.cursor = 'default';
 		item.style.overflow = 'hidden';
 
-		item.style.height = '107px';
-		item.style.width = '88px';
+		item.style.height = '120px';
+		item.style.width = '108px';
 
 		item.style.verticalAlign = 'top';
 		item.style.wordWrap = 'break-word';
@@ -42,8 +42,8 @@ function View() {
 			
 			icn = Icon(List[i]);
 			icn.style.display = 'block';
-			icn.style.width = '48px';
-			icn.style.height = '48px';
+			icn.style.width = '64px';
+			icn.style.height = '64px';
 			icn.style.margin = '0 auto';
 			icn.style.marginBottom = '4px';
 			itm.appendChild(icn);
@@ -73,8 +73,8 @@ function View() {
 			folder.push([''],[
 				'Icon View',
 				[
-					['Large Icons',function(){View.set('desktop.lg.js');},{icon:'icon.xl.svg'}],
-					['Medium Icons',function(){},{toggled:true,icon:'icon.lg.svg'}],
+					['Large Icons',function(){},{toggled:true,icon:'icon.xl.svg'}],
+					['Medium Icons',function(){View.set('desktop.js');},{icon:'icon.lg.svg'}],
 					['Small Icons',function(){View.set('desktop.sm.js');},{icon:'icon.md.svg'}]
 				],
 				{icon:'icon.xl.svg'}
