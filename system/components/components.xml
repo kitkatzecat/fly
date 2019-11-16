@@ -14,6 +14,11 @@
 		<version>1.0</version>
 		<description>Displays message dialogs, input dialogs, and confirm dialogs called using system functions.</description>
 	</component>
+	<component file="dialog2.php">
+		<name>Fly Dialogs</name>
+		<version>2.0</version>
+		<description>Displays message dialogs, input dialogs, and confirm dialogs called using system functions.</description>
+	</component>
 	<component file="document-otf.php">
 		<name>On-The-Fly Document Renderer</name>
 		<version>0.1</version>
