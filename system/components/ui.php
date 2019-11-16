@@ -50,6 +50,11 @@ ui.init = function() {
 		ui.loadingCursor.style.cursor = 'wait';
 		ui.loadingCursor.style.zIndex = '999999999';
 		ui.loadingCursor.style.display = 'none';
+		ui.loadingCursor.onclick = function() {
+			try {
+				shell.sound.system('alert');
+			} catch(e) {}
+		}
 
 		document.body.appendChild(ui.loading);
 		document.body.appendChild(ui.loadingCursor);
