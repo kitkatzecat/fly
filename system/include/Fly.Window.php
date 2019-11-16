@@ -237,7 +237,9 @@ if (typeof Fly.window == "undefined") {
 				}
 				frame.window.composition.buttons.close.onclick = frame.window.close;
 
-				callback(Fly.window.child.children[frame.id]);
+				try {
+					callback(Fly.window.child.children[frame.id]);
+				} catch(e) {console.log(e);}
 			}
 		} else {
 			attributes.load = function(frame) {
@@ -245,7 +247,10 @@ if (typeof Fly.window == "undefined") {
 				Fly.window.child.children[frame.id]['frame'] = frame;
 				Fly.window.child.children[frame.id]['modal'] = false;
 				Fly.window.child.children[frame.id]['window'] = frame.window.content.contentWindow;
-				callback(Fly.window.child.children[frame.id]);
+				
+				try {
+					callback(Fly.window.child.children[frame.id]);
+				} catch(e) {console.log(e);}
 			}
 		}
 		window.top.task.create(window.top.document.getElementById(Fly.window.id).window.id,attributes);
