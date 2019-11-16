@@ -21,9 +21,10 @@ if (isset($_GET['save'])) {
 include 'fly.php';
 include 'Fly.Registry.php';
 include 'Fly.FileProcessor.php';
+include 'Fly.File.php';
 include 'Fly.Command.php';
 
-echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
+//echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
 echo FlyLoadExtension('SprocketComputers.FileManager','SaveDialog');
 echo FlyLoadExtension('SprocketComputers.Utilities','ColorPicker');
 
@@ -218,7 +219,11 @@ function SaveAs_save() {
 	form.submit();
 }
 function Open() {
-	document.getElementById('FileBrowser').browse();
+	Fly.file.get(function(a) {
+		if (a) {
+			CheckFile(a);
+		}
+	});
 }
 function Font() {
 	var font = document.getElementById('FlyToolbarItem-font');
@@ -288,19 +293,16 @@ function WordWrap() {
 		WordWrapEnabled = true;
 	}
 }
-function CheckFile() {
-	var browser = document.getElementById('FileBrowser');
-
+function CheckFile(file) {
 	if (Changes) {
-		Fly.control.confirm('Close current file','Are you sure you want to close "'+Basename+'"? There are unsaved changes that will be lost.','Memo','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',function(){OpenFile(true)},function(){OpenFile(false)});
+		Fly.control.confirm('Close current file','Are you sure you want to close "'+Basename+'"? There are unsaved changes that will be lost.','Memo','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',function(){OpenFile(file)},function(){OpenFile(false)});
 	} else {
-		OpenFile(true);
+		OpenFile(file);
 	}
 }
-function OpenFile(boolean) {
-	var browser = document.getElementById('FileBrowser');
-	if (boolean) {
-		window.location.href = '<?php echo CURRENT_URL; ?>?Fly_Id=<?php echo FLY_WINDOW_ID; ?>&file='+encodeURIComponent(browser.vars.path);
+function OpenFile(file) {
+	if (file) {
+		window.location.href = '<?php echo CURRENT_URL; ?>?Fly_Id=<?php echo FLY_WINDOW_ID; ?>&file='+encodeURIComponent(file['file']);
 	}
 }
 function NewFile(boolean) {
