@@ -13,6 +13,7 @@
 	".": "./",
 	"..": "./",
 	"../": "./",
+	"": "?home",
 	"Keywords": "?keywords",
 	"keywords": "?keywords",
 	"Home": "?home",
