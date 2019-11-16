@@ -37,57 +37,12 @@ if (array_key_exists($_GET['p'],$Keywords)) {
 if ($Path == '.' || $Path == '..') {
 	$Path = '%FLY.PATH%';
 }
-$Path = FlyVarsReplace($Path,false,FlyCoreVars($_FLY['PATH']));
-$FolderProcess = FlyFileStringProcessor($Path);
-if (is_dir($Path)) {
-	$FolderList = FlyCommand('list:'.$Path);
-	$FolderListArray = json_decode($FolderList['return']);
-	if (count($FolderListArray) == 0) {
-		// Directory is empty
-		$Output = '<div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'folder.svg">This directory is empty.</div>';
-		echo '
-		<script>
-		var Folder = JSON.parse(atob(\''.base64_encode(json_encode($FolderProcess)).'\'));
-		var List = false;
-		var Files = [];
-		
-		document.oncontextmenu = function(e) {
-			ContextMenu(Folder,e);
-			e.preventDefault();
-			return false;
-		}
-		</script>
-		';
+if (substr($Path,0,1) == '?') {
+	$Path = substr_replace($Path,'',0,1);
+	if (file_exists('mods/'.strtolower($Path).'.php')) {
+		include 'mods/'.strtolower($Path).'.php';
 	} else {
-		// Directory is not empty
-		foreach ($FolderListArray as &$Item) {
-			$process = FlyFileStringProcessor($Path.'/'.$Item);
-			$Item = $process;
-		}
-		echo '
-		<script>
-		var Folder = JSON.parse(atob(\''.base64_encode(json_encode($FolderProcess)).'\'));
-		var List = JSON.parse(atob(\''.base64_encode(json_encode($FolderListArray)).'\'));
-		var Files = JSON.parse(atob(\''.base64_encode($FolderList['return']).'\'));
-		</script>
-		';
-	}
-} else {
-	// Path given is not to a directory
-	if ($FolderProcess['type'] == 'file') {
-		// Path given is to a file
-		if ($FolderProcess['extension'] == 'als') {
-			$als = simpleXML_load_file($FolderProcess['file']);
-			$ALSProcess = FlyFileStringProcessor(FlyVarsReplace($als->link));
-			if (!!$ALSProcess && $ALSProcess['type'] == 'folder') {
-				echo '<script>window.parent.Nav(\''.$ALSProcess['file'].'\');</script>';
-			} else {
-				echo '<script>window.top.eval(atob(\''.base64_encode('system.command(\'run:'.$FolderProcess['file'].'\');').'\'));window.parent.Fly.window.message(\'"\'+atob(\''.base64_encode($FolderProcess['fname']).'\')+\'" has been opened\');window.parent.Nav(\''.$FolderProcess['path'].'\');</script>';
-			}
-		}
-	} else {
-		// Directory does not exist
-		$Output = '<script>window.parent.Fly.window.title.set(\'File Manager - Not Found\');</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified directory or keyword could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
+		$Output = '<script>window.parent.Fly.window.title.set(\'Not Found\');</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified module could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
 		echo '
 		<script>
 		var Folder = false;
@@ -96,6 +51,8 @@ if (is_dir($Path)) {
 		</script>
 		';
 	}
+} else {
+	include 'mods/folder.php';
 }
 
 echo '
@@ -107,12 +64,6 @@ var Output = atob(\''.base64_encode($Output).'\');
 ?>
 <script>
 function Load() {
-	try {
-		window.View();
-	} catch(e) {
-		console.log(e); // Change the = below to a += for debugging directories that always break views
-		document.body.innerHTML = '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg">An error occurred while loading this view.</div><p class="description">Try refreshing. If the problem persists, change the view.</p><p style="font-family:monospace;">'+e+'</p>';
-	}
 	if (ImagePreviews) {
 		try {
 			window.parent.ImagePreviews.toggleOn();
@@ -129,6 +80,37 @@ function Load() {
 	CheckInterval = setInterval(Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
 
 	document.addEventListener('mousedown',function() {Deselect();});
+}
+
+var Display = {
+	Icon: function(src) {
+		try {
+			window.parent.Fly.window.icon.set(src);
+		} catch(e) {
+			console.log(e);
+		}
+	},
+	Title: function(title) {
+		try {
+			window.parent.Fly.window.title.set(title);
+		} catch(e) {
+			console.log(e);
+		}
+	},
+	Path: function(path) {
+		try {
+			window.parent.Addressbar.value = path;
+		} catch(e) {
+			console.log(e);
+		}
+},
+	Status: function(status) {
+		try {
+			window.parent.document.getElementById('statusbar').innerHTML = status;
+		} catch(e) {
+			console.log(e);
+		}
+}
 }
 
 function Deselect(item=false) {
@@ -155,10 +137,15 @@ function Select(item,e,obj) {
 		item.className = item.className.replace('FlyUiMenuItem','FlyUiMenuItemActive');
 	}
 	Selected = item;
-	window.parent.SelectedFile = obj;
+	try {
+		window.parent.SelectedFile = obj;
+		window.parent.SelectedFileOn();
+	} catch(e) {console.log(e);}
 	e.stopPropagation();
 }
 var Selected = false;
+
+var SelectedFile = CurrentLocation;
 
 function Click(obj) {
 	if (obj['isdir']) {
@@ -305,7 +292,7 @@ function ContextMenu(obj,e,ret=false) {
 	}
 }
 
-ImagePreviews = eval('<?php echo FlyRegistryGet('ShowImagePreviews'); ?>');
+var ImagePreviews = eval('<?php echo FlyRegistryGet('ShowImagePreviews'); ?>');
 
 function Icon(file) {
 	var icon = document.createElement('div');

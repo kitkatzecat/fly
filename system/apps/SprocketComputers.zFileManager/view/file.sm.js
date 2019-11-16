@@ -7,13 +7,13 @@ function View(Folder=false,List=false) {
 		item.style.display = 'inline-block';
 		item.style.boxSizing = 'border-box';
 		item.style.padding = '6px';
-		item.style.marginTop = '6px';
-		item.style.marginLeft = '6px';
+		item.style.marginTop = '4px';
+		item.style.marginLeft = '4px';
 		item.style.cursor = 'default';
 		item.style.overflow = 'hidden';
 
 		item.style.height = 'auto';
-		item.style.width = '96px';
+		item.style.width = '76px';
 
 		item.style.verticalAlign = 'top';
 		item.style.wordWrap = 'break-word';
@@ -28,8 +28,8 @@ function View(Folder=false,List=false) {
 			
 			icn = Icon(List[i]);
 			icn.style.display = 'block';
-			icn.style.width = '64px';
-			icn.style.height = '64px';
+			icn.style.width = '32px';
+			icn.style.height = '32px';
 			icn.style.margin = '0 auto';
 			icn.style.marginBottom = '4px';
 			itm.appendChild(icn);
@@ -42,19 +42,22 @@ function View(Folder=false,List=false) {
 				Select(this,e,List[this.id]);
 			}
 			itm.ondblclick = function() {
-				Click(List[this.id]);
+				console.log(List[this.id]);
+				if (List[this.id]['type'] == 'folder') {
+					Click(List[this.id]);
+				}
 			}
 			itm.oncontextmenu = function(e) {
 				Select(this,e,List[this.id]);
-				ContextMenu(List[this.id],e);
 				e.preventDefault();
 				e.stopPropagation();
 				return false;
-			}			
+			}
+			
 			document.body.appendChild(itm);
 		}
+
 		document.oncontextmenu = function(e) {
-			ContextMenu(Folder,e);
 			e.preventDefault();
 			return false;
 		}

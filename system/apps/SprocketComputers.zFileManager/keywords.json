@@ -12,5 +12,9 @@
 	"undefined": "./",
 	".": "./",
 	"..": "./",
-	"../": "./"
+	"../": "./",
+	"Keywords": "?keywords",
+	"keywords": "?keywords",
+	"Home": "?home",
+	"home": "?home"
 }

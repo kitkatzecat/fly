@@ -1,4 +1,4 @@
-function View() {
+function View(Folder=false,List=false) {
 	if (Folder && List) {
 
 		var documentStyle = document.createElement('style');
@@ -119,6 +119,10 @@ function View() {
 			},500);
 		}
 	} else {
-		document.body.innerHTML += Output;
+		throw "Folder or List is not valid";
 	}
 }
+window.addEventListener('load',function() {
+	document.body.style.color = '#fff';
+	document.body.style.textShadow = '0px 0px 4px rgba(0,0,0,0.7)';
+});

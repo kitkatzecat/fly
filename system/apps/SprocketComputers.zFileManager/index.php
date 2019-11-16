@@ -69,7 +69,7 @@ function ToolbarInit() {
 		['Copy to',function(){},{disabled:true}],
 		['Move to',function(){},{disabled:true}],
 		[''],
-		['Keywords...',function(){Dialog.open('dialogs.php?dialog=keywords_manage','Manage Keywords',500,400,false);},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'}]
+		['Keywords',function(){Nav('?keywords');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'}]
 	]});
 	Menubar.add({text:'View',type:'dropdown',menu:[
 		['Home',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
@@ -186,19 +186,29 @@ function Nav(path) {
 	Addressbar.value = '';
 	document.getElementById('statusbar').innerHTML = 'Loading...';
 	document.getElementById('frame-main').style.display = 'none';
-	Fly.command('fileprocess:'+path,function(pth){
-		if (pth['return'].hasOwnProperty('ffile')) {
-			Addressbar.value = pth['return']['ffile'];
-			Fly.window.icon.set(pth['return']['icon']);
-			Fly.window.title.set(pth['return']['fname']);
-		} else {
-			Addressbar.value = path;
-			Fly.window.icon.set('<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg');
-			Fly.window.title.set('Not Found');
-		}
-		Nav.current = pth['return'];
-	})
-	document.getElementById('frame-main').src = 'list.php?p='+encodeURIComponent(path);
+	if (path.indexOf('?') == 0) {
+		var file = path.replace('?','');
+		Addressbar.value = 'Loading...';
+		Fly.window.icon.set('<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg');
+		Fly.window.title.set('Loading...');
+		document.getElementById('frame-main').src = 'list.php?p='+encodeURIComponent(path);
+
+		Nav.current = path;
+	} else {
+		Fly.command('fileprocess:'+path,function(pth){
+			if (pth['return'].hasOwnProperty('ffile')) {
+				Addressbar.value = pth['return']['ffile'];
+				Fly.window.icon.set(pth['return']['icon']);
+				Fly.window.title.set(pth['return']['fname']);
+			} else {
+				Addressbar.value = path;
+				Fly.window.icon.set('<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg');
+				Fly.window.title.set('Not Found');
+			}
+			Nav.current = pth['return'];
+		});
+		document.getElementById('frame-main').src = 'list.php?p='+encodeURIComponent(path);
+	}
 }
 Nav.current = false;
 
@@ -214,7 +224,11 @@ function Refresh(pos=false) {
 		}
 		frame.addEventListener('load',a);
 	}
-	Nav(Nav.current['ffile']);
+	if (typeof Nav.current['ffile'] !== 'undefined') {
+		Nav(Nav.current['ffile']);
+	} else {
+		Nav(Nav.current);
+	}
 }
 
 var Pane = {
@@ -414,16 +428,14 @@ var CurrentLocation = {
 	fpath: './system',
 };
 var SelectedFile = CurrentLocation;
+function SelectedFileOn() {
+	
+}
 
 function FrameLoad() {
 	var frame = document.getElementById('frame-main');
 
 	frame.style.display = 'block';
-	if (parseInt(frame.contentWindow.List.length)) {
-		document.getElementById('statusbar').innerHTML = frame.contentWindow.List.length+' items';
-	} else {
-		document.getElementById('statusbar').innerHTML = 'Ready';
-	}
 }
 
 </script>

@@ -1,4 +1,4 @@
-function View() {
+function View(Folder=false,List=false) {
 	if (Folder && List) {
 		// Item object
 		var item = document.createElement('div');
@@ -59,6 +59,6 @@ function View() {
 			return false;
 		}
 	} else {
-		document.body.innerHTML += Output;
+		throw "Folder or List is not valid";
 	}
 }

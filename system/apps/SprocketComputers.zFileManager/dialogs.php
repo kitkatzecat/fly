@@ -18,6 +18,9 @@ if ($_GET['dialog'] == 'keyword_add') {
 if ($_GET['dialog'] == 'keyword_remove') {
 	goto keyword_remove;
 }
+if ($_GET['dialog'] == 'file_get') {
+	goto file_get;
+}
 exit;
 
 bookmark_add:
@@ -417,7 +420,7 @@ button#ButtonHelp {
 <p class="hint" id="KeywordHint" style="margin-bottom:16px;">Keywords are case-sensitive.</p>
 </div>
 
-<button onclick="window.top.system.command('run:SprocketComputers.zFileManager.ManageKeywords');" id="ButtonHelp"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg" class="button-image"></button>
+<button onclick="window.top.system.command('run:<?php echo $_FLY['APP']['ID']; ?>,p=?keywords');" id="ButtonHelp"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg" class="button-image"></button>
 <button onclick="Dialog.submit();" disabled id="ButtonOk"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg" class="button-image"></button>
 <button onclick="Dialog.cancel();" disabled id="ButtonCancel"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg" class="button-image"></button>
 
@@ -467,5 +470,268 @@ if (isset($keywords[$_GET['keyword']])) {
 file_put_contents($_FLY['APP']['DATA_PATH'].'keywords.json',json_encode($keywords));
 echo '<script>window.parent.location.reload();</script>';
 
+exit;
+
+file_get:
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<?php
+include 'Fly.Standard.php';
+include 'Fly.Actionbar.php';
+include 'Fly.Command.php';
+
+if (isset($_GET['p'])) {
+	$p = $_GET['p'];
+} else {
+	$p = '%FLY.PATH%';
+}
+$p = base64_encode($p);
+
+$views = json_decode(file_get_contents($_FLY['WORKING_PATH'].'view/views.json'),true);
+$cv = FlyRegistryGet('View');
+$vm = '';
+$vl = '{';
+$vc = 0;
+foreach ($views as $k => $v) {
+	if ($v['src'] == $cv) {
+		$vm .= '[\''.$k.'\',function(){View.set(\''.$v['src'].'\');},{icon:\''.FlyVarsReplace($v['icon']).'\',toggled:true}],';
+	} else {
+		$vm .= '[\''.$k.'\',function(){View.set(\''.$v['src'].'\');},{icon:\''.FlyVarsReplace($v['icon']).'\'}],';
+	}
+	$vl .= '\''.$v['src'].'\':'.$vc.',';
+	$vc++;
+}
+$vl .= '}';
+$vl = str_lreplace(',','',$vl);
+
+$vm = str_lreplace(',','',$vm);
+
+?>
+<script>
+var Menubar;
+var Navbar;
+var Panebar;
+var Addressbar;
+var Panes = {};
+Fly.window.ready = function() {
+	ToolbarInit();
+	Fly.window.disableContext();
+	Nav(atob('<?php echo $p; ?>'));
+}
+
+Fly.window.onclose = function() {
+	Fly.window.close();
+}
+
+function ToolbarInit() {
+	Navbar = new Fly.actionbar();
+	Navbar.style.position = 'absolute';
+	Navbar.style.top = '0px';
+	Navbar.style.right = '0px';
+	Navbar.style.left = '0px';
+	Navbar.style.width = 'auto';
+	Navbar.style.transition = 'right 0.2s ease-in-out';
+	
+	Addressbar = document.createElement("input");
+	Addressbar.type = 'text';
+	Addressbar.className = 'addressbar transparent-white FlyUiTextHighlight';
+	Addressbar.onkeydown = function(event) {
+		if (event.keyCode == 13) {
+			Go();
+		}
+	}
+	Addressbar.onfocus = function() {
+		Addressbar.className = 'addressbar-focus';
+		setTimeout(function(){Addressbar.select()},100);
+	}
+	Addressbar.onblur = function() {
+		Addressbar.className = 'addressbar transparent-white FlyUiTextHighlight';
+		if (window.getSelection) {window.getSelection().removeAllRanges();}
+		else if (document.selection) {document.selection.empty();}
+	}
+	
+	Navbar.add({text:'',title:'Back',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
+	Navbar.add({text:'',title:'Up',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-up.svg',action:Up});
+	var ab = Navbar.add({type:'custom',content:Addressbar});
+	ab.style.width = 'calc(100% - 164px)';
+	Navbar.add({text:'',title:'Refresh',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg',action:Refresh,align:'right'});
+	Navbar.add({text:'Go',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',action:Go,align:'right'});
+	
+	document.body.appendChild(Navbar);
+}
+function Close() {
+	Fly.window.close();
+}
+function Go() {
+	Nav(Addressbar.value);
+	Addressbar.blur();
+}
+
+function Nav(path) {
+	window.top.shell.sound.system('click');
+	Addressbar.value = '';
+	document.getElementById('frame-main').style.display = 'none';
+	Fly.command('fileprocess:'+path,function(pth){
+		if (pth['return'].hasOwnProperty('ffile')) {
+			Addressbar.value = pth['return']['ffile'];
+			Fly.window.title.set('Choose a File - '+pth['return']['fname']);
+		} else {
+			Addressbar.value = path;
+			Fly.window.title.set('Choose a File - Not Found');
+		}
+		Nav.current = pth['return'];
+	})
+	document.getElementById('frame-main').src = 'list.php?v=file.sm.js&p='+encodeURIComponent(path);
+}
+Nav.current = false;
+
+function Up() {
+	Nav(Nav.current['fpath']);
+}
+function Refresh(pos=false) {
+	if (!!pos) {
+		var frame = document.getElementById('frame-main');
+		var a = function() {
+			frame.contentWindow.scrollTo(0,pos);
+			frame.removeEventListener('load',a);
+		}
+		frame.addEventListener('load',a);
+	}
+	Nav(Nav.current['ffile']);
+}
+
+var CurrentLocation = {
+	basename: 'system',
+	icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',
+	path: '<?php echo $_FLY['PATH']; ?>system',
+	url: '<?php echo $_FLY['URL']; ?>system',
+	fpath: './system',
+};
+var SelectedFile = CurrentLocation;
+function SelectedFileOn() {
+	if (SelectedFile['type'] !== 'folder') {
+		document.getElementById('filename').innerHTML = SelectedFile['fname'];
+		document.getElementById('fileicon').src = SelectedFile['icon'];
+		ChosenFile = SelectedFile;
+	}
+}
+
+var ChosenFile = false;
+
+function FrameLoad() {
+	var frame = document.getElementById('frame-main');
+
+	frame.style.display = 'block';
+}
+</script>
+<style>
+#main {
+	position: absolute;
+	top: 34px;
+	left: 0px;
+	right: 0px;
+	bottom: 48px;
+	background: #fff;
+	z-index: 2;
+	cursor: wait;
+}
+.addressbar-focus {
+	margin-left: 4px;
+	margin-right: 4px;
+	margin-top: 3px;
+	height: 24px;
+	box-sizing: border-box;
+	cursor: text;
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+	background-color: #fff !important;
+	text-shadow: none !important;
+	color: #000 !important;
+	border-color: #000 !important;
+}
+.addressbar {
+	margin-left: 4px;
+	margin-right: 4px;
+	margin-top: 3px;
+	height: 24px;
+	box-sizing: border-box;
+	background-color: transparent;
+	cursor: text;
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+}
+.addressbar:disabled {
+	color: #808080 !important;
+}
+.transparent-white {
+	border: 1px solid rgba(255,255,255,0.3) !important;
+}
+.transparent-white:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+.white {
+	border: 1px solid rgb(255,255,255) !important;
+}
+.white:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+.black {
+	border: 1px solid rgb(0,0,0) !important;
+}
+.black:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+#frame-main {
+	width: 100%;
+	height: 100%;
+}
+#filebar {
+	position: absolute;
+	left: 9px;
+	bottom: 9px;
+	right: 119px;
+	border: 1px solid rgba(255,255,255,0.3) !important;
+	border-radius: 4px;
+	height: 28px;
+	padding: 5px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+#filebar:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+#fileicon {
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+	margin-bottom: -3px;
+	margin-left: 2px;
+}
+
+img.button-image {
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+}
+button#button-ok {
+	width:100px;position:absolute;bottom:9px;right:9px;
+}
+</style>
+</head>
+<body onload="Load()">
+<div id="main">
+<iframe id="frame-main" onload="FrameLoad();" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
+</div>
+
+<div id="filebar" class="FlyUiTextHighlight"><img id="fileicon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg"><span id="filename">No file selected</span></div>
+<button disabled id="button-ok"><img class="button-image" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg"></button>
+
+</body>
+</html>
+<?php
 exit;
 ?>
