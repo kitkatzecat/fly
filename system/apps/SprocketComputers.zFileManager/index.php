@@ -72,7 +72,7 @@ function ToolbarInit() {
 		['Keywords',function(){Nav('?keywords');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'}]
 	]});
 	Menubar.add({text:'View',type:'dropdown',menu:[
-		['Home',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
+		['Home',function(){Nav('?home');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
 		[''],
 		['Icon View',[
 			<?php echo $vm; ?>
