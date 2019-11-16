@@ -83,7 +83,7 @@ if (in_array($process['ffile'],$reg)) {
 		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
 
 		Fly.window.size.set(500,height);
-		Fly.window.position.set(((window.top.window.innerWidth/2)-258),((window.top.window.innerHeight/2)-((height+64)/2)));
+		Fly.window.position.set(((window.top.window.innerWidth/2)-258),((window.top.window.innerHeight/2)-((height+100)/2)));
 
 		document.getElementById('ButtonOk').disabled = false;
 		document.getElementById('ButtonCancel').disabled = false;
