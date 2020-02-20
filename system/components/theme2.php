@@ -468,7 +468,7 @@ if (strpos($settings, 'controls') !== false || strpos($settings, 'all') !== fals
 	button:active, input[type=submit]:active, input[type=reset]:active, input[type=button]:active {
 		'.str_replace($vars,$values,$theme->controls->button->active).'
 	}
-	button:hover, input[type=submit]:active, input[type=reset]:active, input[type=button]:active {
+	button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover {
 		'.str_replace($vars,$values,$theme->controls->button->hover).'
 	}
 	input[type=text], input[type=password] {
