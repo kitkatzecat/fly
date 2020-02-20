@@ -61,15 +61,22 @@ function FlyFontInfo($name) {
 }
 
 // Checks if a font is installed
-// ------------------------------------------------------ this needs to be fixed to check actual names in the JSON!!!!
 function FlyFontCheck($name) {
 	global $_FLY;
-	
-	if (file_exists($_FLY['RESOURCE']['PATH']['FONTS'].$name)) {
-		return true;
-	} else {
-		return false;
+
+	$fonts = scandir($_FLY['RESOURCE']['PATH']['FONTS']);
+	foreach ($fonts as $file) {
+		if (is_dir($_FLY['RESOURCE']['PATH']['FONTS'].$file)) {
+			if (file_exists($_FLY['RESOURCE']['PATH']['FONTS'].$file.'/font.json')) {
+				$json = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['FONTS'].$file.'/font.json'),true);
+				if ($json['name'] == $name) {
+					return true;
+				}
+			}
+		}
 	}
+	
+	return false;
 }
 
 // Returns the CSS font notation for a Fly font style
