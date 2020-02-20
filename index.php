@@ -69,7 +69,8 @@ include 'Fly.Command.php'; // Dynamic commands
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'shell.php'; // Fly shell
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'sound.php'; // Fly shell - sound
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'theme.php'; // Theme loader 1.0 (OLD)
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme2.php'; // Theme loader 2.0
+//include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme2.php'; // Theme loader 2.0
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme3.php'; // Theme loader 3.0 (beta)
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window.php'; // Window manager 1.0 (OLD)
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window2.php'; // Window manager 2.0 (OLD)
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'window3.php'; // Window manager 3.0
@@ -82,7 +83,9 @@ include 'Fly.Actionmenu.php'; // Fly Actionmenu for Window Switcher menu
 // JS SCRIPTS
 
 // EXECUTE SYSTEM FUNCTIONS
-FlyLoadTheme('all');
+//FlyLoadTheme('all');
+$theme = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['THEMES'].'base.thm');
+echo FlyThemeCSS($theme[0],$theme[1]);
 audio_sound_init($config_user);
 
 // CHECK USER FOLDERS
