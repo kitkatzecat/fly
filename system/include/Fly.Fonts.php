@@ -5,7 +5,7 @@ if (!isset($_FLY)) {
 if (!FlyIncludeCheck('FLY.FONTS')) {
 FlyIncludeRegister('FLY.FONTS');
 
-// Loads a font installed in the fonts resources directory (FLY.RESOURCE.*.FONTS)
+// Loads a font installed in the fonts resources directory (FLY.RESOURCE.*.FONTS) (Uses folder ID, must get from FlyFontCheck)
 function FlyFontLoad($name,$echo=true,$enclosure=true) {
 	global $_FLY;
 	
@@ -17,10 +17,11 @@ function FlyFontLoad($name,$echo=true,$enclosure=true) {
 				if ($enclosure) {
 					$css .= '<style>';
 				}
+				$css .= "/* font $name */\n";
 				foreach ($json['resources'] as $style => $file) {
 					$css .= '@font-face {font-family: \''.$json['name'].'\';src: url(\''.$_FLY['RESOURCE']['URL']['FONTS'].$name.'/'.$file.'\');';
 					$css .= FlyFontStyleToCss($style);
-					$css .= '}'."\r\n";
+					$css .= '}'."\n";
 				}
 				if ($enclosure) {
 					$css .= '</style>';
@@ -60,7 +61,7 @@ function FlyFontInfo($name) {
 	}
 }
 
-// Checks if a font is installed
+// Checks if a font is installed, returns ID if is
 function FlyFontCheck($name) {
 	global $_FLY;
 
@@ -70,7 +71,7 @@ function FlyFontCheck($name) {
 			if (file_exists($_FLY['RESOURCE']['PATH']['FONTS'].$file.'/font.json')) {
 				$json = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['FONTS'].$file.'/font.json'),true);
 				if ($json['name'] == $name) {
-					return true;
+					return $file;
 				}
 			}
 		}
