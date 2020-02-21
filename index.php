@@ -84,8 +84,7 @@ include 'Fly.Actionmenu.php'; // Fly Actionmenu for Window Switcher menu
 
 // EXECUTE SYSTEM FUNCTIONS
 //FlyLoadTheme('all');
-$theme = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['THEMES'].'base.thm');
-echo FlyThemeCSS($theme[0],$theme[1]);
+FlyTheme(['text','controls','window','toolbar','body']);
 audio_sound_init($config_user);
 
 // CHECK USER FOLDERS
