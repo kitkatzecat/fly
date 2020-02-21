@@ -281,7 +281,7 @@ if (!function_exists('FlyVarsReplace')) {
 function FlyVarsReplace($string,$url=false,$fly=false) {
 	global $_FLY;
 	
-	$pattern = '/(\%.[^ ]*?\%)/';
+	$pattern = '/(\%[A-Za-z1-9\_\.]*?\%)/';
 	$matches = [];
 	$return = $string;
 	
