@@ -7,7 +7,7 @@
 	},
 	"resources": {
 		"fonts": ["Droid Sans","Symbols"],
-		"background": "./Field.jpg",
+		"background": "",
 		"background_color": [128,128,128],
 		"color": [0,0,0],
 		"transparency": 1
@@ -82,7 +82,10 @@
 						"padding": "0px",
 						"box-sizing": "border-box",
 						"font-family": "%THEME.FONTS%",
-						"text-align": "center"
+						"text-align": "center",
+						"overflow": "hidden",
+						"text-overflow": "ellipsis",
+						"white-space": "nowrap"
 					},
 					"hover": {},
 					"active": {}
@@ -102,7 +105,10 @@
 						"padding": "0px",
 						"box-sizing": "border-box",
 						"font-family": "%THEME.FONTS%",
-						"text-align": "center"
+						"text-align": "center",
+						"overflow": "hidden",
+						"text-overflow": "ellipsis",
+						"white-space": "nowrap"
 					},
 					"hover": {},
 					"active": {}
