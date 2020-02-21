@@ -15,7 +15,7 @@ function FlyLoadThemeFile($file = false) {
 
 	// If no file is specified, load the user's theme file; if no user logged in, load default theme
 	if (!$file) {
-		if ($_FLY['IS_USER']) {
+		if (false) {
 			$file = $_FLY['USER']['DATA'].'theme.thm';
 		} else {
 			$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
@@ -58,17 +58,37 @@ function FlyLoadThemeFile($file = false) {
 
 	// Create ThemeVars SHADE_RGB and SHADE_COLOR properties (used for shadows, etc)
 	if ( (0.2126*$json_parsed['resources']['color'][0] + 0.7152*$json_parsed['resources']['color'][1] + 0.0722*$json_parsed['resources']['color'][2]) < 128 && $json_parsed['resources']['transparency'] > 0.2) {
-		$THEME['SHADE_RGB'] = '#ffffff';
-		$THEME['SHADE_COLOR'] = '255';
+		$THEME['SHADE_COLOR'] = '#ffffff';
+		$THEME['SHADE_RGB'] = '255';
 	} else {
-		$THEME['SHADE_RGB'] = '#000000';
-		$THEME['SHADE_COLOR'] = '0';
+		$THEME['SHADE_COLOR'] = '#000000';
+		$THEME['SHADE_RGB'] = '0';
+	}
+
+	return([$json_raw, $THEME]);
+}
+
+function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','window','body'],$enclosure=true) {
+
+	echo '<!--';
+	print_r($THEME);
+	echo '-->';
+
+	function loopProperties($array,&$print) {
+		foreach ($array as $key => $value) {
+			$print .= "\t$key: $value;\n";
+		}
+	}
+	function addRule($name,$array,&$print) {
+		$print .= "$name {\n";
+		loopProperties($array,$print);
+		$print .= "}\n";
 	}
 
 	// Replace ThemeVars in raw json
-	$pattern = '/(\%.[^ ]*?\%)/';
+	$pattern = '/(\%[A-Za-z1-9\.\_]*?\%)/';
 	$matches = [];
-	$return = $json_raw;
+	$return = $json;
 
 	preg_match_all($pattern,$return,$matches);
 	foreach ($matches[0] as $m) {
@@ -86,20 +106,7 @@ function FlyLoadThemeFile($file = false) {
 		}
 	}
 
-	return([$return, $THEME]);
-}
-
-function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','window','body'],$enclosure=true) {
-	function loopProperties($array,&$print) {
-		foreach ($array as $key => $value) {
-			$print .= "\t$key: $value;\n";
-		}
-	}
-	function addRule($name,$array,&$print) {
-		$print .= "$name {\n";
-		loopProperties($array,$print);
-		$print .= "}\n";
-	}
+	$json = $return;
 
 	$css = '';
 
@@ -157,7 +164,7 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 
 		addRule('.FlyToolbar',$json['style']['toolbar']['normal'],$css);
 
-		addRule('.FlyUiTip',$json['style']['toolbar']['tip'],$css);
+		addRule('.FlyUiTip',$json['style']['toolbar']['tip']['normal'],$css);
 
 		addRule('.FlyTrayIcon',$json['style']['toolbar']['tray_icon']['normal'],$css);
 		addRule('.FlyTrayIcon:hover',$json['style']['toolbar']['tray_icon']['hover'],$css);
@@ -197,6 +204,7 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('button, input[type=submit], input[type=reset], input[type=button]',$json['style']['controls']['button']['normal'],$css);
 		addRule('button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover',$json['style']['controls']['button']['hover'],$css);
 		addRule('button:active, input[type=submit]:active, input[type=reset]:active, input[type=button]:active',$json['style']['controls']['button']['active'],$css);
+		addRule('button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]',array_merge($json['style']['controls']['button']['normal'],$json['style']['controls']['button']['disabled']),$css);
 		
 		addRule('input[type=text], input[type=password]',$json['style']['controls']['text']['normal'],$css);
 		addRule('input[type=text]:hover, input[type=password]:hover',$json['style']['controls']['text']['hover'],$css);
@@ -233,6 +241,29 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 
 	return $css;
 
+}
+
+function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true) {
+	global $_FLY;
+
+	$base = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['OS'].'base.thm');
+	$base[0] = json_decode($base[0],true);
+	$user = FlyLoadThemeFile();
+	$user[0] = json_decode($user[0],true);
+
+	$theme = [
+		array_replace_recursive($base[0],$user[0]),
+		array_replace($base[1],$user[1])
+	];
+
+	$theme[0] = json_encode($theme[0]);
+
+	$css = FlyThemeCSS($theme[0],$theme[1],$categories,$enclosure);
+	if ($echo) {
+		echo $css;
+	} else {
+		return $css;
+	}
 }
 
 }
