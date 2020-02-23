@@ -147,7 +147,7 @@ include 'Fly.Constants.php';
 include 'Fly.Theme.php';
 include 'Fly.FileProcessor.php';
 include 'Fly.Actionmenu.php';
-FlyLoadTheme('text controls');
+FlyTheme(['text','controls']);
 
 ?>
 <style>
