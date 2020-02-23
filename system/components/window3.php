@@ -7,17 +7,23 @@ if (!isset($_FLY)) {
 if (!FlyIncludeCheck('FLY.FONTS')) {
 	include 'Fly.Fonts.php';
 }
+if (!FlyIncludeCheck('FLY.THEME')) {
+	include 'Fly.Theme.php';
+}
 
 FlyFontLoad('Symbols');
 
 $window_timeout = '1000';
-$theme = simpleXML_load_file(FlyVarsReplace($config_user->visual->theme->url));
-if ($theme->window['background-movement']=="true" || $theme->window['background-movement']=="on" || $theme->window['background-movement']=="yes") {
-	$window_move = true;
-} else {
-	$window_move = false;
-}
-$minimize_timeout = $theme->window->minimize['wait'];
+
+$themebase = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['OS'].'base.thm');
+$themebase[0] = json_decode($themebase[0],true);
+$theme3 = FlyLoadThemeFile();
+$theme3[0] = json_decode($theme3[0],true);
+$theme3 = array_replace_recursive($themebase,$theme3);
+
+$window_move = boolval($theme3[0]['style']['window']['background_movement']);
+$minimize_timeout = strval((floatval($theme3[0]['style']['window']['animation']['minimize']['length'])*floatval($theme3[0]['style']['window']['animation']['minimize']['repeat']))+(floatval($theme3[0]['style']['window']['animation']['minimize']['delay'])*floatval($theme3[0]['style']['window']['animation']['minimize']['repeat'])));
+
 error_reporting(E_ALL);
 ?>
 <style>
@@ -294,9 +300,9 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			frame.style.zIndex = '99999999';
 			frame.style.pointerEvents = 'none';
 			<?php
-				echo 'frame.style.animation = "FlyWindowCloseAnimation '.$theme->window->animations->close["length"].'s '.$theme->window->animations->close["timing"].' '.$theme->window->animations->close["delay"].'s '.$theme->window->animations->close["repeat"].'";';
+				echo 'frame.style.animation = "FlyWindowCloseAnimation '.$theme3[0]['style']['window']['animations']['close']['length'].'s '.$theme3[0]['style']['window']['animations']['close']['timing'].' '.$theme3[0]['style']['window']['animations']['close']['delay'].'s '.$theme3[0]['style']['window']['animations']['close']['repeat'].'";';
 
-				echo 'setTimeout(function() {frame.window.clear();frame.parentNode.removeChild(frame);}, '.((((float)$theme->window->animations->close["length"]*(int)$theme->window->animations->close["repeat"])+(float)$theme->window->animations->close["delay"])*1000).');';
+				echo 'setTimeout(function() {frame.window.clear();frame.parentNode.removeChild(frame);}, '.((((float)$theme3[0]['style']['window']['animations']['close']['length']*(int)$theme3[0]['style']['window']['animations']['close']['repeat'])+(float)$theme3[0]['style']['window']['animations']['close']['delay'])*1000).');';
 			?>
 		}
 	}
@@ -311,9 +317,9 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	frame.window.minimize = function() {
 		if (frame.window.isMinimized == false) {
 			<?php
-				echo 'frame.style.animation = "FlyWindowMinimizeAnimation '.$theme->window->animations->minimize["length"].'s '.$theme->window->animations->minimize["timing"].' '.$theme->window->animations->minimize["delay"].'s '.$theme->window->animations->minimize["repeat"].'";';
+				echo 'frame.style.animation = "FlyWindowMinimizeAnimation '.$theme3[0]['style']['window']['animations']['minimize']['length'].'s '.$theme3[0]['style']['window']['animations']['minimize']['timing'].' '.$theme3[0]['style']['window']['animations']['minimize']['delay'].'s '.$theme3[0]['style']['window']['animations']['minimize']['repeat'].'";';
 
-				echo 'setTimeout(frame.window.minimized, '.((((float)$theme->window->animations->minimize["length"]*(int)$theme->window->animations->minimize["repeat"])+(float)$theme->window->animations->minimize["delay"])*1000).');';
+				echo 'setTimeout(frame.window.minimized, '.((((float)$theme3[0]['style']['window']['animations']['minimize']['length']*(int)$theme3[0]['style']['window']['animations']['minimize']['repeat'])+(float)$theme3[0]['style']['window']['animations']['minimize']['delay'])*1000).');';
 			?>
 		}
 	}
@@ -351,8 +357,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			frame.window.composition.minimizeObj = false;
 			
 			<?php
-				echo 'frame.style.animation = "FlyWindowMinimizeAnimation '.$theme->window->animations->minimize["length"].'s '.$theme->window->animations->minimize["timing"].' '.$theme->window->animations->minimize["delay"].'s '.$theme->window->animations->minimize["repeat"].' reverse";';
-				echo 'setTimeout(function() {frame.window.bringToFront();frame.style.animation="";}, '.((((float)$theme->window->animations->minimize["length"]*(int)$theme->window->animations->minimize["repeat"])+(float)$theme->window->animations->minimize["delay"])*1000).');';
+				echo 'frame.style.animation = "FlyWindowMinimizeAnimation '.$theme3[0]['style']['window']['animations']['minimize']['length'].'s '.$theme3[0]['style']['window']['animations']['minimize']['timing'].' '.$theme3[0]['style']['window']['animations']['minimize']['delay'].'s '.$theme3[0]['style']['window']['animations']['minimize']['repeat'].' reverse";';
+				echo 'setTimeout(function() {frame.window.bringToFront();frame.style.animation="";}, '.((((float)$theme3[0]['style']['window']['animations']['minimize']['length']*(int)$theme3[0]['style']['window']['animations']['minimize']['repeat'])+(float)$theme3[0]['style']['window']['animations']['minimize']['delay'])*1000).');';
 			?>
 
 			frame.window.bringToFront();
@@ -1290,7 +1296,7 @@ if ($window_move) {
 		frame.style.visibility = 'visible';
 		frame.window.bringToFront();
 		<?php
-			echo 'frame.style.animation = "FlyWindowOpenAnimation '.$theme->window->animations->open["length"].'s '.$theme->window->animations->open["timing"].' '.$theme->window->animations->open["delay"].'s '.$theme->window->animations->open["repeat"].'";';
+			echo 'frame.style.animation = "FlyWindowOpenAnimation '.$theme3[0]['style']['window']['animations']['open']['length'].'s '.$theme3[0]['style']['window']['animations']['open']['timing'].' '.$theme3[0]['style']['window']['animations']['open']['delay'].'s '.$theme3[0]['style']['window']['animations']['open']['repeat'].'";';
 		?>
 		clearTimeout(frame.window.composition.showContentTimeout);
 	}
