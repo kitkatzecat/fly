@@ -72,12 +72,31 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 
 	function loopProperties($array,&$print) {
 		foreach ($array as $key => $value) {
-			$print .= "\t$key: $value;\n";
+			if (is_array($value)) {
+				$print .= "\t$key: {\n";
+				loopProperties($value,$print);
+				$print .= "\t}\n";
+			} else {
+				$print .= "\t$key: $value;\n";
+			}
+		}
+	}
+	function loopAnimation($array,&$print) {
+		foreach ($array as $key => $value) {
+			if (is_array($value)) {
+				$print .= "\t$key {\n";
+				loopProperties($value,$print);
+				$print .= "\t}\n";
+			}
 		}
 	}
 	function addRule($name,$array,&$print) {
 		$print .= "$name {\n";
-		loopProperties($array,$print);
+		if (substr($name,0,10) == '@keyframes') {
+			loopAnimation($array,$print);
+		} else {
+			loopProperties($array,$print);
+		}
 		$print .= "}\n";
 	}
 
@@ -129,6 +148,10 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 
 		// .FlyWindow
 		$css .= ".FlyWindow {}\n";
+
+		addRule('@keyframes FlyWindowOpenAnimation',$json['style']['window']['animations']['open']['style'],$css);
+		addRule('@keyframes FlyWindowCloseAnimation',$json['style']['window']['animations']['close']['style'],$css);
+		addRule('@keyframes FlyWindowMinimizeAnimation',$json['style']['window']['animations']['minimize']['style'],$css);
 
 		addRule('.FlyWindowActive',$json['style']['window']['active'],$css);
 		addRule('.FlyWindowInactive',$json['style']['window']['inactive'],$css);
@@ -217,7 +240,8 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('.FlyUiToolbarItem:active',$json['style']['controls']['toolbar_item']['active'],$css);
 		addRule('.FlyUiToolbarItemToggle',array_merge($json['style']['controls']['toolbar_item']['normal'],$json['style']['controls']['toolbar_item']['toggle']),$css);
 
-		addRule('.FlyUiMenu',$json['style']['controls']['menu']['normal'],$css);
+		addRule('@keyframes FlyUiMenuAnimation',$json['style']['controls']['menu']['animations']['open']['style'],$css);
+		addRule('.FlyUiMenu',array_merge($json['style']['controls']['menu']['normal'],['animation'=>'FlyUiMenuAnimation '.$json['style']['controls']['menu']['animations']['open']['length'].'s '.$json['style']['controls']['menu']['animations']['open']['timing'].' '.$json['style']['controls']['menu']['animations']['open']['delay'].'s '.$json['style']['controls']['menu']['animations']['open']['repeat']]),$css);
 		addRule('.FlyUiMenuItem',$json['style']['controls']['menu_item']['normal']['normal'],$css);
 		addRule('.FlyUiMenuItem:hover',$json['style']['controls']['menu_item']['normal']['hover'],$css);
 		addRule('.FlyUiMenuItem:active',$json['style']['controls']['menu_item']['normal']['active'],$css);

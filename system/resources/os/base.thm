@@ -35,6 +35,39 @@
 			}
 		},
 		"window": {
+			"background_movement": true,
+			"animations": {
+				"open": {
+					"length": 0,
+					"delay": 0,
+					"timing": "linear",
+					"repeat": 1,
+					"style": {
+						"from": {},
+						"to": {}
+					}
+				},
+				"close": {
+					"length": 0,
+					"delay": 0,
+					"timing": "linear",
+					"repeat": 1,
+					"style": {
+						"from": {},
+						"to": {}
+					}
+				},
+				"minimize": {
+					"length": 0,
+					"delay": 0,
+					"timing": "linear",
+					"repeat": 1,
+					"style": {
+						"from": {},
+						"to": {}
+					}
+				}
+			},
 			"active": {
 				"background": "#c0c0c0",
 				"font-family": "%THEME.FONTS%",
@@ -400,6 +433,18 @@
 				}
 			},
 			"menu": {
+				"animations": {
+					"open": {
+						"length": 0,
+						"delay": 0,
+						"timing": "linear",
+						"repeat": 1,
+						"style": {
+							"from": {},
+							"to": {}
+						}
+					}
+				},
 				"normal": {
 					"min-width": "96px",
 					"position": "absolute",
