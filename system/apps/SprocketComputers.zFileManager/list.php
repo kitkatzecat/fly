@@ -64,7 +64,7 @@ var Output = atob(\''.base64_encode($Output).'\');
 ?>
 <script>
 function Load() {
-	if (ImagePreviews) {
+	if (Icon.ImagePreviews) {
 		try {
 			window.parent.ImagePreviews.toggleOn();
 		} catch(e) {console.log(e);}
@@ -74,7 +74,7 @@ function Load() {
 		} catch(e) {console.log(e);}
 	}
 	try {
-		window.parent.ImagePreviews.visible = ImagePreviews;
+		window.parent.ImagePreviews.visible = Icon.ImagePreviews;
 	} catch(e) {console.log(e);}
 
 	CheckInterval = setInterval(Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
@@ -292,15 +292,13 @@ function ContextMenu(obj,e,ret=false) {
 	}
 }
 
-var ImagePreviews = eval('<?php echo FlyRegistryGet('ShowImagePreviews'); ?>');
-
 function Icon(file) {
 	var icon = document.createElement('div');
 	icon.className = 'FlyUiNoSelect';
 	icon.style.display = 'inline-block';
 	icon.style.position = 'relative';
 
-	if (file['mime'].indexOf('image/') != -1 && !!ImagePreviews) {
+	if (file.hasOwnProperty('mime') && file['mime'].indexOf('image/') != -1 && Icon.ImagePreviews) {
 		icon.style.boxShadow = '0px 1px 4px #888';
 		icon.style.backgroundSize = 'contain';
 		icon.style.backgroundRepeat = 'no-repeat';
@@ -313,6 +311,7 @@ function Icon(file) {
 	}
 	return icon;
 }
+Icon.ImagePreviews = eval('<?php echo FlyRegistryGet('ShowImagePreviews'); ?>');
 
 var CheckInterval;
 function Check() {
