@@ -31,7 +31,7 @@ if (!FlyIncludeCheck('FLY.COREJS')) {
 	include 'Fly.CoreJS.php';
 }
 
-FlyLoadTheme('text controls');
+FlyTheme(['text','controls']);
 
 echo '
 <style>
@@ -44,6 +44,5 @@ body {
 }
 </style>
 ';
-
 
 ?>

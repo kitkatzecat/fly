@@ -70,10 +70,6 @@ function FlyLoadThemeFile($file = false) {
 
 function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','window','body'],$enclosure=true) {
 
-	echo '<!--';
-	print_r($THEME);
-	echo '-->';
-
 	function loopProperties($array,&$print) {
 		foreach ($array as $key => $value) {
 			$print .= "\t$key: $value;\n";
@@ -120,6 +116,8 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		$css .= FlyFontLoad(FlyFontCheck($font),false,false)."\n";
 	}
 
+	$css .= "\n/* (font) */\n";
+	addRule('*',['font-family'=>$THEME['FONTS']],$css);
 	if (in_array('body',$categories)) {
 		$css .= "\n/* body */\n";
 

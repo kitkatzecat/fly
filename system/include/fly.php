@@ -23,7 +23,7 @@ const WORKING_URL = \''.WORKING_URL.'\';
 </script>
 ';
 
-FlyLoadTheme('text controls');
+FlyTheme(['text','controls']);
 echo '
 <style>
 html {

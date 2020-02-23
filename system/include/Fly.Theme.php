@@ -4,5 +4,5 @@ if (!isset($_FLY)) {
 }
 FlyIncludeRegister('FLY.THEME');
 
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'theme2.php';
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'theme3.php';
 ?>
