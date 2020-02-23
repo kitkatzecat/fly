@@ -24,7 +24,7 @@ if ((string)$_FLY_CONFIG->firstRun == 'true') {
 	exit;
 }
 
-FlyLoadTheme('text controls');
+FlyTheme(['text','controls']);
 
 function getUsers() {
 	global $_FLY;
