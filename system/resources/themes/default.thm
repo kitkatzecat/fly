@@ -20,7 +20,7 @@
 				to {opacity: 1;transform-origin: 50% 0%;transform: scale(%scale_value%);}
 			]]></open>
 			<close length=".25" delay="0" timing="ease-in-out" repeat="1"><![CDATA[
-				from {opacity: 1;transform-origin: 50% 100%;transform: scale(%scale_value);}
+				from {opacity: 1;transform-origin: 50% 100%;transform: scale(%scale_value%);}
 				to {opacity: 0;transform-origin: 50% 100%;transform: scale(.85) rotateX(40deg);}
 			]]></close>
 			<minimize length=".35" delay="0" timing="ease-in" repeat="1"><![CDATA[
