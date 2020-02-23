@@ -7,7 +7,7 @@
 		"version": "3.0"
 	},
 	"resources": {
-		"fonts": ["Droid Sans","Symbols"],
+		"fonts": ["Droid Sans"],
 		"background": "./Field.jpg",
 		"background_color": [128,200,128],
 		"color": [0,0,0],
@@ -15,6 +15,7 @@
 	},
 	"style": {
 		"window": {
+			"background_movement": true,
 			"animations": {
 				"open": {
 					"length": 0.25,

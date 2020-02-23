@@ -6,7 +6,7 @@
 		"version": 3.0
 	},
 	"resources": {
-		"fonts": ["Droid Sans","Symbols"],
+		"fonts": ["Droid Sans"],
 		"background": "",
 		"background_color": [128,128,128],
 		"color": [0,0,0],
@@ -35,7 +35,7 @@
 			}
 		},
 		"window": {
-			"background_movement": true,
+			"background_movement": false,
 			"animations": {
 				"open": {
 					"length": 0,
