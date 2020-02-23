@@ -68,6 +68,30 @@ function FlyLoadThemeFile($file = false) {
 	return([$json_raw, $THEME]);
 }
 
+function FlyThemeVarsReplace($string,$THEME=[]) {
+	$pattern = '/(\%[A-Za-z1-9\.\_]*?\%)/';
+	$matches = [];
+	$return = $string;
+
+	preg_match_all($pattern,$return,$matches);
+	foreach ($matches[0] as $m) {
+		$m = substr($m,1,-1);
+		$ma = explode('.',$m);
+		if ($ma[0] == 'THEME') {
+			array_shift($ma);
+			$var = '$THEME';
+			foreach($ma as $a) {
+				$var .= '[\''.$a.'\']';
+			}
+			if (eval('return '.$var.';') !== null) {
+			    $return = str_replace('%'.$m.'%',eval('return '.$var.';'),$return);
+			}
+		}
+	}
+
+	return $return;
+}
+
 function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','window','body'],$enclosure=true) {
 
 	function loopProperties($array,&$print) {
@@ -101,27 +125,7 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 	}
 
 	// Replace ThemeVars in raw json
-	$pattern = '/(\%[A-Za-z1-9\.\_]*?\%)/';
-	$matches = [];
-	$return = $json;
-
-	preg_match_all($pattern,$return,$matches);
-	foreach ($matches[0] as $m) {
-		$m = substr($m,1,-1);
-		$ma = explode('.',$m);
-		if ($ma[0] == 'THEME') {
-			array_shift($ma);
-			$var = '$THEME';
-			foreach($ma as $a) {
-				$var .= '[\''.$a.'\']';
-			}
-			if (eval('return '.$var.';') !== null) {
-			    $return = str_replace('%'.$m.'%',eval('return '.$var.';'),$return);
-			}
-		}
-	}
-
-	$json = $return;
+	$json = FlyThemeVarsReplace($json,$THEME);
 
 	$css = '';
 
