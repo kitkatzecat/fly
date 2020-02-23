@@ -15,12 +15,18 @@ function FlyLoadThemeFile($file = false) {
 
 	// If no file is specified, load the user's theme file; if no user logged in, load default theme
 	if (!$file) {
-		if (false) {
-			$file = $_FLY['USER']['DATA'].'theme.thm';
+		if ($_FLY['IS_USER']) {
+			if (file_exists($_FLY['USER']['DATA'].'theme.thm')) {
+				$file = $_FLY['USER']['DATA'].'theme.thm';
+			} else {
+				$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
+			}
 		} else {
 			$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
 		}
 	}
+
+	error_log('FlyLoadThemeFile: '.$file);
 
 	// Get raw content of theme file (store this, we'll use it later), replace FlyVars
 	$json_raw = file_get_contents($file);
