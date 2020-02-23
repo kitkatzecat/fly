@@ -17,5 +17,9 @@
 	"Keywords": "?keywords",
 	"keywords": "?keywords",
 	"Home": "?home",
-	"home": "?home"
+	"home": "?home",
+	"Applications": "?applications",
+	"applications": "?applications",
+	"Apps": "?applications",
+	"apps": "?applications"
 }

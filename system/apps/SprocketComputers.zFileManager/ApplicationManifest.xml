@@ -1,6 +1,6 @@
 <manifest>
 	<id>SprocketComputers.zFileManager</id>
-	<name>zFile Manager</name>
+	<name>File Manager</name>
 	<publisher>Sprocket Computers</publisher>
 	<version>0.1</version>
 	<icon>%app_path%fileman.svg</icon>

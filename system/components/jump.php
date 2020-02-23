@@ -174,6 +174,6 @@ function toggleMasks(id,button) {
 <body class="FlyUiText">
 <?php echo drawApps(getApps()); ?>
 <hr>
-<div onclick="window.top.ui.jump.toggle();window.top.system.command('run:SprocketComputers.Utilities.Applications');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:24px;height:24px;vertical-align:middle;margin-right:6px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>application.svg">Applications</div>
+<div onclick="window.top.ui.jump.toggle();window.top.system.command('run:SprocketComputers.zFileManager,p=?applications');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:24px;height:24px;vertical-align:middle;margin-right:6px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>application.svg">Applications</div>
 </body>
 </html>
