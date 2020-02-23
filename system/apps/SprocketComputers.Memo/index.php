@@ -47,7 +47,7 @@ if ($_GET['file'] == '') {
 			exit;
 		}
 	} else {
-		echo '<script>window.top.shell.dialog("File not found",\'The file "'.htmlentities(basename($_GET['file'])).'" could not be opened because the file could not be found.\',"Not Found");window.location.href="index.php?Fly_Id='.FLY_WINDOW_ID.'";</script>';
+		echo '<script>Fly.control.modal("File not found",\'The file "'.htmlentities(basename($_GET['file'])).'" could not be opened because the file could not be found.\',"Not Found","'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg",function() {window.location.href="'.$_FLY['WORKING_URL'].'index.php?Fly_Id='.FLY_WINDOW_ID.'";});</script>';
 		exit;
 	}
 }
