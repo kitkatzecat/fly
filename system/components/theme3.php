@@ -26,8 +26,6 @@ function FlyLoadThemeFile($file = false) {
 		}
 	}
 
-	error_log('FlyLoadThemeFile: '.$file);
-
 	// Get raw content of theme file (store this, we'll use it later), replace FlyVars
 	$json_raw = file_get_contents($file);
 	$json_raw = FlyVarsReplace($json_raw,true);
