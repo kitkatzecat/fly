@@ -22,7 +22,6 @@ $theme3[0] = json_decode($theme3[0],true);
 $theme3 = array_replace_recursive($themebase,$theme3);
 
 $window_move = boolval($theme3[0]['style']['window']['background_movement']);
-$minimize_timeout = strval((floatval($theme3[0]['style']['window']['animation']['minimize']['length'])*floatval($theme3[0]['style']['window']['animation']['minimize']['repeat']))+(floatval($theme3[0]['style']['window']['animation']['minimize']['delay'])*floatval($theme3[0]['style']['window']['animation']['minimize']['repeat'])));
 
 error_reporting(E_ALL);
 ?>
