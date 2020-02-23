@@ -628,11 +628,12 @@ ui.init = function() {
 		document.body.appendChild(spacerDiv);
 		
 		var flyStylesheet = document.getElementById('FlyStylesheet');
-		flyStylesheet.innerHTML += '.FlyWindowActive { margin-top: '+ui.toolbar.offsetHeight+'px; }';
-		flyStylesheet.innerHTML += '.FlyWindowInactive { margin-top: '+ui.toolbar.offsetHeight+'px; }';
-		flyStylesheet.innerHTML += '.FlyWindowMinimize { margin-top: '+ui.toolbar.offsetHeight+'px; }';
-		flyStylesheet.innerHTML += '.FlyWindowTransparent { margin-top: '+ui.toolbar.offsetHeight+'px; }';
-		flyStylesheet.innerHTML += '.FlyWindowExpand { margin-top: '+ui.toolbar.offsetHeight+'px; height: calc(100% - '+ui.toolbar.offsetHeight+'px) !important; }';
+		flyStylesheet.innerHTML += '\n/* Added by ui.php - window spacing for toolbar */';
+		flyStylesheet.innerHTML += '\n.FlyWindowActive { margin-top: '+ui.toolbar.offsetHeight+'px; }';
+		flyStylesheet.innerHTML += '\n.FlyWindowInactive { margin-top: '+ui.toolbar.offsetHeight+'px; }';
+		flyStylesheet.innerHTML += '\n.FlyWindowMinimize { margin-top: '+ui.toolbar.offsetHeight+'px; }';
+		flyStylesheet.innerHTML += '\n.FlyWindowTransparent { margin-top: '+ui.toolbar.offsetHeight+'px; }';
+		flyStylesheet.innerHTML += '\n.FlyWindowExpand { margin-top: '+ui.toolbar.offsetHeight+'px; height: calc(100% - '+ui.toolbar.offsetHeight+'px) !important; }';
 
 		ui.jump = document.createElement("div");
 		ui.jump.className = 'FlyUiControlScaled';
