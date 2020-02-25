@@ -96,12 +96,41 @@ img.button-image {
 		Fly.window.size.set(500,height);
 		Fly.window.position.set(((window.top.window.innerWidth/2)-258),((window.top.window.innerHeight/2)-((height+100)/2)));
 
-		try {
-			document.getElementById('Button1').disabled = false;
-		} catch(e) {}
-		try {
-			document.getElementById('Button2').disabled = false;
-		} catch(e) {}
+		document.addEventListener("keydown", function(e) {
+			if (e.keyCode == 13) {
+				e.preventDefault();
+				document.getElementById('Button1').onclick();
+			}
+		}, false);
+
+		if (typeof document.getElementById('Button2') != "undefined") {
+			Fly.window.onclose = function() {
+				try {
+					document.getElementById('Button2').onclick;
+				} catch(e) {
+					Fly.window.close();
+				}
+				Fly.window.onclose = Fly.window.close();
+			}
+		}
+
+	}
+	var dialog = {
+		retT: function() {},
+		retF: function() {},
+		enable: function() {
+			try {
+				Fly.window.focus.take('<?php echo base64_decode($_GET['windowid']); ?>');
+			} catch(e) {
+				console.log(Fly.window.id+': no window to take focus of');
+			}
+			try {
+				document.getElementById('Button1').disabled = false;
+			} catch(e) {}
+			try {
+				document.getElementById('Button2').disabled = false;
+			} catch(e) {}
+		}
 	}
 </script>
 
@@ -118,7 +147,43 @@ if ($_GET['type'] == 'message') {
 	try {
 		window.top.shell.sound.system("error");
 	} catch(e) {}
+	dialog.enable();
 	</script>';
+}
+if ($_GET['type'] == 'confirm') {
+	echo '
+	<script>
+	try {
+		window.top.shell.sound.system("question");
+	} catch(e) {}
+	dialog.returnTrue = function() {
+		var TargetWindow = window.top.document.getElementById("'.base64_decode($_GET['windowid']).'");
+		try {
+			dialog.retT();
+			TargetWindow.window.resetFocus();
+			TargetWindow.window.bringToFront();
+		}
+		catch(err) {
+			window.top.shell.dialog("Control Error - Error","An error has occurred in the control:<pre>"+err+"</pre>","Control Error");
+		}
+		Fly.window.close();
+	}
+	dialog.returnFalse = function() {
+		var TargetWindow = window.top.document.getElementById("'.base64_decode($_GET['windowid']).'");
+		try {
+			dialog.retF();
+			TargetWindow.window.resetFocus();
+			TargetWindow.window.bringToFront();
+		}
+		catch(err) {
+			window.top.shell.dialog("Control Error - Error","An error has occurred in the control:<pre>"+err+"</pre>","Control Error");
+		}
+		Fly.window.close();
+	}
+	</script>
+	<button onclick="dialog.returnTrue();" disabled id="Button1"><img src="'.$_FLY['RESOURCE']['URL']['ICONS'].'mark-check.svg" class="button-image"></button>
+	<button onclick="dialog.returnFalse();" disabled id="Button2"><img src="'.$_FLY['RESOURCE']['URL']['ICONS'].'mark-x.svg" class="button-image"></button>
+	';
 }
 ?>
 </body>

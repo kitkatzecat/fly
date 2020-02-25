@@ -70,7 +70,7 @@ Fly.control.confirm = function(msg="Confirm",content="Are you sure you want to d
 			frame.window.close();
 		}
 	}
-	var frame = window.top.task.create(\''.$_FLY['APP']['ID'].'\',{title:title, name:Fly.window.name.get(),x:((window.top.window.innerWidth/2)-258),y:((window.top.window.innerHeight/2)-154),width:500,height:220,location:\'/system/components/dialog.php?type=confirm&windowid=\'+encodeURIComponent(window.btoa(Fly.window.id))+\'&message=\'+encodeURIComponent(window.btoa(msg))+\'&content=\'+encodeURIComponent(window.btoa(content))+\'&icon=\'+encodeURIComponent(window.btoa(icon)),icon:Fly.window.icon.get(),load:init});
+	var frame = window.top.task.create(\''.$_FLY['APP']['ID'].'\',{title:title, name:Fly.window.name.get(),x:((window.top.window.innerWidth/2)-258),y:((window.top.window.innerHeight/2)-154),width:500,height:100,location:\'/system/components/dialog2.php?type=confirm&windowid=\'+encodeURIComponent(window.btoa(Fly.window.id))+\'&message=\'+encodeURIComponent(window.btoa(msg))+\'&content=\'+encodeURIComponent(window.btoa(content))+\'&icon=\'+encodeURIComponent(window.btoa(icon)),icon:Fly.window.icon.get(),load:init});
 	return frame;
 }
 
