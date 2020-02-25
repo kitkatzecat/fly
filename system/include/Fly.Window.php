@@ -94,23 +94,23 @@ if (typeof Fly.window == "undefined") {
 		if (window.top.document.getElementById(Fly.window.id).window.isExpand) {
 			return [0,0];
 		} else {
-			return [window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,''),window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,'')];
+			return [parseInt(window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,'')),parseInt(window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,''))];
 		}
 	}
 	Fly.window.position.set = function(x=32,y=32) {
 		window.top.document.getElementById(Fly.window.id).window.setPosition(x,y);
-		return [window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,''),window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,'')];
+		return [parseInt(window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,'')),parseInt(window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,''))];
 	}
 
 	Fly.window.size = function() {
 		return Fly.window.size.get();
 	}
 	Fly.window.size.get = function() {
-		return [window.top.document.getElementById(Fly.window.id).window.content.offsetWidth,window.top.document.getElementById(Fly.window.id).window.content.offsetHeight];
+		return [parseInt(window.top.document.getElementById(Fly.window.id).window.content.offsetWidth),parseInt(window.top.document.getElementById(Fly.window.id).window.content.offsetHeight)];
 	}
 	Fly.window.size.set = function(width=320,height=240) {
 		window.top.document.getElementById(Fly.window.id).window.setSize(width,height);
-		return [window.top.document.getElementById(Fly.window.id).window.content.style.width.replace(/\\D/g,''),window.top.document.getElementById(Fly.window.id).window.content.style.height.replace(/\\D/g,'')];
+		return [parseInt(window.top.document.getElementById(Fly.window.id).window.content.style.width.replace(/\\D/g,'')),parseInt(window.top.document.getElementById(Fly.window.id).window.content.style.height.replace(/\\D/g,''))];
 	}
 	Fly.window.resize = function() {
 		return Fly.window.resize.enable();
