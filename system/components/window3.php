@@ -1331,7 +1331,7 @@ if ($window_move) {
 	if (!attributes.close) {frame.window.composition.buttons.close.status.hide();}
 	frame.window.composition.title.adjustWidth();
 	
-	console.log('Window opened - '+id+' "'+attributes.name+'"');
+	console.log(`Window opened - ${id} "${attributes.name}" (${frame.id})`);
 	return frame;
 }
 /*
