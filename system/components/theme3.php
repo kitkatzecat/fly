@@ -241,9 +241,9 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('button:active, input[type=submit]:active, input[type=reset]:active, input[type=button]:active',$json['style']['controls']['button']['active'],$css);
 		addRule('button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]',array_merge($json['style']['controls']['button']['normal'],$json['style']['controls']['button']['disabled']),$css);
 		
-		addRule('input[type=text], input[type=password]',$json['style']['controls']['text']['normal'],$css);
-		addRule('input[type=text]:hover, input[type=password]:hover',$json['style']['controls']['text']['hover'],$css);
-		addRule('input[type=text]:active, input[type=password]:active',$json['style']['controls']['text']['active'],$css);
+		addRule('input[type=text], input[type=password], input[type=date], input[type=time], input[type=number]',$json['style']['controls']['text']['normal'],$css);
+		addRule('input[type=text]:hover, input[type=password]:hover, input[type=date]:hover, input[type=time]:hover, input[type=number]:hover',$json['style']['controls']['text']['hover'],$css);
+		addRule('input[type=text]:active, input[type=password]:active, input[type=date]:active, input[type=time]:active, input[type=number]:active',$json['style']['controls']['text']['active'],$css);
 		
 		addRule('select',$json['style']['controls']['select']['normal'],$css);
 		addRule('select:hover',$json['style']['controls']['select']['hover'],$css);
