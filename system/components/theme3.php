@@ -98,34 +98,40 @@ function FlyThemeVarsReplace($string,$THEME=[]) {
 
 function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','window','body'],$enclosure=true) {
 
-	function loopProperties($array,&$print) {
-		foreach ($array as $key => $value) {
-			if (is_array($value)) {
-				$print .= "\t$key: {\n";
-				loopProperties($value,$print);
-				$print .= "\t}\n";
+	if (!function_exists('loopProperties')) {
+		function loopProperties($array,&$print) {
+			foreach ($array as $key => $value) {
+				if (is_array($value)) {
+					$print .= "\t$key: {\n";
+					loopProperties($value,$print);
+					$print .= "\t}\n";
+				} else {
+					$print .= "\t$key: $value;\n";
+				}
+			}
+		}
+	}
+	if (!function_exists('loopAnimation')) {
+		function loopAnimation($array,&$print) {
+			foreach ($array as $key => $value) {
+				if (is_array($value)) {
+					$print .= "\t$key {\n";
+					loopProperties($value,$print);
+					$print .= "\t}\n";
+				}
+			}
+		}
+	}
+	if (!function_exists('addRule')) {
+		function addRule($name,$array,&$print) {
+			$print .= "$name {\n";
+			if (substr($name,0,10) == '@keyframes') {
+				loopAnimation($array,$print);
 			} else {
-				$print .= "\t$key: $value;\n";
+				loopProperties($array,$print);
 			}
+			$print .= "}\n";
 		}
-	}
-	function loopAnimation($array,&$print) {
-		foreach ($array as $key => $value) {
-			if (is_array($value)) {
-				$print .= "\t$key {\n";
-				loopProperties($value,$print);
-				$print .= "\t}\n";
-			}
-		}
-	}
-	function addRule($name,$array,&$print) {
-		$print .= "$name {\n";
-		if (substr($name,0,10) == '@keyframes') {
-			loopAnimation($array,$print);
-		} else {
-			loopProperties($array,$print);
-		}
-		$print .= "}\n";
 	}
 
 	// Replace ThemeVars in raw json
