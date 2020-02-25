@@ -199,12 +199,9 @@ if (typeof Fly.window == "undefined") {
 	Fly.window.child = function(a) {
 		return Fly.window.child.open(a);
 	}
-	Fly.window.child.open = function(options={modal:false,attributes:{title:'Untitled', name:'Untitled', icon:'', x:'auto', y:'auto', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false}},callback=function(){}) {
-		if (typeof options.attributes != 'undefined') {
-			attributes = options.attributes;
-		} else {
-			attributes = {title:'Untitled', name:'Untitled', icon:'', x:'center', y:'center', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false};
-		}
+	Fly.window.child.open = function(options={modal:false,attributes:{}},callback=function(){}) {
+		
+		attributes = Object.assign({title:'Untitled', name:'Untitled', icon:'', x:'center', y:'center', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false},options.attributes);
 
 		attributes.reload = function(frame) {
 			Fly.window.child.children[frame.id]['window'] = frame.window.content.contentWindow;
