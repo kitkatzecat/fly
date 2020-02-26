@@ -44,9 +44,9 @@ Fly.dialog = {
 			title: `${Fly.window.name.get()} - ${attributes.title}`,
 			name: Fly.window.name.get(),
 			icon: Fly.window.icon.get(),
-			x: (pos[0]+(size[0]/2))-250,
+			x: (pos[0]+(size[0]/2))-200,
 			y: (pos[1]+(size[1]/2))-100,
-			width: 500,
+			width: 400,
 			height: 100,
 			location: '<?php echo $_FLY['RESOURCE']['URL']['COMPONENTS']; ?>dialog3.php?a='+att64,
 			close: (!attributes.modal),
@@ -55,7 +55,7 @@ Fly.dialog = {
 			resize: false,
 			background: false,
 			minheight: 100,
-			minwidth: 500
+			minwidth: 400
 		};
 
 		Fly.window.child.open({modal:attributes.modal,attributes:win},function(frame) {
@@ -64,7 +64,7 @@ Fly.dialog = {
 		});
 	},
 	message: function(properties={}) {
-		properties = Object.assign({title:'Information',message:'Information',content:'Something happened',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg',callback:function(){}},properties);
+		properties = Object.assign({title:'Information',message:'Information',content:'Something happened.',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg',callback:function(){}},properties);
 
 		Fly.dialog.open({
 			modal: true,
@@ -80,6 +80,66 @@ Fly.dialog = {
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-o.svg",
 					default: true,
 					onclick: properties.callback,
+					text: ""
+				}
+			]
+		});
+	},
+	confirm: function(properties={}) {
+		properties = Object.assign({title:'Confirm',message:'Confirm',content:'Are you sure?',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
+
+		Fly.dialog.open({
+			modal: true,
+			title: properties.title,
+			message: properties.message,
+			content: properties.content,
+			sound: "question",
+			input: false,
+			icon: properties.icon,
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
+					default: true,
+					onclick: function() {
+						properties.callback(true);
+					},
+					text: ""
+				},
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+					onclick: function() {
+						properties.callback(false);
+					},
+					text: ""
+				}
+			]
+		});
+	},
+	input: function(properties={}) {
+		properties = Object.assign({title:'Input',message:'Input',content:'Input some text.',placeholder:'',value:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
+
+		Fly.dialog.open({
+			modal: true,
+			title: properties.title,
+			message: properties.message,
+			content: properties.content,
+			sound: "question",
+			input: {
+				type: "text",
+				placeholder: properties.placeholder,
+				value: properties.value
+			},
+			icon: properties.icon,
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
+					default: true,
+					onclick: function(i) {
+						properties.callback(i);
+					},
 					text: ""
 				}
 			]
