@@ -7,6 +7,7 @@ include 'Fly.FileProcessor.php';
 include 'Fly.Registry.php';
 include 'Fly.Actionmenu.php';
 include 'Fly.Command.php';
+include 'Fly.Dialog.php';
 
 echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
 echo FlyLoadExtension('SprocketComputers.FileManager','SaveDialog');
@@ -345,7 +346,7 @@ function ShortcutInit() {
 			ZoomOut();
 		}
 		
-		//Zoom zero (ctrl+-)
+		//Zoom zero (ctrl+0)
 		if (e.keyCode == 48 && e.ctrlKey) {
 			e.preventDefault();
 			ZoomActual();
@@ -356,7 +357,33 @@ function ShortcutInit() {
 var New = {
 	blank: function() {
 		if (Changes) {
-			Fly.control.confirm('Close current file','Are you sure you want to close the file "'+FileName+'"? Any unsaved changes will be lost.','Brush - Close File','<?php echo $_FLY['RESOURCE']['URL']['ICONS'];?>warning.svg',function(){window.location.href = '<?php echo WORKING_URL;?>index.php?Fly_Id=<?php echo $_GET['Fly_Id'];?>'});
+			Fly.dialog.custom({
+				title: 'Save Changes',
+				message: 'Save changes?',
+				content: `Do you want to save changes to the file "${FileName}" before creating a new file?`,
+				sound: 'question',
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+				buttons: [
+					{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
+						default: true,
+						onclick: function() {
+							Save.save();
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
+						onclick: function() {
+							window.location.href = '<?php echo $_FLY['WORKING_URL'];?>index.php?Fly_Id=<?php echo $_GET['Fly_Id'];?>';
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+						onclick: function() {},
+					}
+				]
+			});
 		} else {
 			window.location.href = '<?php echo WORKING_URL;?>index.php?Fly_Id=<?php echo $_GET['Fly_Id'];?>';
 		}
@@ -370,7 +397,33 @@ var New = {
 		var browser = document.getElementById('FileBrowser');
 		browser.onchange = function(){};
 		if (Changes) {
-			Fly.control.confirm('Close current file','Are you sure you want to close the file "'+FileName+'"? Any unsaved changes will be lost.','Brush - Close File','<?php echo $_FLY['RESOURCE']['URL']['ICONS'];?>warning.svg',New.fileconfirm);
+			Fly.dialog.custom({
+				title: 'Save Changes',
+				message: 'Save changes?',
+				content: `Do you want to save changes to the file "${FileName}"?`,
+				sound: 'question',
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+				buttons: [
+					{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
+						default: true,
+						onclick: function() {
+							Save.save();
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
+						onclick: function() {
+							New.fileconfirm()
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+						onclick: function() {},
+					}
+				]
+			});
 		} else {
 			New.fileconfirm();
 		}
@@ -390,7 +443,33 @@ var Open = {
 		var browser = document.getElementById('FileBrowser');
 		browser.onchange = function(){};
 		if (Changes) {
-			Fly.control.confirm('Close current file','Are you sure you want to close the file "'+FileName+'"? Any unsaved changes will be lost.','Brush - Close File','<?php echo $_FLY['RESOURCE']['URL']['ICONS'];?>warning.svg',Open.fileconfirm);
+			Fly.dialog.custom({
+				title: 'Save Changes',
+				message: 'Save changes?',
+				content: `Do you want to save changes to the file "${FileName}"?`,
+				sound: 'question',
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+				buttons: [
+					{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
+						default: true,
+						onclick: function() {
+							Save.save();
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
+						onclick: function() {
+							Open.fileconfirm()
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+						onclick: function() {},
+					}
+				]
+			});
 		} else {
 			Open.fileconfirm();
 		}
@@ -431,7 +510,17 @@ var Save = {
 	},
 	confirmoverwrite: function() {
 		var browser = document.getElementById('SaveDialog');
-		Fly.control.confirm('File already exists','The file "'+Save.temp.name+'" already exists in "'+browser.vars.pbasename+'". Do you want to overwrite it?','Brush - File Exists','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',Save.confirmwrite);
+		Fly.dialog.confirm({
+			title: 'File Exists',
+			message: 'Overwrite file?',
+			content: `The file "${Save.temp.name}" already exists in "${browser.vars.pbasename}". Do you want to overwrite it?`,
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+			callback: function(r) {
+				if (r) {
+					Save.confirmwrite();
+				}
+			}
+		});
 	},
 	confirmwrite: function() {
 		File = Save.temp.path;
@@ -458,12 +547,36 @@ function Properties() {
 }
 function Close() {
 	if (Changes) {
-		Fly.control.confirm('Discard changes','Are you sure you want to close the file "'+FileName+'"? Any unsaved changes will be lost.','Brush','<?php echo $_FLY['RESOURCE']['URL']['ICONS'];?>warning.svg',function(){
-			setTimeout(function(){
-				Changes = false;
-				Close();
-			},0);
-		});
+		Fly.dialog.custom({
+				title: 'Save Changes',
+				message: 'Save changes?',
+				content: `Do you want to save changes to the file "${FileName}"?`,
+				sound: 'question',
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+				buttons: [
+					{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
+						default: true,
+						onclick: function() {
+							Save.save();
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
+						onclick: function() {
+							setTimeout(function(){
+								Changes = false;
+								Close();
+							},0);
+						},
+					},{
+						align: "right",
+						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+						onclick: function() {},
+					}
+				]
+			});
 	} else {
 		Dialog.closeAll();
 		Fly.window.close();
@@ -589,7 +702,16 @@ var Overlay = {
 		ovrlay.style.backgroundImage = 'none';
 	},
 	flatten: function() {
-		Fly.control.confirm('Flatten overlay','Are you sure you want to flatten the overlay? This will make it part of the image, and you will not be able to change the opacity or clear it.','Brush - Flatten Overlay','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',Overlay.flattenconfirm);
+		Fly.dialog.confirm({
+			title: 'Flatten Overlay',
+			message: 'Flatten overlay?',
+			content: 'Are you sure you want to flatten the overlay? This will make it part of the image, and you will not be able to change the opacity or clear it.',
+			callback: function(r) {
+				if (r) {
+					Overlay.flattenconfirm();
+				}
+			}
+		});
 	},
 	flattenconfirm: function() {		
 		Fly.control.progress('Flattening overlay...','Flattening Overlay',function(dialog) {
