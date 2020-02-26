@@ -63,8 +63,14 @@ var Output = atob(\''.base64_encode($Output).'\');
 
 ?>
 <script>
+
+if (typeof onLoad == 'undefined') {
+	onLoad = [];
+}
 function Load() {
-	if (Icon.ImagePreviews) {
+	window.ImagePreviews = (eval('<?php echo FlyRegistryGet('ShowImagePreviews'); ?>')) ? true : false;
+
+	if (window.ImagePreviews) {
 		try {
 			window.parent.ImagePreviews.toggleOn();
 		} catch(e) {console.log(e);}
@@ -74,12 +80,36 @@ function Load() {
 		} catch(e) {console.log(e);}
 	}
 	try {
-		window.parent.ImagePreviews.visible = Icon.ImagePreviews;
+		window.parent.ImagePreviews.visible = window.ImagePreviews;
+	} catch(e) {console.log(e);}
+
+
+	window.SystemFiles = (eval('<?php echo FlyRegistryGet('ShowSystemFiles'); ?>')) ? true : false;
+
+	if (window.SystemFiles) {
+		try {
+			window.parent.SystemFiles.toggleOn();
+		} catch(e) {console.log(e);}
+	} else {
+		try {
+			window.parent.SystemFiles.toggleOff();
+		} catch(e) {console.log(e);}
+	}
+	try {
+		window.parent.SystemFiles.visible = window.SystemFiles;
 	} catch(e) {console.log(e);}
 
 	CheckInterval = setInterval(Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
 
 	document.addEventListener('mousedown',function() {Deselect();});
+
+	onLoad.forEach(function(f) {
+		try {
+			f();
+		} catch(e) {
+			console.log(e);
+		}
+	});
 }
 
 var Display = {
@@ -103,14 +133,14 @@ var Display = {
 		} catch(e) {
 			console.log(e);
 		}
-},
+	},
 	Status: function(status) {
 		try {
 			window.parent.document.getElementById('statusbar').innerHTML = status;
 		} catch(e) {
 			console.log(e);
 		}
-}
+	}
 }
 
 function Deselect(item=false) {
@@ -298,7 +328,7 @@ function Icon(file) {
 	icon.style.display = 'inline-block';
 	icon.style.position = 'relative';
 
-	if (file.hasOwnProperty('mime') && file['mime'].indexOf('image/') != -1 && Icon.ImagePreviews) {
+	if (file.hasOwnProperty('mime') && file['mime'].indexOf('image/') !== -1 && window.ImagePreviews) {
 		icon.style.boxShadow = '0px 1px 4px #888';
 		icon.style.backgroundSize = 'contain';
 		icon.style.backgroundRepeat = 'no-repeat';
@@ -311,7 +341,6 @@ function Icon(file) {
 	}
 	return icon;
 }
-Icon.ImagePreviews = eval('<?php echo FlyRegistryGet('ShowImagePreviews'); ?>');
 
 var CheckInterval;
 function Check() {

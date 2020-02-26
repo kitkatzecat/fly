@@ -1,7 +1,21 @@
 <?php
 $Path = FlyVarsReplace($Path,false,FlyCoreVars($_FLY['PATH']));
 $FolderProcess = FlyFileStringProcessor($Path);	
-if (is_dir($Path)) {
+
+$protected_enforce = FlyRegistryGet('ShowSystemFiles');
+$protected = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['COMPONENTS'].'protected.json'),true);
+
+if (in_array($FolderProcess['ffile'],$protected) && $protected_enforce !== 'true') {
+	// File/folder is a protected system file
+	$Output = '<script>window.parent.Fly.window.title.set(\'System File\');Fly.window.disableContext();</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'warning.svg">The specified path is a system folder or file.</div><p class="description">These files are hidden to protect your computer.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>If you still want to continue, <a onclick="window.parent.SystemFiles.toggle();"><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg">Show System Files</a>';
+	echo '
+	<script>
+	var Folder = false;
+	var List = false;
+	var Files = false;
+	</script>
+	';
+} else if (is_dir($Path)) {
 	$FolderList = FlyCommand('list:'.$Path);
 	$FolderListArray = json_decode($FolderList['return']);
 	if (count($FolderListArray) == 0) {
@@ -49,7 +63,7 @@ if (is_dir($Path)) {
 		}
 	} else {
 		// Directory does not exist
-		$Output = '<script>window.parent.Fly.window.title.set(\'Not Found\');</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified directory or keyword could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a onclick="window.parent.Nav(\'?home\');"><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
+		$Output = '<script>window.parent.Fly.window.title.set(\'Not Found\');Fly.window.disableContext();</script><div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg">The specified directory or keyword could not be found.</div><p class="description">Try checking the spelling of the path.</p><p>'.trimslashes(str_freplace($_FLY['PATH'],'./',$Path)).'</p><p>Or, try going <a onclick="window.parent.Nav(\'?home\');"><img class="inline-icon" style="margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</a>';
 		echo '
 		<script>
 		var Folder = false;
@@ -61,21 +75,29 @@ if (is_dir($Path)) {
 }
 ?>
 <script>
-window.addEventListener('load',function() {
-	try {
-		window.View(Folder,List);
-		if (parseInt(List.length)) {
-			Display.Status(List.length+' items');
-		} else {
-			Display.Status('Ready');
-		}
+if (typeof onLoad == 'undefined') {
+	onLoad = [];
+}
+onLoad.push(function() {
+	if (Folder && List) {
+		try {
+			window.View(Folder,List);
+			if (parseInt(List.length)) {
+				Display.Status(List.length+' items');
+			} else {
+				Display.Status('Ready');
+			}
 
-	} catch(e) {
-		console.log(e); // Change the = below to a += for debugging directories that always break views
-		document.body.innerHTML = '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg">An error occurred while loading this view.</div><p class="description">Try refreshing. If the problem persists, change the view.</p><p style="font-family:monospace;">'+e+'</p>';
-		Display.Title('View Error');
-		Display.Path(atob('<?php echo base64_encode($Path); ?>'));
-		Display.Icon('<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg');
+		} catch(e) {
+			console.log(e); // Change the = below to a += for debugging directories that always break views
+			Fly.window.disableContext();
+			document.body.innerHTML = '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg">An error occurred while loading this view.</div><p class="description">Try refreshing. If the problem persists, change the view.</p><p style="font-family:monospace;">'+e+'</p>';
+			Display.Title('View Error');
+			Display.Path(atob('<?php echo base64_encode($Path); ?>'));
+			Display.Icon('<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg');
+		}
+	} else {
+		document.body.innerHTML = Output;
 	}
 });
 </script>

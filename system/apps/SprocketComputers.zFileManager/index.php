@@ -5,6 +5,7 @@
 include 'Fly.Standard.php';
 include 'Fly.Actionbar.php';
 include 'Fly.Command.php';
+include 'Fly.Dialog.php';
 
 if (isset($_GET['p'])) {
 	$p = $_GET['p'];
@@ -79,6 +80,7 @@ function ToolbarInit() {
 		],{icon:'icon.xl.svg'}],
 		['Image Previews',function(){ImagePreviews.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
 		['File Extensions',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
+		['System Files',function(){SystemFiles.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>options.svg'}],
 		[''],
 		['Status Bar',function(){StatusBar.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>index.svg'}],
 		[''],
@@ -313,7 +315,7 @@ var StatusBar = {
 		pane.style.bottom = '24px';
 		bar.style.display = 'block';
 		StatusBar.visible = true;
-		Menubar.buttons[2].menu.options[6].toggleOn();
+		Menubar.buttons[2].menu.options[7].toggleOn();
 
 		Fly.command('registry:set,ShowStatusBar,true',function(a) {
 			if (!a.return) {
@@ -330,7 +332,7 @@ var StatusBar = {
 		pane.style.bottom = '0px';
 		bar.style.display = 'block';
 		StatusBar.visible = false;
-		Menubar.buttons[2].menu.options[6].toggleOff();
+		Menubar.buttons[2].menu.options[7].toggleOff();
 
 		Fly.command('registry:set,ShowStatusBar,false',function(a) {
 			if (!a.return) {
@@ -382,6 +384,49 @@ var ImagePreviews = {
 			ImagePreviews.hide();
 		} else {
 			ImagePreviews.show();
+		}
+	}
+}
+
+var SystemFiles = {
+	visible: false,
+	show: function() {
+		SystemFiles.visible = true;
+		SystemFiles.toggleOn();
+
+		Fly.command('registry:set,ShowSystemFiles,true',function(a) {
+			Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
+	},
+	hide: function() {
+		SystemFiles.visible = false;
+		SystemFiles.toggleOff();
+
+		Fly.command('registry:set,ShowSystemFiles,false',function(a) {
+			Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+			if (!a.return) {
+				Fly.window.message.show('An error occurred while saving your options to the registry');
+			}
+		});
+	},
+	toggleOn: function() {
+		Menubar.buttons[2].menu.options[5].toggleOn();
+	},
+	toggleOff: function() {
+		Menubar.buttons[2].menu.options[5].toggleOff();
+	},
+	toggle: function() {
+		if (SystemFiles.visible) {
+			SystemFiles.hide();
+		} else {
+			Fly.dialog.confirm({title:'System Files',message:'Show system files?',content:'Are you sure you want to show system files and folders? Changing the contents of these files can harm your computer.',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>options.svg',callback:function(r){
+				if (r) {
+					SystemFiles.show();
+				}
+			}});
 		}
 	}
 }
