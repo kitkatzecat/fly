@@ -57,6 +57,24 @@
 				<title>Trash</title>
 			</window>
 		</mask>-->
+		<mask id="Applications" hidden="false">
+			<name>Applications</name>
+			<icon>%icon_path%application.svg</icon>
+			<index>index.php?p=%3Fapplications</index>
+			<window>
+				<title>Applications</title>
+				<width>60%</width>
+				<height>60%</height>
+				<minwidth>400</minwidth>
+				<minheight>160</minheight>
+				<maxinitwidth>1280</maxinitwidth>
+				<maxinitheight>720</maxinitheight>
+				<x>auto</x>
+				<y>auto</y>
+				<expand>true</expand>
+				<resize>true</resize>
+			</window>
+		</mask>
 		<mask id="Properties" hidden="true">
 			<name>Properties</name>
 			<icon>%icon_path%properties.svg</icon>
