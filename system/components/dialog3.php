@@ -15,16 +15,24 @@ var Dialog = {
 		document.querySelector('span#title').innerHTML = Dialog.attributes.message;
 		document.querySelector('p#content').innerHTML = Dialog.attributes.content;
 
+		if (!Dialog.attributes.hasOwnProperty('content') || Dialog.attributes.content == '') {
+			document.querySelector('p#content').style.display = 'none';
+		}
+
+		if (!Dialog.attributes.hasOwnProperty('icon') || Dialog.attributes.icon == '') {
+			document.querySelector('img#icon').style.display = 'none';
+		}
+
 		Dialog.attributes.buttons.forEach(function(element,index) {
 			let b = document.createElement('button');
 			b.className = 'Button';
 			b.style.right = ((9*(index+1))+(100*index))+'px';
 
 			b.innerHTML = '';
-			if (typeof element.image != 'undefined' && element.image != '') {
+			if (element.hasOwnProperty('image') && element.image != '') {
 				b.innerHTML += '<img class="button-image" src="'+element.image+'">';
 			}
-			if (typeof element.text != 'undefined' && element.text != '') {
+			if (element.hasOwnProperty('text') && element.text != '') {
 				if (typeof element.image != 'undefined' && element.image != '') {
 					b.innerHTML += ' '+element.text;
 				} else {
@@ -44,11 +52,34 @@ var Dialog = {
 		});
 
 		if (!!Dialog.attributes.input) {
+			var input = document.querySelector('input#input');
 			document.querySelector('div.input').style.display = 'block';
+			if (Dialog.attributes.input.type == 'text') {
+				input.type = 'text';
+			} else if (Dialog.attributes.input.type == 'date') {
+				input.type = 'date';
+			} else if (Dialog.attributes.input.type == 'time') {
+				input.type = 'time';
+			} else if (Dialog.attributes.input.type == 'number') {
+				input.type = 'number';
+			} else if (Dialog.attributes.input.type == 'password') {
+				input.type = 'password';
+			} else {
+				input.type = 'text';
+			}
+
+			if (Dialog.attributes.input.hasOwnProperty('placeholder')) {
+				input.placeholder = Dialog.attributes.input.placeholder;
+			}
+			if (Dialog.attributes.input.hasOwnProperty('value')) {
+				input.value = Dialog.attributes.input.value;
+			}
+
+			input.focus();
 		}
 
 		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
-		Fly.window.size.set(500,height);
+		Fly.window.size.set(400,height);
 
 		Fly.window.position.set(Fly.window.position.get()[0],(Dialog.opener.Fly.window.position.get()[1]+((Dialog.opener.Fly.window.size.get()[1]/2)-(Fly.window.size.get()[1]/2))))
 
@@ -179,9 +210,9 @@ input#input {
 
 <div id="Content">
 
-<div class="title"><img id="icon" class="title-icon" src=""><span id="title"></span></div>
-<div class="description"><p id="content"></p></div>
-<div class="input"><input type="text" id="input"></div>
+<div class="title FlyUiNoSelect"><img id="icon" class="title-icon" src=""><span id="title"></span></div>
+<div class="description FlyUiNoSelect"><p id="content"></p></div>
+<div class="input"><input autocomplete="off" type="text" id="input"></div>
 
 </div>
 
