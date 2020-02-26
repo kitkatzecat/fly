@@ -32,7 +32,7 @@ Fly.dialog = {
 			}
 		]
 	},
-	open: function(attributes={}) {
+	custom: function(attributes={}) {
 		attributes = Object.assign(Object.assign({},Fly.dialog.base),attributes);
 
 		var size = Fly.window.size.get();
@@ -66,7 +66,7 @@ Fly.dialog = {
 	message: function(properties={}) {
 		properties = Object.assign({title:'Information',message:'Information',content:'Something happened.',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg',callback:function(){}},properties);
 
-		Fly.dialog.open({
+		Fly.dialog.custom({
 			modal: true,
 			title: properties.title,
 			message: properties.message,
@@ -88,7 +88,7 @@ Fly.dialog = {
 	confirm: function(properties={}) {
 		properties = Object.assign({title:'Confirm',message:'Confirm',content:'Are you sure?',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
 
-		Fly.dialog.open({
+		Fly.dialog.custom({
 			modal: true,
 			title: properties.title,
 			message: properties.message,
@@ -120,7 +120,7 @@ Fly.dialog = {
 	input: function(properties={}) {
 		properties = Object.assign({title:'Input',message:'Input',content:'Input some text.',placeholder:'',value:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
 
-		Fly.dialog.open({
+		Fly.dialog.custom({
 			modal: true,
 			title: properties.title,
 			message: properties.message,
@@ -139,8 +139,11 @@ Fly.dialog = {
 					default: true,
 					onclick: function(i) {
 						properties.callback(i);
-					},
-					text: ""
+					}
+				},
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"
 				}
 			]
 		});
