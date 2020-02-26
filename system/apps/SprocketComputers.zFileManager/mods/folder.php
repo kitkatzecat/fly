@@ -97,6 +97,7 @@ onLoad.push(function() {
 			Display.Icon('<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg');
 		}
 	} else {
+		Display.Status('Ready');
 		document.body.innerHTML = Output;
 	}
 });
