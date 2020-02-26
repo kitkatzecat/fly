@@ -306,7 +306,6 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		}
 	}
 	frame.window.clear = function() {
-		frame.window.content.remove();
 		frame.innerHTML = '';
 	}
 	
