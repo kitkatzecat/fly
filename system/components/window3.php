@@ -306,10 +306,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		}
 	}
 	frame.window.clear = function() {
-		try {
-			frame.window.content.contentWindow.document.write('');
-		} catch(e) {}
 		frame.window.content.remove();
+		frame.innerHTML = '';
 	}
 	
 	// Minimize window
