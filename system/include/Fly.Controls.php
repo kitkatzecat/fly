@@ -5,6 +5,9 @@ if (!isset($_FLY)) {
 if (!FlyIncludeCheck('FLY.ACTIONMENU')) {
 	include 'Fly.Actionmenu.php';
 }
+if (!FlyIncludeCheck('FLY.DIALOG')) {
+	include 'Fly.Dialog.php';
+}
 FlyIncludeRegister('FLY.CONTROLS');
 echo '
 <script>
@@ -18,6 +21,7 @@ Fly.control.progressBar = function(element,options) {
 	element.className = "";
 }
 
+// DEPRECATED - Exists only as a legacy passthrough to Fly.actionmenu
 Fly.control.contextMenu = function(pos,options,actions) {
 	var moptions = [];
 	options.forEach(function(value,index) {
@@ -30,65 +34,54 @@ Fly.control.contextMenu = function(pos,options,actions) {
 	});
 	Fly.actionmenu(pos,moptions);
 }
-Fly.control.contextMenu.close = function(id) {
-	/*
-	document.getElementById(\'Fly-ContextMenu-Cover\').parentNode.removeChild(document.getElementById(\'Fly-ContextMenu-Cover\'));
-	document.getElementById(id).parentNode.removeChild(document.getElementById(id));
-	*/
-}
+Fly.control.contextMenu.close = function(id) {};
 
+// DEPRECATED - Exists only as a legacy passthrough to Fly.dialog
 Fly.control.input = function(msg="Enter text",content="",title="Enter Text",icon="'.$_FLY['RESOURCE']['URL']['ICONS'].'pencil.svg",funct=function(){}) {
 	if (icon == "") {
 		icon = "'.$_FLY['RESOURCE']['URL']['ICONS'].'pencil.svg";
 	}
-	var init = function() {
-		try {
-			frame.window.content.contentWindow.dialog.ret = funct;
-			frame.window.content.contentWindow.dialog.enable();
-		}
-		catch(err) {
-			window.top.shell.dialog(\'Control Error - Error\',\'An error has occurred in the control:<pre>\'+err+\'</pre>\',\'Control Error\');
-			frame.window.close();
-		}
-	}
-	var frame = window.top.task.create(\''.$_FLY['APP']['ID'].'\',{title:title, name:Fly.window.name.get(),x:((window.top.window.innerWidth/2)-258),y:((window.top.window.innerHeight/2)-154),width:500,height:220,location:\'/system/components/dialog.php?type=input&windowid=\'+encodeURIComponent(window.btoa(Fly.window.id))+\'&message=\'+encodeURIComponent(window.btoa(msg))+\'&content=\'+encodeURIComponent(window.btoa(content))+\'&icon=\'+encodeURIComponent(window.btoa(icon)),icon:Fly.window.icon.get(),load:init});
-	return frame;
+	Fly.dialog.input({
+		title: title,
+		message: msg,
+		content: content,
+		icon: icon,
+		callback: funct
+	});
  }
 
-Fly.control.confirm = function(msg="Confirm",content="Are you sure you want to do this?",title="Confirm",icon="'.$_FLY['RESOURCE']['URL']['ICONS'].'question.svg",returntrue=function(){},returnfalse=function(){}) {
+ // DEPRECATED - Exists only as a legacy passthrough to Fly.dialog
+ Fly.control.confirm = function(msg="Confirm",content="Are you sure you want to do this?",title="Confirm",icon="'.$_FLY['RESOURCE']['URL']['ICONS'].'question.svg",returntrue=function(){},returnfalse=function(){}) {
 	if (icon == "") {
 		icon = "'.$_FLY['RESOURCE']['URL']['ICONS'].'question.svg";
 	}
-	var init = function() {
-		try {
-			frame.window.content.contentWindow.dialog.retT = returntrue;
-			frame.window.content.contentWindow.dialog.retF = returnfalse;
-			frame.window.content.contentWindow.dialog.enable();
+	Fly.dialog.confirm({
+		title: title,
+		message: msg,
+		content: content,
+		icon: icon,
+		callback: function(r) {
+			if (r) {
+				returntrue();
+			} else {
+				returnfalse();
+			}
 		}
-		catch(err) {
-			window.top.shell.dialog(\'Control Error - Error\',\'An error has occurred in the control:<pre>\'+err+\'</pre>\',\'Control Error\');
-			frame.window.close();
-		}
-	}
-	var frame = window.top.task.create(\''.$_FLY['APP']['ID'].'\',{title:title, name:Fly.window.name.get(),x:((window.top.window.innerWidth/2)-258),y:((window.top.window.innerHeight/2)-154),width:500,height:100,location:\'/system/components/dialog2.php?type=confirm&windowid=\'+encodeURIComponent(window.btoa(Fly.window.id))+\'&message=\'+encodeURIComponent(window.btoa(msg))+\'&content=\'+encodeURIComponent(window.btoa(content))+\'&icon=\'+encodeURIComponent(window.btoa(icon)),icon:Fly.window.icon.get(),load:init});
-	return frame;
+	});
 }
 
+// DEPRECATED - Exists only as a legacy passthrough to Fly.dialog
 Fly.control.modal = function(msg="Information",content="Something happened.",title="Information",icon="'.$_FLY['RESOURCE']['URL']['ICONS'].'info.svg",returntrue=function(){}) {
 	if (icon == "") {
-		icon = "'.$_FLY['RESOURCE']['URL']['ICONS'].'question.svg";
+		icon = "'.$_FLY['RESOURCE']['URL']['ICONS'].'information.svg";
 	}
-	var init = function() {
-		try {
-			frame.window.content.contentWindow.dialog.retT = returntrue;
-			frame.window.content.contentWindow.dialog.enable();
-		} catch(err) {
-			window.top.shell.dialog(\'Control Error - Error\',\'An error has occurred in the control:<pre>\'+err+\'</pre>\',\'Control Error\');
-			frame.window.close();
-		}
-	}
-	var frame = window.top.task.create(\''.$_FLY['APP']['ID'].'\',{title:title, name:Fly.window.name.get(), x:((window.top.window.innerWidth/2)-258),y:((window.top.window.innerHeight/2)-154),width:500,height:220,location:\'/system/components/dialog.php?type=modal&windowid=\'+encodeURIComponent(window.btoa(Fly.window.id))+\'&message=\'+encodeURIComponent(window.btoa(msg))+\'&content=\'+encodeURIComponent(window.btoa(content))+\'&icon=\'+encodeURIComponent(window.btoa(icon)),icon:Fly.window.icon.get(),load:init});
-	return frame;
+	Fly.dialog.message({
+		title: title,
+		message: msg,
+		content: content,
+		icon: icon,
+		callback: returntrue
+	});
 }
 
 Fly.control.password = function(msg="Enter your password to continue:",returntrue=function(){},returnfalse=function(){}) {
