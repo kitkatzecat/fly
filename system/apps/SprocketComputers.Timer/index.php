@@ -144,6 +144,9 @@ timer.set = function(place,add) {
 	timer.draw();
 }
 timer.set.show = function() {
+	if (timer.running) {
+		timer.stop();
+	}
 	var arrows = document.querySelectorAll('.arrow');
 	arrows.forEach(function(arrow) {
 		arrow.style.display = 'block';
