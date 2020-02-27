@@ -134,10 +134,13 @@ timer.set = function(place,add) {
 	}
 	if (add) {
 		timer.time += unit;
+		if (timer.time >= 360000) {
+			timer.time -= 360000;
+		}
 	} else {
 		timer.time -= unit;
 		if (timer.time < 0) {
-			timer.time = 0;
+			timer.time += 360000;
 		}
 	}
 
