@@ -66,10 +66,10 @@ timer.init = 0;
 timer.running = false;
 timer.setting = false;
 timer.start = function() {
+	if (timer.setting) {
+		timer.set.hide();
+	}
 	if (timer.time > 0) {
-		if (timer.setting) {
-			timer.set.hide();
-		}
 		timer.init = timer.time;
 		timer.interval = setInterval(function(){timer.setInterval()},1000);
 		Toolbar.buttons[0].toggleOn();
