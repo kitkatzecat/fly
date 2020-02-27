@@ -9,7 +9,7 @@
 	<description><![CDATA[Use the timer to count down or the stopwatch to keep time.]]></description>
 	<window>
 		<title>Timer</title>
-		<width>320</width>
+		<width>300</width>
 		<height>112</height>
 		<x>auto</x>
 		<y>auto</y>

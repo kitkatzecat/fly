@@ -64,8 +64,12 @@ var timer = {};
 timer.time = 0;
 timer.init = 0;
 timer.running = false;
+timer.setting = false;
 timer.start = function() {
 	if (timer.time > 0) {
+		if (timer.setting) {
+			timer.set.hide();
+		}
 		timer.init = timer.time;
 		timer.interval = setInterval(function(){timer.setInterval()},1000);
 		Toolbar.buttons[0].toggleOn();
@@ -154,18 +158,18 @@ timer.set.show = function() {
 	arrows.forEach(function(arrow) {
 		arrow.style.display = 'block';
 	});
-	Toolbar.style.display = 'none';
 	Setbar.buttons[0].toggleOn();
 	Setbar.buttons[0].setAction(timer.set.hide);
+	timer.setting = true;
 }
 timer.set.hide = function() {
 	var arrows = document.querySelectorAll('.arrow');
 	arrows.forEach(function(arrow) {
 		arrow.style.display = 'none';
 	});
-	Toolbar.style.display = 'block';
 	Setbar.buttons[0].toggleOff();
 	Setbar.buttons[0].setAction(timer.set.show);
+	timer.setting = false;
 }
 </script>
 <style>
@@ -199,22 +203,22 @@ timer.set.hide = function() {
 </head>
 <body onload="onload();">
 
-<div id="h1" class="FlyUiTextHighlight number" style="left:57px;">0</div>
-<div id="h2" class="FlyUiTextHighlight number" style="left:88px;">0</div>
-<div class="FlyUiTextHighlight number colon" style="left:119px;width:16px;">:</div>
-<div id="m1" class="FlyUiTextHighlight number" style="left:135px;">0</div>
-<div id="m2" class="FlyUiTextHighlight number" style="left:166px;">0</div>
-<div class="FlyUiTextHighlight number number_small colon" style="left:197px;width:13px;">:</div>
-<div id="s1" class="FlyUiTextHighlight number number_small" style="left:210px;">0</div>
-<div id="s2" class="FlyUiTextHighlight number number_small" style="left:236px;">0</div>
+<div id="h1" class="FlyUiTextHighlight number" style="left:47px;">0</div>
+<div id="h2" class="FlyUiTextHighlight number" style="left:78px;">0</div>
+<div class="FlyUiTextHighlight number colon" style="left:109px;width:16px;">:</div>
+<div id="m1" class="FlyUiTextHighlight number" style="left:125px;">0</div>
+<div id="m2" class="FlyUiTextHighlight number" style="left:156px;">0</div>
+<div class="FlyUiTextHighlight number number_small colon" style="left:187px;width:13px;">:</div>
+<div id="s1" class="FlyUiTextHighlight number number_small" style="left:200px;">0</div>
+<div id="s2" class="FlyUiTextHighlight number number_small" style="left:226px;">0</div>
 
-<div onclick="timer.set('h',true);" class="FlyUiTextHover number arrow arrow_up" style="left:57px;width:62px;">⯅</div>
-<div onclick="timer.set('m',true);" class="FlyUiTextHover number arrow arrow_up" style="left:135px;width:62px;">⯅</div>
-<div onclick="timer.set('s',true);" class="FlyUiTextHover number arrow number_small arrow_up" style="left:210px;top:38px;width:52px;">⯅</div>
+<div onclick="timer.set('h',true);" class="FlyUiTextHover number arrow arrow_up" style="left:47px;width:62px;">⯅</div>
+<div onclick="timer.set('m',true);" class="FlyUiTextHover number arrow arrow_up" style="left:125px;width:62px;">⯅</div>
+<div onclick="timer.set('s',true);" class="FlyUiTextHover number arrow number_small arrow_up" style="left:200px;top:38px;width:52px;">⯅</div>
 
-<div onclick="timer.set('h',false);" class="FlyUiTextHover number arrow arrow_down" style="left:57px;width:62px;">⯆</div>
-<div onclick="timer.set('m',false);" class="FlyUiTextHover number arrow arrow_down" style="left:135px;width:62px;">⯆</div>
-<div onclick="timer.set('s',false);" class="FlyUiTextHover number arrow number_small arrow_down" style="left:210px;width:52px;">⯆</div>
+<div onclick="timer.set('h',false);" class="FlyUiTextHover number arrow arrow_down" style="left:47px;width:62px;">⯆</div>
+<div onclick="timer.set('m',false);" class="FlyUiTextHover number arrow arrow_down" style="left:125px;width:62px;">⯆</div>
+<div onclick="timer.set('s',false);" class="FlyUiTextHover number arrow number_small arrow_down" style="left:200px;width:52px;">⯆</div>
 
 </body>
 </html>
