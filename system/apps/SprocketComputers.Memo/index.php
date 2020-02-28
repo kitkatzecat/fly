@@ -154,14 +154,66 @@ function ShortcutInit() {
 }
 function New() {
 	if (Changes) {
-		Fly.control.confirm('Close current file','Are you sure you want to close "'+Basename+'"? There are unsaved changes that will be lost.','Memo','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',function(){NewFile(true)},function(){NewFile(false)});
+		Fly.dialog.custom({
+			title: 'Save Changes',
+			message: 'Save changes?',
+			content: `Do you want to save changes to the file "${Basename}"?`,
+			sound: 'question',
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
+					default: true,
+					onclick: function() {
+						Save();
+					},
+				},{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
+					onclick: function() {
+						Newfile(true)
+					},
+				},{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+					onclick: function() {},
+				}
+			]
+		});
 	} else {
 		NewFile(true);
 	}
 }
 function Close() {
 	if (Changes) {
-		Fly.control.confirm('Close current file','Are you sure you want to close "'+Basename+'"? There are unsaved changes that will be lost.','Memo','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',function(){setTimeout(Fly.window.close,10)});
+		Fly.dialog.custom({
+			title: 'Save Changes',
+			message: 'Save changes?',
+			content: `Do you want to save changes to the file "${Basename}"?`,
+			sound: 'question',
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
+					default: true,
+					onclick: function() {
+						Save();
+					},
+				},{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
+					onclick: function() {
+						Fly.window.close();
+					},
+				},{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+					onclick: function() {},
+				}
+			]
+		});
 	} else {
 		Fly.window.close();
 	}
@@ -295,7 +347,35 @@ function WordWrap() {
 }
 function CheckFile(file) {
 	if (Changes) {
-		Fly.control.confirm('Close current file','Are you sure you want to close "'+Basename+'"? There are unsaved changes that will be lost.','Memo','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',function(){OpenFile(file)},function(){OpenFile(false)});
+		Fly.dialog.custom({
+			title: 'Save Changes',
+			message: 'Save changes?',
+			content: `Do you want to save changes to the file "${Basename}"?`,
+			sound: 'question',
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
+					default: true,
+					onclick: function() {
+						Save();
+					}
+				},{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
+					onclick: function() {
+						OpenFile(file)
+					}
+				},{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
+					onclick: function() {
+						OpenFile(false)
+					}
+				}
+			]
+		});
 	} else {
 		OpenFile(file);
 	}
