@@ -147,6 +147,36 @@ Fly.dialog = {
 				}
 			]
 		});
+	},
+	color: function(properties={}) {
+		properties = Object.assign({title:'Pick Color',value:[255,0,0],callback:function(){}},properties);
+
+		var pos = Fly.window.position.get();
+
+		var att64 = btoa(JSON.stringify(properties));
+
+		var win = {
+			title: `${Fly.window.name.get()} - ${properties.title}`,
+			name: Fly.window.name.get(),
+			icon: Fly.window.icon.get(),
+			x: pos[0]+32,
+			y: pos[1]+32,
+			width: 240,
+			height: 324,
+			location: '<?php echo $_FLY['RESOURCE']['URL']['COMPONENTS']; ?>dialog3.php?d=color&a='+att64,
+			close: false,
+			minimize: false,
+			expand: false,
+			resize: false,
+			background: false,
+			minheight: 324,
+			minwidth: 240
+		};
+
+		Fly.window.child.open({modal:true,attributes:win},function(frame) {
+			frame.window.Dialog.attributes = properties;
+			frame.window.Dialog.opener = window;
+		});
 	}
 };
 </script>
