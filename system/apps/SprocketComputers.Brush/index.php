@@ -11,7 +11,6 @@ include 'Fly.Dialog.php';
 
 echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
 echo FlyLoadExtension('SprocketComputers.FileManager','SaveDialog');
-echo FlyLoadExtension('SprocketComputers.Utilities','ColorPicker');
 
 echo $FlyFileStringFunction;
 
@@ -237,12 +236,20 @@ function OnLoad() {
 	Actionbars.Colorbar.add({type:'divider'});
 	Actionbars.Colorbar.buttonsList.custom1 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom1.hex);}});
 	Actionbars.Colorbar.buttonsList.custom1.hex = '#c0c0c0';
-	Actionbars.Colorbar.buttonsList.custom2 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom2.hex);}});
-	Actionbars.Colorbar.buttonsList.custom2.hex = '#c0c0c0';
-	Actionbars.Colorbar.buttonsList.custom3 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#c0c0c0;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom3.hex);}});
-	Actionbars.Colorbar.buttonsList.custom3.hex = '#c0c0c0';
+	Actionbars.Colorbar.buttonsList.custom2 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#808080;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom2.hex);}});
+	Actionbars.Colorbar.buttonsList.custom2.hex = '#808080';
+	Actionbars.Colorbar.buttonsList.custom3 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#404040;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom3.hex);}});
+	Actionbars.Colorbar.buttonsList.custom3.hex = '#404040';
 	Actionbars.Colorbar.add({type:'divider'});
-	Actionbars.Colorbar.buttonsList.color = Actionbars.Colorbar.add({text:'Custom',action:function(){document.getElementById('ColorPicker').choose()}});
+	Actionbars.Colorbar.buttonsList.color = Actionbars.Colorbar.add({text:'Custom',action:function(){
+		var current = hexToRgb(Color);
+		Fly.dialog.color({
+			value: [current.r,current.g,current.b],
+			callback: function(rgb) {
+				SetColor(rgbToHex(rgb[0],rgb[1],rgb[2]));
+			}
+		});
+	}});
 	
 	Actionbars.Colorbar.buttonsList.red.toggleOn();
 	
@@ -1096,7 +1103,6 @@ body {
 </style>
 </head>
 <body onload="OnLoad()">
-<div id="ColorPicker" style="display:none;"></div>
 <div id="FileBrowser" style="display:none;"></div>
 
 <div id="main">
@@ -1105,11 +1111,6 @@ body {
 </div>
 
 <script>
-Fly.extension.replace('ColorPicker','SprocketComputers.Utilities','ColorPicker');
-document.getElementById('ColorPicker').onchange = function() {
-	SetColor(this.color.hex);
-}
-
 Fly.extension.replace('FileBrowser','SprocketComputers.FileManager','FileChooser');
 document.getElementById('FileBrowser').onchange = function() {
 }
