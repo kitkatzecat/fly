@@ -250,7 +250,7 @@ var Dialog = {
 					var ih = document.getElementById('h');
 					var is = document.getElementById('s');
 					var il = document.getElementById('l');
-					Dialog.attributes.callback([parseInt(ir.value),parseInt(ig.value),parseInt(ig.value)],[parseInt(ih.value),parseInt(is.value),parseInt(il.value)]);
+					Dialog.attributes.callback([parseInt(ir.value),parseInt(ig.value),parseInt(ib.value)],[parseInt(ih.value),parseInt(is.value),parseInt(il.value)]);
 				}
 			},
 			{
