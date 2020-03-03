@@ -229,8 +229,12 @@ if (typeof Fly.window == "undefined") {
 
 				frame.window.closeWindow = frame.window.forceClose;
 				frame.window.forceClose = function() {
-					Fly.window.focus.self();
-					Fly.window.bringToFront();
+					try {
+						Fly.window.focus.self();
+						Fly.window.bringToFront();
+					} catch(e) {
+						console.log(e);
+					}
 					frame.window.closeWindow();
 				}
 				frame.window.composition.buttons.close.onclick = frame.window.close;
