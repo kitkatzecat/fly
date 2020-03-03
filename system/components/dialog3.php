@@ -48,7 +48,9 @@ var Dialog = {
 			b.onclick = function() {
 				var v = document.getElementById('input').value;
 				Fly.window.onclose();
-				element.onclick(v);
+				try {
+					element.onclick(v);
+				} catch(e) {console.log(e)}
 			};
 			if (element.default) {
 				Dialog.default = b.onclick;
@@ -119,8 +121,10 @@ Fly.window.ready = function() {
 	Dialog.ready();
 }
 Fly.window.onclose = function() {
-	Dialog.opener.Fly.window.focus.self();
-	Dialog.opener.Fly.window.bringToFront();
+	try {
+		Dialog.opener.Fly.window.focus.self();
+		Dialog.opener.Fly.window.bringToFront();
+	} catch(e) {console.log(e)}
 	Fly.window.close();
 }
 </script>
