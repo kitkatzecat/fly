@@ -24,7 +24,6 @@ include 'Fly.FileProcessor.php';
 include 'Fly.File.php';
 include 'Fly.Command.php';
 
-//echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
 echo FlyLoadExtension('SprocketComputers.FileManager','SaveDialog');
 echo FlyLoadExtension('SprocketComputers.Utilities','ColorPicker');
 
@@ -350,7 +349,7 @@ function CheckFile(file) {
 		Fly.dialog.custom({
 			title: 'Save Changes',
 			message: 'Save changes?',
-			content: `Do you want to save changes to the file "${Basename}"?`,
+			content: `Do you want to save changes to the file "${Basename}" before opening "${file['name']}"?`,
 			sound: 'question',
 			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
 			buttons: [
@@ -365,13 +364,13 @@ function CheckFile(file) {
 					align: "right",
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
 					onclick: function() {
-						OpenFile(file)
+						OpenFile(file);
 					}
 				},{
 					align: "right",
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg",
 					onclick: function() {
-						OpenFile(false)
+						OpenFile(false);
 					}
 				}
 			]
