@@ -8,14 +8,15 @@ include 'Fly.Registry.php';
 include 'Fly.Actionmenu.php';
 include 'Fly.Command.php';
 include 'Fly.Dialog.php';
+include 'Fly.File.php';
 
-echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
 echo FlyLoadExtension('SprocketComputers.FileManager','SaveDialog');
 
 echo $FlyFileStringFunction;
 
 $canvasinit = '
 function CanvasInit() {
+	var sketch_style = getComputedStyle(document.getElementById(\'main\'));
 	canvas.width = parseInt(sketch_style.getPropertyValue(\'width\'))-16;
 	canvas.height = parseInt(sketch_style.getPropertyValue(\'height\'))-16;
 	ovrlay.style.width = canvas.width+\'px\';
@@ -45,7 +46,7 @@ if (!empty($_GET['file'])) {
 				ovrlay.style.height = canvas.height+\'px\';
 				
 				if (('.$img[0].'*'.$img[1].') > 1000000) {
-					setTimeout(function(){window.top.shell.dialog(\'Large image\',\'The image loaded for editing is a large resolution, which may result in delays when using Brush. To minimize delays, enable the "Optimize speed" setting in Options.\',\'Brush - Large Image\',\''.$_FLY['RESOURCE']['URL']['ICONS'].'warning.svg\')},1000);
+					setTimeout(function(){Fly.dialog.message({message:\'Large image\',content:\'The image loaded for editing is a large resolution, which may result in delays when using Brush. To minimize delays, enable the "Optimize speed" setting in Options.\',title:\'Large Image\',icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'warning.svg\'})},1000);
 				}
 				
 				var img = new Image;
@@ -72,7 +73,7 @@ if (!empty($_GET['file'])) {
 			}
 		} else {
 			$canvasinitother = '
-			window.top.shell.dialog(\'Unsupported file type\',\'The file "'.basename($_GET['file']).'" could not be loaded for editing because it is not a file type supported by Brush.\',\'Brush - Unsupported Type\');
+			Fly.dialog.message({message:\'Unsupported file type\',content:\'The file "'.basename($_GET['file']).'" could not be loaded for editing because it is not a file type supported by Brush.\',title:\'Unsupported Type\',icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg\'});
 			';
 		}
 	}
@@ -397,17 +398,18 @@ var New = {
 	},
 	file: function() {
 		var browser = document.getElementById('FileBrowser');
-		browser.onchange = New.filereturn;
-		browser.browse();
+		Fly.file.get(function(file) {
+			if (file != false) {
+				New.filereturn(file);
+			}
+		});
 	},
-	filereturn: function() {
-		var browser = document.getElementById('FileBrowser');
-		browser.onchange = function(){};
+	filereturn: function(file) {
 		if (Changes) {
 			Fly.dialog.custom({
 				title: 'Save Changes',
 				message: 'Save changes?',
-				content: `Do you want to save changes to the file "${FileName}"?`,
+				content: `Do you want to save changes to the file "${FileName}" before creating a new file?`,
 				sound: 'question',
 				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
 				buttons: [
@@ -422,7 +424,7 @@ var New = {
 						align: "right",
 						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
 						onclick: function() {
-							New.fileconfirm()
+							New.fileconfirm(file)
 						},
 					},{
 						align: "right",
@@ -432,28 +434,27 @@ var New = {
 				]
 			});
 		} else {
-			New.fileconfirm();
+			New.fileconfirm(file);
 		}
 	},
-	fileconfirm: function() {
-		var browser = document.getElementById('FileBrowser');
-		window.location.href = '<?php echo WORKING_URL; ?>index.php?Fly_Id=<?php echo $_GET['Fly_Id']; ?>&new=true&file='+encodeURIComponent(browser.vars.path);
+	fileconfirm: function(file) {
+		window.location.href = '<?php echo WORKING_URL; ?>index.php?Fly_Id=<?php echo $_GET['Fly_Id']; ?>&new=true&file='+encodeURIComponent(file['file']);
 	}
 };
 var Open = {
 	file: function() {
-		var browser = document.getElementById('FileBrowser');
-		browser.onchange = Open.filereturn;
-		browser.browse();
+		Fly.file.get(function(file) {
+			if (file != false) {
+				Open.filereturn(file);
+			}
+		});
 	},
-	filereturn: function() {
-		var browser = document.getElementById('FileBrowser');
-		browser.onchange = function(){};
+	filereturn: function(file) {
 		if (Changes) {
 			Fly.dialog.custom({
 				title: 'Save Changes',
 				message: 'Save changes?',
-				content: `Do you want to save changes to the file "${FileName}"?`,
+				content: `Do you want to save changes to the file "${FileName}" before opening "${file['name']}"?`,
 				sound: 'question',
 				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
 				buttons: [
@@ -468,7 +469,7 @@ var Open = {
 						align: "right",
 						image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
 						onclick: function() {
-							Open.fileconfirm()
+							Open.fileconfirm(file)
 						},
 					},{
 						align: "right",
@@ -478,12 +479,11 @@ var Open = {
 				]
 			});
 		} else {
-			Open.fileconfirm();
+			Open.fileconfirm(file);
 		}
 	},
-	fileconfirm: function() {
-		var browser = document.getElementById('FileBrowser');
-		window.location.href = '<?php echo WORKING_URL; ?>index.php?Fly_Id=<?php echo $_GET['Fly_Id']; ?>&file='+encodeURIComponent(browser.vars.path);
+	fileconfirm: function(file) {
+		window.location.href = '<?php echo WORKING_URL; ?>index.php?Fly_Id=<?php echo $_GET['Fly_Id']; ?>&file='+encodeURIComponent(file['file']);
 	}
 };
 var Save = {
@@ -1120,9 +1120,6 @@ var canvas = document.getElementById('paint');
 var ctx = canvas.getContext('2d');
 
 var sketch = document.getElementById('main');
-var sketch_style = getComputedStyle(sketch);
-canvas.width = parseInt(sketch_style.getPropertyValue('width'))-16;
-canvas.height = parseInt(sketch_style.getPropertyValue('height'))-16;
 
 var mouse = {x: 0, y: 0};
 var bodymouse = {x: 0, y: 0};
