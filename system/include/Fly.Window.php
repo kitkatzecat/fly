@@ -227,10 +227,11 @@ if (typeof Fly.window == "undefined") {
 				Fly.window.focus.set(frame.id);
 				Fly.window.child.children[frame.id]['window'] = frame.window.content.contentWindow;
 
-				frame.window.close = function() {
+				frame.window.closeWindow = frame.window.forceClose;
+				frame.window.forceClose = function() {
 					Fly.window.focus.self();
 					Fly.window.bringToFront();
-					frame.window.forceClose();
+					frame.window.closeWindow();
 				}
 				frame.window.composition.buttons.close.onclick = frame.window.close;
 
