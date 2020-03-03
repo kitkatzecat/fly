@@ -432,7 +432,7 @@ Fly.extension.replace('ColorPicker','SprocketComputers.Utilities','ColorPicker')
 document.getElementById('ColorPicker').onchange = FontColor_set;
 </script>
 
-<div class="main"><form style="width:100%;height:100%;" id="Form" target="frame" action="index.php?Fly_Id=<?php echo FLY_WINDOW_ID; ?>&save=<?php echo rawurlencode($_GET['file']); ?>" method="post"><textarea name="content" id="TextArea" oninput="if (!Changes) {Fly.window.title.set('Memo - '+Basename+' *');Changes = true;}" style="" spellcheck="false">
+<div class="main"><form style="width:100%;height:100%;" id="Form" target="frame" action="index.php?Fly_Id=<?php echo FLY_WINDOW_ID; ?>&save=<?php echo rawurlencode($_GET['file']); ?>" method="post"><textarea name="content" id="TextArea" oninput="if (!Changes) {Fly.window.title.set('Memo - '+Basename+' *');Changes = true;}" spellcheck="false">
 <?php echo $content; ?>
 </textarea></form>
 
