@@ -518,11 +518,7 @@ var Panes = {};
 Fly.window.ready = function() {
 	ToolbarInit();
 	Fly.window.disableContext();
-	Nav(atob('<?php echo $p; ?>'));
-}
-
-Fly.window.onclose = function() {
-	Fly.window.close();
+	Dialog.ready();
 }
 
 function ToolbarInit() {
@@ -569,6 +565,12 @@ function Go() {
 	Addressbar.blur();
 }
 
+Fly.window.title.setDirect = Fly.window.title.set;
+Fly.window.title.set = function(title) {
+	Fly.window.title.setDirect(Fly.window.name.get() + ' - '+title);
+}
+Fly.window.icon.set = function() {};
+
 function Nav(path) {
 	window.top.shell.sound.system('click');
 	Addressbar.value = '';
@@ -576,10 +578,10 @@ function Nav(path) {
 	Fly.command('fileprocess:'+path,function(pth){
 		if (pth['return'].hasOwnProperty('ffile')) {
 			Addressbar.value = pth['return']['ffile'];
-			Fly.window.title.set('Choose a File - '+pth['return']['fname']);
+			Fly.window.title.set(pth['return']['fname']);
 		} else {
 			Addressbar.value = path;
-			Fly.window.title.set('Choose a File - Not Found');
+			Fly.window.title.set('Not Found');
 		}
 		Nav.current = pth['return'];
 	})
@@ -615,6 +617,10 @@ function SelectedFileOn() {
 		document.getElementById('filename').innerHTML = SelectedFile['fname'];
 		document.getElementById('fileicon').src = SelectedFile['icon'];
 		ChosenFile = SelectedFile;
+		document.getElementById('button-ok').disabled = false;
+		document.getElementById('button-ok').onclick = function() {
+			Dialog.select(SelectedFile);
+		}
 	}
 }
 
@@ -626,6 +632,36 @@ function FrameLoad() {
 	frame.style.display = 'block';
 }
 </script>
+
+<script>
+var Dialog = {
+	opener: {},
+	options: {},
+	callback: function() {},
+	ready: function() {
+		if (Dialog.options.hasOwnProperty('path')) {
+			Nav(Dialog.options.path);		
+		} else {
+			Nav('%FLY.USER.PATH%');
+		}
+		Fly.window.onclose = function() {
+			Dialog.callback(false);
+			Fly.window.close();
+		}
+	},
+	select: function(file) {
+		Dialog.selected = true;
+
+		Dialog.opener.Fly.window.focus.self();
+		Dialog.opener.Fly.window.bringToFront();
+		Fly.window.close();
+
+		Dialog.callback(file);
+	},
+	selected: false
+};
+</script>
+
 <style>
 #main {
 	position: absolute;
@@ -722,7 +758,7 @@ button#button-ok {
 }
 </style>
 </head>
-<body onload="Load()">
+<body>
 <div id="main">
 <iframe id="frame-main" onload="FrameLoad();" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
 </div>

@@ -42,9 +42,10 @@ function View(Folder=false,List=false) {
 				Select(this,e,List[this.id]);
 			}
 			itm.ondblclick = function() {
-				console.log(List[this.id]);
-				if (List[this.id]['type'] == 'folder') {
+				if (List[this.id]['type'] == 'folder' || List[this.id]['extension'] == 'als') {
 					Click(List[this.id]);
+				} else {
+					window.parent.Dialog.select(List[this.id]);
 				}
 			}
 			itm.oncontextmenu = function(e) {
