@@ -436,6 +436,21 @@ document.getElementById('ColorPicker').onchange = FontColor_set;
 <?php echo $content; ?>
 </textarea></form>
 
+<?php 
+if ($content == '' && (filesize($_GET['file']) > 0) && $_GET['file'] != '') {
+	echo '
+	<script>
+	Fly.dialog.message({
+		title:"Unsupported Type",
+		message:"Unsupported file type",
+		content:\'"\'+Basename+\'" may be of a file type that is not supported by Memo, so the file\\\'s contents may not display correctly.\',
+		icon:"'.$_FLY['RESOURCE']['URL']['ICONS'].'warning.svg"
+	});
+	</script>
+	';
+}
+?>
+
 <iframe id="Frame" name="frame" style="display:none;"></iframe></div>
 
 </body>
