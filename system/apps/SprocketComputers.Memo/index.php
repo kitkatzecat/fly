@@ -64,6 +64,8 @@ var IsSaved = <?php echo $issaved; ?>;
 var SaveAsName = false;
 var Toolbar;
 var ViewMenu;
+var FileMenu;
+var EditMenu;
 
 function onload() {
 	Toolbar = new Fly.actionbar();
@@ -72,7 +74,7 @@ function onload() {
 	Toolbar.style.left = '0px';
 	Toolbar.style.right = '0px';
 	
-	Toolbar.add({text:'File',type:'dropdown',menu:[
+	FileMenu = Toolbar.add({text:'File',type:'dropdown',menu:[
 		['New',New,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
 		['Open',Open,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg'}],
 		['Save',Save,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg'}],
@@ -82,9 +84,13 @@ function onload() {
 		[''],
 		['Close',Close,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'}]
 	]});
-	Toolbar.add({text:'Edit',type:'dropdown',menu:[
-		['Find',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg'}],
-		['Find Next',function(){}]
+	EditMenu = Toolbar.add({text:'Edit',type:'dropdown',menu:[
+		['Select All', function() {
+			document.getElementById('TextArea').select();
+		}, {}],
+		[''],
+		['Find',Find.dialog,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg'}],
+		['Find Next',Find.next,{disabled:true}]
 	]});
 	ViewMenu = Toolbar.add({text:'View',type:'dropdown',menu:[
 		['Word Wrap',WordWrap,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/text.svg'}],
@@ -96,7 +102,7 @@ function onload() {
 			['<span style="font-family:fantasy;">Fantasy</span>',function(){FontSet('fantasy')}],
 			[''],
 			['Color...',FontColor]
-		]]
+		],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>text.svg'}]
 	]});
 	Toolbar.add({type:'divider'});
 	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg',title:'Save',action:Save});
@@ -156,7 +162,7 @@ function New() {
 		Fly.dialog.custom({
 			title: 'Save Changes',
 			message: 'Save changes?',
-			content: `Do you want to save changes to the file "${Basename}"?`,
+			content: `Do you want to save changes to the file "${Basename}" before creating a new file?`,
 			sound: 'question',
 			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
 			buttons: [
@@ -171,7 +177,7 @@ function New() {
 					align: "right",
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg",
 					onclick: function() {
-						Newfile(true)
+						NewFile(true);
 					},
 				},{
 					align: "right",
@@ -389,6 +395,44 @@ function NewFile(boolean) {
 		window.location.href = '<?php echo CURRENT_URL; ?>?Fly_Id=<?php echo FLY_WINDOW_ID; ?>';
 	}
 }
+
+var Find = {
+	dialog: function() {
+		Fly.dialog.input({
+			title: 'Find',
+			message: 'Find',
+			content: 'Enter the text to find:',
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg',
+			callback: function(i) {
+				if (!!i) {
+					EditMenu.menu.options[3].enable();
+					Find.finding = i;
+					Find.next();
+				}
+			}
+		})
+	},
+	next: function() {
+		if (!Find.finding) {
+			Find.dialog();
+		} else {
+			var text = document.getElementById('TextArea');
+			if (text.innerHTML.indexOf(Find.finding) == -1) {
+				Fly.window.message('No matches found');
+			} else {
+				var pos = text.selectionEnd;
+				var ind = text.innerHTML.indexOf(Find.finding,pos);
+				if (ind == -1) {
+					Fly.window.message('No more matches found');
+				} else {
+					text.focus();
+					text.setSelectionRange(ind,ind+Find.finding.length);
+				}
+			}
+		}
+	},
+	finding: false
+};
 </script>
 <style>
 .main {
