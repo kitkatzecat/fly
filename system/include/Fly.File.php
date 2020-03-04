@@ -12,6 +12,9 @@ if (!FlyIncludeCheck('FLY.COMMAND')) {
 }
 ?>
 <script>
+if (typeof Fly == 'undefined') {
+	var Fly = {};
+}
 
 Fly.file = {
 	get: function(callback=function(){},options={}) {
