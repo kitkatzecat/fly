@@ -32,7 +32,7 @@ Fly.file = {
 			resize: true,
 			background: false,
 			minheight: 100,
-			minwidth: 200,
+			minwidth: 300,
 			maxheight: false,
 			maxwidth: false,
 			maxinitheight: false,
