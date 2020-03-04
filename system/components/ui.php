@@ -23,7 +23,9 @@ if (in_array(FlyRegistryGet('TimeShowMilitary','SprocketComputers.Options'),['tr
 }
 ?>
 <script>
-function ui() {};
+var ui = {};
+
+ui.dev = false;
 
 ui.init = function() {
 	// if UI is not already initialized
@@ -221,6 +223,12 @@ ui.init = function() {
 				}
 			}
 			wn.push(['']);
+			if (ui.dev) {
+				wn.push(['Developer',[
+					['Reload',function(){ob.window.content.contentWindow.location.reload();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg'}]
+				],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>options.svg'}]);
+				wn.push(['']);
+			}
 			wn.push(['Reset',function(){ui.toolbar.snap.window.reset(ob);},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>undo.svg'}]);
 			wn.push(['']);
 			wn.push(['Close',ob.window.close,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'}]);
