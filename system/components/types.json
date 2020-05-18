@@ -143,6 +143,12 @@
 		"description": "INI Configuration File",
 		"action": "SprocketComputers.Memo,file=%1"
 	},
+	"zip": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%package.svg",
+		"description": "Compressed ZIP Folder",
+		"action": "",
+		"mime": "application/zip"
+	},
 	"conf": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/setting.svg",
 		"description": "Configuration File",
