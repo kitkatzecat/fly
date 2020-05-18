@@ -12,12 +12,17 @@
 	<component file="dialog.php">
 		<name>Fly Dialogs</name>
 		<version>1.0</version>
-		<description>Displays message dialogs, input dialogs, and confirm dialogs called using system functions.</description>
+		<description>[DEPRECATED] Displays message dialogs, input dialogs, and confirm dialogs called using system functions.</description>
 	</component>
 	<component file="dialog2.php">
 		<name>Fly Dialogs</name>
 		<version>2.0</version>
-		<description>Displays message dialogs, input dialogs, and confirm dialogs called using system functions.</description>
+		<description>[DEPRECATED] Displays message dialogs, input dialogs, and confirm dialogs called using system functions.</description>
+	</component>
+	<component file="dialog3.php">
+		<name>Fly Dialogs</name>
+		<version>3.0</version>
+		<description>Displays dialogs called using system functions.</description>
 	</component>
 	<component file="document-otf.php">
 		<name>On-The-Fly Document Renderer</name>
@@ -67,7 +72,12 @@
 	<component file="theme2.php">
 		<name>Fly Theme Loader</name>
 		<version>2.0</version>
-		<description>Loads user-specified theme assets for use on desktop and in applications.</description>
+		<description>[DEPRECATED] Loads user-specified theme assets for use on desktop and in applications.</description>
+	</component>
+	<component file="theme3.php">
+		<name>Fly Theme Loader</name>
+		<version>3.0</version>
+		<description>Loads user- and system-specified theme assets for use on the desktop and in applications.</description>
 	</component>
 	<component file="ui.php">
 		<name>Fly Desktop User Interface</name>
@@ -103,6 +113,11 @@
 		<name>Fly Resource Locations</name>
 		<version>1.0</version>
 		<description>Provides the system with the locations of essential system files.</description>
+	</component>
+	<component file="protected.json">
+		<name>Protected System Files</name>
+		<version>1.0</version>
+		<description>Provides the system with a list of system files that are protected.</description>
 	</component>
 	<component file="types.json">
 		<name>File Types Index</name>
