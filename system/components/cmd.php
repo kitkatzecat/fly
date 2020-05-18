@@ -4,6 +4,9 @@ include 'Fly.Constants.php';
 include 'Fly.Core.php';
 include 'Fly.FileProcessor.php';
 
+ob_end_flush();
+ob_implicit_flush(true);
+
 $FlyCommandVersion = '1.2';
 
 $COMMAND_ECHO = '';
@@ -121,6 +124,8 @@ function FlyCommand($cmd,$execute=false,$error=false,$silent=false) {
 	$COMMAND_RETURN['json'] = json_encode($COMMAND_RETURN);
 	return $COMMAND_RETURN;
 }
+
+ob_implicit_flush(false);
 	
 	/*
 	if ($do=="run") {
