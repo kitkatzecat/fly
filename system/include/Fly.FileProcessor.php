@@ -356,7 +356,7 @@ function FlyFileStringProcessor($item) {
 			} else {
 				$fname = basename($filePath);
 			}
-			$bname = str_lreplace('.'.$extension,'',$fname);
+			$bname = str_lireplace('.'.$extension,'',$fname);
 			if ($path == '') {
 				$path = '/';
 			}
