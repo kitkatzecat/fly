@@ -19,6 +19,23 @@ function str_lreplace($search, $replace, $subject)
 }
 }
 
+if (!function_exists('str_lireplace')) {
+/*
+	Replace only the last occurrence of a subject in a string (case insensitive)
+	str_lireplace( [string] needle , [string] replace with , [string] haystack )
+	returns [string]
+*/
+function str_lireplace($search, $replace, $subject)
+{
+	$pos = strripos($subject, $search);
+	if($pos !== false)
+	{
+		$subject = substr_replace($subject, $replace, $pos, strlen($search));
+	}
+	return $subject;
+}
+}
+	
 if (!function_exists('str_freplace')) {
 /*
 	Replace only the first occurrence of a subject in a string
