@@ -44,33 +44,31 @@ var FlyCommand = function(cmd=\'\',callback=function(){},options={}) {
 		var opt = \'\';
 	}
 
-    FlyCommand.request.open("GET", \''.$_FLY['RESOURCE']['URL']['COMPONENTS'].'cmd.php?time=\'+dateTime+\'&json=true&req=true\'+opt+\'&cp='.$_FLY['CURRENT_PATH'].'&cmd=\'+encodeURIComponent(cmd), true);
-    FlyCommand.request.onreadystatechange = FlyCommand.response;
-    FlyCommand.request.setRequestHeader("Cache-Control", "no-cache");
-    FlyCommand.request.send(null);
-}
-FlyCommand.request = new XMLHttpRequest();
-FlyCommand.callback = function(){};
-
-FlyCommand.response = function() {
-    if(FlyCommand.request.readyState == 4) {
-        if(FlyCommand.request.status == 200) {
-            result = FlyCommand.request.responseText;
-			try {
-				result = JSON.parse(result);
+	var request = new XMLHttpRequest();
+	var error;
+    request.open("GET", \''.$_FLY['RESOURCE']['URL']['COMPONENTS'].'cmd.php?time=\'+dateTime+\'&json=true&req=true\'+opt+\'&cp='.$_FLY['CURRENT_PATH'].'&cmd=\'+encodeURIComponent(cmd), true);
+    request.onreadystatechange = function() {
+		if(request.readyState == 4) {
+			if(request.status == 200) {
+				result = request.responseText;
 				try {
-					result.return = JSON.parse(result.return);
-				} catch(e) {}
-				FlyCommand.callback(result);
-			} catch(err) {
-				FlyCommand.error = err;
-				FlyCommand.callback(false);
-			}
-        } else {
-			FlyCommand.error = FlyCommand.request.statusText;
-            FlyCommand.callback(false);
-      }
-   }
+					result = JSON.parse(result);
+					try {
+						result.return = JSON.parse(result.return);
+					} catch(e) {}
+					callback(result);
+				} catch(err) {
+					error = err;
+					callback(false);
+				}
+			} else {
+				error = FlyCommand.request.statusText;
+				callback(false);
+		  }
+	   }
+	};
+    request.setRequestHeader("Cache-Control", "no-cache");
+    request.send(null);
 }
 
 if (typeof Fly != "undefined") {
