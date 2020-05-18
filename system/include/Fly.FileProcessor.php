@@ -210,7 +210,7 @@ function FlyFileStringProcessor($item) {
 				$location = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/';
 				$manifest = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/ApplicationManifest.xml';
 				$action = 'task.create(\''.$id.'\', {title:\''.$manifestXML->window->title.'\', name:\''.$name.'\', x:\''.$appX.'\', y:\''.$appY.'\', width:\''.$manifestXML->window->width.'\', height:\''.$manifestXML->window->height.'\', minwidth:\''.$minWidth.'\', minheight:\''.$minHeight.'\', maxwidth:\''.$maxWidth.'\', maxheight:\''.$maxHeight.'\', maxinitwidth:'.$maxInitWidth.', maxinitheight:'.$maxInitHeight.', location:\''.$window.'\', icon:\''.$icon.'\', expand:'.$expand.', minimize:'.$minimize.', close:'.$close.', resize:'.$resize.'})';
-				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"location"=>$location,"manifest"=>$manifest];
+				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"bname"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"location"=>$location,"manifest"=>$manifest];
 			} else {
 				return false;
 			}
@@ -293,7 +293,7 @@ function FlyFileStringProcessor($item) {
 				$fpath = './';
 			}
 			
-			return ["file"=>$path.'/'.basename($filePath),"name"=>basename($filePath),"type"=>$type,"mime"=>'directory',"icon"=>$icon,"description"=>$description,"URL"=>$url,"action"=>$action,"path"=>$path,"fpath"=>$fpath,"ffile"=>$ffile,"fname"=>$fname,"isdir"=>true];
+			return ["file"=>$path.'/'.basename($filePath),"name"=>basename($filePath),"bname"=>basename($filePath),"fname"=>basename($filePath),"type"=>$type,"mime"=>'directory',"icon"=>$icon,"description"=>$description,"URL"=>$url,"action"=>$action,"path"=>$path,"fpath"=>$fpath,"ffile"=>$ffile,"fname"=>$fname,"isdir"=>true];
 		} else { // FILE ------------------------------------------------------------------------------------------------------
 			$filePath = trimslashes($filePath);
 			$extension = strtolower(end(explode('.',basename($filePath))));
@@ -356,6 +356,7 @@ function FlyFileStringProcessor($item) {
 			} else {
 				$fname = basename($filePath);
 			}
+			$bname = str_lreplace('.'.$extension,'',$fname);
 			if ($path == '') {
 				$path = '/';
 			}
@@ -364,7 +365,7 @@ function FlyFileStringProcessor($item) {
 			}
 			
 			
-			return ["file"=>$path.'/'.basename($filePath),"name"=>basename($filePath),"registered"=>$registered,"type"=>$type,"mime"=>$mime,"extension"=>$extension,"icon"=>$icon,"description"=>$description,"URL"=>$url,"action"=>$action,"path"=>$path,"fpath"=>$fpath,"ffile"=>$ffile,"fname"=>$fname,"isdir"=>false];
+			return ["file"=>$path.'/'.basename($filePath),"name"=>basename($filePath),"registered"=>$registered,"type"=>$type,"mime"=>$mime,"extension"=>$extension,"icon"=>$icon,"description"=>$description,"URL"=>$url,"action"=>$action,"path"=>$path,"fpath"=>$fpath,"ffile"=>$ffile,"fname"=>$fname,"bname"=>$bname,"isdir"=>false];
 		}
 	}
 }
