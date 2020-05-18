@@ -198,6 +198,7 @@ function drawApps($array) {
 	right: 0px;
 	bottom: 96px;
 	padding: 6px;
+	padding-top: 0;
 	overflow: auto;
 	padding-top: -4px;
 }
@@ -214,14 +215,14 @@ function drawApps($array) {
 	right: 117px;
 }
 .header {
-	margin-top: 8px;
-	padding-top: 4px;
+	margin-top: 0;
+	padding-top: 12px;
 	padding-bottom: 8px;
 	margin-bottom: 0px;
 	font-size: 12px;
 	font-weight: bold;
 	position: sticky;
-	top: -1px;
+	top: 0px;
 	left: 0px;
 	background-color: #fff;
 }
@@ -235,6 +236,18 @@ p.hint {
 	font-size: 0.8em;
 	margin-top: 0px;
 	margin-bottom: 0px;
+}
+#file {
+	margin-bottom: 4px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+#file-icon {
+	width: 36px;
+	height: 36px;
+	vertical-align: middle;
+	margin-right: 6px;
 }
 </style>
 <script>
@@ -298,7 +311,7 @@ Fly.window.ready = function() {
 
 <div class="main FlyUiText FlyUiNoSelect FlyUiContent">
 <div id="content">
-<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-bottom:4px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['name']; ?></div>
+<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" id="file"><img id="file-icon" src="<?php echo $process['icon']; ?>"><?php echo $process['name']; ?></div>
 <p class="hint">Choose an application to open this file:</p>
 </div>
 </div>
