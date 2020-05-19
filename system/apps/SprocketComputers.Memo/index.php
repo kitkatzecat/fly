@@ -1,14 +1,14 @@
 <?php
 if (isset($_GET['save'])) {
-	include 'constants.php';
-	$save = file_put_contents($_GET['save'],$_POST['content']);
+	include 'Fly.Core.php';
+	$save = file_put_contents(FlyVarsReplace($_GET['save']),$_POST['content']);
 	if ($save !== false) {
-		echo '<script>window.parent.Save_success();</script>';
+		echo '<script>window.parent.Save.success();</script>';
 		exit;
 	} else {
 		$rand = rand();
-		file_put_contents(FLY_ROOT.'temp-'.$rand.'.txt',$_POST['content']);
-		echo '<script>window.top.shell.dialog("File not saved",\'The file "'.htmlentities(basename($_GET['save'])).'" could not be saved. A temporary copy of the file containing any changes made has been saved to "./temp-'.$rand.'.txt".\',"Save Error");</script>';
+		file_put_contents($_FLY['USER']['PATH'].'Documents/temp-'.$rand.'.txt',$_POST['content']);
+		echo '<script>window.parent.Fly.dialog.message({message:"File not saved",content:\'The file "'.htmlentities(basename($_GET['save'])).'" could not be saved. A temporary copy of the file containing any changes made has been saved to your Documents folder as "temp-'.$rand.'.txt".\',title:"Save Error",icon:"'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg");</script>';
 		exit;
 	}
 	
@@ -77,8 +77,8 @@ function onload() {
 	FileMenu = Toolbar.add({text:'File',type:'dropdown',menu:[
 		['New',New,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
 		['Open',Open,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg'}],
-		['Save',Save,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg'}],
-		['Save As',SaveAs],
+		['Save',Save.save,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg'}],
+		['Save As',Save.opendialog],
 		[''],
 		['Properties',Properties,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>properties.svg'}],
 		[''],
@@ -105,7 +105,7 @@ function onload() {
 		],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>text.svg'}]
 	]});
 	Toolbar.add({type:'divider'});
-	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg',title:'Save',action:Save});
+	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg',title:'Save',action:Save.save});
 	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',title:'Open',action:Open});
 	
 	document.body.appendChild(Toolbar);
@@ -122,7 +122,7 @@ function ShortcutInit() {
 		
 		//Save (ctrl+s)
 		if (e.keyCode == 83 && e.ctrlKey) {
-			Save();
+			Save.save();
 			e.preventDefault();
 		}
 		
@@ -171,7 +171,7 @@ function New() {
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
 					default: true,
 					onclick: function() {
-						Save();
+						Save.save();
 					},
 				},{
 					align: "right",
@@ -204,7 +204,7 @@ function Close() {
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
 					default: true,
 					onclick: function() {
-						Save();
+						Save.save();
 					},
 				},{
 					align: "right",
@@ -223,58 +223,71 @@ function Close() {
 		Fly.window.close();
 	}
 }
-function Save() {
-	if (IsSaved) {
-		document.getElementById('Form').submit();
-	} else {
-		SaveAs();
-	}
-}
-function Save_success() {
-	Changes = false;
-	IsSaved = true;
-	if (SaveAsName !== false) {
-		Basename = SaveAsName;
-	}
 
-	Fly.window.title.set('Memo - '+Basename);
-}
-function SaveAs() {
-	document.getElementById('LocationBrowser').browse();
-	if (Changes) {
-		var star = ' *';
-	} else {
-		var star = '';
-	}
-}
-function SaveAs_check() {
-	var frame = document.getElementById('Frame');
-	var browser = document.getElementById('LocationBrowser');
-	var name = browser.vars.basename;
-	if (name.indexOf('.') == -1) {
-		name = FlyFileStringReplace(name)+'.txt';
-	} else {
-		name = FlyFileStringReplace(name);
-	}
-	SaveAsName = name;
-	FlyCommand('exists:'+browser.vars.bpath+'/'+SaveAsName,function(r) {
-		if (r.return == true) {
-			SaveAs_exists();
+var Save = {
+	save: function() {
+		if (IsSaved) {
+			document.getElementById('Form').submit();
 		} else {
-			SaveAs_save();
+			Save.opendialog();
 		}
-	});
+	},
+	success: function() {
+		Changes = false;
+		IsSaved = true;
+		if (SaveAsName !== false) {
+			Basename = SaveAsName;
+		}
+
+		Fly.window.title.set('Memo - '+Basename);
+		Fly.window.message('Saved "'+Basename+'"');
+	},
+	opendialog: function() {
+		Fly.file.set(Save.checkfile,{name:Fly.file.string.bname(Basename),extensions:['txt','htm','md','xml','json','js','php']})
+	},
+	checkfile: function(r) {
+		if (r) {
+			Save.checkexists(r);
+		}
+	},
+	checkexists: function(r) {
+		Fly.command('exists:'+r.file,function(a){
+			if (a.return == true) {
+				Save.confirmoverwrite(r);
+			} else {
+				Save.confirmwrite(r);
+			}
+		});
+	},
+	confirmoverwrite: function(r) {
+		Fly.dialog.confirm({
+			title: 'File Exists',
+			message: 'Overwrite file?',
+			content: `The file "${r.name}" already exists. Do you want to overwrite it?`,
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+			callback: function(a) {
+				if (a) {
+					Save.confirmwrite(r);
+				} else {
+					Save.opendialog();
+				}
+			}
+		});
+	},
+	confirmwrite: function(r) {
+		File = r.file;
+		FileName = r.name;
+		Save.writefile(r);
+	},
+	writefile: function(r) {
+		var form = document.getElementById('Form');
+		form.action = 'index.php?Fly_Id=<?php echo FLY_WINDOW_ID; ?>&save='+encodeURIComponent(r.file);
+		form.submit();
+		
+		SaveAsName = r.name;
+	}
 }
-function SaveAs_exists() {
-	var browser = document.getElementById('LocationBrowser');
-	Fly.control.confirm('File already exists','The file "'+SaveAsName+'" already exists in "'+browser.vars.pbasename+'". Do you want to overwrite it?','Memo - File Exists','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',SaveAs_save,function() {setTimeout(function(){document.getElementById('LocationBrowser').browse();},10)});
-}
-function SaveAs_save() {
-	var form = document.getElementById('Form');
-	var browser = document.getElementById('LocationBrowser');
-	form.action = 'index.php?Fly_Id=<?php echo FLY_WINDOW_ID; ?>&save='+encodeURIComponent(browser.vars.bpath+'/'+SaveAsName);
-	form.submit();
-}
+
 function Open() {
 	Fly.file.get(function(a) {
 		if (a) {
@@ -364,7 +377,7 @@ function CheckFile(file) {
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg",
 					default: true,
 					onclick: function() {
-						Save();
+						Save.save();
 					}
 				},{
 					align: "right",
