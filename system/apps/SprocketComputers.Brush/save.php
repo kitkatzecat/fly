@@ -1,24 +1,19 @@
 <?php
-if (empty($_GET['check'])) {
+if (!isset($_FLY)) {
+	include 'Fly.Core.php';
+}
 
-$folder = str_replace(basename($_POST['filename']),'',$_POST['filename']);
+$file = FlyVarsReplace($_POST['filename']);
+$folder = str_replace(basename($file),'',$file);
 if (file_exists($folder)) {
 	$count = 1;
 	$content = base64_decode(str_replace('data:image/png;base64,','',$_POST['content'],$count));
-	if (file_put_contents($_POST['filename'],$content)) {
+	if (file_put_contents($file,$content)) {
 		echo '200';
 	} else {
-		echo '<script>window.top.shell.dialog(\'Save error\',\'The file "'.htmlspecialchars(basename($_POST['filename'])).'" could not be saved due to an unknown error.\',\'Brush - Save Error\');</script>';
+		echo '<script>window.parent.Fly.dialog.message({message:\'Save error\',content:\'The file "'.htmlspecialchars(basename($file)).'" could not be saved due to an unknown error.\',title:\'Save Error\',icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg\');</script>';
 	}
 } else {
-	echo '<script>window.top.shell.dialog(\'Save error\',\'The file "'.htmlspecialchars(basename($_POST['filename'])).'" could not be saved because the specified folder to save in could not be found.\',\'Brush - Save Error\');</script>';
-}
-
-} else {
-	if (file_exists($_GET['file'])) {
-		echo '<script>setTimeout(function(){window.parent.Save.confirmoverwrite();},100);</script>';
-	} else {
-		echo '<script>setTimeout(function(){window.parent.Save.confirmwrite();},100);</script>';
+	echo '<script>window.parent.Fly.dialog.message({message:\'Save error\',content:\'The file "'.htmlspecialchars(basename($file)).'" could not be saved because the specified folder to save in could not be found.\',title:\'Save Error\',icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg\');</script>';
 	}
-}
 ?>
