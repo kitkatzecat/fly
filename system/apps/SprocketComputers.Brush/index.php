@@ -447,7 +447,7 @@ var Open = {
 			if (file != false) {
 				Open.filereturn(file);
 			}
-		});
+		},{types:['png','jpg','jpeg','bmp','gif','image/']});
 	},
 	filereturn: function(file) {
 		if (Changes) {
