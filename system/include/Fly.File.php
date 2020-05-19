@@ -4,11 +4,11 @@ if (!isset($_FLY)) {
 }
 FlyIncludeRegister('FLY.FILE');
 
-if (!FlyIncludeCheck('FLY.CONTROLS')) {
-	include 'Fly.Controls.php';
-}
 if (!FlyIncludeCheck('FLY.COMMAND')) {
 	include 'Fly.Command.php';
+}
+if (!FlyIncludeCheck('FLY.WINDOW')) {
+	include 'Fly.Window.php';
 }
 ?>
 <script>
@@ -48,7 +48,7 @@ Fly.file = {
 			frame.window.Dialog.callback = callback;
 		});
 	},
-	set: function(callback=function(){},options={}) { // TODO - add more in-depth type specification
+	set: function(callback=function(){},options={}) { // TODO - add more in-depth type specification, prompt to overwrite
 		var pos = Fly.window.position.get();
 
 		var attributes = {
@@ -78,6 +78,23 @@ Fly.file = {
 			frame.window.Dialog.opener = window;
 			frame.window.Dialog.callback = callback;
 		});
+	},
+	string: {
+		name: function(file) {
+			return file.replace(/^.*[\\\/]/,'');
+		},
+		path: function(file) {
+			return file.substr(0,file.lastIndexOf(Fly.file.string.name(file)));
+		},
+		bname: function(file) {
+			return file.substr(0,file.lastIndexOf('.'));
+		},
+		extension: function(file) {
+			return file.substr(file.lastIndexOf('.')+1);
+		},
+		trimslashes: function(file) {
+			return file.replace(/#\/+#/,'/');
+		}
 	}
 }
 </script>
