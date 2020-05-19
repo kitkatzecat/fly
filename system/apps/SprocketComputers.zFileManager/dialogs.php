@@ -484,6 +484,7 @@ file_get:
 include 'Fly.Standard.php';
 include 'Fly.Actionbar.php';
 include 'Fly.Command.php';
+include 'Fly.Registry.php';
 
 if (isset($_GET['p'])) {
 	$p = $_GET['p'];
@@ -492,8 +493,11 @@ if (isset($_GET['p'])) {
 }
 $p = base64_encode($p);
 
-$views = json_decode(file_get_contents($_FLY['WORKING_PATH'].'view/views.json'),true);
-$cv = FlyRegistryGet('View');
+$cv = FlyRegistryGet('ViewDialog');
+if ($cv == '' || $cv == false) {
+	$cv = 'file.sm.js';
+}
+$views = json_decode(file_get_contents($_FLY['WORKING_PATH'].'view/views.file.json'),true);
 $vm = '';
 $vl = '{';
 $vc = 0;
@@ -553,8 +557,14 @@ function ToolbarInit() {
 	
 	Navbar.add({text:'',title:'Back',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
 	Navbar.add({text:'',title:'Up',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-up.svg',action:Up});
+
 	var ab = Navbar.add({type:'custom',content:Addressbar});
-	ab.style.width = 'calc(100% - 164px)';
+	ab.style.width = 'calc(100% - 224px)';
+
+	Navbar.add({text:'',title:'Icon View',icon:'<?php echo $_FLY['WORKING_URL']; ?>icon.xl.svg',type:'dropdown',menu:[
+		<?php echo $vm; ?>
+	],align:'right'});
+	Navbar.add({type:'divider',align:'right'});
 	Navbar.add({text:'',title:'Refresh',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg',action:Refresh,align:'right'});
 	Navbar.add({text:'Go',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',action:Go,align:'right'});
 	
@@ -567,6 +577,27 @@ function Go() {
 	Nav(Addressbar.value);
 	Addressbar.blur();
 }
+var View = {
+	set: function(view) {
+		Fly.command('registry:set,ViewDialog,'+view,View.callback);
+		View.setting = view;
+	},
+	callback: function(a) {
+		if (!a.return) {
+			Fly.window.message.show('An error occurred while saving your options to the registry');
+			View.setting = false;
+		} else {
+			Navbar.buttons[3].menu.options[View.list[View.current]].toggleOff();
+			Navbar.buttons[3].menu.options[View.list[View.setting]].toggleOn();
+			View.current = View.setting;
+			View.setting = false;
+		}
+		Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+	},
+	list: <?php echo $vl; ?>,
+	current: '<?php echo $cv; ?>',
+	setting: false
+};
 
 Fly.window.title.setDirect = Fly.window.title.set;
 Fly.window.title.set = function(title) {
@@ -588,7 +619,7 @@ function Nav(path) {
 		}
 		Nav.current = pth['return'];
 	})
-	document.getElementById('frame-main').src = 'list.php?v=file.sm.js&p='+encodeURIComponent(path);
+	document.getElementById('frame-main').src = 'list.php?v='+View.current+'&p='+encodeURIComponent(path);
 }
 Nav.current = false;
 
@@ -633,6 +664,10 @@ function FrameLoad() {
 	var frame = document.getElementById('frame-main');
 
 	frame.style.display = 'block';
+
+	if (Dialog.filter.length > 0) {
+		Dialog.filterList();
+	}
 }
 </script>
 
@@ -640,6 +675,7 @@ function FrameLoad() {
 var Dialog = {
 	opener: {},
 	options: {},
+	filter: [],
 	callback: function() {},
 	ready: function() {
 		if (Dialog.options.hasOwnProperty('path')) {
@@ -647,9 +683,102 @@ var Dialog = {
 		} else {
 			Nav('%FLY.USER.PATH%');
 		}
+
+		var typebar = document.getElementById('typebar');
+		if (Dialog.options.hasOwnProperty('types')) {
+			if (Array.isArray(Dialog.options.types)) {
+				let all = document.createElement('option');
+				all.innerHTML = 'All Supported Types (';
+				Dialog.options.types.forEach(function(t,i) {
+					if (t.indexOf('/') == -1) {
+						all.innerHTML += '*.'+t;
+						all.value += t;
+					} else {
+						all.innerHTML += t;
+						all.value += t;
+					}
+					if (i < Dialog.options.types.length-1) {
+						all.innerHTML += ', ';
+						all.value += ',';
+					} else {
+						all.innerHTML += ')';
+					}
+				});
+				typebar.appendChild(all);
+
+				Dialog.options.types.forEach(function(t) {
+					let type = document.createElement('option');
+					type.value = t;
+					if (t.indexOf('/') == -1) {
+						type.innerHTML = '*.'+t;
+					} else {
+						type.innerHTML = t;
+					}
+					typebar.appendChild(type);
+
+					Dialog.getTypeName(t,type);
+				});
+			}
+		}
+		var type_any = document.createElement('option');
+		type_any.value = '*';
+		type_any.innerHTML = 'Any (*.*)';
+		typebar.appendChild(type_any);
+		typebar.addEventListener('change',Dialog.updateType);
+		Dialog.updateType();
+
 		Fly.window.onclose = function() {
 			Dialog.callback(false);
 			Fly.window.close();
+		}
+	},
+	updateType: function() {
+		var typebar = document.getElementById('typebar');
+		if (typebar.value == '*') {
+			Dialog.filter = [];
+		} else {
+			Dialog.filter = typebar.value.split(',');
+		}
+		Dialog.filterList(); 
+	},
+	filterList: function() {
+		var frame = document.getElementById('frame-main').contentWindow;
+		var list = frame.List.filter(function(item) {
+			if (Dialog.filter.length == 0) {
+				return true;
+			} else {
+				var ret = false;
+				Dialog.filter.forEach(function(type) {
+					if (item['isdir']) {
+						ret = true;
+					} else if (type.indexOf('/') != -1 && item['mime'].indexOf(type) != -1) {
+						ret = true;
+					} else if (item['extension'] == type) {
+						ret = true;
+					} else {
+						ret = false;
+					}
+				});
+				return ret;
+			}
+		});
+		frame.document.body.innerHTML = '';
+		if (list.length == 0) {
+			frame.document.body.innerHTML = '<div class="title"><img class="title-icon" src="<?php echo $_FLY['WORKING_URL']; ?>fileman.svg">No files match the chosen filter.</div><p class="description">Try another filter, or select the "Any (*.*)" filter to view all files in this directory.</p>';
+		}
+		frame.View(frame.Folder,list);
+	},
+	getTypeName: function(type,option) {
+		if (type.indexOf('/') == -1) {
+			Fly.command('type:'+type,function(a) {
+				if (a.return == '' || a.return == false) {
+					option.innerHTML = 'Unknown (*.'+type+')';
+				} else {
+					option.innerHTML = a.return['description']+' (*.'+type+')';
+				}
+			});
+		} else {
+			option.innerHTML = 'MIME Type ('+type+')';
 		}
 	},
 	select: function(file) {
@@ -671,7 +800,7 @@ var Dialog = {
 	top: 34px;
 	left: 0px;
 	right: 0px;
-	bottom: 48px;
+	bottom: 84px;
 	background: #fff;
 	z-index: 2;
 	cursor: wait;
@@ -731,12 +860,21 @@ var Dialog = {
 #filebar {
 	position: absolute;
 	left: 9px;
-	bottom: 9px;
-	right: 119px;
+	bottom: 43px;
+	right: 9px;
 	border: 1px solid rgba(255,255,255,0.3) !important;
 	border-radius: 4px;
 	height: 28px;
 	padding: 5px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+#typebar {
+	position: absolute;
+	left: 9px;
+	bottom: 9px;
+	height: 28px;
+	width: calc(100% - 125px);
 	box-sizing: border-box;
 	font-size: 14px;
 }
@@ -767,6 +905,7 @@ button#button-ok {
 </div>
 
 <div id="filebar" class="FlyUiTextHighlight"><img id="fileicon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg"><span id="filename">No file selected</span></div>
+<select id="typebar"></select>
 <button disabled id="button-ok"><img class="button-image" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg"></button>
 
 </body>
@@ -791,8 +930,11 @@ if (isset($_GET['p'])) {
 }
 $p = base64_encode($p);
 
-$views = json_decode(file_get_contents($_FLY['WORKING_PATH'].'view/views.json'),true);
-$cv = FlyRegistryGet('View');
+$cv = FlyRegistryGet('ViewDialog');
+if ($cv == '' || $cv == false) {
+	$cv = 'file.sm.js';
+}
+$views = json_decode(file_get_contents($_FLY['WORKING_PATH'].'view/views.file.json'),true);
 $vm = '';
 $vl = '{';
 $vc = 0;
@@ -852,8 +994,14 @@ function ToolbarInit() {
 	
 	Navbar.add({text:'',title:'Back',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
 	Navbar.add({text:'',title:'Up',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-up.svg',action:Up});
+
 	var ab = Navbar.add({type:'custom',content:Addressbar});
-	ab.style.width = 'calc(100% - 164px)';
+	ab.style.width = 'calc(100% - 224px)';
+
+	Navbar.add({text:'',title:'Icon View',icon:'<?php echo $_FLY['WORKING_URL']; ?>icon.xl.svg',type:'dropdown',menu:[
+		<?php echo $vm; ?>
+	],align:'right'});
+	Navbar.add({type:'divider',align:'right'});
 	Navbar.add({text:'',title:'Refresh',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg',action:Refresh,align:'right'});
 	Navbar.add({text:'Go',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',action:Go,align:'right'});
 	
@@ -866,6 +1014,27 @@ function Go() {
 	Nav(Addressbar.value);
 	Addressbar.blur();
 }
+var View = {
+	set: function(view) {
+		Fly.command('registry:set,ViewDialog,'+view,View.callback);
+		View.setting = view;
+	},
+	callback: function(a) {
+		if (!a.return) {
+			Fly.window.message.show('An error occurred while saving your options to the registry');
+			View.setting = false;
+		} else {
+			Navbar.buttons[3].menu.options[View.list[View.current]].toggleOff();
+			Navbar.buttons[3].menu.options[View.list[View.setting]].toggleOn();
+			View.current = View.setting;
+			View.setting = false;
+		}
+		Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+	},
+	list: <?php echo $vl; ?>,
+	current: '<?php echo $cv; ?>',
+	setting: false
+};
 
 Fly.window.title.setDirect = Fly.window.title.set;
 Fly.window.title.set = function(title) {
@@ -890,7 +1059,7 @@ function Nav(path) {
 		}
 		Nav.current = pth['return'];
 	})
-	document.getElementById('frame-main').src = 'list.php?v=file.sm.js&p='+encodeURIComponent(path);
+	document.getElementById('frame-main').src = 'list.php?v='+View.current+'&p='+encodeURIComponent(path);
 }
 Nav.current = false;
 
@@ -920,6 +1089,7 @@ var SelectedFile = CurrentLocation;
 function SelectedFileOn() {
 	if (SelectedFile['type'] !== 'folder') {
 		document.getElementById('filebar').value = SelectedFile['bname'];
+		Dialog.updateFile();
 	}
 }
 

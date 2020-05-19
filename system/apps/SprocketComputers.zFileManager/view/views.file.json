@@ -1,0 +1,10 @@
+{
+	"Small Icons": {
+		"icon": "%FLY.WORKING_URL%icon.sm.svg",
+		"src": "file.sm.js"
+	},
+	"List": {
+		"icon": "%FLY.WORKING_URL%icon.ls.svg",
+		"src": "file.list.js"
+	}
+}
