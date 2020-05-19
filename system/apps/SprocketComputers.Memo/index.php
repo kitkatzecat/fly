@@ -243,7 +243,7 @@ var Save = {
 		Fly.window.message('Saved "'+Basename+'"');
 	},
 	opendialog: function() {
-		Fly.file.set(Save.checkfile,{name:Fly.file.string.bname(Basename),extensions:['txt','htm','md','xml','json','js','php']})
+		Fly.file.set(Save.checkfile,{name:Fly.file.string.bname(Basename),extensions:['txt','htm','md','xml','json','js','php','jsc']})
 	},
 	checkfile: function(r) {
 		if (r) {
@@ -293,7 +293,7 @@ function Open() {
 		if (a) {
 			CheckFile(a);
 		}
-	});
+	},{types:['txt','htm','md','xml','json','js','php','jsc','text/']});
 }
 function Font() {
 	var font = document.getElementById('FlyToolbarItem-font');
