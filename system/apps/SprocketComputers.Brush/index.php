@@ -36,7 +36,7 @@ if (!empty($_GET['file'])) {
 		window.top.shell.dialog(\'File not found\',\'The file "'.basename($_GET['file']).'" could not be loaded for editing because it does not exist.\',\'Not Found\');
 		';
 	} else {
-		if (in_array($process['extension'],['jpg','jpeg','bmp','gif','png'])) {
+		if (in_array($process['extension'],['jpg','jpeg','bmp','gif','png']) || strpos($process['mime'],'image/') !== false) {
 			$img = getimagesize($process["file"]);
 			$canvasinit = '
 			function CanvasInit() {
@@ -495,43 +495,57 @@ var Save = {
 		}
 	},
 	opendialog: function() {
-		document.getElementById('SaveDialog').browse();
+		Fly.file.set(Save.checkfile,{name:FileName,extensions:['png']})
 	},
-	checkfile: function() {
-		var browser = document.getElementById('SaveDialog');
-		var name = browser.vars.basename;
-		if (name.indexOf('.') == -1) {
-			name = FlyFileStringReplace(name)+'.png';
-		} else {
-			name = FlyFileStringReplace(name);
-		}
-		Save.temp.name = name;
-		Save.temp.path = browser.vars.bpath+'/'+name;
-		FlyCommand('exists:'+browser.vars.bpath+'/'+name,function(r){
-			if (r.return == true) {
-				Save.confirmoverwrite();
+	checkfile: function(r) {
+		if (r) {
+			var name = r.name;
+			if (r.extension != 'png') {
+				Fly.dialog.confirm({
+					title: 'Unexpected Extension',
+					message: 'Unexpected extension',
+					content: 'You have chosen an extension for this file that is not supported by Brush. Are you sure you want to continue?',
+					icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
+					callback: function(b) {
+						if (b) {
+							Save.checkexists(r);
+						} else {
+							Save.opendialog();
+						}
+					}
+				});
 			} else {
-				Save.confirmwrite();
+				Save.checkexists(r);
+			}
+		}
+	},
+	checkexists: function(r) {
+		Fly.command('exists:'+r.file,function(a){
+			if (a.return == true) {
+				Save.confirmoverwrite(r);
+			} else {
+				Save.confirmwrite(r);
 			}
 		});
 	},
-	confirmoverwrite: function() {
-		var browser = document.getElementById('SaveDialog');
+	confirmoverwrite: function(r) {
 		Fly.dialog.confirm({
 			title: 'File Exists',
 			message: 'Overwrite file?',
-			content: `The file "${Save.temp.name}" already exists in "${browser.vars.pbasename}". Do you want to overwrite it?`,
+			content: `The file "${r.name}" already exists. Do you want to overwrite it?`,
 			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg',
-			callback: function(r) {
-				if (r) {
-					Save.confirmwrite();
+			callback: function(a) {
+				if (a) {
+					Save.confirmwrite(r);
+				} else {
+					Save.opendialog();
 				}
 			}
 		});
 	},
-	confirmwrite: function() {
-		File = Save.temp.path;
-		FileName = Save.temp.name;
+	confirmwrite: function(r) {
+		File = r.file;
+		FileName = r.name;
 		Save.writefile();
 	},
 	writefile: function() {
@@ -543,10 +557,6 @@ var Save = {
 		Fly.window.title.set('Brush - '+FileName);
 		Changes = false;
 		Fly.window.message('Saved "'+FileName+'"');
-	},
-	temp: {
-		name: '',
-		path: '',
 	}
 }
 function Properties() {
