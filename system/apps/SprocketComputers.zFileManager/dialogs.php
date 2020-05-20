@@ -688,6 +688,7 @@ var Dialog = {
 		if (Dialog.options.hasOwnProperty('types')) {
 			if (Array.isArray(Dialog.options.types)) {
 				let all = document.createElement('option');
+				all.value = '';
 				all.innerHTML = 'All Supported Types (';
 				Dialog.options.types.forEach(function(t,i) {
 					if (t.indexOf('/') == -1) {
