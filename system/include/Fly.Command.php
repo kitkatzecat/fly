@@ -47,7 +47,7 @@ var FlyCommand = function(cmd=\'\',callback=function(){},options={}) {
 	var request = new XMLHttpRequest();
 	var error;
     request.open("GET", \''.$_FLY['RESOURCE']['URL']['COMPONENTS'].'cmd.php?time=\'+dateTime+\'&json=true&req=true\'+opt+\'&cp='.$_FLY['CURRENT_PATH'].'&cmd=\'+encodeURIComponent(cmd), true);
-    request.onreadystatechange = function() {
+    request.addEventListener(\'readystatechange\',function() {
 		if(request.readyState == 4) {
 			if(request.status == 200) {
 				result = request.responseText;
@@ -55,18 +55,20 @@ var FlyCommand = function(cmd=\'\',callback=function(){},options={}) {
 					result = JSON.parse(result);
 					try {
 						result.return = JSON.parse(result.return);
-					} catch(e) {}
+					} catch(e) {
+						error = e;
+					}
 					callback(result);
 				} catch(err) {
 					error = err;
-					callback(false);
+					callback(false,err);
 				}
 			} else {
-				error = FlyCommand.request.statusText;
-				callback(false);
-		  }
-	   }
-	};
+				error = request.statusText;
+				callback(false,error);
+			}
+		}
+	});
     request.setRequestHeader("Cache-Control", "no-cache");
     request.send(null);
 }
