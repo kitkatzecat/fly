@@ -2,8 +2,9 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
 include 'Fly.FileProcessor.php';
+include 'Fly.File.php';
 
 if ($_GET['file'] !== '') {
 	$_GET['file'] = FlyVarsReplace($_GET['file']);
@@ -18,27 +19,45 @@ if ($_GET['file'] !== '') {
 	}
 }
 
-echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
 ?>
 <script>
 function onload() {
 	window.top.document.getElementById(Fly.window.id).window.content.style.backgroundColor = '#fff';
 	window.top.document.getElementById(Fly.window.id).window.content.scrolling = 'auto';
-	setTimeout(function() {document.getElementById('FileChooser').browse();},500);
+	setTimeout(load,500);
+}
+function load() {
+	Fly.file.get(function(file) {
+			Fly.window.title.set(file.fname);
+			Fly.window.icon.set(file.icon);
+			window.location.href = file.URL;
+	});
 }
 </script>
+<style>
+.title {
+	font-size: 1.2em;
+	font-weight: bold;
+	padding-top: 18px;
+	padding-bottom: 16px;
+	padding-left: 6%;
+	padding-right: 6%;
+}
+img.button-image {
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	margin-right: 6px;
+}
+p.description {
+	margin-top: -12px;
+	padding-left: 6%;
+	padding-right: 6%;
+}
+</style>
 </head>
 <body onload="onload()">
-
-<div id="FileChooser"></div>
-<script>
-Fly.extension.replace('FileChooser','SprocketComputers.FileManager','FileChooser');
-document.getElementById('FileChooser').onchange = function() {
-	Fly.window.title.set(document.getElementById('FileChooser').vars.basename);
-	Fly.window.icon.set(document.getElementById('FileChooser').vars.icon);
-	window.location.href = document.getElementById('FileChooser').vars.URL;
-}
-</script>
-
+<div class="title">No file selected</div>
+<p class="description"><button onclick="load()"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg" class="button-image">Open file</button></p>
 </body>
 </html>

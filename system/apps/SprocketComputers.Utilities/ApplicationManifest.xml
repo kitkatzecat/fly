@@ -72,8 +72,10 @@
 			<index>executor.php</index>
 			<window>
 				<title>Executor - No file</title>
-				<width>640</width>
-				<height>480</height>
+				<width>50%</width>
+				<height>50%</height>
+				<minwidth>300</minwidth>
+				<minheight>100</minheight>
 				<x>auto</x>
 				<y>auto</y>
 				<resize>true</resize>
