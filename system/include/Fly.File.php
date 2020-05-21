@@ -95,6 +95,60 @@ Fly.file = {
 		trimslashes: function(file) {
 			return file.replace(/#\/+#/,'/');
 		}
+	},
+	write: function(options={}) {
+		var options_base = {
+			method: 'text',
+			content: '',
+			file: false,
+			overwrite: true,
+			progress: function() {},
+			ready: function() {}
+		}
+
+		options = Object.assign(Object.assign({},options_base),options);
+
+		var json = {
+			method: options['method'],
+			overwrite: options['overwrite'],
+			content: options['content'],
+			file: options['file']
+		};
+
+		var body = 'content='+JSON.stringify(json);
+
+		var request = new XMLHttpRequest();
+		request.open('POST','<?php echo $_FLY['RESOURCE']['URL']['COMPONENTS']; ?>file.php?d=write');
+		request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		request.setRequestHeader("Cache-Control", "no-cache");
+		request.addEventListener('readystatechange',function() {
+			if (request.readyState == 4) {
+				if (request.status == 200) {
+					var result = request.responseText;
+					try {
+						result = JSON.parse(result);
+						try {
+							options.ready(result['status'],result['message']);
+						} catch (e) {
+							console.log(e);
+						}
+					} catch(e) {
+						options.ready(false,'Invalid response: '+e);
+					}
+				} else {
+					options.ready(false,request.statusText);
+				}
+			}
+		});
+		request.upload.addEventListener('progress',function(e) {
+			var percent = e.loaded/e.total;
+			try {
+				options.progress(percent,e.loaded,e.total);
+			} catch(e) {
+				console.log(e);
+			}
+		});
+		request.send(body);
 	}
 }
 </script>
