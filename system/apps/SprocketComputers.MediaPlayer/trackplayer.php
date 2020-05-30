@@ -2,9 +2,8 @@
 <html>
 <head>
 <?php
-include 'fly.php';
-
-echo FlyLoadExtension('SprocketComputers.FileManager','FileChooser');
+include 'Fly.Standard.php';
+include 'Fly.File.php';
 
 ?>
 <script>
@@ -17,7 +16,11 @@ function onload() {
 	Toolbar.style.top = '0px';
 	
 	Toolbar.add({text:'Add Track...',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-plus.svg',action:function(){
-		document.getElementById('FileBrowser').browse();
+		Fly.file.get(function(r) {
+			if (r) {
+				Audio.add(r.URL,r.fname);
+			}
+		},{types:['mp3','m4a','wav','ogg','mp4','audio/']});
 	}});
 	Toolbar.add({text:'Remove All Tracks',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg',align:'right',action:Audio.remove});
 	
@@ -255,7 +258,6 @@ Audio.remove = function() {
 <button id="Button-Speed-Reverse" class="FlyUiNoSelect" onclick="ButtonRestartTrack();"><img id="Button-Speed-Reverse-Img" style="width:20px;height:20px;vertical-align:middle;pointer-events:none;" src="button.speed.reverse.svg"></button>
 <button id="Button-Speed" class="FlyUiNoSelect" onclick="ButtonSpeed();"><img id="Button-Speed-Img" style="width:20px;height:20px;vertical-align:middle;pointer-events:none;" src="button.speed.svg"></button>-->
 
-<div id="FileBrowser" style="display:none;"></div>
 <script>
 Fly.extension.replace('FileBrowser','SprocketComputers.FileManager','FileChooser');
 document.getElementById('FileBrowser').onchange = function() {
