@@ -69,14 +69,14 @@ include 'Fly.Command.php'; // Dynamic commands
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'shell.php'; // Fly shell
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'sound.php'; // Fly shell - sound
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'theme.php'; // Theme loader 1.0 (OLD)
-//include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme2.php'; // Theme loader 2.0
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme3.php'; // Theme loader 3.0 (beta)
+//include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme2.php'; // Theme loader 2.0 (OLD)
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme3.php'; // Theme loader 3.0
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window.php'; // Window manager 1.0 (OLD)
 //include $_FLY['RESOURCE']['PATH']['COMPONENTS'].'window2.php'; // Window manager 2.0 (OLD)
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'window3.php'; // Window manager 3.0
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'ui.php'; // Fly user interface
 
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'types_compatibility.php'; // Fly user interface
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'types_compatibility.php'; // Compatibility for types.json
 
 include 'Fly.Actionmenu.php'; // Fly Actionmenu for Window Switcher menu
 
@@ -190,16 +190,16 @@ include 'Fly.Command.php';
 
 // LOAD CONFIG
 $config_system = $_FLY_CONFIG; // System config
-$config_user = simpleXML_load_file($_FLY['RESOURCE']['PATH']['RESOURCES'] . 'os/loginstyles.xml'); // User config
+$config_user = simpleXML_load_file($_FLY['RESOURCE']['PATH']['OS'] . 'loginstyles.xml'); // User config
 
 // SYSTEM COMPONENTS
-include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme2.php'; // Theme loader
+include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'theme3.php'; // Theme loader
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'window3.php'; // Window manager 3.0
 include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'sound.php'; // Fly shell - sound
 
 // EXECUTE SYSTEM FUNCTIONS
 FlyCommand('clearlog');
-FlyLoadTheme('window body text', $config_user);
+FlyTheme(['text','controls','window','toolbar','body'],true,true,$_FLY['RESOURCE']['URL']['OS'].'loginstyles.thm');
 audio_sound_init($config_user);
 
 if (!empty($_GET['skiplogo'])) {

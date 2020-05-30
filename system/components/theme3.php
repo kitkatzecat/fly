@@ -288,12 +288,12 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 
 }
 
-function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true) {
+function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true,$file=false) {
 	global $_FLY;
 
 	$base = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['OS'].'base.thm');
 	$base[0] = json_decode($base[0],true);
-	$user = FlyLoadThemeFile();
+	$user = FlyLoadThemeFile($file);
 	$user[0] = json_decode($user[0],true);
 
 	$theme = [
