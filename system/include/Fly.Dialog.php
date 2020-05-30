@@ -149,7 +149,7 @@ Fly.dialog = {
 		});
 	},
 	color: function(properties={}) {
-		properties = Object.assign({title:'Pick Color',value:[255,0,0],callback:function(){}},properties);
+		properties = Object.assign({title:'Pick Color',value:[255,0,0],custom:false,callback:function(){}},properties);
 
 		var pos = Fly.window.position.get();
 

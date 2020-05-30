@@ -312,6 +312,9 @@ var Dialog = {
 		}, false);
 
 		checkColorRGB();
+		if (Dialog.attributes.custom) {
+			toggleAdvanced();
+		}
 	}
 };
 Fly.window.ready = function() {
