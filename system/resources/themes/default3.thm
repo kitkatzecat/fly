@@ -312,6 +312,30 @@
 					"color": "#808080"
 				}
 			},
+			"checkbox": {
+				"normal": {
+					"normal": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%checkbox_empty.svg')"
+					},
+					"hover": {},
+					"active": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%checkbox_empty_pressed.svg')"
+					}
+				},
+				"checked": {
+					"normal": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%checkbox_checked.svg')"
+					},
+					"hover": {},
+					"active": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%checkbox_checked_pressed.svg')"
+					}
+				}
+			},
 			"text": {
 				"normal": {
 					"border": "1px solid #000000",

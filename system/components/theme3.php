@@ -106,7 +106,7 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 					loopProperties($value,$print);
 					$print .= "\t}\n";
 				} else {
-					$print .= "\t$key: $value;\n";
+					$print .= "\t$key: ".FlyVarsReplace($value).";\n";
 				}
 			}
 		}
@@ -157,6 +157,10 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('html',$json['style']['body']['html'],$css);
 		addRule('body',$json['style']['body']['body'],$css);
 	}
+
+	// Remove large focus outlines
+	$css .= 'input:focus,button:focus,select:focus,textarea:focus {outline:none;}';
+
 	if (in_array('window',$categories)) {
 		$css .= "\n/* window */\n";
 
@@ -188,8 +192,6 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('.FlyWindowButtonInactive',$json['style']['window']['button']['inactive']['normal'],$css);
 		addRule('.FlyWindowButtonInactive:hover',$json['style']['window']['button']['inactive']['hover'],$css);
 		addRule('.FlyWindowButtonInactive:active',$json['style']['window']['button']['inactive']['active'],$css);
-
-		// ------------------ Window animations?
 
 		addRule('.FlyUiControlScaled',$json['style']['window']['control'],$css);
 		addRule('.FlyUiControlNonScaled',$json['style']['window']['control'],$css);
@@ -240,6 +242,13 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('button:hover, input[type=submit]:hover, input[type=reset]:hover, input[type=button]:hover',$json['style']['controls']['button']['hover'],$css);
 		addRule('button:active, input[type=submit]:active, input[type=reset]:active, input[type=button]:active',$json['style']['controls']['button']['active'],$css);
 		addRule('button[disabled], input[type=submit][disabled], input[type=reset][disabled], input[type=button][disabled]',array_merge($json['style']['controls']['button']['normal'],$json['style']['controls']['button']['disabled']),$css);
+
+		addRule('input[type=checkbox]',$json['style']['controls']['checkbox']['normal']['normal'],$css);
+		addRule('input[type=checkbox]:hover',$json['style']['controls']['checkbox']['normal']['hover'],$css);
+		addRule('input[type=checkbox]:active',$json['style']['controls']['checkbox']['normal']['active'],$css);
+		addRule('input[type=checkbox]:checked',$json['style']['controls']['checkbox']['checked']['normal'],$css);
+		addRule('input[type=checkbox]:checked:hover',$json['style']['controls']['checkbox']['checked']['hover'],$css);
+		addRule('input[type=checkbox]:checked:active',$json['style']['controls']['checkbox']['checked']['active'],$css);
 		
 		addRule('input[type=text], input[type=password], input[type=date], input[type=time], input[type=number]',$json['style']['controls']['text']['normal'],$css);
 		addRule('input[type=text]:hover, input[type=password]:hover, input[type=date]:hover, input[type=time]:hover, input[type=number]:hover',$json['style']['controls']['text']['hover'],$css);
