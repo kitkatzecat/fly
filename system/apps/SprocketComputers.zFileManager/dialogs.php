@@ -869,6 +869,9 @@ var Dialog = {
 	padding: 5px;
 	box-sizing: border-box;
 	font-size: 14px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
 }
 #typebar {
 	position: absolute;
