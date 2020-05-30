@@ -6,5 +6,9 @@
 	"List": {
 		"icon": "%FLY.WORKING_URL%icon.ls.svg",
 		"src": "file.list.js"
+	},
+	"Previews": {
+		"icon": "%FLY.WORKING_URL%icon.fs.svg",
+		"src": "file.preview.js"
 	}
 }
