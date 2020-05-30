@@ -748,16 +748,16 @@ var Dialog = {
 			if (Dialog.filter.length == 0) {
 				return true;
 			} else {
-				var ret = false;
+				let ret = false;
 				Dialog.filter.forEach(function(type) {
 					if (item['isdir']) {
 						ret = true;
-					} else if (type.indexOf('/') != -1 && item['mime'].indexOf(type) != -1) {
+					}
+					if (type.indexOf('/') != -1 && item['mime'].indexOf(type) != -1) {
 						ret = true;
-					} else if (item['extension'] == type) {
+					}
+					if (item['extension'] == type) {
 						ret = true;
-					} else {
-						ret = false;
 					}
 				});
 				return ret;
