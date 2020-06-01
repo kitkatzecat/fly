@@ -13,7 +13,7 @@ var OptionsTree = [
 </head>
 <body class="FlyUiText FlyUiNoSelect">
 
-<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>clock.svg">Time & Date</div>
+<div class="title category">Time & Date<img class="category-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>clock.svg"></div>
 <p><a onclick="window.location.href='timezone.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>earth.svg">Change your time zone</a></p>
 <p><a onclick="window.location.href='timedisplay.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>clock.svg">Change how times are displayed</a></p>
 <p><a onclick="window.location.href='datedisplay.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>calendar.svg">Change how dates are displayed</a></p>

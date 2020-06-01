@@ -9,7 +9,7 @@ include 'Fly.Actionbar.php';
 #main {
 	position: absolute;
 	top: 34px;
-	left: 160px;
+	left: min(220px,25%);
 	right: 0px;
 	bottom: 0px;
 	background-color: #fff;
@@ -21,9 +21,13 @@ include 'Fly.Actionbar.php';
 	position: absolute;
 	top: 34px;
 	left: 0px;
-	width: 160px;
+	width: 25%;
+	max-width: 220px;
 	bottom: 0px;
-	padding: 6px;
+	padding-top: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-bottom: 4px;
 	box-sizing: border-box;
 	overflow: hidden;
 }
@@ -60,20 +64,14 @@ function onload() {
 	Toolbar = new Fly.actionbar();
 	Toolbar.style.position = 'absolute';
 	Toolbar.style.top = '0px';
-	Toolbar.style.left = '160px';
+	Toolbar.style.left = 'min(220px,25%)';
 	Toolbar.style.right = '0px';
 	Toolbar.style.wordWrap = 'nowrap';
 	Toolbar.style.whiteSpace = 'pre';
 	Toolbar.style.overflowX = 'auto !important';
 	
-	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>index.svg',toggled:true,action:function(){}});
-	Toolbar.add({type:'divider'});
-	/*Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
-	Toolbar.add({text:'Home',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>personalization.svg',action:function(){}});
+	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>options.svg',action:function(){nav('home.php')}});
 	Toolbar.add({type:'title',text:'▸'});
-	Toolbar.add({text:'Theme',action:function(){}});
-	Toolbar.add({type:'title',text:'▸'});
-	Toolbar.add({text:'Change background',toggled:true,disabled:true});*/
 	
 	document.body.appendChild(Toolbar);
 	
@@ -81,6 +79,7 @@ function onload() {
 	IndexToolbar.style.position = 'absolute';
 	IndexToolbar.style.top = '0px';
 	IndexToolbar.style.left = '0px';
+	IndexToolbar.style.width = '23%';
 	IndexToolbar.style.width = '160px';
 	IndexToolbar.style.wordWrap = 'nowrap';
 	IndexToolbar.style.whiteSpace = 'pre';
@@ -103,15 +102,24 @@ function nav(page) {
 	frame.src = page;
 }
 var Tree = [];
+var frameloadinit = false;
 function frameload() {
+	var frame = document.getElementById('frame');
+
+	if (frameloadinit) {
+		try {
+			window.top.shell.sound.system('click');
+		} catch(e) {}
+	} else {
+		frameloadinit = true;
+	}
+
 	if (Tree.length > 0) {
 		for (i=0; i < Tree.length; i++) {
 			Tree[i].remove();
 		}
 		Tree = [];
 	}
-	
-	var frame = document.getElementById('frame');
 	if (typeof frame.contentWindow.OptionsTree !== 'undefined') {
 		var tree = frame.contentWindow.OptionsTree;
 		for (let i=0; i < tree.length; i++) {
@@ -119,7 +127,8 @@ function frameload() {
 				Tree.push(Toolbar.add({text:tree[i].name,icon:tree[i].icon,toggled:true,action:function(){}}));
 				Fly.window.title.set('Options - '+tree[i].name);
 			} else {
-				Tree.push(Toolbar.add({text:tree[i].name,icon:tree[i].icon,action:function(){nav(tree[i].index);}}));
+				var b = Toolbar.add({text:tree[i].name,icon:tree[i].icon,action:function(){b.toggleOn();nav(tree[i].index);}});
+				Tree.push(b);
 				Tree.push(Toolbar.add({type:'title',text:'▸'}));
 			}
 		}

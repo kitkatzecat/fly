@@ -13,7 +13,7 @@ var OptionsTree = [
 </head>
 <body class="FlyUiText FlyUiNoSelect">
 
-<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>personalization.svg">Personalization</div>
+<div class="title category">Personalization<img class="category-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>personalization.svg"></div>
 <p><a onclick="window.location.href='background.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg">Change your background</a></p>
 <p><a onclick="window.location.href='window.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>application.svg">Change window color and transparency</a></p>
 <p><a onclick="window.location.href='jump.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>fly.svg">Customize your Jump menu</a></p>

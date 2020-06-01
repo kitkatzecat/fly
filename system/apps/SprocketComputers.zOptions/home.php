@@ -43,7 +43,7 @@ var OptionsTree = [
 </head>
 <body class="FlyUiText FlyUiNoSelect">
 <?php
-echo '<div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'home.svg">Home</div>';
+echo '<div class="title category">Options Home<img class="category-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg"></div>';
 ?>
 <div class="box"><h1><img class="userImage" src="<?php echo $_FLY['RESOURCE']['URL']['OS']; ?>userimagelight.svg"><?php echo htmlentities($userXML->user->name); ?></h1></div>
 <div class="title">Common tasks</div>

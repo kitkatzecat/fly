@@ -63,7 +63,7 @@ var OptionsTree = [
 
 <?php
 if ($user == $_FLY['USER']['ID']) {
-	echo '<div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'person.svg">Users</div>';
+	echo '<div class="title category">Users<img class="category-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'person.svg"></div>';
 } else {
 	echo '<div class="title">Manage user</div>';
 }

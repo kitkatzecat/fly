@@ -13,7 +13,7 @@ var OptionsTree = [
 </head>
 <body class="FlyUiText FlyUiNoSelect">
 
-<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>application.svg">Files & Applications</div>
+<div class="title category">Files & Applications<img class="category-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>application.svg"></div>
 <p><a onclick="window.location.href='apps.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>application.svg">Manage installed applications</a></p>
 <p><a onclick="window.location.href='filetypes.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg">Manage file types and associations</a></p>
 
