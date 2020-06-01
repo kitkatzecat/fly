@@ -291,23 +291,56 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true,$file=false) {
 	global $_FLY;
 
-	$base = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['OS'].'base.thm');
-	$base[0] = json_decode($base[0],true);
-	$user = FlyLoadThemeFile($file);
-	$user[0] = json_decode($user[0],true);
+	sort($categories);
 
-	$theme = [
-		array_replace_recursive($base[0],$user[0]),
-		array_replace($base[1],$user[1])
-	];
-
-	$theme[0] = json_encode($theme[0]);
-
-	$css = FlyThemeCSS($theme[0],$theme[1],$categories,$enclosure);
-	if ($echo) {
-		echo $css;
+	if ($_FLY['IS_USER']) {
+		if (!$file) {
+			$file = $_FLY['USER']['DATA'].'theme.thm';
+		}
+		$tmp = $_FLY['RESOURCE']['PATH']['TEMP'].'theme3'.'_'.$_FLY['USER']['ID'].'_'.implode('-',$categories).'_'.filemtime($file).'.css';
 	} else {
-		return $css;
+		if (!$file) {
+			$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
+		}
+		$tmp = $_FLY['RESOURCE']['PATH']['TEMP'].'theme3'.'__'.implode('-',$categories).'_'.filemtime($file).'.css';
+	}
+
+	if (file_exists($tmp)) {
+		$css = file_get_contents($tmp);
+		if ($echo) {
+			if ($enclosure) {
+				echo '<link id="FlyStylesheet" rel="stylesheet" href="'.str_replace($_FLY['PATH'],$_FLY['URL'],$tmp).'">';
+			} else {
+				echo $css;
+			}
+		} else {
+			return $css;
+		}
+	} else {
+		$base = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['OS'].'base.thm');
+		$base[0] = json_decode($base[0],true);
+		$user = FlyLoadThemeFile($file);
+		$user[0] = json_decode($user[0],true);
+	
+		$theme = [
+			array_replace_recursive($base[0],$user[0]),
+			array_replace($base[1],$user[1])
+		];
+	
+		$theme[0] = json_encode($theme[0]);
+	
+		$css = FlyThemeCSS($theme[0],$theme[1],$categories,false);
+		file_put_contents($tmp,$css);
+
+		if ($echo) {
+			if ($enclosure) {
+				echo '<link id="FlyStylesheet" rel="stylesheet" href="'.str_replace($_FLY['PATH'],$_FLY['URL'],$tmp).'">';
+			} else {
+				echo $css;
+			}
+		} else {
+			return $css;
+		}
 	}
 }
 
