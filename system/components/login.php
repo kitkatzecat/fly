@@ -75,6 +75,7 @@ var interval;
 function onload() {
 	Fly.window.buttons.hide();
 	interval = setInterval(position,1000);
+	window.top.addEventListener('resize',position);
 
 	Fly.window.disableContext();
 }

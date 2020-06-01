@@ -199,7 +199,7 @@ include $_FLY['RESOURCE']['PATH']['COMPONENTS'] . 'sound.php'; // Fly shell - so
 
 // EXECUTE SYSTEM FUNCTIONS
 FlyCommand('clearlog');
-FlyTheme(['text','controls','window','toolbar','body'],true,true,$_FLY['RESOURCE']['URL']['OS'].'loginstyles.thm');
+FlyTheme(['text','controls','window','toolbar','body'],true,true,$_FLY['RESOURCE']['PATH']['OS'].'loginstyles.thm');
 audio_sound_init($config_user);
 
 if (!empty($_GET['skiplogo'])) {
