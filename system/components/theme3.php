@@ -51,6 +51,11 @@ function FlyLoadThemeFile($file = false) {
 	// Create ThemeVars COLOR property (rgba color, a is transparency)
 	$THEME['COLOR'] = 'rgba('.$json_parsed['resources']['color'][0].','.$json_parsed['resources']['color'][1].','.$json_parsed['resources']['color'][2].','.$json_parsed['resources']['transparency'].')';
 
+	// Create ThemeVars COLOR_# properties (where # is R, G, B, or A; corresponds to rgba of color)
+	$THEME['COLOR_R'] = $json_parsed['resources']['color'][0];
+	$THEME['COLOR_G'] = $json_parsed['resources']['color'][1];
+	$THEME['COLOR_B'] = $json_parsed['resources']['color'][2];
+
 	// Create ThemeVars COLOR_OPAQUE property (#rrggbb color, transparency value omitted)
 	$THEME['COLOR_OPAQUE'] = '#'.str_pad(dechex($json_parsed['resources']['color'][0]),2,"0",STR_PAD_LEFT).str_pad(dechex($json_parsed['resources']['color'][1]),2,"0",STR_PAD_LEFT).str_pad(dechex($json_parsed['resources']['color'][2]),2,"0",STR_PAD_LEFT);
 
