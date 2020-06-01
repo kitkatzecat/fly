@@ -671,20 +671,17 @@ var Overlay = {
 	file: '',
 	opacity: 0.3,
 	open: function() {
-		var browser = document.getElementById('FileBrowser');
-		browser.onchange = Overlay.filereturn;
-		browser.browse();
-	},
-	filereturn: function() {
-		var browser = document.getElementById('FileBrowser');
-		if (['jpg','png','bmp','gif','jpeg'].indexOf(browser.vars.extension) !== -1) {
-			ovrlay.style.backgroundImage = 'url(\''+browser.vars.URL+'\')';
-			Overlay.file = browser.vars.URL;
-			if((parseFloat(ovrlay.style.opacity)*100) < 10) {
-				ovrlay.style.opacity = '0.1';
+		Fly.file.get(function(file) {
+			if (file != false) {
+				Overlay.filereturn(file);
 			}
-		} else {
-			window.top.shell.dialog('Can\'t set overlay','The selected image could not be used for the overlay as it is of a file type not supported by Brush.','Brush - Overlay Error');
+		},{types:['png','jpg','jpeg','bmp','gif','image/']});
+	},
+	filereturn: function(file) {
+		ovrlay.style.backgroundImage = 'url(\''+file.URL+'\')';
+		Overlay.file = file.URL;
+		if((parseFloat(ovrlay.style.opacity)*100) < 10) {
+			ovrlay.style.opacity = '0.1';
 		}
 	},
 	setOpacity: function(opacity) {
@@ -1175,12 +1172,6 @@ canvas.addEventListener('mouseout', function() {
 <script>
 var iFrame = document.getElementById('iframe');
 var Form = document.getElementById('form');
-</script>
-
-<div id="SaveDialog" style="display:none;"></div>
-<script>
-Fly.extension.replace('SaveDialog','SprocketComputers.FileManager','SaveDialog');
-document.getElementById('SaveDialog').onchange = function() {Save.checkfile();};
 </script>
 
 </body>
