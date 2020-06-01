@@ -73,11 +73,17 @@ function View(Folder=false,List=false) {
 			folder.push([''],[
 				'Icon View',
 				[
-					['Large Icons',function(){},{toggled:true,icon:'icon.xl.svg'}],
-					['Medium Icons',function(){View.set('desktop.js');},{icon:'icon.lg.svg'}],
+					['Large Icons',function(){View.set('desktop.lg.js');},{icon:'icon.xl.svg'}],
+					['Medium Icons',function(){},{toggled:true,icon:'icon.lg.svg'}],
 					['Small Icons',function(){View.set('desktop.sm.js');},{icon:'icon.md.svg'}]
 				],
 				{icon:'icon.xl.svg'}
+			],[''],[
+				'Personalization',
+				function() {
+					window.top.system.command('run:SprocketComputers.zOptions,page=personalization');
+				},
+				{icon:`${Fly.core['RESOURCE']['URL']['ICONS']}personalization.svg`}
 			]);
 			Fly.actionmenu(e,folder);
 			e.preventDefault();

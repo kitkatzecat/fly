@@ -78,6 +78,12 @@ function View(Folder=false,List=false) {
 					['Small Icons',function(){View.set('desktop.sm.js');},{icon:'icon.md.svg'}]
 				],
 				{icon:'icon.xl.svg'}
+			],[''],[
+				'Personalization',
+				function() {
+					window.top.system.command('run:SprocketComputers.zOptions,page=personalization');
+				},
+				{icon:`${Fly.core['RESOURCE']['URL']['ICONS']}personalization.svg`}
 			]);
 			Fly.actionmenu(e,folder);
 			e.preventDefault();
