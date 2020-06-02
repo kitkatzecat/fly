@@ -46,6 +46,38 @@ function formatFileSize($filesize) {
 	return $filesize;
 }
 
+function nicetime($date)
+{
+	if (empty($date)) {
+		return "Not available";
+	}
+	$periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+	$lengths = array("60","60","24","7","4.35","12","10");
+	$now = time();
+	$unix_date = $date;
+	
+	if (empty($unix_date)) {    
+		return "Not available";
+	}
+	
+	if ($now > $unix_date) {    
+		$difference = $now - $unix_date;
+		$tense = "ago";
+	} else {
+		$difference = $unix_date - $now;
+		$tense = "from now";
+	}
+	for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
+		$difference /= $lengths[$j];
+	}
+	$difference = round($difference);
+
+	if ($difference != 1) {
+		$periods[$j].= "s";
+	}
+	return "$difference $periods[$j] {$tense}";
+}
+
 if ($_GET['properties_filesize'] == 'true') {
 	goto size;
 }
@@ -54,13 +86,29 @@ if ($_GET['properties_filesize'] == 'true') {
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
 include 'Fly.FileProcessor.php';
+include 'Fly.Actionmenu.php';
 ?>
 <style>
 body {
 	background-color: #ffffff;
 	margin: 0px;
+}
+@keyframes fadein-icon {
+	0% {opacity: 0;}
+	80% {opacity: 0;}
+	100% {opacity: 1}
+}
+@keyframes fadein-img {
+	0% {opacity: 0;}
+	70% {opacity: 0;}
+	100% {opacity: 1}
+}
+.file {
+	min-height: 58px;
+	position: relative;
+	transition: height .5s ease-in-out, min-height .5s ease-in-out;
 }
 .item {
 	display: inline-block;
@@ -70,26 +118,49 @@ body {
 	box-sizing: border-box;
 	cursor: default;
 	overflow: hidden;
-	font-size: 16px;
+	font-size: 14px;
 	word-wrap: break-word;
 }
-.head {
-	font-size: 12px;
-	font-weight: bold;
+.title {
+	width: clamp(80px,30%,160px);
+	float: left;
+	height: 100%;
 }
 .icon {
 	width: 48px;
 	height: 48px;
-	margin-bottom: 4px;
-	pointer-events: none;
-	vertical-align: middle;
-	margin-right: 6px;
-	float: left;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	transition: transform .5s ease-in-out, top .5s ease-in-out, width .5s ease-in-out, height .5s ease-in-out;
+	animation: fadein-icon .4s linear;
+}
+.image {
+	max-width: 48px;
+	max-height: 48px;
+	position: absolute;
+	top: 50%;
+	left: 28px;
+	transform: translate(-50%,-50%);
+	box-shadow: 0px 1px 4px #888;
+	transition: transform .5s ease-in-out, top .5s ease-in-out, width .5s ease-in-out, height .5s ease-in-out, max-width .5s ease-in-out, max-height .5s ease-in-out;
+	animation: fadein-img .4s linear;
+}
+.info {
+	display: inline-block;
+	width: calc(100% - clamp(80px,30%,160px) - 20px);
+	word-wrap: break-word;
 }
 .name {
 	display: inline-block;
-	width: calc(100% - 54px);
-	margin-top: 16px;
+	width: calc(100% - 80px);
+	margin-top: 12px;
+	margin-bottom: 12px;
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: 58px;
+	text-align: left;
+	transition: width .5s ease-in-out, margin-left .5s ease-in-out, margin-top .5s ease-in-out;
 }
 .FlyUiMenuItem {
 	box-sizing: border-box;
@@ -102,6 +173,22 @@ body {
 	bottom: 0px;
 	padding: 2px;
 	overflow: auto;
+}
+.toggle {
+	width: 20px;
+	height: 20px;
+	vertical-align: middle;
+	float: right;
+	padding-left: 2px;
+	padding-top: 0px;
+	font-size: 16px;
+	margin: -2px;
+}
+.infos {
+	display: none;
+	margin-top: 6px;
+	word-wrap: break-word;
+	white-space: pre-wrap;
 }
 </style>
 <?php
@@ -139,35 +226,202 @@ if ($process !== false) {
 	</script>';
 	exit;
 }
+
+if (strpos($process['mime'],'image/') !== false) {
+	$icon_src = $process['URL'];
+	$icon_class = 'image';
+} else {
+	$icon_src = $process['icon'];
+	$icon_class = 'icon';
+}
 ?>
 <script>
 function onload() {
 	<?php
-	echo 'Fly.window.title.set(\'Properties - '.$process['name'].'\');';
+	echo 'Fly.window.title.set(\'Properties - '.$process['fname'].'\');';
 	?>
 	Fly.window.size.set(240,320);
 	<?php
 	echo 'document.getElementById(\'frame\').src = \'properties.php?properties_filesize=true&file='.$process['file'].'\'';
 	?>
 }
+function contextMenu(e) {
+	Fly.actionmenu(e,[
+		[
+			'Open',function() {
+				window.top.system.command('run:<?php echo $process['file']; ?>');
+			},{icon:`${Fly.core['RESOURCE']['URL']['ICONS']}run.svg`}
+		],
+		[
+			'Open with...',function() {
+				window.top.system.command('run:SprocketComputers.Utilities.OpenWith,file=<?php echo $process['file']; ?>');
+			}
+		]
+	]);
+}
+function toggle(id,button) {
+	id = document.getElementById(id);
+	button = document.getElementById(button);
+	if (id.style.display == 'block' ) {
+		id.style.display = 'none';
+		button.innerHTML = '▾';
+	} else {
+		id.style.display = 'block';
+		button.innerHTML = '▴';
+	}
+}
+
+var itemicon = '<?php echo $process['icon']; ?>';
+var itemurl = '<?php echo $process['URL']; ?>';
+<?php
+if (strpos($process['mime'],'image/') !== false) {
+echo '
+function toggleicon() {
+	var icon = document.getElementById("icon");
+	if (icon.className.indexOf("image") != -1) {
+		icon.className = icon.className.replace("image","icon");
+		icon.src = itemicon;
+	} else {
+		icon.className = icon.className.replace("icon","image");
+		icon.src = itemurl;
+	}
+}
+';
+$toggleicon = 'toggleicon()';
+}
+?>
+
+var togglesized = false;
+function togglesize() {
+	var toggle = document.getElementById('toggleimg');
+	var file = document.getElementById('file');
+	var icon = document.getElementById('icon');
+	var name = document.getElementById('name');
+	if (!togglesized) {
+		if (icon.className.indexOf("image") == -1) {
+			icon.style.top = '4px';
+			icon.style.width = '200px';
+			icon.style.height = '200px';
+			icon.style.transform = 'translate(0%,0%)';
+			name.style.marginTop = '208px';
+			name.style.marginLeft = '8px';
+			name.style.width = '184px';
+			name.style.textAlign = 'center';
+			file.style.minHeight = `${216+name.offsetHeight}px`;
+		} else {
+			if (icon.offsetWidth > icon.offsetHeight || icon.offsetWidth == icon.offsetHeight) {
+				icon.style.maxWidth = 'none';
+				icon.style.maxHeight = 'none';
+				icon.style.width = '192px';
+				icon.style.left = '4px';
+				icon.style.top = `${(icon.offsetHeight/2)+4}px`;
+				icon.style.transform = 'translate(0%,-50%)';
+				name.style.marginTop = `${icon.offsetHeight+8}px`;
+				name.style.marginLeft = '8px';
+				name.style.width = '184px';
+				name.style.textAlign = 'center';
+				file.style.minHeight = `${4+icon.offsetHeight}px`;
+			} else {
+				icon.style.maxWidth = 'none';
+				icon.style.maxHeight = 'none';
+				icon.style.height = '192px';
+				icon.style.top = '4px';
+				icon.style.left = '100px';
+				icon.style.transform = 'translate(-50%,0%)';
+				name.style.marginTop = '200px';
+				name.style.marginLeft = '8px';
+				name.style.width = '184px';
+				name.style.textAlign = 'center';
+				file.style.minHeight = '204px';
+			}
+		}
+
+		icon.onclick = function() {};
+		toggle.innerHTML = '<span style="position:absolute;top:50%;transform:translateY(-50%)">▴</span>';
+		togglesized = true;
+	} else {
+		icon.style.top = '';
+		icon.style.left = '';
+		icon.style.width = '';
+		icon.style.height = '';
+		icon.style.maxHeight = '';
+		icon.style.maxWidth = '';
+		icon.style.transform = '';
+		name.style.marginTop = '';
+		name.style.marginLeft = '';
+		name.style.width = '';
+		name.style.textAlign = '';
+		file.style.minHeight = '';
+
+		icon.onclick = function() {<?php echo $toggleicon; ?>};
+		toggle.innerHTML = '<span style="position:absolute;top:50%;transform:translateY(-50%)">▾</span>';
+		togglesized = false;
+	}
+}
 </script>
 </head>
 <body onload="onload()" oncontextmenu="return false;">
-<div id="appBrowser" style="display:none;"></div>
-<script>
-Fly.control.replace('appBrowser','Fly.control.applicationChooser');
-document.getElementById('appBrowser').onchange = function() {
-	window.top.system.command('run:'+document.getElementById('appBrowser').getAttribute('app')+',file=<?php echo $process['file']; ?>');
-}
-</script>
 
 <div class="page">
-<div style="cursor:pointer;" oncontextmenu="Fly.control.contextMenu(event,['<b>Open</b>','Rename','Open With...'],['window.top.system.command(\'run:<?php echo htmlentities($process['file']); ?>\')','window.top.system.command(\'run:SprocketComputers.FileManager.Rename,file=<?php echo htmlentities($process['file']); ?>\')','document.getElementById(\'appBrowser\').browse();']);return false;" class="item FlyUiMenuItem FlyUiText FlyUiNoSelect" onclick="window.top.system.command('run:<?php echo htmlentities($process['file']); ?>')"><img class="icon FlyUiNoSelect" src=" <?php echo $process['icon']; ?>"><div class="name"><?php echo $process['name']; ?></div></div>
-<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect"><span class="head">Type</span><br><?php echo htmlentities($process['description']); if ($process['type']=="file" && $process['extension'] !== '') {echo ' ('.$process['extension'].')';}?></div>
-<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect"><span class="head">Size</span><br><span id="size-value">Determining...</span></div>
-<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect"><span class="head">Modified</span><br><?php echo date("l, F j, Y",filemtime($process['file'])); ?></div>
-<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect"><span class="head">Created</span><br><?php echo date("l, F j, Y",filectime($process['file'])); ?></div>
-<div style="cursor:pointer;" oncontextmenu="Fly.control.contextMenu(event,['<b>Open</b>'],['window.top.system.command(\'run:<?php echo htmlentities($process['fpath']); ?>\')']);return false;" class="item FlyUiMenuItem FlyUiText FlyUiNoSelect" onclick="window.top.system.command('run:<?php echo htmlentities($process['fpath']); ?>')"><span class="head">Path</span><br><?php echo preg_replace('#/+#','/',$process['fpath']); ?></div>
+<div oncontextmenu="contextMenu(event)" id="file" ondblclick="window.top.system.command('run:<?php echo htmlentities($process['file']); ?>')" class="file item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<img id="icon" onclick="<?php echo $toggleicon; ?>" class="<?php echo $icon_class; ?> FlyUiNoSelect" src="<?php echo $icon_src; ?>">
+	<div id="toggleimg" style="position:absolute;top:4px;right:4px;height:calc(100% - 4px);" onclick="togglesize()" class="FlyUiMenuItem toggle"><span style="position:absolute;top:50%;transform:translateY(-50%)">▾</span></div>
+	<div id="name" class="name"><?php echo $process['fname']; ?></div>
+</div>
+
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Type</span>
+	<span class="info"><?php echo htmlentities($process['description']); if ($process['type']=="file" && $process['extension'] !== '') {echo ' ('.$process['extension'].')';}?></span>
+</div>
+
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">MIME</span>
+	<span class="info"><?php echo $process['mime']; ?></span>
+</div>
+
+<div ondblclick="toggle('size-full','togglesize');" class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Size</span>
+	<div id="togglesize" onclick="toggle('size-full','togglesize');" class="FlyUiMenuItem toggle">▾</div>
+	<span class="info">
+		<span id="size-nice">Determining...</span>
+		<span class="infos" id="size-full">Determining...</span>
+	</span>
+</div>
+
+<div ondblclick="toggle('Adate','toggleAdate');" class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Accessed</span>
+	<div id="toggleAdate" onclick="toggle('Adate','toggleAdate');" class="FlyUiMenuItem toggle">▾</div>
+	<span class="info">
+		<?php echo nicetime(fileatime($process['file'])); ?>
+		<div class="infos" id="Adate"><?php echo date("l, F j, Y\ng:i A",fileatime($process['file'])); ?></div>
+	</span>
+</div>
+
+<div ondblclick="toggle('Mdate','toggleMdate');" class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Modified</span>
+	<div id="toggleMdate" onclick="toggle('Mdate','toggleMdate');" class="FlyUiMenuItem toggle">▾</div>
+	<span class="info">
+		<?php echo nicetime(filemtime($process['file'])); ?>
+		<div class="infos" id="Mdate"><?php echo date("l, F j, Y\ng:i A",filemtime($process['file'])); ?></div>
+	</span>
+</div>
+
+<!--
+<div ondblclick="toggle('Cdate','toggleCdate');" class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Created</span>
+	<div id="toggleCdate" onclick="toggle('Cdate','toggleCdate');" class="FlyUiMenuItem toggle">▾</div>
+	<span class="info">
+		<?php echo nicetime(filectime($process['file'])); ?>
+		<div class="infos" id="Cdate"><?php echo date("l, F j, Y\ng:i A",filectime($process['file'])); ?></div>
+	</span>
+</div>
+-->
+
+<div style="cursor:pointer;" class="item FlyUiMenuItem FlyUiText FlyUiNoSelect" onclick="window.top.system.command('run:<?php echo htmlentities($process['fpath']); ?>')">
+	<span class="title">Path</span>
+	<span class="info"><?php echo preg_replace('#/+#','/',$process['fpath']); ?></span>
+</div>
+
 </div>
 <iframe style="display:none;" id="frame" src=""></iframe>
 </body>
@@ -177,13 +431,16 @@ exit;
 
 size:
 if (is_dir($_GET['file'])) {
-	$filesize = formatFileSize(getFolderSize($_GET['file']));
+	$fullsize = getFolderSize($_GET['file']);
+	$filesize = formatFileSize($fullsize);
 } else {
-	$filesize = formatFileSize(filesize($GET['file']));
+	$fullsize = filesize($_GET['file']);
+	$filesize = formatFileSize($fullsize);
 }
 echo '
 <script>
-window.parent.document.getElementById(\'size-value\').innerHTML = \''.$filesize.'\';
+window.parent.document.getElementById(\'size-full\').innerHTML = \''.number_format($fullsize).' bytes\';
+window.parent.document.getElementById(\'size-nice\').innerHTML = \''.$filesize.'\';
 </script>
 ';
 exit;

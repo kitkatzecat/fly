@@ -82,9 +82,13 @@
 			<window>
 				<x>auto</x>
 				<y>auto</y>
-				<width>240</width>
+				<width>250</width>
 				<height>320</height>
 				<title>Properties</title>
+				<resize>true</resize>
+				<minwidth>250</minwidth>
+				<minheight>200</minheight>
+				<maxwidth>250</maxwidth>
 			</window>
 		</mask>
 		<mask id="Rename" hidden="true">
