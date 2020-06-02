@@ -132,7 +132,7 @@
 			"titlebar": {
 				"active": {
 					"normal": {
-						"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+						"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 						"font-weight": "normal",
 						"font-size": "14px",
 						"text-align": "center",
@@ -163,7 +163,7 @@
 				"active": {
 					"normal": {
 						"color": "#FFFFFF",
-						"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+						"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 						"transition": "color .1s, text-shadow .1s",
 						"padding": "2px",
 						"text-align": "center"
@@ -196,7 +196,7 @@
 		},
 		"toolbar": {
 			"normal": {
-				"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+				"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 				"font-weight": "normal",
 				"font-size": "16px",
 				"color": "#FFFFFF",
@@ -230,7 +230,7 @@
 				"normal": {
 					"normal": {
 						"color": "#FFFFFF",
-						"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+						"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 						"transition": "color .1s, text-shadow .1s"
 					},
 					"hover": {
@@ -245,7 +245,7 @@
 				"control": {
 					"normal": {
 						"color": "#FFFFFF",
-						"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+						"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 						"transition": "color .1s, text-shadow .1s"
 					},
 					"hover": {
@@ -261,12 +261,12 @@
 			"highlight": {
 				"normal": {
 					"color": "#FFFFFF",
-					"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+					"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 					"transition": "color .1s, text-shadow .1s"
 				},
 				"control": {
 					"color": "#FFFFFF",
-					"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+					"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 					"transition": "color .1s, text-shadow .1s"
 				}
 			},
@@ -371,7 +371,7 @@
 			"toolbar_item": {
 				"normal": {
 					"color": "#FFFFFF",
-					"text-shadow": "0px 0px 9px 1px %THEME.SHADE_COLOR%",
+					"text-shadow": "0px 0px 9px %THEME.SHADE_COLOR%",
 					"border": "1px solid transparent",
 					"border-radius": "3px"
 				},
