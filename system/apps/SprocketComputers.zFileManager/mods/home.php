@@ -1,3 +1,6 @@
+<?php
+include 'Fly.CommonStyle.php';
+?>
 <script>
 window.addEventListener('load',function() {
 	Display.Title('Home');
@@ -5,7 +8,7 @@ window.addEventListener('load',function() {
 	Display.Path('Home');
 	Display.Status('Ready');
 
-	document.body.innerHTML = '<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg">Home</div>';
+	document.body.innerHTML = '<div class="FlyCSTitle FlyCSSectionTitle">Home<img class="FlyCSSectionIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg"></div>';
 });
 </script>
 

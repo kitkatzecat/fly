@@ -11,7 +11,13 @@ window.addEventListener('load',function() {
 	Display.Path('Keywords');
 });
 </script>
+<?php
+include 'Fly.CommonStyle.php';
+?>
 <style>
+body {
+	background-color: #fff;
+}
 #main {
 	position: absolute;
 	top: 0px;
@@ -19,7 +25,6 @@ window.addEventListener('load',function() {
 	right: 0px;
 	bottom: 0px;
 	padding: 4px;
-	background-color: #fff;
 	overflow-y: auto;
 }
 #okButton {
@@ -112,8 +117,8 @@ th {
 <body class="FlyUiNoSelect">
 
 <div id="main">
-<div class="title"><img class="title-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg">Keywords</div>
-<p class="description">Keywords are a convenient way to get where you're trying to go quickly while using File Manager.</p>
+<div class="FlyCSTitle FlyCSSectionTitle">Keywords<img class="FlyCSSectionIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg"></div>
+<p>Keywords are a convenient way to get where you're trying to go quickly while using File Manager.</p>
 <p>To use a keyword, just type it into the address bar in any File Manager window.</p>
 
 <?php

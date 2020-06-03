@@ -1,5 +1,4 @@
 <?php
-
 function getFolderSize( $path = '.' ){
 
 $size = "0";
@@ -190,6 +189,19 @@ body {
 	word-wrap: break-word;
 	white-space: pre-wrap;
 }
+.category {
+	width: calc(100% - 8px);
+	box-sizing: border-box;
+	margin-left: 4px;
+	margin-right: 4px;
+	font-weight: bold;
+	font-size: 12px;
+	border-bottom: 1px solid #808080;
+	padding: 2px;
+	margin-top: 8px;
+	margin-bottom: 6px;
+	padding-left: 1px;
+}
 </style>
 <?php
 $process = FlyFileStringProcessor($_GET['file']);
@@ -239,11 +251,11 @@ if (strpos($process['mime'],'image/') !== false) {
 function onload() {
 	<?php
 	echo 'Fly.window.title.set(\'Properties - '.$process['fname'].'\');';
+	echo 'document.getElementById(\'frame\').src = \'properties.php?properties_filesize=true&file='.urlencode($process['file']).'\';';
 	?>
-	Fly.window.size.set(240,320);
-	<?php
-	echo 'document.getElementById(\'frame\').src = \'properties.php?properties_filesize=true&file='.$process['file'].'\'';
-	?>
+}
+Fly.window.ready = function() {
+	Fly.window.size.set(Fly.window.size.get()[0],Math.min(window.top.window.innerHeight-128,Math.max(document.getElementById('page').scrollHeight,200)));
 }
 function contextMenu(e) {
 	Fly.actionmenu(e,[
@@ -362,12 +374,14 @@ function togglesize() {
 </head>
 <body onload="onload()" oncontextmenu="return false;">
 
-<div class="page">
+<div class="page" id="page">
 <div oncontextmenu="contextMenu(event)" id="file" ondblclick="window.top.system.command('run:<?php echo htmlentities($process['file']); ?>')" class="file item FlyUiMenuItem FlyUiText FlyUiNoSelect">
 	<img id="icon" onclick="<?php echo $toggleicon; ?>" class="<?php echo $icon_class; ?> FlyUiNoSelect" src="<?php echo $icon_src; ?>">
 	<div id="toggleimg" style="position:absolute;top:4px;right:4px;height:calc(100% - 4px);" onclick="togglesize()" class="FlyUiMenuItem toggle"><span style="position:absolute;top:50%;transform:translateY(-50%)">▾</span></div>
 	<div id="name" class="name"><?php echo $process['fname']; ?></div>
 </div>
+
+<div class="category FlyUiText FlyUiNoSelect">File</div>
 
 <div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
 	<span class="title">Type</span>
@@ -421,6 +435,76 @@ function togglesize() {
 	<span class="title">Path</span>
 	<span class="info"><?php echo preg_replace('#/+#','/',$process['fpath']); ?></span>
 </div>
+
+<?php
+
+// Image - show width/height
+if (strpos($process['mime'],'image/') !== false) {
+	$size = getimagesize($process['file']);
+	if ($size !== false) {
+		?>
+<div class="category FlyUiText FlyUiNoSelect">Image</div>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Width</span>
+	<span class="info"><?php echo $size[0]; ?> pixels</span>
+</div>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Height</span>
+	<span class="info"><?php echo $size[1]; ?> pixels</span>
+</div>
+		<?php
+		if (isset($size[5])) {
+			?>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Color Channels</span>
+	<span class="info"><?php echo $size[5]; ?></span>
+</div>
+			<?php
+		}
+		if (isset($size[6])) {
+			?>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Bit Depth</span>
+	<span class="info"><?php echo $size[6]; ?></span>
+</div>
+			<?php
+		}
+	}
+}
+
+// Video/Audio - get duration from HTML
+if ((strpos($process['mime'],'audio/') !== false || strpos($process['mime'],'video/') !== false ) && in_array($process['extension'],['wav','ogg','mp3','m4a','mp4'])) {
+	?>
+<div class="category FlyUiText FlyUiNoSelect">Media</div>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Duration</span>
+	<span class="info" id="media-duration">Determining...</span>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',function() {
+	function FormatTime(sec) {
+		var hr = Math.floor(sec / 3600);
+		var min = Math.floor((sec - (hr * 3600))/60);
+		sec -= ((hr * 3600) + (min * 60));
+		hr += ''; sec += ''; min += '';
+		while (hr.length < 2) {hr = '0' + hr;}
+		while (min.length < 2) {min = '0' + min;}
+		while (sec.length < 2) {sec = '0' + sec;}
+		hr = hr+':';
+		return hr + min + ':' + sec;
+	}
+
+	var audio = new Audio();
+	audio.preload = 'metadata';
+	audio.src = '<?php echo $process['URL']; ?>';
+	audio.onloadedmetadata = function() {
+		document.getElementById('media-duration').innerText = FormatTime(Math.round(audio.duration));
+	}
+});
+</script>
+	<?php
+}
+?>
 
 </div>
 <iframe style="display:none;" id="frame" src=""></iframe>

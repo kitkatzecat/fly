@@ -60,8 +60,8 @@
 			<icon>%FLY.RESOURCE.URL.ICONS%properties.svg</icon>
 			<index>../SprocketComputers.zFileManager/properties.php</index>
 			<window>
-				<x>auto</x>
-				<y>auto</y>
+				<x>32</x>
+				<y>32</y>
 				<width>250</width>
 				<height>320</height>
 				<title>Properties</title>

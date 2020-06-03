@@ -103,6 +103,13 @@ function Load() {
 
 	document.addEventListener('mousedown',function() {Deselect();});
 
+	try {
+		window.parent.SelectedFile = Folder;
+		window.parent.OnSelectionChange();
+	} catch(e) {
+		console.log(e);
+	}
+
 	onLoad.forEach(function(f) {
 		try {
 			f();
@@ -151,7 +158,12 @@ function Deselect(item=false) {
 		}
 		Selected.className = Selected.className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
 		Selected = false;
-		window.parent.SelectedFile = window.parent.CurrentLocation;
+		try {
+			window.parent.SelectedFile = Folder;
+			window.parent.OnSelectionChange();
+		} catch(e) {
+			console.log(e);
+		}
 		try {
 			View.ondeselect();
 		} catch(e) {console.log(e);}
@@ -169,7 +181,7 @@ function Select(item,e,obj) {
 	Selected = item;
 	try {
 		window.parent.SelectedFile = obj;
-		window.parent.SelectedFileOn();
+		window.parent.OnSelectionChange();
 	} catch(e) {console.log(e);}
 	e.stopPropagation();
 }

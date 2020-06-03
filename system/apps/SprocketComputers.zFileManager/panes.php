@@ -2,12 +2,14 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
 include 'Fly.FileProcessor.php';
+include 'Fly.Command.php';
 ?>
 <style>
 body {
 	padding: 8px;
+	padding-bottom: 0px;
 }
 #title {
 	font-size: 1.2em;
@@ -51,35 +53,106 @@ if ($_GET['pane'] == 'folders') {
 	<span id="title" class="FlyUiTextHighlight">Search</span>
 	';
 } else if ($_GET['pane'] == 'properties') {
-	echo '
+	?>
 	<style>
 	.head {
 		font-size: 12px;
 		font-weight: bold;
 	}
+	#image {
+		filter: drop-shadow(0px 0px 4px rgba(0,0,0,0.5));
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: center;
+		width: 100%;
+		height: 138px;
+		margin-top: 4px;
+		margin-bottom: 4px;
+	}
+	#properties {
+		box-sizing: border-box;
+		width: 100%;
+		height: 34px !important;
+		text-align: center;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		margin-top: 12px;
+	}
 	</style>
 	<span id="title" class="FlyUiTextHighlight">Properties</span>
-	<img class="FlyUiNoSelect" style="width:100%;height:auto;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/mediafolder.svg"><br><div style="width:100%;max-width:100%;text-align:center;word-wrap:break-word;" class="FlyUiTextHighlight"><span id="name-value">Media</span></div>
+	<img class="FlyUiNoSelect" id="icon" style="width:100%;height:auto;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/unknown.svg">
+	<div class="FlyUiNoSelect" id="image"></div>
+	<br>
+	<div style="width:100%;max-width:100%;text-align:center;word-wrap:break-word;" class="FlyUiTextHighlight"><span id="name-value">Unknown</span></div>
 	
-	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Type</div><span id="type-value">Folder<span></div>
-	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Size</div><span id="size-value">100 MB</span></div>
-	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Modified</div><span id="modified-value">Jun 20, 2017</span></div>
-	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Created</div><span id="created-value">Jun 20, 2017</span></div>
+	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Type</div><span id="type-value">Unknown<span></div>
+	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Size</div><span id="size-nice">Determining...</span><span style="display:none;" id="size-full"></span></div>
+	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Accessed</div><span id="accessed-value">Determining...</span></div>
+	<div style="margin-top:8px;" class="FlyUiTextHighlight"><div class="head FlyUiNoSelect">Modified</div><span id="modified-value">Determining...</span></div>
 	
-	<div onclick="" class="FlyUiToolbarItem FlyUiNoSelect" style="position:fixed;bottom:2px;left:2px;right:2px;text-align:center;"><img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'arrow-right.svg">More Properties</div>
+	<div id="properties" class="FlyUiToolbarItem FlyUiNoSelect"><img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-right.svg">All Properties</div>
+	<iframe style="display:none;" id="frame" src=""></iframe>
 	<script>
-	var Values = {
-		Name: document.getElementById("name-value"),
-		Type: document.getElementById("type-value"),
-		Size: document.getElementById("size-value"),
-		Modified: document.getElementById("modified-value"),
-		Created: document.getElementById("created-value")
-	};
-	if (typeof window.parent.SelectedFile !== "undefined") {
-		
+	var CurrentItem = '';
+	function ShowProperties(Item=false) {
+		var Name = document.getElementById("name-value");
+		var Type = document.getElementById("type-value");
+		var Size = document.getElementById("size-nice");
+		var Modified = document.getElementById("modified-value");
+		var Accessed = document.getElementById("accessed-value");
+		var Icon = document.getElementById("icon");
+		var Image = document.getElementById("image");
+		var Properties = document.getElementById("properties");
+
+		if (Item == false) {
+			Item = window.parent.SelectedFile;
+		}
+
+		if (typeof Item !== "undefined" && Item['file'] !== CurrentItem) {
+			CurrentItem = Item['file'];
+
+			Properties.onclick = function() {
+				window.top.system.command(`run:<?php echo $_FLY['APP']['ID']; ?>.Properties,file=${Item['file']}`);
+			}
+
+			Name.innerText = Item['fname'];
+			Size.innerText = 'Determining...';
+			Modified.innerText = 'Determining...';
+			Accessed.innerText = 'Determining...';
+
+			if (Item['mime'].indexOf('image/') !== -1) {
+				Icon.style.display = 'none';
+				Image.style.display = 'inline-block';
+				Image.style.backgroundImage = `url('${Item['URL']}')`;
+			} else {
+				Image.style.display = 'none';
+				Icon.style.display = 'inline-block';
+				Icon.src = Item['icon'];
+			}
+
+			Type.innerText = Item['description'];
+			if (Item.hasOwnProperty('extension') && Item['extension'].length > 0) {
+				Type.innerText += ` (${Item['extension']})`;
+			}
+
+			document.getElementById('frame').src = `properties.php?properties_filesize=true&file=${Item['file']}`;
+
+			Fly.command(`php:return date("M j, Y",filemtime('${Item['file']}'));`,function(r) {
+				if (r.return != false) {
+					Modified.innerText = r.return;
+				}
+			});
+
+			Fly.command(`php:return date("M j, Y",fileatime('${Item['file']}'));`,function(r) {
+				if (r.return != false) {
+					Accessed.innerText = r.return;
+				}
+			});
+		}
 	}
+	document.addEventListener('DOMContentLoaded',function() {ShowProperties()});
 	</script>
-	';
+	<?php
 } else {
 	echo '<div style="padding:6px;" class="FlyUiTextHighlight">Pane not found</div>';
 }

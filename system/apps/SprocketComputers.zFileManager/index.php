@@ -233,6 +233,14 @@ function Refresh(pos=false) {
 	}
 }
 
+function OnSelectionChange() {
+	if (Pane.visiblePane == 'properties') {
+		var frame = document.getElementById('frame-pane');
+
+		frame.contentWindow.ShowProperties(SelectedFile);
+	}
+}
+
 var Pane = {
 	toggle: function(pane) {
 		if (Pane.visible && Pane.visiblePane !== pane) {
@@ -465,17 +473,7 @@ var Dialog = {
 	}
 };
 
-var CurrentLocation = {
-	basename: 'system',
-	icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',
-	path: '<?php echo $_FLY['PATH']; ?>system',
-	url: '<?php echo $_FLY['URL']; ?>system',
-	fpath: './system',
-};
 var SelectedFile = CurrentLocation;
-function SelectedFileOn() {
-	
-}
 
 function FrameLoad() {
 	var frame = document.getElementById('frame-main');
