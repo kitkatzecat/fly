@@ -187,7 +187,7 @@ function Select(item,e,obj) {
 }
 var Selected = false;
 
-var SelectedFile = CurrentLocation;
+var SelectedFile = {};
 
 function Click(obj) {
 	if (obj['isdir']) {

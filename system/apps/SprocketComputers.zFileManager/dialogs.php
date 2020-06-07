@@ -646,7 +646,7 @@ var CurrentLocation = {
 	fpath: './system',
 };
 var SelectedFile = CurrentLocation;
-function SelectedFileOn() {
+function OnSelectionChange() {
 	if (SelectedFile['type'] !== 'folder') {
 		document.getElementById('filename').innerHTML = SelectedFile['fname'];
 		document.getElementById('fileicon').src = SelectedFile['icon'];
@@ -1090,7 +1090,7 @@ var CurrentLocation = {
 	fpath: './system',
 };
 var SelectedFile = CurrentLocation;
-function SelectedFileOn() {
+function OnSelectionChange() {
 	if (SelectedFile['type'] !== 'folder') {
 		document.getElementById('filebar').value = SelectedFile['bname'];
 		Dialog.updateFile();
