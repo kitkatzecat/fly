@@ -37,10 +37,10 @@
 	<mime>audio/*,video/*</mime>
 	<window>
 		<title>Media Player</title>
-		<width>320</width>
-		<height>72</height>
-		<minwidth>320</minwidth>
-		<minheight>72</minheight>
+		<width>375</width>
+		<height>110</height>
+		<minwidth>375</minwidth>
+		<minheight>110</minheight>
 		<x>auto</x>
 		<y>auto</y>
 		<expand>true</expand>

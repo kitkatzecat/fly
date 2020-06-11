@@ -2,20 +2,24 @@
 <html>
 <head>
 <?php
-include 'fly.php';
-include 'fileprocessor.php';
+include 'Fly.Standard.php';
+include 'Fly.FileProcessor.php';
+include 'Fly.File.php';
 
-echo FlyLoadExtension('SprocketComputers.FileManager', 'FileChooser');
 ?>
 <style>
+body {
+	background-color: transparent !important;
+}
 button {
 	box-sizing: border-box;
+	min-width: 0;
 }
 #Player-Progress {
 	position: absolute;
-	bottom: 56px;
-	left: 4px;
-	right: 4px;
+	bottom: 57px;
+	left: 12px;
+	right: 12px;
 	height: 4px;
 	/* transition: background-size .1s linear; */
 	background-image: linear-gradient(to bottom, #aebcbf 0%,#6e7774 50%,#0a0e0a 51%,#0a0809 100%),linear-gradient(to bottom, rgba(242,246,248,1) 0%,rgba(216,225,231,1) 50%,rgba(181,198,208,1) 51%,rgba(224,239,249,1) 100%);
@@ -23,7 +27,7 @@ button {
 	background-size: 0% 100%, 100% 100%;
 	border-top: 6px solid rgba(0,0,0,0);
 	border-bottom: 6px solid rgba(0,0,0,0);
-	border-radius: 500px;
+	border-radius: 5px;
 	cursor: pointer;
 }
 #Player-Seek {
@@ -51,8 +55,8 @@ button {
 }
 #Volume-Progress {
 	display: none;
-	width: 80px;
-	margin-left: 8px;
+	width: 76px;
+	margin-right: 12px;
 	margin-bottom: 3px;
 	margin-top: 4px;
 	height: 4px;
@@ -82,35 +86,35 @@ button {
 #Button-Play {
 	width: 48px !important;
 	height: 48px !important;
-	border-radius: 100px;
+	border-radius: 100%;
 	text-align: center;
 	padding: 0px !important;
 	margin: 0px !important;
 	position: absolute;
 	bottom: 4px;
-	left: 4px;
+	left: calc(50% - 24px);
 }
 #Button-Stop {
 	width: 32px !important;
 	height: 32px !important;
-	border-radius: 100px;
+	border-radius: 100%;
 	text-align: center;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
 	bottom: 12px;
-	left: 56px;
+	left: calc(50% + 80px);
 }
 #Button-Volume {
 	width: 32px !important;
 	height: 32px !important;
-	border-radius: 100px;
+	border-radius: 100%;
 	text-align: center;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
 	bottom: 12px;
-	left: 92px;
+	left: 12px;
 }
 #Button-Volume-Progress {
 	width: 128px !important;
@@ -121,22 +125,22 @@ button {
 	margin: 0px;
 	position: absolute;
 	bottom: 12px;
-	left: 92px;
+	left: 12px;
 	display: none;
 }
 #Button-Repeat {
 	width: 32px !important;
 	height: 32px !important;
-	border-radius: 100px;
+	border-radius: 100%;
 	text-align: center;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
 	bottom: 12px;
-	left: 128px;
+	left: calc(50% - 112px);
 }
 #Button-Speed {
-	width: 32px !important;
+	width: 48px !important;
 	height: 32px !important;
 	border-radius: 100px;
 	text-align: center;
@@ -144,11 +148,11 @@ button {
 	margin: 0px;
 	position: absolute;
 	bottom: 12px;
-	left: 296px;
+	left: calc(50% + 28px);
 	display: none;
 }
 #Button-Speed-Reverse {
-	width: 32px !important;
+	width: 48px !important;
 	height: 32px !important;
 	border-radius: 100px;
 	text-align: center;
@@ -156,48 +160,39 @@ button {
 	margin: 0px;
 	position: absolute;
 	bottom: 12px;
-	left: 260px;
+	left: calc(50% - 76px);
 	display: none;
 }
 #Button-Mode {
 	width: 32px !important;
 	height: 32px !important;
-	border-radius: 100px;
+	border-radius: 100%;
 	text-align: center;
 	padding: 0px;
 	margin: 0px;
 	position: absolute;
 	bottom: 12px;
-	left: 164px;
+	right: 12px;
 }
 #Text-Duration {
-	text-align: right;
+	text-align: left;
 	position: absolute;
-	right: 8px;
-	bottom: 20px;
+	left: calc(50% + 136px);
+	right: 56px;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	bottom: 8px;
 	height: 16px;
+	padding: 12px;
 }
-#Main {
+#Library,#Main {
 	display: none;
 	position: absolute;
 	top: 34px;
 	left: 0px;
 	right: 0px;
-	bottom: 76px;
-	background-image: url('background.nowplaying.svg'),url('background.header.static.svg'),url('background.header.repeat.svg');
-	background-size: auto;
-	background-repeat: no-repeat, no-repeat, repeat-x;
-	background-position: right top, right top, left top;
-	background-color: #ffffff;
-	padding: 8px;
-}
-#Library {
-	display: none;
-	position: absolute;
-	top: 34px;
-	left: 0px;
-	right: 0px;
-	bottom: 76px;
+	bottom: 80px;
 }
 #Text-NowPlaying {
     position: absolute;
@@ -219,6 +214,105 @@ button {
 	from {background-position: 0px 0px;}
 	to {background-position: 640px 0px;}
 }
+
+#Background {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: calc(100% - 75px);
+	height: 75px;
+	z-index: -1;
+	font-size: 0;
+}
+#Background-Edge-Left {
+	width: 18px;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-image: url('background.edge.left.svg');
+	display: inline-block;
+}
+#Background-Middle-Left {
+	width: calc(50% - 184px);
+	height: 100%;
+	background-repeat: repeat-x;
+	background-position: top left;
+	background-image: url('background.middle.svg');
+	display: inline-block;
+}
+#Background-Buttons-Left {
+	width: 75px;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-image: url('background.buttons.left.svg');
+	display: inline-block;
+}
+#Background-Buttons {
+	width: 182px;
+	height: 100%;
+	background-repeat: repeat-x;
+	background-position: top left;
+	background-image: url('background.buttons.svg');
+	display: inline-block;
+}
+#Background-Buttons-Right {
+	width: 75px;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-image: url('background.buttons.right.svg');
+	display: inline-block;
+}
+#Background-Middle-Right {
+	width: calc(50% - 184px);
+	height: 100%;
+	background-repeat: repeat-x;
+	background-position: top left;
+	background-image: url('background.middle.svg');
+	display: inline-block;
+}
+#Background-Edge-Right {
+	width: 18px;
+	height: 100%;
+	background-repeat: no-repeat;
+	background-position: top left;
+	background-image: url('background.edge.right.svg');
+	display: inline-block;
+}
+
+@media (max-width: 600px) {
+	#Button-Volume-Progress {
+		display: none !important;
+	}
+	#Text-Duration {
+		text-align: center;
+		bottom: 76px;
+		left: 0px;
+		right: 0px;
+	}
+	#Tabs {
+		display: none !important;
+	}
+	#Main {
+		bottom: 114px;
+		display: block !important;
+	}
+	#Library {
+		display: none !important;
+	}
+	#Toolbar-View,#Toolbar-Library {
+		display: none;
+	}
+}
+@media (max-height: 200px) {
+	#Main,#Library {
+		display: none !important;
+	}
+	#Toolbar,#Tabs {
+		display: none !important;
+	}
+}
 </style>
 <script>
 function getBasename(path) {
@@ -234,6 +328,7 @@ function ToolbarInit() {
 	Toolbar.style.top = '0px';
 	Toolbar.style.left = '0px';
 	Toolbar.style.width = 'auto';
+	Toolbar.id = 'Toolbar';
 	
 	ToolbarButtons.File = Toolbar.add({text:'File',type:'dropdown',menu:[
 		['Open',Open,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg'}],
@@ -298,6 +393,11 @@ function ToolbarInit() {
 			['Compact',ButtonModeCompact]
 		],{icon:'button.arrow.compact.svg'}],
 	]});
+
+	ToolbarButtons.Library = Toolbar.add({text:'Library',type:'dropdown',menu:[
+		['']
+	]});
+	ToolbarButtons.Library.id = 'Toolbar-Library'
 	
 	ToolbarButtons.View = Toolbar.add({text:'View',type:'dropdown',menu:[
 		['Library',TabLibrary,{icon:'library.svg'}],
@@ -305,6 +405,7 @@ function ToolbarInit() {
 		[''],
 		['Playlist',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>index.svg'}],
 	]});
+	ToolbarButtons.View.id = 'Toolbar-View'
 	
 	
 	Tabs = new Fly.actionbar();
@@ -312,11 +413,12 @@ function ToolbarInit() {
 	Tabs.style.top = '0px';
 	Tabs.style.right = '0px';
 	Tabs.style.width = 'auto';
+	Tabs.id = 'Tabs';
 	
 	TabsButtons.Library = Tabs.add({text:'Library',icon:'library.svg',action:TabLibrary});
 	TabsButtons.NowPlaying = Tabs.add({text:'Now Playing',icon:'media.svg',action:TabNowplaying});
-	Tabs.add({type:'divider'});
-	TabsButtons.Playlist = Tabs.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>index.svg'});
+	//Tabs.add({type:'divider'});
+	//TabsButtons.Playlist = Tabs.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>index.svg'});
 	
 	TabsButtons.NowPlaying.toggleOn();
 	
@@ -388,7 +490,6 @@ function TabLibrary() {
 	var mainTab = TabsButtons.NowPlaying;
 	var library = document.getElementById('Library');
 	var libraryTab = TabsButtons.Library;
-	var libraryFrame = document.getElementById('Library-Frame');
 	
 	main.style.display = 'none';
 	mainTab.toggleOff();
@@ -410,12 +511,12 @@ function ButtonMode() {
 function ButtonModeFull() {
 	img = document.getElementById('Button-Mode-Img');
 	
-	Fly.window.size.set(640,480);
+	Fly.window.size.set(window.top.innerWidth*0.6,window.top.innerHeight*0.6);
 	img.src = 'button.arrow.compact.svg';
 	
 	document.getElementById('Button-Volume-Progress').style.display = 'inline-block';
-	document.getElementById('Button-Repeat').style.left = '224px';
-	document.getElementById('Button-Mode').style.left = '332px';
+	//document.getElementById('Button-Repeat').style.left = '224px';
+	//document.getElementById('Button-Mode').style.left = '332px';
 	document.getElementById('Volume-Progress').style.display = 'inline-block';
 	document.getElementById('Button-Speed').style.display = 'inline-block';
 	document.getElementById('Button-Speed-Reverse').style.display = 'inline-block';
@@ -444,14 +545,18 @@ function ButtonModeCompact() {
 	Fly.window.expand.disable();
 }
 function Open() {
-	document.getElementById('Control-Browser').browse();
+	Fly.file.get(function(r) {
+		if (r) {
+			Load(r.URL);
+		}
+	},{types:['mp3','m4a','ogg','mp4','audio/','video/']})
 }
 function OpenURL() {
 	Fly.control.input('Open URL','Enter the URL for Media Player to open.','Media Player - Open URL','<?php echo FLY_ICONS_URL; ?>earth.svg',LoadURL);
 }
 function SetSpeed(int) {
 	var audio = document.getElementById('Audio-Player');
-	var text = document.getElementById('Text-PlaySpeed');
+	var text = document.getElementById('Main-Frame').contentWindow.document.getElementById('Text-PlaySpeed');
 	
 	audio.playbackRate = (int);
 	
@@ -500,15 +605,15 @@ function FormatTime(sec) {
 function LoadURL(url) {
 	if (url !== '') {
 		Load(url);
-		document.getElementById('Text-NowPlaying').innerHTML = decodeURIComponent(getBasename(url)).replace(/\.[^/.]+$/, "");
+		document.getElementById('Main-Frame').contentWindow.document.getElementById('Text-NowPlaying').innerHTML = decodeURIComponent(getBasename(url)).replace(/\.[^/.]+$/, "");
 		Fly.window.title.set('Media Player - '+decodeURIComponent(getBasename(url)));
 	}
 }
 function Load(url) {
 	ButtonStop();
 	document.getElementById('Text-Duration').innerHTML = 'Loading...';
-	document.getElementById('Text-PlaySpeed').innerHTML = 'Play speed: 100%';
-	document.getElementById('Text-NowPlaying').innerHTML = getBasename(url).replace(/\.[^/.]+$/, "");
+	document.getElementById('Main-Frame').contentWindow.document.getElementById('Text-PlaySpeed').innerHTML = 'Play speed: 100%';
+	document.getElementById('Main-Frame').contentWindow.document.getElementById('Text-NowPlaying').innerHTML = getBasename(url).replace(/\.[^/.]+$/, "");
 	document.getElementById('Audio-Player').src = url;
 	document.getElementById('Audio-Player').playbackRate = 1;
 	Fly.window.title.set('Media Player - '+getBasename(url));
@@ -528,18 +633,15 @@ function GotoTimeReturn(sec) {
 
 </head>
 <body onload="onload()">
-<div id="Control-Browser" style="display:none;"></div>
-<script>
-Fly.extension.replace('Control-Browser','SprocketComputers.FileManager','FileChooser');
-document.getElementById('Control-Browser').onchange = function() {
-	var browser = document.getElementById('Control-Browser');
-	if (['mp3','m4a','wav'].indexOf(browser.vars.extension) == -1) {
-		window.top.shell.dialog('Selected file cannot be played','The selected file cannot be played because it is not a recognized audio or video file.','Media Player','<?php echo FLY_ICONS_URL; ?>warning.svg');
-	} else {
-		Load(browser.vars.URL);
-	}
-}
-</script>
+<div id="Background">
+	<div id="Background-Edge-Left"></div>
+	<div id="Background-Middle-Left"></div>
+	<div id="Background-Buttons-Left"></div>
+	<div id="Background-Buttons"></div>
+	<div id="Background-Buttons-Right"></div>
+	<div id="Background-Middle-Right"></div>
+	<div id="Background-Edge-Right"></div>
+</div>
 <?php
 if (in_array($_GET['autoplay'], ['true', 'on', 'yes'])) {
 	$autoplay = 'audio.play();';
@@ -621,7 +723,7 @@ function ButtonStop() {
 }
 function ButtonSpeed() {
 	var audio = document.getElementById(\'Audio-Player\');
-	var text = document.getElementById(\'Text-PlaySpeed\');
+	var text = document.getElementById(\'Main-Frame\').contentWindow.document.getElementById(\'Text-PlaySpeed\');
 	
 	if (parseFloat(audio.playbackRate) !== 4) {
 		audio.playbackRate = (parseFloat(audio.playbackRate)+0.5);
@@ -642,17 +744,20 @@ function onload() {
 	document.getElementById(\'Button-Play\').disabled = true;
 	
 	var library = document.getElementById(\'Library-Frame\');
-	library.src = \'library.php\'
+	library.src = \'library2.php\'
+	
+	var nowplaying = document.getElementById(\'Main-Frame\');
+	nowplaying.src = \'nowplaying.php\'
 	
 	audio.onpause = function() {
 		document.getElementById(\'Button-Play-Img\').src = \'button.play.svg\';
-		document.getElementById(\'Text-NowPlaying\').style.animation = \'\';
+		document.getElementById(\'Main-Frame\').contentWindow.document.body.style.animation = \'\';
 		ToolbarButtons.Play.menu.options[0].enable();
 		ToolbarButtons.Play.menu.options[1].disable();
 	}
 	audio.onplay = function() {
 		document.getElementById(\'Button-Play-Img\').src = \'button.pause.svg\';
-		document.getElementById(\'Text-NowPlaying\').style.animation = \'Text-NowPlaying-Animation 5s linear infinite\';
+		document.getElementById(\'Main-Frame\').contentWindow.document.body.style.animation = \'Body-Animation 5s linear infinite\';
 		ToolbarButtons.Play.menu.options[1].enable();
 		ToolbarButtons.Play.menu.options[0].disable();
 	}
@@ -710,7 +815,7 @@ function onload() {
 ?>
 
 <div id="Player-Progress" class="FlyUiNoSelect"><div id="Player-Seek"></div></div>
-<div id="Main"><span class="FlyUiText" style="color: #ffffff; font-size: 24px;">Now Playing</span><div class="FlyUiText" id="Text-NowPlaying"></div><div class="FlyUiText" style="margin-top:32px;" id="Text-PlaySpeed">Play speed: 100%</div></div>
+<div id="Main"><iframe id="Main-Frame" style="width:100%;height:100%;" allowtransparency="true" scrolling="auto" frameborder="0" src=""></iframe></div>
 <div id="Library"><iframe id="Library-Frame" style="width:100%;height:100%;" allowtransparency="true" scrolling="auto" frameborder="0" src=""></iframe></div>
 <button id="Button-Play" class="FlyUiNoSelect" onclick="ButtonPlay();"><img id="Button-Play-Img" style="width:32px;height:32px;vertical-align:middle;pointer-events:none;" src="button.play.svg"></button>
 <button id="Button-Stop" class="FlyUiNoSelect" onclick="ButtonStop();"><img id="Button-Stop-Img" style="width:20px;height:20px;vertical-align:middle;pointer-events:none;" src="button.stop.svg"></button>
