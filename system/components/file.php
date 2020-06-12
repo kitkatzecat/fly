@@ -10,8 +10,7 @@ if ($_GET['d'] == 'read') {
 	$file = FlyVarsReplace($json['file']);
 
 	if (!file_exists($file)) {
-		echo '[DEBUG] NOT FOUND: '.$file;
-		//http_response_code(404);
+		http_response_code(404);
 		exit;
 	}
 
