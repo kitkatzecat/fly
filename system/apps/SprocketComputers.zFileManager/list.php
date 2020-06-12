@@ -311,6 +311,40 @@ function ContextMenu(obj,e,ret=false) {
 		}
 	]); // Temporary - until actual Open With dialog is fully functional
 
+	if (obj['mime'] == 'image/jpeg') {
+		more.push(
+			[''],
+			[
+				'Rotate Clockwise',
+				function() {
+					Fly.dialog.message({
+						title: 'Rotate Image',
+						message: 'Rotate Image Clockwise',
+						content: '',
+						icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>image-rotate-right.svg'
+					})
+				},
+				{
+					icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>image-rotate-right.svg'
+				}
+			],
+			[
+				'Rotate Counterclockwise',
+				function() {
+					Fly.dialog.message({
+						title: 'Rotate Image',
+						message: 'Rotate Image Counterclockwise',
+						content: '',
+						icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>image-rotate-left.svg'
+					})
+				},
+				{
+					icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>image-rotate-left.svg'
+				}
+			]
+		);
+	}
+
 	if (more.length > 0) {
 		menu.push([
 			'More',
