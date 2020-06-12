@@ -115,7 +115,7 @@ Fly.file = {
 			file: options['file']
 		};
 
-		var body = 'content='+JSON.stringify(json);
+		var body = 'content='+encodeURIComponent(JSON.stringify(json));
 
 		var request = new XMLHttpRequest();
 		request.open('POST','<?php echo $_FLY['RESOURCE']['URL']['COMPONENTS']; ?>file.php?d=write');
@@ -141,6 +141,51 @@ Fly.file = {
 			}
 		});
 		request.upload.addEventListener('progress',function(e) {
+			var percent = e.loaded/e.total;
+			try {
+				options.progress(percent,e.loaded,e.total);
+			} catch(e) {
+				console.log(e);
+			}
+		});
+		request.send(body);
+	},
+	read: function(options={}) {
+		var options_base = {
+			method: 'text',
+			file: false,
+			progress: function() {},
+			ready: function() {}
+		}
+
+		options = Object.assign(Object.assign({},options_base),options);
+
+		var json = {
+			method: options['method'],
+			file: options['file']
+		};
+
+		var body = 'content='+encodeURIComponent(JSON.stringify(json));
+
+		var request = new XMLHttpRequest();
+		request.open('POST','<?php echo $_FLY['RESOURCE']['URL']['COMPONENTS']; ?>file.php?d=read');
+		request.setRequestHeader('Content-Type','application/x-www-form-urlencoded');
+		request.setRequestHeader("Cache-Control", "no-cache");
+		request.addEventListener('readystatechange',function() {
+			if (request.readyState == 4) {
+				if (request.status == 200) {
+					var result = request.responseText;
+					try {
+						options.ready(result);
+					} catch (e) {
+						console.log(e);
+					}
+				} else {
+					options.ready(false,request.statusText);
+				}
+			}
+		});
+		request.addEventListener('progress',function(e) {
 			var percent = e.loaded/e.total;
 			try {
 				options.progress(percent,e.loaded,e.total);

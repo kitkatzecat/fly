@@ -4,6 +4,45 @@ include 'Fly.Core.php';
 $status = 'false';
 $message = '';
 
+if ($_GET['d'] == 'read') {
+	$json = json_decode($_POST['content'],true);
+
+	$file = FlyVarsReplace($json['file']);
+
+	if (!file_exists($file)) {
+		echo '[DEBUG] NOT FOUND: '.$file;
+		//http_response_code(404);
+		exit;
+	}
+
+	if ($json['method'] == 'base64') {
+		$content = file_get_contents($file);
+		if (!$content) {
+			http_response_code(500);
+		} else {
+			$content = base64_encode($content);
+			if (!$content) {
+				http_response_code(500);
+			} else {
+				echo $content;
+			}
+		}
+		exit;
+	} else if ($json['method'] == 'text') {
+		$content = file_get_contents($file);
+		if (!$content) {
+			http_response_code(500);
+		} else {
+			echo $content;
+		}
+		exit;
+	} else {
+		http_response_code(400);
+		exit;
+	}
+}
+exit;
+
 if ($_GET['d'] == 'write') {
 	$json = json_decode($_POST['content'],true);
 
@@ -53,4 +92,5 @@ if ($_GET['d'] == 'write') {
 
 end:
 echo '{"status":'.$status.',"message":"'.$message.'"}';
+exit;
 ?>
