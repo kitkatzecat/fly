@@ -39,8 +39,8 @@ if ($_GET['d'] == 'read') {
 		http_response_code(400);
 		exit;
 	}
-}
 exit;
+}
 
 if ($_GET['d'] == 'write') {
 	$json = json_decode($_POST['content'],true);
