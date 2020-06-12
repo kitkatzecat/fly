@@ -17,7 +17,7 @@ div.FlyCSTitle {
 	padding-right: 6%;
 }
 div.FlyCSTitle.FlyCSSectionTitle {
-    background-image: linear-gradient(to left, rgba(160,220,255,0.5) 0%,rgba(160,220,255,0) 100%);
+    background-image: linear-gradient(to left, rgba(180,180,255,0.5) 0%,rgba(180,180,255,0) 100%);
     margin-top: -8px;
 	padding-top: 24px;
 	position: relative;
@@ -30,7 +30,7 @@ p.FlyCSHint {
 	font-size: 0.8em;
 	opacity: 0.8;
 	margin-top: -16px;
-	padding-left: 58px;
+	padding-left: calc(6% + 26px);
 }
 p.FlyCSParagraphTitle {
 	font-size: 0.8em;
@@ -60,7 +60,7 @@ img.FlyCSSectionIcon {
 	width: 79px;
 	height: 79px;
 	top: 0px;
-	filter: saturate(0) contrast(150%);
+	filter: contrast(150%) saturate(0);
 }
 div.FlyCSBox {
 	background-color: rgba(0,0,0,0.05);
