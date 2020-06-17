@@ -196,8 +196,8 @@ if (typeof Fly.window == "undefined") {
 		window.top.document.getElementById(Fly.window.id).window.composition.secondaryMovement.reset();
 	}
 
-	Fly.window.child = function(a) {
-		return Fly.window.child.open(a);
+	Fly.window.child = function(a,b) {
+		return Fly.window.child.open(a,b);
 	}
 	Fly.window.child.open = function(options={modal:false,attributes:{}},callback=function(){}) {
 		
@@ -249,6 +249,18 @@ if (typeof Fly.window == "undefined") {
 				Fly.window.child.children[frame.id]['frame'] = frame;
 				Fly.window.child.children[frame.id]['modal'] = false;
 				Fly.window.child.children[frame.id]['window'] = frame.window.content.contentWindow;
+
+				frame.window.closeWindow = frame.window.forceClose;
+				frame.window.forceClose = function() {
+					try {
+						Fly.window.focus.self();
+						Fly.window.bringToFront();
+					} catch(e) {
+						console.log(e);
+					}
+					frame.window.closeWindow();
+				}
+				frame.window.composition.buttons.close.onclick = frame.window.close;
 				
 				try {
 					callback(Fly.window.child.children[frame.id]);
@@ -262,6 +274,26 @@ if (typeof Fly.window == "undefined") {
 
 	}
 	Fly.window.open = Fly.window.child.open;
+	Fly.window.open.application = function(app='',options={},callback=function(){}) {
+		options = Object.assign({modal:false,attibutes:{}},options);
+
+		if (!Fly.hasOwnProperty('command')) {
+			throw 'Error: Fly.Command is required';
+		}
+
+		Fly.command('fileprocess:'+app,function(r) {
+			process = r['return'];
+			if (process && process['type'] == 'application') {
+				Fly.window.child.open({
+					modal: options.modal,
+					attributes: Object.assign(process['window'],options.attributes)
+				},callback);
+			} else {
+				throw `Error: "${app}" is not a valid application`;
+			}
+		});
+	}
+	Fly.window.child.application = Fly.window.open.application;
 
 	Fly.window.disableContext = function() {
 		document.addEventListener('contextmenu',function(e) {
