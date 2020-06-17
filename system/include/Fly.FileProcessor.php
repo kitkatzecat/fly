@@ -209,8 +209,28 @@ function FlyFileStringProcessor($item) {
 				$filePath = preg_replace('#/+#','/',$filePath);
 				$location = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/';
 				$manifest = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/ApplicationManifest.xml';
-				$action = 'task.create(\''.$id.'\', {title:\''.$manifestXML->window->title.'\', name:\''.$name.'\', x:\''.$appX.'\', y:\''.$appY.'\', width:\''.$manifestXML->window->width.'\', height:\''.$manifestXML->window->height.'\', minwidth:\''.$minWidth.'\', minheight:\''.$minHeight.'\', maxwidth:\''.$maxWidth.'\', maxheight:\''.$maxHeight.'\', maxinitwidth:'.$maxInitWidth.', maxinitheight:'.$maxInitHeight.', location:\''.$window.'\', icon:\''.$icon.'\', expand:'.$expand.', minimize:'.$minimize.', close:'.$close.', resize:'.$resize.'})';
-				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"bname"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"location"=>$location,"manifest"=>$manifest];
+				$window = [
+					'title' => (string)$manifestXML->window->title,
+					'name' => $name,
+					'x' => $appX, 
+					'y' => $appY,
+					'width' => (string)$manifestXML->window->width,
+					'height' => (string)$manifestXML->window->height,
+					'minwidth' => $minWidth,
+					'minheight' => $minHeight,
+					'maxwidth' => $maxWidth,
+					'maxheight' => $maxHeight,
+					'maxinitwidth' => $maxInitWidth,
+					'maxinitheight' => $maxInitHeight,
+					'location' => $window,
+					'icon' => $icon,
+					'expand' => $expand,
+					'minimize' => $minimize,
+					'close' => $close,
+					'resize' => $resize
+				];
+				$action = 'task.create(\''.$id.'\', '.json_encode($window).')';
+				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"bname"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"window"=>$window,"location"=>$location,"manifest"=>$manifest];
 			} else {
 				return false;
 			}
