@@ -170,12 +170,12 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		$css .= "\n/* window */\n";
 
 		// .FlyWindow
-		$css .= ".FlyWindow {}\n";
 
 		addRule('@keyframes FlyWindowOpenAnimation',$json['style']['window']['animations']['open']['style'],$css);
 		addRule('@keyframes FlyWindowCloseAnimation',$json['style']['window']['animations']['close']['style'],$css);
 		addRule('@keyframes FlyWindowMinimizeAnimation',$json['style']['window']['animations']['minimize']['style'],$css);
 
+		addRule('.FlyWindow',$json['style']['window']['base'],$css);
 		addRule('.FlyWindowActive',$json['style']['window']['active'],$css);
 		addRule('.FlyWindowInactive',$json['style']['window']['inactive'],$css);
 		addRule('.FlyWindowTransparent',$json['style']['window']['transparent'],$css);
@@ -205,6 +205,7 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		$css .= "\n/* toolbar */\n";
 
 		addRule('.FlyToolbar',$json['style']['toolbar']['normal'],$css);
+		addRule('.FlyToolbarExpand',$json['style']['toolbar']['expand'],$css);
 
 		addRule('.FlyUiTip',$json['style']['toolbar']['tip']['normal'],$css);
 

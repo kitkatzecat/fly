@@ -207,6 +207,10 @@
 				"-webkit-backdrop-filter": "blur(3px)",
 				"backdrop-filter": "blur(3px)"
 			},
+			"expand": {
+				"box-shadow": "none",
+				"border-bottom": "solid 1px %THEME.COLOR_OPAQUE%"
+			},
 			"tip": {
 				"normal": {
 					"font-size": "12px",

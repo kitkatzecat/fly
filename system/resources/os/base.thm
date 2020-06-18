@@ -68,6 +68,7 @@
 					}
 				}
 			},
+			"base": {},
 			"active": {
 				"background": "#c0c0c0",
 				"font-family": "%THEME.FONTS%",
@@ -223,6 +224,7 @@
 				"-ms-user-select": "none",
 				"user-select": "none"
 			},
+			"expand": {},
 			"tip": {
 				"normal": {
 					"font-family": "%THEME.FONTS%",
