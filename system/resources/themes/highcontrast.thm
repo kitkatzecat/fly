@@ -1,0 +1,114 @@
+{
+	"properties": {
+		"name": "High Contrast",
+		"description": "A high contrast theme to increase visibility of the user interface of Fly.",
+		"publisher": "Sprocket Computers",
+		"type": "full",
+		"version": "3.0"
+	},
+	"resources": {
+		"fonts": ["Droid Sans"],
+		"background": "",
+		"background_color": [255,255,255],
+		"color": [0,0,0],
+		"transparency": 1
+	},
+	"style": {
+		"window": {
+			"active": {
+				"border": "2px solid #fff",
+				"outline": "2px solid #000",
+				"background": "#000"
+			},
+			"titlebar": {
+				"active": {
+					"normal": {
+						"color": "#fff",
+						"font-weight": "bold"
+					}
+				}
+			},
+			"button": {
+				"active": {
+					"normal": {
+						"outline": "1px solid #fff",
+						"color": "#fff"
+					}
+				}
+			}
+		},
+		"text": {
+			"hover": {
+				"normal": {
+					"color": "#fff"
+				},
+				"control": {
+					"color": "#fff"
+				}
+			},
+			"highlight": {
+				"normal": {
+					"color": "#fff"
+				},
+				"control": {
+					"color": "#fff"
+				}
+			}
+		},
+		"controls": {
+			"toolbar_item": {
+				"normal": {
+					"color": "#fff"
+				},
+				"hover": {
+					"color": "#000",
+					"background-color": "#fff",
+					"outline":"2px solid #fff",
+					"outline-offset": "2px"
+				},
+				"active": {
+					"color": "#000",
+					"background-color": "#fff"
+				},
+				"toggle": {
+					"color": "#000",
+					"background-color": "#fff"
+				}
+			},
+			"menu": {
+				"normal": {
+					"outline": "2px solid #000"
+				}
+			},
+			"button": {
+				"normal": {
+					"border": "2px solid #000",
+					"outline": "2px solid #fff",
+					"background-color": "#fff",
+					"color": "#000"
+				}
+			},
+			"menu_item": {
+				"normal": {
+					"hover": {
+						"background-color": "#000",
+						"color": "#fff",
+						"outline": "2px solid #fff"
+					}
+				},
+				"active": {
+					"normal": {
+						"background-color": "#000",
+						"color": "#fff"
+					}
+				}
+			},
+			"text": {
+				"normal": {
+					"background-color": "#000",
+					"color": "#fff"
+				}
+			}
+		}
+	}
+}
