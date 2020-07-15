@@ -7,30 +7,30 @@ if (!isset($_FLY)) {
 if (!FlyIncludeCheck('FLY.FONTS')) {
 	include 'Fly.Fonts.php';
 }
+if (!FlyIncludeCheck('FLY.REGISTRY')) {
+	include 'Fly.Registry.php';
+}
 
 
 // Load a Fly Theme file, takes a theme filename, returns array with [0] theme array, [1] $THEME ThemeVars
-function FlyLoadThemeFile($file = false) {
+function FlyLoadThemeFile($file = false, $loading_from_file = true) {
 	global $_FLY;
 
-	// If no file is specified, load the user's theme file; if no user logged in, load default theme
+	// If no file is specified, load default theme
 	if (!$file) {
-		if ($_FLY['IS_USER']) {
-			if (file_exists($_FLY['USER']['DATA'].'theme.thm')) {
-				$file = $_FLY['USER']['DATA'].'theme.thm';
-			} else {
-				$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
-			}
-		} else {
-			$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
-		}
+		$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
 	}
 
-	// Get raw content of theme file (store this, we'll use it later), replace FlyVars
-	$json_raw = file_get_contents($file);
-	$json_raw = FlyVarsReplace($json_raw,true);
-	// Parse theme file (first time, no ThemeVars replacement)
-	$json_parsed = json_decode($json_raw,true);
+	if ($loading_from_file) {
+		// Get raw content of theme file (store this, we'll use it later), replace FlyVars
+		$json_raw = file_get_contents($file);
+		$json_raw = FlyVarsReplace($json_raw,true);
+		// Parse theme file (first time, no ThemeVars replacement)
+		$json_parsed = json_decode($json_raw,true);
+	} else {
+		$json_raw = $file;
+		$json_parsed = json_decode($json_raw,true);
+	}
 
 	// Object for ThemeVars
 	$THEME = [];
@@ -62,8 +62,12 @@ function FlyLoadThemeFile($file = false) {
 	// Create ThemeVars TRANSPARENCY property (transparency value, 0-1)
 	$THEME['TRANSPARENCY'] = $json_parsed['resources']['transparency'];
 
-	// Create ThemeVars DESKTOP_OVERFLOW property (desktop scrolling) ---- NEED TO MAKE LOAD FROM USER REGISTRY/CONFIG
-	$THEME['DESKTOP_OVERFLOW'] = 'hidden';
+	// Create ThemeVars DESKTOP_OVERFLOW property (desktop scrolling)
+	if ($_FLY['IS_USER']) {
+		$THEME['DESKTOP_OVERFLOW'] = FlyUserRegistryGet('DesktopScrolling','SprocketComputers.Options');
+	} else {
+		$THEME['DESKTOP_OVERFLOW'] = 'hidden';
+	}
 
 	// Create ThemeVars SHADE_RGB and SHADE_COLOR properties (used for shadows, etc)
 	if ( (0.2126*$json_parsed['resources']['color'][0] + 0.7152*$json_parsed['resources']['color'][1] + 0.0722*$json_parsed['resources']['color'][2]) < 128 && $json_parsed['resources']['transparency'] > 0.2) {
@@ -106,12 +110,14 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 	if (!function_exists('loopProperties')) {
 		function loopProperties($array,&$print) {
 			foreach ($array as $key => $value) {
-				if (is_array($value)) {
-					$print .= "\t$key: {\n";
-					loopProperties($value,$print);
-					$print .= "\t}\n";
-				} else {
-					$print .= "\t$key: ".FlyVarsReplace($value).";\n";
+				if ($value !== false) {
+					if (is_array($value)) {
+						$print .= "\t$key: {\n";
+						loopProperties($value,$print);
+						$print .= "\t}\n";
+					} else {
+						$print .= "\t$key: ".FlyVarsReplace($value).";\n";
+					}
 				}
 			}
 		}
@@ -294,23 +300,44 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 
 }
 
+function FlyUserThemeGenerate() {
+	global $_FLY;
+
+	$files = FlyRegistryGet('Theme','SprocketComputers.Options');
+	if ($files) {
+		$files = json_decode($files,true);
+	} else {
+		$files = ['%FLY.RESOURCE.PATH.OS%base.thm','%FLY.RESOURCE.PATH.THEMES%default3.thm'];
+	}
+
+	$theme = [];
+	for ($i = 0; $i < sizeof($files); $i++) {
+		$files[$i] = FlyVarsReplace($files[$i],$_FLY);
+
+		$file = json_decode(file_get_contents($files[$i]),true);
+		$theme = array_replace_recursive($theme,$file);
+	}
+	$theme = json_encode($theme);
+	return $theme;
+}
+
 function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true,$file=false) {
 	global $_FLY;
 
 	sort($categories);
 
 	if ($_FLY['IS_USER']) {
-		if (!$file) {
+		/*if (!$file) {
 			$file = $_FLY['USER']['DATA'].'theme.thm';
-		}
+		}*/
 		$tmp = $_FLY['RESOURCE']['PATH']['TEMP'].'theme3'.'_'.$_FLY['USER']['ID'].'_'.implode('-',$categories).'_'.filemtime($file).'.css';
 	} else {
-		if (!$file) {
+		/*if (!$file) {
 			$file = $_FLY['RESOURCE']['PATH']['THEMES'].'default3.thm';
-		}
+		}*/
 		$tmp = $_FLY['RESOURCE']['PATH']['TEMP'].'theme3'.'__'.implode('-',$categories).'_'.filemtime($file).'.css';
 	}
-
+/*
 	if (file_exists($tmp)) {
 		$css = file_get_contents($tmp);
 		if ($echo) {
@@ -322,7 +349,8 @@ function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true,$fi
 		} else {
 			return $css;
 		}
-	} else {
+	} else {*/
+		/*
 		$base = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['OS'].'base.thm');
 		$base[0] = json_decode($base[0],true);
 		$user = FlyLoadThemeFile($file);
@@ -334,6 +362,9 @@ function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true,$fi
 		];
 	
 		$theme[0] = json_encode($theme[0]);
+		*/
+		$theme = FlyUserThemeGenerate();
+		$theme = FlyLoadThemeFile($theme,false);
 	
 		$css = FlyThemeCSS($theme[0],$theme[1],$categories,false);
 		file_put_contents($tmp,$css);
@@ -347,7 +378,7 @@ function FlyTheme($categories=['text','controls'],$echo=true,$enclosure=true,$fi
 		} else {
 			return $css;
 		}
-	}
+	//}
 }
 
 }

@@ -319,6 +319,7 @@ ui.init = function() {
 				ui.toolbar.expandedControls.restore.onclick = function() {
 					frame.window.restore();
 				}
+				ui.toolbar.className = 'FlyToolbar FlyToolbarExpand';
 			}
 		}
 		
@@ -328,6 +329,7 @@ ui.init = function() {
 				ui.toolbar.expandedControls.style.right = '-256px';
 				ui.toolbar.tray.style.right = '32px';
 			}
+			ui.toolbar.className = 'FlyToolbar';
 			ui.toolbar.setActiveApplication(ui.toolbar.activeApplication.object);
 		}
 		
@@ -379,7 +381,7 @@ ui.init = function() {
 		ui.desktop.style.left = '0px';
 		ui.desktop.style.right = '0px';
 		ui.desktop.style.bottom = '0px';
-		ui.desktop.style.zIndex = '-1';
+		ui.desktop.style.zIndex = '0';
 		ui.desktop.style.transition = 'opacity .2s linear';
 		ui.desktop.style.opacity = '0';
 		setTimeout(function(){

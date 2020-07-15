@@ -158,7 +158,7 @@ if (intval($config_system->version->bdate) >= intval(date("YmdHis", filemtime('i
 <body onload="onload()">
 <?php
 if (in_array(FlyRegistryGet('DesktopShowVersion', 'SprocketComputers.Options'), ['on', 'true', 'yes'])) {
-	echo '<div class="FlyUiNoSelect FlyUiText" onclick="system.command(\'run:SprocketComputers.Utilities.AboutFly\')" style="position:fixed;bottom:12px;right:12px;width:240px;text-align:right;color:#FFFFFF;text-shadow: 0px 0px 6px #000000;z-index:0;">Fly&nbsp;' . $config_system->version->name . '<br>Version ' . $config_system->version->major . '&nbsp;Build&nbsp;' . $build . '<br>&copy;&nbsp;' . substr($config_system->version->bdate, 0, 4) . '&nbsp;Sprocket Computers</div>';
+	echo '<div class="FlyUiNoSelect FlyUiText" onclick="system.command(\'run:SprocketComputers.Utilities.AboutFly\')" style="position:fixed;bottom:12px;right:12px;width:240px;text-align:right;color:#FFFFFF;text-shadow: 0px 0px 6px #000000;z-index:1;">Fly&nbsp;' . $config_system->version->name . '<br>Version ' . $config_system->version->major . '&nbsp;Build&nbsp;' . $build . '<br>&copy;&nbsp;' . substr($config_system->version->bdate, 0, 4) . '&nbsp;Sprocket Computers</div>';
 }
 ?>
 <div id="SystemStartupCover" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:rgba(0,0,0,1);z-index:5000010;transition:background-color 1s linear;">

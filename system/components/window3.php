@@ -15,11 +15,9 @@ FlyFontLoad('Symbols');
 
 $window_timeout = '1000';
 
-$themebase = FlyLoadThemeFile($_FLY['RESOURCE']['PATH']['OS'].'base.thm');
-$themebase[0] = json_decode($themebase[0],true);
-$theme3 = FlyLoadThemeFile();
+$theme3 = FlyUserThemeGenerate();
+$theme3 = FlyLoadThemeFile($theme3,false);
 $theme3[0] = json_decode($theme3[0],true);
-$theme3 = array_replace_recursive($themebase,$theme3);
 
 $window_move = boolval($theme3[0]['style']['window']['background_movement']);
 
