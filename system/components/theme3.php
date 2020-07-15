@@ -169,8 +169,10 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('body',$json['style']['body']['body'],$css);
 	}
 
-	// Remove large focus outlines
-	$css .= 'input:focus,button:focus,select:focus,textarea:focus {outline:none;}';
+	// Focus outlines
+	if (FlyRegistryGet('ShowFocusOutlines','SprocketComputers.Options') != 'true') {
+		$css .= 'input:focus,button:focus,select:focus,textarea:focus {outline:none;}';
+	}
 
 	if (in_array('window',$categories)) {
 		$css .= "\n/* window */\n";
@@ -186,6 +188,10 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('.FlyWindowInactive',$json['style']['window']['inactive'],$css);
 		addRule('.FlyWindowTransparent',$json['style']['window']['transparent'],$css);
 		addRule('.FlyWindowExpand',$json['style']['window']['expand'],$css);
+
+		if (FlyRegistryGet('MagnifyWindows','SprocketComputers.Options') == 'true') {
+			addRule('.FlyWindow',['transform'=>'scale(1.2)','transform-origin'=>'0 0'],$css);
+		}
 
 		addRule('.FlyWindowTitleActive',$json['style']['window']['titlebar']['active']['normal'],$css);
 		addRule('.FlyWindowTitleActive:hover',$json['style']['window']['titlebar']['active']['hover'],$css);
@@ -246,6 +252,10 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('a:hover',$json['style']['text']['link']['hover'],$css);
 		addRule('a:active',$json['style']['text']['link']['active'],$css);
 		addRule('a:visited',$json['style']['text']['link']['visited'],$css);
+
+		if (FlyRegistryGet('LargeText','SprocketComputers.Options') == 'true') {
+			addRule('.FlyUiText,.FlyUiTextHighlight,.FlyUiTextHighlightControl,.FlyUiTextHover,.FlyUiTextHoverControl',['zoom'=>'1.2'],$css);
+		}
 	}
 	if (in_array('controls',$categories)) {
 		$css .= "\n/* controls */\n";
@@ -308,6 +318,10 @@ function FlyUserThemeGenerate() {
 		$files = json_decode($files,true);
 	} else {
 		$files = ['%FLY.RESOURCE.PATH.OS%base.thm','%FLY.RESOURCE.PATH.THEMES%default3.thm'];
+	}
+
+	if (FlyRegistryGet('HighContrastTheme','SprocketComputers.Options') == 'true') {
+		$files = ['%FLY.RESOURCE.PATH.OS%base.thm','%FLY.RESOURCE.PATH.THEMES%highcontrast.thm'];
 	}
 
 	$theme = [];
