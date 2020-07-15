@@ -31,7 +31,8 @@
 				"padding": "0px",
 				"overflow-x": "hidden",
 				"overflow-y": "%THEME.DESKTOP_OVERFLOW%",
-				"overscroll-behavior": "none"
+				"overscroll-behavior": "none",
+				"height": "100%"
 			}
 		},
 		"window": {
