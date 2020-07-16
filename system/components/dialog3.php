@@ -87,8 +87,14 @@ var Dialog = {
 
 		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.size.set(400,height);
+		var width = Fly.window.size.get()[0];
 
-		Fly.window.position.set(Fly.window.position.get()[0],(Dialog.opener.Fly.window.position.get()[1]+((Dialog.opener.Fly.window.size.get()[1]/2)-(Fly.window.size.get()[1]/2))))
+		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).classList.contains('FlyWindowBackground')) {
+			height = window.top.document.getElementById(Fly.window.id).offsetHeight;
+			width = window.top.document.getElementById(Fly.window.id).offsetWidth;
+		}
+
+		Fly.window.position.set((Dialog.opener.Fly.window.position.get()[0]+((Dialog.opener.Fly.window.size.get()[0]/2)-(width/2))),(Dialog.opener.Fly.window.position.get()[1]+((Dialog.opener.Fly.window.size.get()[1]/2)-(height/2))))
 
 		document.addEventListener("keydown", function(e) {
 			if (e.keyCode == 13) {
