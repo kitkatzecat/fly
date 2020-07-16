@@ -93,27 +93,15 @@
 		</mask>
 		<mask id="Rename" hidden="true">
 			<name>Rename</name>
-			<icon>%app_path%fileman.svg</icon>
-			<index>fileact.php?act=rename</index>
-			<window>
-				<x>32</x>
-				<y>32</y>
-				<width>500</width>
-				<height>220</height>
-				<title>Rename</title>
-			</window>
+			<icon>%FLY.WORKING_URL%fileman.svg</icon>
+			<index>%FLY.WORKING_URL%filedialog.php?d=rename</index>
+			<title>Rename</title>
 		</mask>
 		<mask id="Delete" hidden="true">
 			<name>Delete</name>
-			<icon>%app_path%fileman.svg</icon>
-			<index>fileact.php?act=delete</index>
-			<window>
-				<x>32</x>
-				<y>32</y>
-				<width>500</width>
-				<height>220</height>
-				<title>Delete</title>
-			</window>
+			<icon>%FLY.WORKING_URL%fileman.svg</icon>
+			<index>%FLY.WORKING_URL%filedialog.php?d=delete</index>
+			<title>Delete</title>
 		</mask>
 		<mask id="CreateKeyword" hidden="true">
 			<name>Create a Keyword</name>
