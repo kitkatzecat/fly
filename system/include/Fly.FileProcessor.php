@@ -120,6 +120,8 @@ function FlyFileStringProcessor($item) {
 						return false;
 					}
 				}
+
+				$FLY = FlyCoreVars($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.xml');
 				
 				if (strpos((string)$manifestXML->index,'?') !== false) {
 					$indexOptions = explode('?',(string)$manifestXML->index)[1];
@@ -132,7 +134,6 @@ function FlyFileStringProcessor($item) {
 				} else {
 					$index = (string)$manifestXML->index;
 				}
-				$index = FlyVarsReplace($index);
 				
 				$id = $manifestXML->id;
 				if ($id == '') {
@@ -143,93 +144,109 @@ function FlyFileStringProcessor($item) {
 				$version = (string)$manifestXML->version;
 				$date = (string)$manifestXML->date;
 				$icon = str_replace('%app_path%','%FLY_APPS_URL%'.$appCheck.'/',str_replace('%CURRENT_PATH%','%FLY_APPS_PATH%'.$appCheck.'/',str_replace('%WORKING_PATH%','%FLY_APPS_PATH%'.$appCheck.'/',str_replace('%CURRENT_URL%','%FLY_APPS_URL%'.$appCheck.'/',str_replace('%WORKING_URL%','%FLY_APPS_URL%'.$appCheck.'/',str_replace('%icon_path%','%FLY_ICONS_URL%',$manifestXML->icon))))));
-				$icon = FlyVarsReplace(FlyStringReplaceConstants($icon),true,FlyCoreVars($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.xml'));
+				$icon = FlyVarsReplace(FlyStringReplaceConstants($icon),true,$FLY);
 				$description = (string)$manifestXML->description;
-				$window = $protocol.$_SERVER['HTTP_HOST'].'/system/apps/'.$appCheck.'/'.$index.$options;		
-				if ($appX == '') {
-					$appX = (string)$manifestXML->window->x;
-				}
-				if ($appY == '') {
-					$appY = (string)$manifestXML->window->y;
-				}
-				if (in_array((string)$manifestXML->window->expand,['true','yes','on'])) {
-					$expand = 'true';
-				} else {
-					$expand = 'false';
+				
+				$window = FlyVarsReplace($index.$options,true,$FLY);
+				if (substr($window,0,4) !== 'http') {
+					$window = $FLY['WORKING_URL'].$window;
 				}
 
-				if (intval((string)$manifestXML->window->minwidth)) {
-					$minWidth = intval((string)$manifestXML->window->minwidth);
-				} else {
-					$minWidth = 'false';
-				}
-				if (intval((string)$manifestXML->window->maxwidth)) {
-					$maxWidth = intval((string)$manifestXML->window->maxwidth);
-				} else {
-					$maxWidth = 'false';
-				}
-
-				if (intval((string)$manifestXML->window->minheight)) {
-					$minHeight = intval((string)$manifestXML->window->minheight);
-				} else {
-					$minHeight = 'false';
-				}
-				if (intval((string)$manifestXML->window->maxheight)) {
-					$maxHeight = intval((string)$manifestXML->window->maxheight);
-				} else {
-					$maxHeight = 'false';
-				}
-
-				if (intval((string)$manifestXML->window->maxinitwidth)) {
-					$maxInitWidth = intval((string)$manifestXML->window->maxinitwidth);
-				} else {
-					$maxInitWidth = 'false';
-				}
-				if (intval((string)$manifestXML->window->maxinitheight)) {
-					$maxInitHeight = intval((string)$manifestXML->window->maxinitheight);
-				} else {
-					$maxInitHeight = 'false';
-				}
-
-				if (in_array((string)$manifestXML->window->minimize,['false','no','off'])) {
-					$minimize = 'false';
-				} else {
-					$minimize = 'true';
-				}
-				if (in_array((string)$manifestXML->window->close,['false','no','off'])) {
-					$close = 'false';
-				} else {
-					$close = 'true';
-				}
-				if (in_array((string)$manifestXML->window->resize,['true','yes','on'])) {
-					$resize = 'true';
-				} else {
-					$resize = 'false';
-				}
 				$filePath = preg_replace('#/+#','/',$filePath);
 				$location = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/';
 				$manifest = $_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/ApplicationManifest.xml';
-				$window = [
-					'title' => (string)$manifestXML->window->title,
-					'name' => $name,
-					'x' => $appX, 
-					'y' => $appY,
-					'width' => (string)$manifestXML->window->width,
-					'height' => (string)$manifestXML->window->height,
-					'minwidth' => $minWidth,
-					'minheight' => $minHeight,
-					'maxwidth' => $maxWidth,
-					'maxheight' => $maxHeight,
-					'maxinitwidth' => $maxInitWidth,
-					'maxinitheight' => $maxInitHeight,
-					'location' => $window,
-					'icon' => $icon,
-					'expand' => $expand,
-					'minimize' => $minimize,
-					'close' => $close,
-					'resize' => $resize
-				];
-				$action = 'task.create(\''.$id.'\', '.json_encode($window).')';
+
+				if (isset($manifestXML->window)) {
+					if ($appX == '') {
+						$appX = (string)$manifestXML->window->x;
+					}
+					if ($appY == '') {
+						$appY = (string)$manifestXML->window->y;
+					}
+					if (in_array((string)$manifestXML->window->expand,['true','yes','on'])) {
+						$expand = 'true';
+					} else {
+						$expand = 'false';
+					}
+	
+					if (intval((string)$manifestXML->window->minwidth)) {
+						$minWidth = intval((string)$manifestXML->window->minwidth);
+					} else {
+						$minWidth = 'false';
+					}
+					if (intval((string)$manifestXML->window->maxwidth)) {
+						$maxWidth = intval((string)$manifestXML->window->maxwidth);
+					} else {
+						$maxWidth = 'false';
+					}
+	
+					if (intval((string)$manifestXML->window->minheight)) {
+						$minHeight = intval((string)$manifestXML->window->minheight);
+					} else {
+						$minHeight = 'false';
+					}
+					if (intval((string)$manifestXML->window->maxheight)) {
+						$maxHeight = intval((string)$manifestXML->window->maxheight);
+					} else {
+						$maxHeight = 'false';
+					}
+	
+					if (intval((string)$manifestXML->window->maxinitwidth)) {
+						$maxInitWidth = intval((string)$manifestXML->window->maxinitwidth);
+					} else {
+						$maxInitWidth = 'false';
+					}
+					if (intval((string)$manifestXML->window->maxinitheight)) {
+						$maxInitHeight = intval((string)$manifestXML->window->maxinitheight);
+					} else {
+						$maxInitHeight = 'false';
+					}
+	
+					if (in_array((string)$manifestXML->window->minimize,['false','no','off'])) {
+						$minimize = 'false';
+					} else {
+						$minimize = 'true';
+					}
+					if (in_array((string)$manifestXML->window->close,['false','no','off'])) {
+						$close = 'false';
+					} else {
+						$close = 'true';
+					}
+					if (in_array((string)$manifestXML->window->resize,['true','yes','on'])) {
+						$resize = 'true';
+					} else {
+						$resize = 'false';
+					}
+					$window = [
+						'title' => (string)$manifestXML->window->title,
+						'name' => $name,
+						'x' => $appX, 
+						'y' => $appY,
+						'width' => (string)$manifestXML->window->width,
+						'height' => (string)$manifestXML->window->height,
+						'minwidth' => $minWidth,
+						'minheight' => $minHeight,
+						'maxwidth' => $maxWidth,
+						'maxheight' => $maxHeight,
+						'maxinitwidth' => $maxInitWidth,
+						'maxinitheight' => $maxInitHeight,
+						'location' => $window,
+						'icon' => $icon,
+						'expand' => $expand,
+						'minimize' => $minimize,
+						'close' => $close,
+						'resize' => $resize
+					];
+					$action = 'task.create(\''.$id.'\', '.json_encode($window).')';
+				} else {
+					$window = [
+						'title' => (string)$manifestXML->title,
+						'name' => $name,
+						'location' => $window,
+						'icon' => $icon
+					];
+					$action = 'task.background(\''.$id.'\', '.json_encode($window).')';
+				}
 				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"bname"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"window"=>$window,"location"=>$location,"manifest"=>$manifest];
 			} else {
 				return false;

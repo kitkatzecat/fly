@@ -24,6 +24,7 @@ function onload() {
 		document.getElementById('expandWindows-i').innerHTML = '-';
 		document.getElementById('inactiveWindows-i').innerHTML = '-';
 		document.getElementById('minimizedWindows-i').innerHTML = '-';
+		document.getElementById('backgroundWindows-i').innerHTML = '-';
 	},500);
 }
 function getWindows() {
@@ -58,10 +59,18 @@ function getWindows() {
 		}
 	}
 	
+	var backgroundWindows = window.top.document.getElementsByClassName('FlyWindowBackground');
+	var bkg = '';
+	
+	for (i = 0; i < backgroundWindows.length; i++) { 
+		bkg += '<div style="font-size:12px;" title="'+backgroundWindows[i].window.id+'" oncontextmenu="windowContext(event,\''+backgroundWindows[i].id+'\');return false;" onclick="" id="TaskButton-'+backgroundWindows[i].id+'" class="FlyUiMenuItem FlyUiNoSelect"><img src="'+backgroundWindows[i].window.icon+'" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;margin-top:-8px;"><div style="width: 180px; overflow: hidden; display: inline-block; white-space: nowrap; text-overflow: ellipsis;">'+backgroundWindows[i].window.title+'</div><div style="width:16px;height:16px;float:right;line-height:8px;font-size:8px;text-align:center;" onclick="closeWindow(\''+backgroundWindows[i].id+'\');event.stopPropagation();" class="FlyUiMenuItem"><img style="width:8px;height:8px;vertical-align:middle;pointer-events:none;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"></div></div>';
+	}
+
 	document.getElementById('activeWindows').innerHTML = act;
 	document.getElementById('expandWindows').innerHTML = exp;
 	document.getElementById('inactiveWindows').innerHTML = inact;
 	document.getElementById('minimizedWindows').innerHTML = min;
+	document.getElementById('backgroundWindows').innerHTML = bkg;
 	
 	setTimeout(getWindows,1000);
 }
@@ -209,6 +218,7 @@ function toggle(id) {
 	</div><div oncontextmenu="sectionContext('expandWindows',event);return false;" ondblclick="toggle('expandWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Expanded<span id="expandWindows-i" class="i">+</span></div><div data-title="Expanded" id="expandWindows">
 	</div><div oncontextmenu="sectionContext('inactiveWindows',event);return false;" ondblclick="toggle('inactiveWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Inactive<span id="inactiveWindows-i" class="i">+</span></div><div data-title="Inactive" id="inactiveWindows">
 	</div><div oncontextmenu="sectionContext('minimizedWindows',event);return false;" ondblclick="toggle('minimizedWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Minimized<span id="minimizedWindows-i" class="i">+</span></div><div data-title="Minimized" id="minimizedWindows">
+	</div><div oncontextmenu="sectionContext('backgroundWindows',event);return false;" ondblclick="toggle('backgroundWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Background<span id="backgroundWindows-i" class="i">+</span></div><div data-title="Background" id="backgroundWindows">
 	</div>
 </div>
 </body>

@@ -1329,9 +1329,190 @@ if ($window_move) {
 	console.log(`Window opened - ${id} "${attributes.name}" (${frame.id})`);
 	return frame;
 }
-/*
-setTimeout(function() {
-	shell.notification('Beta Window Composition','The window3.php beta is in use. Some issues may be present with windows.','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg');
-},5000);
-*/
+
+task.background = function(id='public', attributes={title:'Untitled', name:'Untitled', icon:'', location:''}) {
+	
+	// Create window object
+	var frame = document.createElement('div');
+	frame.window = {};
+	frame.window.isLoaded = false;
+	frame.window.composition = {};
+	
+	// Style window object
+	frame.className = 'FlyWindowBackground';
+	frame.style.display = 'none';
+	
+	frame.window.initial = attributes;
+	
+	// Set window title
+	frame.setAttribute('window-title', attributes.title);
+	frame.window.title = attributes.title;
+	
+	// Set application name
+	if (typeof attributes.name == 'undefined') {
+		attributes.name = attributes.title;
+	}
+	frame.setAttribute('window-name', attributes.name);
+	frame.window.name = attributes.name;
+	
+	// Set window ID
+	var m_now     = new Date(); 
+	var m_year    = m_now.getFullYear();
+	var m_month   = m_now.getMonth()+1; 
+	var m_day     = m_now.getDate();
+	var m_hour    = m_now.getHours();
+	var m_minute  = m_now.getMinutes();
+	var m_second  = m_now.getSeconds(); 
+	var m_millisecond  = m_now.getMilliseconds(); 
+	if(m_month.toString().length == 1) {
+		var m_month = '0'+m_month;
+	}
+	if(m_day.toString().length == 1) {
+		var m_day = '0'+m_day;
+	}   
+	if(m_hour.toString().length == 1) {
+		var m_hour = '0'+m_hour;
+	}
+	if(m_minute.toString().length == 1) {
+		var m_minute = '0'+m_minute;
+	}
+	if(m_second.toString().length == 1) {
+		var m_second = '0'+m_second;
+	}   
+	var dateTime = m_year+''+m_month+''+m_day+''+m_hour+''+m_minute+''+m_second+''+m_millisecond;
+	
+	if (id == '') {
+		id == 'public';
+	}
+	
+	frame.id = id+'-'+dateTime;
+	frame.window.id = id;
+	frame.window.uniqueid = id+'-'+dateTime;
+	frame.setAttribute('window-id',id);
+	frame.setAttribute('window-uniqueid',id+'-'+dateTime);
+	
+	// Set icon
+	if (!attributes.icon == '') {
+		frame.window.icon = attributes.icon;
+	} else {
+		frame.window.icon = '';
+	}
+	
+	// Define content
+	if (attributes.location.indexOf('?') > -1) {
+		frame.window.location = attributes.location+'&Fly_Id='+frame.id;
+	} else {
+		frame.window.location = attributes.location+'?Fly_Id='+frame.id;
+	}
+	
+	// Window functions
+	
+	// Show message
+	frame.window.showMessage = function(msg,duration=8) {}
+	
+	// Close window
+	frame.window.close = function() {
+		try {
+			frame.window.content.contentWindow.Fly.window.onclose();
+		} catch(err) {
+			frame.window.forceClose();
+		}
+	}
+	frame.window.forceClose = function() {
+		frame.window.clear();
+		frame.parentNode.removeChild(frame);
+	}
+	frame.window.clear = function() {
+		frame.innerHTML = '';
+	}
+	
+	// Flash window
+	frame.window.flash = function() {
+	}
+		
+	// Set window title
+	frame.window.setTitle = function(title) {
+		frame.window.title = title;
+		frame.setAttribute('window-title', title);
+	}
+
+	// Set application name
+	frame.window.setName = function(name) {
+		frame.window.name = name;
+		frame.setAttribute('window-name', name);
+	}
+	
+	// Set window icon
+	frame.window.setIcon = function(icon) {
+		if (!icon=="") {
+			frame.window.icon = icon;
+		} else {
+			frame.window.icon = '';
+		}
+	}
+		
+	// Window onload function - run once, on initial load
+	if (typeof attributes.load == 'function') {
+		frame.window.onLoad = attributes.load;
+	} else {
+		frame.window.onLoad = function() {};
+	}
+	// Window onreload function - run every time a page is loaded
+	if (typeof attributes.reload == 'function') {
+		frame.window.onReload = attributes.reload;
+	} else {
+		frame.window.onReload = function() {};
+	}
+
+	// CONTENT FRAME
+	frame.window.content = document.createElement('iframe');
+	frame.window.content.src = frame.window.location;
+	
+	frame.window.content.onload = function() {
+		if (frame.window.isLoaded != true) {
+			frame.window.isLoaded = true;
+			
+			frame.window.onContentLoaded();
+			
+			setTimeout(function(){frame.window.content.contentWindow.focus();},10);
+			try {
+				frame.window.onLoad(frame);
+			}
+			catch(err) {
+				shell.dialog('Window error','Window load function error:<pre>'+err+'</pre>','Window Error');
+			}
+		}
+
+		try {
+			frame.window.onReload(frame);
+		}
+		catch(err) {
+			shell.dialog('Window error','Window reload function error:<pre>'+err+'</pre>','Window Error');
+		}
+
+		try {
+			if (typeof frame.window.content.contentWindow.Fly.window != 'undefined') {
+				frame.window.content.contentWindow.Fly.window.id = frame.id;
+				try {
+					frame.window.content.contentWindow.Fly.window.ready();
+				} catch(err) {console.log(err);}
+			}
+		} catch(err) {console.log(err);}
+	}
+	
+	frame.appendChild(frame.window.content);
+
+	frame.window.onContentLoaded = function() {}
+
+	document.body.appendChild(frame);
+		
+	console.log(`Window (background) opened - ${id} "${attributes.name}" (${frame.id})`);
+
+	// Large amount of background windows open check
+	if (document.querySelectorAll('.FlyWindowBackground').length > 10) {
+		shell.notification.create('Many background windows open','A large amount of background windows are open. This may cause your computer to run slowly. To see open background windows, open Window Manager.','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg');
+	}
+
+	return frame;
+}
 </script>
