@@ -235,7 +235,8 @@ function FlyFileStringProcessor($item) {
 						'expand' => $expand,
 						'minimize' => $minimize,
 						'close' => $close,
-						'resize' => $resize
+						'resize' => $resize,
+						'background' => false
 					];
 					$action = 'task.create(\''.$id.'\', '.json_encode($window).')';
 				} else {
@@ -243,7 +244,8 @@ function FlyFileStringProcessor($item) {
 						'title' => (string)$manifestXML->title,
 						'name' => $name,
 						'location' => $window,
-						'icon' => $icon
+						'icon' => $icon,
+						'background' => true
 					];
 					$action = 'task.background(\''.$id.'\', '.json_encode($window).')';
 				}
