@@ -20,6 +20,7 @@ var OptionsTree = [
 <p><a onclick="window.location.href='theme.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>personalization.svg">Change the theme</a></p>
 <p><a onclick="window.location.href='sounds.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>sound.svg">Change system sounds</a></p>
 <p><a onclick="window.location.href='desktop.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>desktop.svg">Manage your desktop</a></p>
+<p><a onclick="window.location.href='accessibility.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>accessibility.svg">Accessibility</a></p>
 
 </body>
 </html>
