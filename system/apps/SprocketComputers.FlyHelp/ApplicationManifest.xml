@@ -2,15 +2,19 @@
 	<id>SprocketComputers.FlyHelp</id>
 	<name>Fly Help</name>
 	<publisher>Sprocket Computers</publisher>
-	<version>0.1</version>
-	<icon>%app_path%question.svg</icon>
-	<date>1493614800</date>
+	<version>1.0</version>
+	<icon>%FLY.RESOURCE.URL.ICONS%question.svg</icon>
+	<date>1591225553</date>
 	<index>index.php</index>
 	<description><![CDATA[Get help and tutorials with a range of topics related to Fly.]]></description>
 	<window>
 		<title>Fly Help</title>
-		<width>640</width>
-		<height>480</height>
+		<width>60%</width>
+		<height>60%</height>
+		<minwidth>640</minwidth>
+		<minheight>480</minheight>
+		<maxinitwidth>1280</maxinitwidth>
+		<maxinitheight>720</maxinitheight>
 		<x>auto</x>
 		<y>auto</y>
 		<expand>true</expand>

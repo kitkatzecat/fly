@@ -1,227 +1,157 @@
-<?php
-/*class MP3File {
-	var $title;
-	var $artist;
-	var $album;
-	var $year;
-	var $comment;
-	var $genre;
-	function getid3($file) {
-		if (file_exists($file)) {
-			$id_start = filesize($file)-128;
-			$fp = fopen($file,"r");
-			fseek($fp,$id_start);
-			$tag = fread($fp,3);
-			if ($tag == "TAG") {
-				$this->title = fread($fp,30);
-				$this->artist = fread($fp,30);
-				$this->album = fread($fp,30);
-				$this->year = fread($fp,4);
-				$this->comment = fread($fp,30);
-				$this->genre = fread($fp,1);
-				fclose($fp);
-				return true;
-			} else {
-				fclose($fp);
-				return false;
-			}
-		} else {
-			return false;
-		}
-	}
-}
-function getMP3($file) {
-	if (file_exists($file)) {
-		$id_start = filesize($file)-128;
-		$fp = fopen($file,"r");
-		fseek($fp,$id_start);
-		$tag = fread($fp,3);
-		$return = array();
-		if ($tag == "TAG") {
-			$return['title'] = fread($fp,30);
-			$return['artist'] = fread($fp,30);
-			$return['album'] = fread($fp,30);
-			$return['year'] = fread($fp,4);
-			$return['comment'] = fread($fp,30);
-			$return['genre'] = fread($fp,1);
-			fclose($fp);
-			return $return;
-		} else {
-			fclose($fp);
-			return false;
-		}
-	} else {
-		return false;
-	}
-}*/
-?>
 <!DOCTYPE html>
 <html>
 <head>
 <?php
-include 'fly.php';
-include 'Fly.Actionmenu.php';
-include 'Fly.Registry.php';
-include 'Fly.Command.php';
-include 'Fly.Application.php';
 include 'Fly.Standard.php';
-echo FlyLoadExtension('SprocketComputers.Utilities','ColorPicker');
+include 'Fly.Actionbar.php';
 ?>
-<script>
-function load() {
-	Fly.extension.replace('test','SprocketComputers.Utilities','ColorPicker');
-}
-function context(event) {
-	Fly.actionmenu(event,[
-		['Home',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
-		[''],
-		['Icon Size',[
-			['Huge',function(){},{icon:'icon.hg.svg'}],
-			['Extra Large',function(){},{icon:'icon.xl.svg'}],
-			['Large',function(){},{icon:'icon.lg.svg'}],
-			['Medium',function(){},{icon:'icon.md.svg'}],
-			['Small',function(){},{icon:'icon.sm.svg'}],
-			['Tiny',function(){},{icon:'icon.tn.svg'}],
-			['Tiles',function(){},{icon:'icon.ls.svg'}],
-			['List',function(){},{icon:'icon.ls.svg'}],
-			[''],
-			['Custom...',function(){}]
-		],{icon:'icon.xl.svg'}],
-		['Image Previews',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
-		['File Extensions',[['smaller'],['menu']]],
-		[''],
-		['Uhhhhhhhhhh']
-	]);
-}
-
-function commm() {
-	Fly.control.input('Input a command','Please','command me pls','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pokeball.svg',function(c) {
-		FlyCommand(c,function(a) {
-			window.top.shell.dialog('Command Result','<pre>'+a.display+'<br><br>'+a.return+'</pre>','Command','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg');
-		});
-	});
-}
-
-var gelp = function() {};
-
-function returrr(dialog) {
-	gelp = dialog;
-}
-function gellppp() {
-	Fly.window.title.hide();
-	Fly.window.movement.set(64,0,544,32);
-	document.getElementById('titlebar').style.display = 'block';
-}
-function nellppp() {
-	Fly.window.title.show();
-	Fly.window.movement.reset();
-	document.getElementById('titlebar').style.display = 'none';
-}
-
-function telp() {
-	Fly.window.border.hide();
-	document.body.backgroundColor = 'transparent';
-}
-function lelp() {
-	Fly.window.border.show();
-	document.body.backgroundColor = '#fff';
-}
-
-function gadget() {
-	var frame;
-	frame = window.top.task.create('public',{name:'Gadget',title:'Gadget',x:'auto',y:'auto',width:150,height:150,location:'<?php echo $_FLY['URL']; ?>system/resources/os/calendar.svg',expand:false,minimize:false,resize:false,close:false,background:true,load:function() {
-		frame.window.hideBorder();
-		frame.window.composition.secondaryMovement.set(0,0,150,150);
-	}});
-}
-function wmp() {
-	var frame;
-	frame = window.top.task.create('public',{name:'Windows Media Player',title:'Windows Media Player',x:'auto',y:'auto',width:670,height:482,location:'<?php echo $_FLY['URL']; ?>users/1/Media/wmplayer.png',expand:false,minimize:true,resize:false,close:true,background:false,load:function() {
-		frame.window.content.contentWindow.document.body.style.margin = '0px';
-		frame.window.hideBorder();
-		frame.window.composition.secondaryMovement.set(0,0,670,32);
-	}});
-}
-function openw() {
-	Fly.window.open({modal:true});
-}
-</script>
 <style>
-#titlebar {
+#main {
 	position: absolute;
-	display: none;
-	top: 0px;
-	left: 0px;
+	top: 34px;
+	left: min(220px,25%);
 	right: 0px;
-	height: 32px;
-	text-align: center;
-	box-sizing: border-box;
-	padding: 4px;
-	background: linear-gradient(to bottom, rgba(216,224,222,1) 0%,rgba(174,191,188,1) 22%,rgba(153,175,171,1) 33%,rgba(142,166,162,1) 50%,rgba(130,157,152,1) 67%,rgba(78,92,90,1) 82%,rgba(14,14,14,1) 100%);
-	color: #fff;
-	font-weight: bold;
+	bottom: 0px;
+	background-color: #fff;
+	transition: left .2s ease-in-out;
+	overflow: hidden;
+	padding: 0px;
 }
-.button {
-	width: 32px;
-	height: 32px;
-	box-sizing: border-box;
-	border: 1px solid #fff;
-	background: linear-gradient(to bottom, rgba(239,197,202,1) 0%,rgba(210,75,90,1) 50%,rgba(186,39,55,1) 51%,rgba(241,142,153,1) 100%);
-	color: #fff;
-	cursor: pointer;
-	padding: 6px;
+#index {
 	position: absolute;
+	top: 34px;
+	left: 0px;
+	width: 25%;
+	max-width: 220px;
+	bottom: 0px;
+	padding-top: 4px;
+	padding-left: 8px;
+	padding-right: 8px;
+	padding-bottom: 4px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+#frame {
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	border: none;
+}
+.index-option {
+	cursor: pointer;
+	font-size: 13px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	margin-top: -4px;
+	margin-bottom: -4px;
+	word-wrap: nowrap;
+	white-space: pre;
+	max-width: 100%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+.index-icon {
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+	margin-right: 6px;
 }
 </style>
+<script>
+var Toolbar;
+var IndexToolbar;
+function onload() {
+	Toolbar = new Fly.actionbar();
+	Toolbar.style.position = 'absolute';
+	Toolbar.style.top = '0px';
+	Toolbar.style.left = 'min(220px,25%)';
+	Toolbar.style.right = '0px';
+	Toolbar.style.wordWrap = 'nowrap';
+	Toolbar.style.whiteSpace = 'pre';
+	Toolbar.style.overflowX = 'auto !important';
+	
+	Toolbar.add({text:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',action:function(){nav('home.php')}});
+	Toolbar.add({type:'title',text:'▸'});
+	
+	document.body.appendChild(Toolbar);
+	
+	IndexToolbar = new Fly.actionbar();
+	IndexToolbar.style.position = 'absolute';
+	IndexToolbar.style.top = '0px';
+	IndexToolbar.style.left = '0px';
+	IndexToolbar.style.width = '23%';
+	IndexToolbar.style.width = '160px';
+	IndexToolbar.style.wordWrap = 'nowrap';
+	IndexToolbar.style.whiteSpace = 'pre';
+	IndexToolbar.style.overflowX = 'auto !important';
+	
+	IndexToolbar.add({text:'Categories',icon:false,type:'title'})
+	
+	document.body.appendChild(IndexToolbar);
+	
+	<?php
+	if (file_exists($_GET['page'])) {
+		echo 'nav(\''.$_GET['page'].'\')';
+	} else {
+		echo 'nav(\'home.php\')';
+	}
+	?>
+}
+function nav(page) {
+	var frame = document.getElementById('frame');
+	frame.src = page;
+}
+var Tree = [];
+var frameloadinit = false;
+function frameload() {
+	var frame = document.getElementById('frame');
+
+	if (frameloadinit) {
+		try {
+			window.top.shell.sound.system('click');
+		} catch(e) {}
+	} else {
+		frameloadinit = true;
+	}
+
+	if (Tree.length > 0) {
+		for (i=0; i < Tree.length; i++) {
+			Tree[i].remove();
+		}
+		Tree = [];
+	}
+	if (typeof frame.contentWindow.OptionsTree !== 'undefined') {
+		var tree = frame.contentWindow.OptionsTree;
+		for (let i=0; i < tree.length; i++) {
+			if (i == tree.length-1) {
+				Tree.push(Toolbar.add({text:tree[i].name,icon:tree[i].icon,toggled:true,action:function(){}}));
+				Fly.window.title.set('Fly Help - '+tree[i].name);
+			} else {
+				var b = Toolbar.add({text:tree[i].name,icon:tree[i].icon,action:function(){b.toggleOn();nav(tree[i].index);}});
+				Tree.push(b);
+				Tree.push(Toolbar.add({type:'title',text:'▸'}));
+			}
+		}
+	} else {
+		Tree.push(Toolbar.add({text:frame.contentWindow.document.title,toggled:true,action:function(){}}));
+		Fly.window.title.set('Fly Help - '+frame.contentWindow.document.title);
+	}
+}
+</script>
 </head>
-<body onload="load()" style="background-color:#FFFFFF;width:200%" class="FlyUiText">
-<!--<h1 style="color:#c0c0c0;text-shadow:2px 2px #808080;">Welcome to Options</h1>
-<p>To open a directory, click an icon.</p>
-<br>-->
-<div id="titlebar"><div class="button" style="top:0px;left:0px;" onclick="Fly.window.minimize();">m</div><div class="button" style="top:0px;left:32px;" onclick="Fly.window.expand();">e</div>fly help<div class="button" style="top:0px;right:0px;" onclick="Fly.window.close();">x</div></div>
-<button onclick="Fly.control.password('gimme your password, bish',function() {window.top.shell.dialog('Thanl you','Something went right');},function() {window.top.shell.dialog('I am angery.')})"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;pointer-events:none;">I Yam Socure</button>
-<form action="index.php" method="GET">
-<div id="test"></div><br>
-<input type="submit" value="Submit">
-</form>
-<br><br>
-<div class="FlyUiProgressWaitContainer"><div class="FlyUiWaitBar"></div></div>
-<br><br>
-<button onclick="Fly.control.progress('Here is a very very','Looood',returrr);setInterval(function(){gelp.position(Math.floor((Math.random() * 100) + 1));},1000);">Make a progress bar</button>
-<a onclick="openw()">open</a>
-<br><br>
-<button onclick="gellppp()">gelp</button>
-<button onclick="nellppp()">nelp</button>
-<br>
-<br>
-<button onclick="telp()">telp</button>
-<button onclick="lelp()">lelp</button>
-<br>
-<button onclick="gadget()">gadget</button>
-<button onclick="wmp()">wmp</button>
-<br><br>
-<button onclick="commm()">commm</button>
-<br><br>
-<button onclick="Fly.control.modal();">yo</button>
-<br><br>
-<input type="text" id="aaabbbccc"><button onclick="Fly.window.message.show(document.getElementById('aaabbbccc').value)">show</button>
-<br><br>
-<div style="background-color: #c0c0c0;" oncontextmenu="context(event);return false;">right click here</div>
-<br>
-<div style="font-size:32px;" id="file"></div>
-<xmp>
+<body onload="onload()">
+
+<div id="index">
 <?php
-echo $_SERVER['DOCUMENT_ROOT'];
-print_r($_SESSION);
-/*$mp3 = getMP3(FLY_ROOT.'Little Saint Nick.mp3');
-if ($mp3 == false) {
-	echo 'noooooooo';
-} else {
-print_r($mp3);
-}*/
-print_r(FlyCommand('run:SprocketComputers.Utilities'));
-print_r($_FLY);
+$index = json_decode(file_get_contents('index.json'),true);
+
+foreach ($index as $item) {
+	echo '<div class="FlyUiTextHover index-option" onclick="nav(\''.$item['index'].'\')"><img class="index-icon" src="'.FlyVarsReplace($item['icon']).'">'.htmlspecialchars($item['name']).'</div>';
+}
 ?>
-</xmp>
+</div>
+
+<div id="main" class="FlyUiText FlyUiNoSelect"><iframe onload="frameload()" src="" frameborder="0" id="frame"></iframe></div>
+
 </body>
 </html>

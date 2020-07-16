@@ -1,0 +1,17 @@
+[
+	{
+		"name": "Home",
+		"icon": "%FLY.RESOURCE.URL.ICONS%home.svg",
+		"index": "home.php"
+	},
+	{
+		"name": "Getting Started",
+		"icon": "%FLY.RESOURCE.URL.ICONS%fly.svg",
+		"index": "gs"
+	},
+	{
+		"name": "Desktop",
+		"icon": "%FLY.RESOURCE.URL.ICONS%desktop.svg",
+		"index": "desktop"
+	}
+]
