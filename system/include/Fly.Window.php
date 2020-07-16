@@ -72,7 +72,7 @@ if (typeof Fly.window == "undefined") {
 		return window.top.document.getElementById(Fly.window.id).window.name;
 	}
 	Fly.window.name.set = function(name) {
-		window.top.document.getElementById(Fly.window.id).window.setname(name);
+		window.top.document.getElementById(Fly.window.id).window.setName(name);
 		return window.top.document.getElementById(Fly.window.id).window.name;
 	}
 
