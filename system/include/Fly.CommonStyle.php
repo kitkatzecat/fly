@@ -37,7 +37,7 @@ p.FlyCSParagraphTitle {
 	opacity: 0.8;
 	margin-bottom: -16px;
 }
-img.FlyCSInlineIcon {
+.FlyCSInlineIcon {
 	width: 18px;
 	height: 18px;
 	vertical-align: middle;
