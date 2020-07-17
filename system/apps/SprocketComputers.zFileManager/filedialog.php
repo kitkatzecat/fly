@@ -3,9 +3,12 @@ include 'Fly.Core.php';
 include 'Fly.Window.Background.php';
 include 'Fly.FileProcessor.php';
 include 'Fly.Dialog.php';
+include 'Fly.Command.php';
 
 $protected = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['COMPONENTS'].'protected.json'),true);
 $sysfiles = FlyRegistryGet('ShowSystemFiles','SprocketComputers.zFileManager');
+$extensions = FlyRegistryGet('HideFileExtensions','SprocketComputers.zFileManager');
+$extensionsALS = FlyRegistryGet('ShowExtensionALS','SprocketComputers.zFileManager');
 ?>
 <script>
 Fly.window.ready = function() {
@@ -16,9 +19,17 @@ if ($_GET['file'] == '') {
 	goto noitem;
 } else {
 	$process = FlyFileStringProcessor(FlyVarsReplace($_GET['file'],false,FlyCoreVars($_FLY['PATH'])));
+	$extra = '';
 
-	if (in_array($process['ffile'],$protected) && $sysfiles !== 'true') {
-		goto nosysfiles;
+	if (!$process) {
+		goto noexist;
+	}
+
+	if (in_array($process['ffile'],$protected)) {
+		$extra .= '<p style="margin-top:4px;color:#f00;" class="FlyCSDescriptionHint">This item is a system '.$process['type'].'. Modifying this '.$process['type'].' can harm your computer.</p>';
+		if ($sysfiles !== 'true') {
+			goto nosysfiles;
+		}
 	}
 
 	if ($_GET['d'] == 'delete') {
@@ -43,14 +54,23 @@ if ($process['type'] == 'application') {
 	});
 <?php
 } else {
+	if ($process['extension'] == 'als') {
+		$extra .= '<p style="margin-top:4px" class="FlyCSDescriptionHint">The file specified is an alias. Deleting this alias will not delete the item it links to.</p>';
+	}
 ?>
     Fly.dialog.confirm({
 		title: '<?php echo $process['fname']; ?>',
 		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg',
 		message: 'Delete',
-		content: 'Do you want to delete this <?php echo $process['type']; ?>?<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div>',
-		callback: function() {
-			Fly.window.close();
+		content: 'Do you want to delete this <?php echo $process['type']; ?>?<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><?php echo $extra; ?>',
+		callback: function(r) {
+			if (r) {
+				Fly.command('delete:<?php echo $process['file']; ?>,true',function() {
+					Fly.window.close();
+				});
+			} else {
+				Fly.window.close();
+			}
 		}
 	});
 <?php
@@ -77,7 +97,7 @@ if ($process['type'] == 'application') {
 		title: '<?php echo $process['fname']; ?>',
 		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',
 		message: 'Rename',
-		content: 'Enter a new name for this <?php echo $process['type']; ?>.<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div>',
+		content: 'Enter a new name for this <?php echo $process['type']; ?>.<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><?php echo $extra; ?>',
 		sound: "question",
 		input: {
 			type: "text",
@@ -89,7 +109,14 @@ if ($process['type'] == 'application') {
 				image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
 				default: true,
 				onclick: function(i) {
-					Fly.window.close();
+					<?php
+					if ($extensions == 'true' || ($extensionsALS !== 'true' && $process['extension'] == 'als')) {
+						?>
+						i += '.<?php echo $process['extension']; ?>';
+						<?php
+					}
+					?>
+					Fly.command('rename:<?php echo $process['file']; ?>,'+i+',true');
 				}
 			},
 			{
@@ -119,13 +146,27 @@ noitem:
 <?php
 goto end;
 
+noexist:
+?>
+    Fly.dialog.message({
+		title: 'Not Found',
+		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg',
+		message: 'Item not found',
+		content: 'The specified item could not be found.',
+		callback: function() {
+			Fly.window.close();
+		}
+	});
+<?php
+goto end;
+
 nosysfiles:
 ?>
     Fly.dialog.message({
-		title: 'System File',
+		title: 'System Item',
 		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg',
-		message: 'Item is a system file',
-		content: 'The specified item is a system file. Modifying these items is disabled to protect your computer. To change this, turn on Show System Files in File Manager.',
+		message: 'Item is a system <?php echo $process['type']; ?>',
+		content: 'The specified item is a system <?php echo $process['type']; ?>. Modifying these items is disabled to protect your computer.<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><p class="FlyCSDescriptionHint" style="margin-top:4px">To change this, turn on Show System Files in File Manager.</p>',
 		callback: function() {
 			Fly.window.close();
 		}
