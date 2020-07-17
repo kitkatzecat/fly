@@ -35,7 +35,7 @@ p.FlyCSHint {
 	font-size: 0.8em;
 	opacity: 0.8;
 	margin-top: -16px;
-	padding-left: calc(6% + 26px);
+	padding-left: calc(6% + 24px);
 }
 p.FlyCSParagraphTitle {
 	font-size: 0.8em;
