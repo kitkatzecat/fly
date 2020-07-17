@@ -91,7 +91,18 @@ system.logout = function() {
 // Shell commands
 function shell() {};
 shell.dialog = function(msg="An error occurred",content="Something went wrong",title="Error",icon="/system/resources/icons/error.svg") {
-	return task.create('public', {title:title, name:title, x:((window.innerWidth/2)-258), y:((window.innerHeight/2)-154), width:500, height:100, location:'/system/components/dialog2.php?type=message&content='+encodeURIComponent(window.btoa(content))+'&message='+encodeURIComponent(window.btoa(msg))+'&icon='+encodeURIComponent(window.btoa(icon)), icon:icon});
+	//return task.create('public', {title:title, name:title, x:((window.innerWidth/2)-258), y:((window.innerHeight/2)-154), width:500, height:100, location:'/system/components/dialog2.php?type=message&content='+encodeURIComponent(window.btoa(content))+'&message='+encodeURIComponent(window.btoa(msg))+'&icon='+encodeURIComponent(window.btoa(icon)), icon:icon});
+	if (typeof msg == 'object') {
+		system.command('run:SprocketComputers.Utilities.ShellDialog,content='+encodeURIComponent(btoa(JSON.stringify(msg))));
+	} else {
+		var content = {
+			message: msg,
+			content: content,
+			title: title,
+			icon: icon
+		}
+		system.command('run:SprocketComputers.Utilities.ShellDialog,content='+encodeURIComponent(btoa(JSON.stringify(content))));
+	}
 }
 
 shell.error = function(content="Something went wrong") {

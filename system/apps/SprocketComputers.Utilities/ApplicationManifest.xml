@@ -226,5 +226,11 @@
 				<minimize>false</minimize>
 			</window>
 		</mask>
+		<mask id="ShellDialog" hidden="true">
+			<name>Message</name>
+			<icon>%FLY.RESOURCE.URL.ICONS%application.svg</icon>
+			<index>%FLY.WORKING_URL%shelldialog.php</index>
+			<title>Shell Dialog</title>
+		</mask>
 	</masks>
 </manifest>
