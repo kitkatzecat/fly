@@ -213,28 +213,74 @@ if (preg_replace('#/+#','/',$_GET['file']) == './') {
 
 if ($process !== false) {
 	if ($process['type']!='folder' && $process['type']!='file') {
-		echo '
-		<script>
-		window.top.shell.dialog("Can\'t get properties","Properties cannot be retrieved for items other than local files or folders, such as applications or online items.","Properties","'.FLY_ICONS_URL.'error.svg");
-		Fly.window.close();
-		</script>';
-		exit;
+		if ($process['type'] == 'application') {
+			echo '
+			<script>
+			window.top.system.command(\'run:SprocketComputers.zOptions,page=\'+encodeURIComponent(\'filesapps/appdetails.php?app='.$process['file'].'\'));
+			Fly.window.close();
+			</script>
+			';
+			exit;
+		} else {
+			echo '
+			<script>
+			Fly.window.hide();
+			Fly.dialog.message({
+				title: "Invalid Item",
+				message: "Cannot get properties",
+				content: "Properties cannot be retrieved for items other than local files or folders, such as applications or online items.",
+				icon: "'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg",
+				callback: function() {
+					Fly.window.close();
+				}
+			});
+			</script>';
+			exit;
+		}
 	}
 } else if ($sprocess !== false) {
-	if ($sprocess['type']!='folder' && $sprocess['type']!='file') {
-		echo '
-		<script>
-		window.top.shell.dialog("Can\'t get properties","Properties cannot be retrieved for items other than local files or folders, such as applications or online items.","Properties","'.FLY_ICONS_URL.'error.svg");
-		Fly.window.close();
-		</script>';
-		exit;
+	if ($process['type']!='folder' && $process['type']!='file') {
+		if ($sprocess['type'] == 'application') {
+			echo '
+			<script>
+			window.top.system.command(\'run:SprocketComputers.zOptions,page=\'+encodeURIComponent(\'filesapps/appdetails.php?app='.$sprocess['file'].'\'));
+			Fly.window.close();
+			</script>
+			';
+			exit;
+		} else {
+			echo '
+			<script>
+			Fly.window.hide();
+			Fly.dialog.message({
+				title: "Invalid Item",
+				message: "Cannot get properties",
+				content: "Properties cannot be retrieved for items other than local files or folders, such as applications or online items.",
+				icon: "'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg",
+				callback: function() {
+					Fly.window.close();
+				}
+			});
+			</script>';
+			exit;
+		}
 	}
-	$process = $sprocess;
+$process = $sprocess;
 } else {
 	echo '
 	<script>
-	window.top.shell.dialog("Item not found","Properties cannot be retrieved for the specified item because it could not be found.","Properties","'.FLY_ICONS_URL.'error.svg");
-	Fly.window.close();
+	Fly.window.hide();
+	Fly.dialog.message({
+		title: "Not Found",
+		message: "Item not found",
+		content: "Properties cannot be retrieved for the specified item because it could not be found.",
+		icon: "'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg",
+		callback: function() {
+			Fly.window.close();
+		}
+	});
+//	window.top.shell.dialog("Item not found","Properties cannot be retrieved for the specified item because it could not be found.","Properties","'.FLY_ICONS_URL.'error.svg");
+//	Fly.window.close();
 	</script>';
 	exit;
 }
