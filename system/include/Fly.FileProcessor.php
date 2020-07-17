@@ -164,58 +164,58 @@ function FlyFileStringProcessor($item) {
 						$appY = (string)$manifestXML->window->y;
 					}
 					if (in_array((string)$manifestXML->window->expand,['true','yes','on'])) {
-						$expand = 'true';
+						$expand = true;
 					} else {
-						$expand = 'false';
+						$expand = false;
 					}
 	
 					if (intval((string)$manifestXML->window->minwidth)) {
 						$minWidth = intval((string)$manifestXML->window->minwidth);
 					} else {
-						$minWidth = 'false';
+						$minWidth = false;
 					}
 					if (intval((string)$manifestXML->window->maxwidth)) {
 						$maxWidth = intval((string)$manifestXML->window->maxwidth);
 					} else {
-						$maxWidth = 'false';
+						$maxWidth = false;
 					}
 	
 					if (intval((string)$manifestXML->window->minheight)) {
 						$minHeight = intval((string)$manifestXML->window->minheight);
 					} else {
-						$minHeight = 'false';
+						$minHeight = false;
 					}
 					if (intval((string)$manifestXML->window->maxheight)) {
 						$maxHeight = intval((string)$manifestXML->window->maxheight);
 					} else {
-						$maxHeight = 'false';
+						$maxHeight = false;
 					}
 	
 					if (intval((string)$manifestXML->window->maxinitwidth)) {
 						$maxInitWidth = intval((string)$manifestXML->window->maxinitwidth);
 					} else {
-						$maxInitWidth = 'false';
+						$maxInitWidth = false;
 					}
 					if (intval((string)$manifestXML->window->maxinitheight)) {
 						$maxInitHeight = intval((string)$manifestXML->window->maxinitheight);
 					} else {
-						$maxInitHeight = 'false';
+						$maxInitHeight = false;
 					}
 	
 					if (in_array((string)$manifestXML->window->minimize,['false','no','off'])) {
-						$minimize = 'false';
+						$minimize = false;
 					} else {
-						$minimize = 'true';
+						$minimize = true;
 					}
 					if (in_array((string)$manifestXML->window->close,['false','no','off'])) {
-						$close = 'false';
+						$close = false;
 					} else {
-						$close = 'true';
+						$close = true;
 					}
 					if (in_array((string)$manifestXML->window->resize,['true','yes','on'])) {
-						$resize = 'true';
+						$resize = true;
 					} else {
-						$resize = 'false';
+						$resize = false;
 					}
 					$window = [
 						'title' => (string)$manifestXML->window->title,
@@ -343,7 +343,8 @@ function FlyFileStringProcessor($item) {
 			$lookup = FlyFileTypeLookup($extension);
 			
 			if ($extension == 'als') {
-				if (simpleXML_load_file($filePath)->icon == '') {
+				$aliasXML = simpleXML_load_file($filePath);
+				if ($aliasXML->icon == '') {
 					$icon = FlyFileStringProcessor(FlyVarsReplace(FlyStringReplaceConstants(simpleXML_load_file($filePath)->link),true,FlyCoreVars($filePath)))['icon'];
 				} else {
 					$icon = FlyVarsReplace(FlyVarsReplace(FlyStringReplaceConstants(simpleXML_load_file($filePath)->icon),true,FlyCoreVars($filePath)));
@@ -372,7 +373,7 @@ function FlyFileStringProcessor($item) {
 			}
 			$action = '';
 			if ($extension == 'als') {
-				$action = 'system.command(\'run:'.FlyVarsReplace(FlyStringReplaceConstants((string)simpleXML_load_file($filePath)->link)).'\')';
+				$action = 'system.command(\'run:'.FlyVarsReplace(FlyStringReplaceConstants((string)$aliasXML->link)).'\')';
 			} else if ($extension == 'jsc') {
 				$action = 'try { (function(){'.FlyVarsReplace(FlyStringReplaceConstants(file_get_contents($filePath)),false,FlyCoreVars($filePath)).'}()); } catch(e) {shell.dialog(\'Script error\',\'An error has occurred in the script "'.htmlspecialchars(basename($filePath)).'":<br><pre>\'+e+\'</pre>\',\'Script Error\');}';
 			} else {
@@ -404,7 +405,11 @@ function FlyFileStringProcessor($item) {
 			}
 			
 			
-			return ["file"=>$path.'/'.basename($filePath),"name"=>basename($filePath),"registered"=>$registered,"type"=>$type,"mime"=>$mime,"extension"=>$extension,"icon"=>$icon,"description"=>$description,"URL"=>$url,"action"=>$action,"path"=>$path,"fpath"=>$fpath,"ffile"=>$ffile,"fname"=>$fname,"bname"=>$bname,"isdir"=>false];
+			$return = ["file"=>$path.'/'.basename($filePath),"name"=>basename($filePath),"registered"=>$registered,"type"=>$type,"mime"=>$mime,"extension"=>$extension,"icon"=>$icon,"description"=>$description,"URL"=>$url,"action"=>$action,"path"=>$path,"fpath"=>$fpath,"ffile"=>$ffile,"fname"=>$fname,"bname"=>$bname,"isdir"=>false];
+			if ($extension == 'als') {
+				$return['alias'] = FlyVarsReplace(FlyStringReplaceConstants((string)$aliasXML->link));
+			}
+			return $return;
 		}
 	}
 }
@@ -499,7 +504,7 @@ function FlyGetApps() {
 }
 
 function FlyFileStringReplace($string) {
-	return preg_replace('/[^a-zA-Z0-9\s\_\-\.]*/im','',$string);
+	return str_replace(['\\','/','\'','"','?','+','=','&','|','*',':','<','>',',','%','`'],'',$string);
 }
 
 $FlyFileStringFunction = '
