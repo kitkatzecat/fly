@@ -54,6 +54,43 @@ if (typeof Fly.window == "undefined") {
 	Fly.window.buttons.show = function() {
 		window.top.document.getElementById(Fly.window.id).window.showButtons();
 	}
+
+	Fly.window.hide = function() {
+		window.top.document.getElementById(Fly.window.id).style.display = 'none';
+		window.top.document.getElementById(Fly.window.id).window.isBackground = true;
+
+		Fly.window.hide.handles.sizeSet = Fly.window.size.set;
+		Fly.window.hide.handles.sizeGet = Fly.window.size.get;
+		Fly.window.hide.handles.positionSet = Fly.window.position.set;
+		Fly.window.hide.handles.positionGet = Fly.window.position.get;
+
+		Fly.window.size.get = function() {
+			var height = window.top.innerHeight;
+			if (typeof window.top.ui.toolbar !== 'undefined') {
+				height -= window.top.ui.toolbar.offsetHeight;
+			}
+			return [window.top.innerWidth,height];
+		}
+		Fly.window.size.set = function() {
+			return Fly.window.size.get();
+		}
+		Fly.window.position.get = function() {
+			return [0,0];
+		}
+		Fly.window.position.set = function() {
+			return [0,0];
+		}
+	}
+	Fly.window.hide.handles = {};
+	Fly.window.unhide = function() {
+		window.top.document.getElementById(Fly.window.id).style.display = 'block';
+		window.top.document.getElementById(Fly.window.id).window.isBackground = false;
+
+		Fly.window.size.set = Fly.window.hide.handles.sizeSet;
+		Fly.window.size.get = Fly.window.hide.handles.sizeGet;
+		Fly.window.position.set = Fly.window.hide.handles.positionSet;
+		Fly.window.position.get = Fly.window.hide.handles.positionGet;
+	}
 	
 	Fly.window.border = function() {
 		return Fly.window.border.hide();
