@@ -1336,6 +1336,7 @@ task.background = function(id='public', attributes={title:'Untitled', name:'Unti
 	var frame = document.createElement('div');
 	frame.window = {};
 	frame.window.isLoaded = false;
+	frame.window.isBackground = true;
 	frame.window.composition = {};
 	
 	// Style window object
