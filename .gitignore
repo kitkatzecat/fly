@@ -20,7 +20,7 @@ system/apps/*
 !system/apps/SprocketComputers.Preview
 !system/apps/SprocketComputers.Recorder
 !system/apps/SprocketComputers.Timer
-!system/apps/SprocketComputers.Utilties
+!system/apps/SprocketComputers.Utilities
 !system/apps/SprocketComputers.zFileManager
 !system/apps/SprocketComputers.zOptions
 !system/apps/SprocketGames.TicTacToe
