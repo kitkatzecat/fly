@@ -14,7 +14,7 @@ date_default_timezone_set("America/Chicago");
 
 define("FLY_ROOT",$_SERVER['DOCUMENT_ROOT'].'/'); // interchangeable with FLY_PATH
 define("FLY_PATH",$_SERVER['DOCUMENT_ROOT'].'/'); // interchangeable with FLY_ROOT
-define("FLY_VERSION",(string)simpleXML_load_file(FLY_ROOT.'system/config.xml')->version->major);
+define("FLY_VERSION",$_FLY['VERSION']);
 if(isset($_SERVER['HTTPS'])) {
     if (!empty($_SERVER['HTTPS'])) {
         define("DOCUMENT_PROTOCOL","https");

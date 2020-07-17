@@ -118,16 +118,16 @@ function FlyCoreVars_System($scope=false,$_FLY=false) {
 		$_FLY['URL'] = $_FLY['PROTOCOL'].'://'.$_FLY['HOSTNAME'].'/';
 		$_FLY['PLATFORM'] = 'desktop';
 
-		$_FLY['VERSION'] = (string)$_FLY_CONFIG->version->major;
-		$_FLY['VERSION_MAJOR'] = (string)$_FLY_CONFIG->version->major;
-		$_FLY['VERSION_BUILD'] = (string)$_FLY_CONFIG->version->build;
-		$_FLY['VERSION_DATE'] = (string)$_FLY_CONFIG->version->bdate;
+		$_FLY['VERSION'] = file_get_contents($_FLY['PATH'].'system/reg/root/public/Version');
+		$_FLY['VERSION_MAJOR'] = $_FLY['VERSION'];
+		$_FLY['VERSION_BUILD'] = file_get_contents($_FLY['PATH'].'system/reg/root/public/VersionBuild');
+		$_FLY['VERSION_DATE'] = file_get_contents($_FLY['PATH'].'system/reg/root/public/VersionDate');
 		$_FLY['VERSION_IMAGE'] = array(
-			'URL' => str_replace('./',$_FLY['URL'],(string)$_FLY_CONFIG->version->image),
-			'PATH' => str_replace('./',$_FLY['PATH'],(string)$_FLY_CONFIG->version->image)
+			'URL' => str_replace('./',$_FLY['URL'],file_get_contents($_FLY['PATH'].'system/reg/root/public/VersionImage')),
+			'PATH' => str_replace('./',$_FLY['PATH'],file_get_contents($_FLY['PATH'].'system/reg/root/public/VersionImage'))
 		);
-		$_FLY['VERSION_NAME'] = (string)$_FLY_CONFIG->version->name;
-		$_FLY['VERSION_STRING'] = 'Fly '.(string)$_FLY_CONFIG->version->name;
+		$_FLY['VERSION_NAME'] = file_get_contents($_FLY['PATH'].'system/reg/root/public/VersionName');
+		$_FLY['VERSION_STRING'] = 'Fly '.$_FLY['VERSION_NAME'];
 
 		if ($scope != false) {
 			$_FLY['CURRENT_URL'] = str_replace($_FLY['PATH'],$_FLY['URL'],preg_replace('#/+#','/',$scope));

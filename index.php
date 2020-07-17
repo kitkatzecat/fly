@@ -56,6 +56,7 @@ function str_lreplace($search, $replace, $subject)
 
 // DEFINE PHP CONSTANTS
 include 'Fly.Core.php';
+include 'Fly.Registry.php';
 include 'Fly.Constants.php';
 
 // LOAD CONFIG
@@ -142,23 +143,28 @@ function toggleFullScreen() {
 <?php
 // BUILD
 date_default_timezone_set("America/Chicago");
-if (intval($config_system->version->bdate) >= intval(date("YmdHis", filemtime('index.php')))) {
-	$build = $config_system->version->build;
+$VersionBuild = FlyGlobalRegistryGet('VersionBuild','root.public');
+$VersionDate = FlyGlobalRegistryGet('VersionDate','root.public');
+$VersionMajor = FlyGlobalRegistryGet('Version','root.public');
+if (intval($VersionBuild) >= intval(date("YmdHis", filemtime('index.php')))) {
+	$build = $VersionBuild;
 } else {
-	$build_o = $config_system->version->build . '';
-	$build = ((float)$config_system->version->build) + 1;
-	$config_system->version->build = ((float)$config_system->version->build) + 1;
-	$config_system->version->bdate = date("YmdHis", filemtime('index.php'));
-	$config_system->asXML($_SERVER['DOCUMENT_ROOT'] . '/system/config.xml');
+	$build_o = $VersionBuild;
+	$build = ((float)$VersionBuild) + 1;
+	$VersionBuild = $build;
+	$VersionDate = date("YmdHis", filemtime('index.php'));
+	file_put_contents($_FLY['REGISTRY'].'root/public/VersionBuild',$VersionBuild);
+	file_put_contents($_FLY['REGISTRY'].'root/public/VersionDate',$VersionDate);
+
 	echo '<script>setTimeout(function() {shell.notification.create("Build Updated","The Fly build has been updated from ' . $build_o . ' to ' . $build . '.","' . FLY_ICONS_URL . 'fly.svg");},5000);</script>';
 }
 ?>
-<title><?php echo 'Fly v' . $config_system->version->major . ' b' . $build; ?></title>
+<title><?php echo 'Fly v' . $VersionMajor . ' b' . $build; ?></title>
 </head>
 <body onload="onload()">
 <?php
 if (in_array(FlyRegistryGet('DesktopShowVersion', 'SprocketComputers.Options'), ['on', 'true', 'yes'])) {
-	echo '<div class="FlyUiNoSelect FlyUiText" onclick="system.command(\'run:SprocketComputers.Utilities.AboutFly\')" style="position:fixed;bottom:12px;right:12px;width:240px;text-align:right;color:#FFFFFF;text-shadow: 0px 0px 6px #000000;z-index:1;">Fly&nbsp;' . $config_system->version->name . '<br>Version ' . $config_system->version->major . '&nbsp;Build&nbsp;' . $build . '<br>&copy;&nbsp;' . substr($config_system->version->bdate, 0, 4) . '&nbsp;Sprocket Computers</div>';
+	echo '<div class="FlyUiNoSelect FlyUiText" onclick="system.command(\'run:SprocketComputers.Utilities.AboutFly\')" style="position:fixed;bottom:12px;right:12px;width:240px;text-align:right;color:#FFFFFF;text-shadow: 0px 0px 6px #000000;z-index:1;">Fly&nbsp;' . FlyGlobalRegistryGet('VersionName','root.public') . '<br>Version ' . $VersionMajor . '&nbsp;Build&nbsp;' . $build . '<br>&copy;&nbsp;' . substr($VersionDate, 0, 4) . '&nbsp;Sprocket Computers</div>';
 }
 ?>
 <div id="SystemStartupCover" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;background-color:rgba(0,0,0,1);z-index:5000010;transition:background-color 1s linear;">
@@ -251,10 +257,10 @@ function onload() {
 	if (skiplogo) {
 		document.getElementById('fade').style.opacity = 0;
 		document.body.style.cursor = 'auto';
-		setTimeout(function() {lwindow = task.create('public', {title:'Welcome to Fly', name:'Welcome to Fly', x:((window.innerWidth/2)-200), y:((window.innerHeight/2)-175), width:400, height:350, location:'<?php echo $_FLY['URL']; ?>/system/components/login.php?', icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>/fly.svg'});}, 500);
+		setTimeout(openWindow, 500);
 		setTimeout(function() {document.getElementById('time').style.opacity = 1;}, 500);
 	} else {
-		setTimeout(function() {lwindow = task.create('public', {title:'Welcome to Fly', name:'Welcome to Fly', x:((window.innerWidth/2)-200), y:((window.innerHeight/2)-175), width:400, height:350, location:'<?php echo $_FLY['URL']; ?>/system/components/login.php?', icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>/fly.svg'});}, 4500);
+		setTimeout(openWindow, 4500);
 		setTimeout(function() {document.getElementById('time').style.opacity = 1;}, 4500);
 		setTimeout(function() {document.getElementById('LogonSound').play();}, 1500);
 		setTimeout(function() {document.getElementById('logo').style.opacity = 1;}, 500);
@@ -265,6 +271,19 @@ function onload() {
 	
 	updateTime();
 
+}
+function openWindow() {
+	<?php
+	if (FlyGlobalRegistryGet('FirstRun','root.public') == 'true') {
+		?>
+		lwindow = <?php echo FlyFileStringProcessor('SprocketComputers.Experiments.Oobe')['action']; ?>
+		<?php
+	} else {
+		?>
+		lwindow = task.create('public', {title:'Welcome to Fly', name:'Welcome to Fly', x:((window.innerWidth/2)-200), y:((window.innerHeight/2)-175), width:400, height:350, location:'<?php echo $_FLY['URL']; ?>/system/components/login.php?', icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>/fly.svg'});
+		<?php
+	}
+	?>
 }
 shell.dialog = function(msg,content) {
 	alert(msg+"\r\n"+content);

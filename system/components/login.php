@@ -19,11 +19,6 @@ include 'Fly.Window.php';
 include 'Fly.Controls.php';
 include 'Fly.Theme.php';
 
-if ((string)$_FLY_CONFIG->firstRun == 'true') {
-	echo '<script>window.location.href="oobe/?Fly_Id='.$_GET['Fly_Id'].'";</script>';
-	exit;
-}
-
 FlyTheme(['text','controls']);
 
 function getUsers() {
