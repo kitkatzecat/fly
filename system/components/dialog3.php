@@ -89,7 +89,7 @@ var Dialog = {
 		Fly.window.size.set(400,height);
 		var width = Fly.window.size.get()[0];
 
-		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).classList.contains('FlyWindowBackground')) {
+		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isBackground) {
 			height = window.top.document.getElementById(Fly.window.id).offsetHeight;
 			width = window.top.document.getElementById(Fly.window.id).offsetWidth;
 		}
@@ -134,10 +134,14 @@ Fly.window.onclose = function() {
 	Fly.window.close();
 }
 </script>
+<?php
+include 'Fly.CommonStyle.php';
+?>
 <style>
 body {
 	margin: 0px;
 	padding: 0px;
+	background: transparent;
 }
 h1,h2,h3,h4,h5,h6,p {
 	padding-left: 9%;
