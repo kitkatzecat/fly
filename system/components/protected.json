@@ -8,5 +8,6 @@
 	"./system/reg",
 	"./system/resources",
 	"./system/config.xml",
-	"./users"
+	"./users",
+	"./index.php"
 ]
