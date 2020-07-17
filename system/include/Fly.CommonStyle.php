@@ -26,6 +26,11 @@ div.FlyCSTitle.FlyCSSectionTitle {
 p.FlyCSDescription {
 	margin-top: -12px;
 }
+p.FlyCSDescriptionHint {
+	font-size: 0.8em;
+	opacity: 0.8;
+	margin-top: -12px;
+}
 p.FlyCSHint {
 	font-size: 0.8em;
 	opacity: 0.8;
