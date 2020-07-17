@@ -21,5 +21,7 @@
 	"Applications": "?applications",
 	"applications": "?applications",
 	"Apps": "?applications",
-	"apps": "?applications"
+	"apps": "?applications",
+	"Options": "?options",
+	"options": "?options"
 }

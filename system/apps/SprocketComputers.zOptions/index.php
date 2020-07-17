@@ -157,8 +157,8 @@ foreach ($index as $item) {
 <div class="FlyUiTextHover index-option"><img class="index-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>text.svg">Fonts</div>
 <div class="FlyUiTextHover index-option"><img class="index-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>drive.svg">Hardware</div> -->
 <hr style="margin-top:10px;margin-bottom:10px;">
-<div class="FlyUiTextHover index-option"><img class="index-icon" src="<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.FileManager/fileman.svg">File Manager</div>
-<div class="FlyUiTextHover index-option"><img class="index-icon" src="<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.Utilities/utilities.svg">Utilities</div>
+<div onclick="window.top.system.command('run:SprocketComputers.zFileManager,p=%3Foptions');" class="FlyUiTextHover index-option"><img class="index-icon" src="<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.FileManager/fileman.svg">File Manager</div>
+<div onclick="window.top.system.command('run:SprocketComputers.Utilities');" class="FlyUiTextHover index-option"><img class="index-icon" src="<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.Utilities/utilities.svg">Utilities</div>
 </div>
 
 <div id="main" class="FlyUiText FlyUiNoSelect"><iframe onload="frameload()" src="" frameborder="0" id="frame"></iframe></div>

@@ -70,7 +70,8 @@ function ToolbarInit() {
 		['Copy to',function(){},{disabled:true}],
 		['Move to',function(){},{disabled:true}],
 		[''],
-		['Keywords',function(){Nav('?keywords');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'}]
+		['Keywords',function(){Nav('?keywords');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'}],
+		['Options',function(){Nav('?options');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>options.svg'}]
 	]});
 	Menubar.add({text:'View',type:'dropdown',menu:[
 		['Home',function(){Nav('?home');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
