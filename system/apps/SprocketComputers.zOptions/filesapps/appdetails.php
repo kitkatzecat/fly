@@ -50,15 +50,21 @@ function formatFileSize($filesize) {
 	return $filesize;
 }
 
-$process = FlyFileStringProcessor($_GET['app']);
+if (substr_count($_GET['app'],'.') > 1) {
+	$app = explode('.',$_GET['app']);
+	$app = $app[0].'.'.$app[1];
+} else {
+	$app = $_GET['app'];
+}
+$process = FlyFileStringProcessor($app);
 if ($process !== false && $process['type'] == 'application') {
-$manifest = simpleXML_load_file($_FLY['RESOURCE']['PATH']['APPS'].$_GET['app'].'/ApplicationManifest.xml');
+$manifest = simpleXML_load_file($_FLY['RESOURCE']['PATH']['APPS'].$app.'/ApplicationManifest.xml');
 
 $masks = '';
 if (isset($manifest->masks)) {
 	$m = '';
 	foreach ($manifest->masks->children() as $mask) {
-		$mprocess = FlyFileStringProcessor($_GET['app'].'.'.$mask['id']);
+		$mprocess = FlyFileStringProcessor($app.'.'.$mask['id']);
 		if ($mprocess != false) {
 			if (in_array((string)$mask['hidden'],['true','on','yes'])) {
 				$hidden_style = 'opacity:0.8;';
@@ -83,7 +89,7 @@ if (isset($manifest->masks)) {
 }
 
 } else {
-	echo '<script>window.location.href = \'apps.php\';</script>';
+	echo '<script>console.log(JSON.parse(atob(\''.base64_encode(json_encode($_GET)).'\')));window.location.href = \'apps.php\';</script>';
 }
 ?>
 <link rel="stylesheet" href="../style.css">
