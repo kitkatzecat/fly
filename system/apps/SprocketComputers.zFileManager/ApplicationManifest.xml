@@ -114,9 +114,11 @@
 				<height>100</height>
 				<title>Create a Keyword</title>
 				<minimize>false</minimize>
+				<resize>false</resize>
+				<expand>false</expand>
 			</window>
 		</mask>
-		<mask id="ManageKeywords" hidden="true">
+		<!--<mask id="ManageKeywords" hidden="true">
 			<name>Manage Keywords</name>
 			<icon>%FLY.WORKING_URL%fileman.svg</icon>
 			<index>dialogs.php?dialog=keywords_manage</index>
@@ -129,7 +131,7 @@
 				<resize>false</resize>
 				<expand>false</expand>
 			</window>
-		</mask>
+		</mask>-->
 		<!--<mask id="FileChooser" hidden="true" extension="true">
 			<name>File Chooser</name>
 			<icon>%app_path%fileman.svg</icon>
