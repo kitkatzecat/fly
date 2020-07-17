@@ -90,7 +90,7 @@ function onload() {
 	document.body.appendChild(IndexToolbar);
 	
 	<?php
-	if (file_exists($_GET['page'])) {
+	if (file_exists(preg_replace('/\?.*/', '',$_GET['page']))) {
 		echo 'nav(\''.$_GET['page'].'\')';
 	} else {
 		echo 'nav(\'home.php\')';
