@@ -255,14 +255,14 @@ function ContextMenu(obj,e,ret=false) {
 	}
 	menu.push([
 		'Delete',
-		function() {window.top.system.command('run:SprocketComputers.FileManager.Delete,file='+encodeURIComponent(obj['file']));},
+		function() {window.top.system.command('run:SprocketComputers.zFileManager.Delete,file='+encodeURIComponent(obj['file']));},
 		{
 			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg',
 			disabled: fileoperations
 		}
 	],[
 		'Rename',
-		function() {window.top.system.command('run:SprocketComputers.FileManager.Rename,file='+encodeURIComponent(obj['file']));},
+		function() {window.top.system.command('run:SprocketComputers.zFileManager.Rename,file='+encodeURIComponent(obj['file']));},
 		{
 			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',
 			disabled: fileoperations
