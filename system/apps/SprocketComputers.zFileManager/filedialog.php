@@ -62,7 +62,7 @@ if ($process['type'] == 'application') {
 		title: '<?php echo $process['fname']; ?>',
 		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg',
 		message: 'Delete',
-		content: 'Do you want to delete this <?php echo $process['type']; ?>?<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><?php echo $extra; ?>',
+		content: 'Are you sure you want to permanently delete this <?php echo $process['type']; ?>?<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><?php echo $extra; ?>',
 		callback: function(r) {
 			if (r) {
 				Fly.command('delete:<?php echo $process['file']; ?>,true',function() {
