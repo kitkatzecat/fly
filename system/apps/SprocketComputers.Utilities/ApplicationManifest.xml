@@ -232,5 +232,11 @@
 			<index>%FLY.WORKING_URL%shelldialog.php</index>
 			<title>Shell Dialog</title>
 		</mask>
+		<mask id="XMLManifestNotif" hidden="true">
+			<name>XMLManifestNotif</name>
+			<icon>%FLY.RESOURCE.URL.ICONS%application.svg</icon>
+			<index>%FLY.WORKING_URL%xmlmanifestnotif.php</index>
+			<title>XMLManifestNotif</title>
+		</mask>
 	</masks>
 </manifest>

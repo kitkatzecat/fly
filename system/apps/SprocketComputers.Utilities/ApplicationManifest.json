@@ -1,0 +1,310 @@
+{
+    "id": "SprocketComputers.Utilities",
+    "name": "Utilities",
+    "publisher": "Sprocket Computers",
+    "version": "0.1",
+    "icon": "%FLY.WORKING_URL%utilities.svg",
+    "date": 1493614800,
+    "index": "index.php",
+    "description": "Utilities",
+    "window": {
+        "position": {
+            "x": "auto",
+            "y": "auto"
+        },
+        "size": {
+            "width": "240",
+            "height": "320"
+        },
+        "title": "Utilities"
+    },
+    "masks": {
+        "WinMgr": {
+            "name": "Window Manager",
+            "icon": "%FLY.WORKING_URL%winmgr.svg",
+            "index": "winmgr.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "240",
+                    "height": "320"
+                },
+                "title": "Window Manager",
+                "resize": true
+            }
+        },
+        "Run": {
+            "name": "Run",
+            "icon": "%FLY.WORKING_URL%run.svg",
+            "index": "run.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "240",
+                    "height": "120"
+                },
+                "title": "Run",
+                "resize": true
+            }
+        },
+        "CommandPrompt": {
+            "name": "Command Prompt",
+            "icon": "%FLY.WORKING_URL%command.svg",
+            "index": "command.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "640",
+                    "height": "320"
+                },
+                "title": "Command Prompt",
+                "expand": true,
+                "resize": true
+            }
+        },
+        "Executor": {
+            "name": "Executor",
+            "icon": "%FLY.WORKING_URL%executor.svg",
+            "index": "executor.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "50%",
+                    "height": "50%"
+                },
+                "title": "Executor - No file",
+                "expand": true,
+                "resize": true
+            }
+        },
+        "RegEdit": {
+            "name": "Registry Editor",
+            "icon": "%FLY.WORKING_URL%regedit.svg",
+            "index": "regedit.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "300",
+                    "height": "60%"
+                },
+                "title": "Registry Editor",
+                "expand": true,
+                "resize": true
+            }
+        },
+        "FileDownloader": {
+            "name": "File Downloader",
+            "icon": "%FLY.WORKING_URL%downloader.svg",
+            "index": "downloader.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "240",
+                    "height": "120"
+                },
+                "title": "File Downloader"
+            }
+        },
+        "SystemVariables": {
+            "name": "System Variables",
+            "icon": "%FLY.RESOURCE.URL.ICONS%index.svg",
+            "index": "vars.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "720",
+                    "height": "480"
+                },
+                "title": "System Variables",
+                "expand": true,
+                "resize": true
+            }
+        },
+        "ThemeLoader": {
+            "name": "Theme Loader",
+            "icon": "%FLY.RESOURCE.URL.ICONS%personalization.svg",
+            "index": "themeloader.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "500",
+                    "height": "212"
+                },
+                "title": "Theme Loader"
+            }
+        },
+        "AboutFly": {
+            "name": "About Fly",
+            "icon": "%FLY.RESOURCE.URL.ICONS%fly.svg",
+            "index": "aboutfly.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "400",
+                    "height": "350"
+                },
+                "title": "About Fly"
+            }
+        },
+        "PackageManager": {
+            "name": "Package Manager",
+            "icon": "%FLY.RESOURCE.URL.ICONS%package.svg",
+            "index": "pkgmgr.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "320",
+                    "height": "320"
+                },
+                "title": "Package Manager",
+                "expand": true,
+                "resize": true
+            }
+        },
+        "OpenWith": {
+            "name": "Open With",
+            "icon": "%FLY.RESOURCE.URL.ICONS%run.svg",
+            "index": "openwith.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "320",
+                    "height": "480"
+                },
+                "title": "Open With"
+            }
+        },
+        "PinJump": {
+            "name": "Pin to Jump",
+            "icon": "%FLY.RESOURCE.URL.ICONS%fly.svg",
+            "index": "pinjump.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "32",
+                    "y": "32"
+                },
+                "size": {
+                    "width": "500",
+                    "height": "100"
+                },
+                "title": "Pin to Jump",
+                "minimize": true
+            }
+        },
+        "Applications": {
+            "name": "Applications",
+            "icon": "%FLY.RESOURCE.URL.ICONS%application.svg",
+            "index": "applications.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "640",
+                    "height": "480"
+                },
+                "title": "Applications",
+                "expand": true,
+                "resize": true
+            }
+        },
+        "Screenshot": {
+            "name": "Screenshot",
+            "icon": "%FLY.WORKING_URL%run.svg",
+            "index": "screenshot.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "640",
+                    "height": "480"
+                },
+                "title": "Screenshot"
+            }
+        },
+        "PowerOptions": {
+            "name": "Power Options",
+            "icon": "%FLY.RESOURCE.URL.ICONS%power.svg",
+            "index": "power.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "32",
+                    "y": "32"
+                },
+                "size": {
+                    "width": "500",
+                    "height": "220"
+                },
+                "title": "Power Options",
+                "minimize": true
+            }
+        },
+        "ShellDialog": {
+            "name": "Message",
+            "icon": "%FLY.RESOURCE.URL.ICONS%application.svg",
+            "index": "%FLY.WORKING_URL%shelldialog.php",
+            "hidden": true,
+            "window": false,
+            "title": "Shell Dialog"
+        },
+        "XMLManifestNotif": {
+            "name": "XMLManifestNotif",
+            "icon": "%FLY.RESOURCE.URL.ICONS%application.svg",
+            "index": "%FLY.WORKING_URL%xmlmanifestnotif.php",
+            "hidden": true,
+            "window": false,
+            "title": "XMLManifestNotif"
+        }
+    }
+}

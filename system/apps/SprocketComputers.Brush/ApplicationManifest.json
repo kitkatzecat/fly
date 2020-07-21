@@ -8,15 +8,14 @@
 	"index": "index.php",
 	"description": "Create digital pictures with a set of artistic tools and save them to your computer.",
 	"types": {
-		".png": {
-			"action": "file=%FLY.CURRENT_PATH%",
-			"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
-			"description": "PNG Image"
+		"png": {
+			"action": "file=%FLY.CURRENT_PATH%"
+		},
+		"image/": {
+			"action": "file=%FLY.CURRENT_PATH%"
 		}
 	},
-	"arguments": {
-		"file": false
-	},
+	"arguments": ["file"],
 	"window": {
 		"title": "Brush",
 		"expand": true,
@@ -28,8 +27,8 @@
 		"size": {
 			"width": "60%",
 			"height": "60%",
-			"minwidth": "720",
-			"minheight": "480"
+			"minwidth": 720,
+			"minheight": 480
 		}
 	}
 }
