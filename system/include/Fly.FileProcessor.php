@@ -138,7 +138,7 @@ function FlyFileStringProcessor($item) {
 				if (isset($manifestJSON['id'])) {
 					$id = $manifestJSON['id'];
 				} else {
-					$id = $manifest['id'].'.'.[explode('.',$filePath)[2]];
+					$id = $manifest['id'].'.'.explode('.',$filePath)[2];
 				}
 
 				$location = FlyVarsReplace($index.$options,true,$FLY);
@@ -185,7 +185,7 @@ function FlyFileStringProcessor($item) {
 						'background' => false
 					];
 					$return['window'] = $window;
-					$return['action'] = 'task.create(\''.$return['id'].'\','.json_encode($window).')';
+					$return['action'] = 'task.create(\''.$id.'\','.json_encode($window).')';
 				} else {
 					$window = [
 						'title' => $manifestJSON['title'],
