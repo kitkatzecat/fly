@@ -9,6 +9,11 @@ if (in_array($_GET['list'],["true","on","yes"])) {
 body {
 	margin: 3px;
 }
+.item {
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
 </style>
 <script>
 function toggle() {
@@ -53,9 +58,9 @@ foreach ($pinned as $item) {
 		$process = FlyFileStringProcessor(FlyVarsReplace(FlyStringReplaceConstants($item)));
 		$rand = rand();
 		if ($process) {
-			$list .= '<div id="'.$rand.'" oncontextmenu="Fly.actionmenu(event,[[\'<b>Open</b>\',function() {document.getElementById(\''.$rand.'\').onclick();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'run.svg\'}],[\'Unpin from Jump\',function() {window.top.ui.jump.toggle();window.top.system.command(\'run:SprocketComputers.Utilities.PinJump,noreplace,file='.$item.'\');},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pin-no.svg\'}],[\'\'],[\'Applications Options\',function(){window.top.system.command(\'run:SprocketComputers.Options,page=filesapps,action=installed\');window.top.ui.jump.toggle();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg\'}]]);return false;" onclick="window.top.ui.jump.toggle();window.top.system.eval64(\''.base64_encode('system.command(\'run:'.$item.'\')').'\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$process["icon"].'">'.htmlentities($process["fname"]).'</div>';
+			$list .= '<div id="'.$rand.'" oncontextmenu="Fly.actionmenu(event,[[\'<b>Open</b>\',function() {document.getElementById(\''.$rand.'\').onclick();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'run.svg\'}],[\'Unpin from Jump\',function() {window.top.ui.jump.toggle();window.top.system.command(\'run:SprocketComputers.Utilities.PinJump,noreplace,file='.$item.'\');},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pin-no.svg\'}],[\'\'],[\'Applications Options\',function(){window.top.system.command(\'run:SprocketComputers.Options,page=filesapps,action=installed\');window.top.ui.jump.toggle();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg\'}]]);return false;" onclick="window.top.ui.jump.toggle();window.top.system.eval64(\''.base64_encode('system.command(\'run:'.$item.'\')').'\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect item"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$process["icon"].'">'.htmlentities($process["fname"]).'</div>';
 		} else {
-			$list .= '<div id="'.$rand.'" oncontextmenu="Fly.actionmenu(event,[[\'<b>Open</b>\',function() {document.getElementById(\''.$rand.'\').onclick();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'run.svg\'}],[\'Unpin from Jump\',function() {window.top.ui.jump.toggle();window.top.system.command(\'run:SprocketComputers.Utilities.PinJump,noreplace,file='.$item.'\');},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pin-no.svg\'}],[\'\'],[\'Applications Options\',function(){window.top.system.command(\'run:SprocketComputers.Options,page=filesapps,action=installed\');window.top.ui.jump.toggle();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg\'}]]);return false;" onclick="window.top.ui.jump.toggle();window.top.system.eval64(\''.base64_encode('system.command(\'run:'.$item.'\')').'\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/unknown.svg">'.htmlentities(basename($item)).'</div>';
+			$list .= '<div id="'.$rand.'" oncontextmenu="Fly.actionmenu(event,[[\'<b>Open</b>\',function() {document.getElementById(\''.$rand.'\').onclick();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'run.svg\'}],[\'Unpin from Jump\',function() {window.top.ui.jump.toggle();window.top.system.command(\'run:SprocketComputers.Utilities.PinJump,noreplace,file='.$item.'\');},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'pin-no.svg\'}],[\'\'],[\'Applications Options\',function(){window.top.system.command(\'run:SprocketComputers.Options,page=filesapps,action=installed\');window.top.ui.jump.toggle();},{icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg\'}]]);return false;" onclick="window.top.ui.jump.toggle();window.top.system.eval64(\''.base64_encode('system.command(\'run:'.$item.'\')').'\');" class="FlyUiMenuItem FlyUiText FlyUiNoSelect item"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'type/unknown.svg">'.htmlentities(basename($item)).'</div>';
 		}
 	}
 }
