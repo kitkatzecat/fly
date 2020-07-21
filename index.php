@@ -146,7 +146,7 @@ date_default_timezone_set("America/Chicago");
 $VersionBuild = FlyGlobalRegistryGet('VersionBuild','root.public');
 $VersionDate = FlyGlobalRegistryGet('VersionDate','root.public');
 $VersionMajor = FlyGlobalRegistryGet('Version','root.public');
-if (intval($VersionBuild) >= intval(date("YmdHis", filemtime('index.php')))) {
+if (intval($VersionDate) >= intval(date("YmdHis", filemtime('index.php')))) {
 	$build = $VersionBuild;
 } else {
 	$build_o = $VersionBuild;
