@@ -107,11 +107,98 @@ function FlyFileStringProcessor($item) {
 		} else {
 			$appCheck = false;
 		}
-		if (file_exists($_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck) && $appCheck) { // APPLICATION ------------------------------------------------
+		if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].$appCheck) && $appCheck) { // APPLICATION ------------------------------------------------
 			$type = 'application';
-			$icon = $protocol.$_SERVER['HTTP_HOST'].'/system/resources/icon/application.svg';
+			$icon = $_FLY['RESOURCE']['URL']['ICONS'].'application.svg';
 			
-			if (file_exists($_SERVER['DOCUMENT_ROOT'].'/system/apps/'.$appCheck.'/ApplicationManifest.xml')) {
+			if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.json')) {
+				$manifestJSON = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.json'),true);
+				$manifest = $manifestJSON;
+				if (!empty(explode('.',$filePath)[2])) {
+					if (isset($manifestJSON['masks'][explode('.',$filePath)[2]])) {
+						$manifestJSON = $manifestJSON['masks'][explode('.',$filePath)[2]];
+					} else {
+						return false;
+					}
+				}
+				$FLY = FlyCoreVars($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.json');
+
+				if (strpos($manifestJSON['index'],'?') !== false) {
+					$indexOptions = explode('?',$manifestJSON['index'])[1];
+					$index = explode('?',$manifestJSON['index'])[0];
+					if ($options == '') {
+						$options = '?'.$indexOptions;
+					} else {
+						$options .= '&'.$indexOptions;
+					}
+				} else {
+					$index = $manifestJSON['index'];
+				}
+
+				if (isset($manifestJSON['id'])) {
+					$id = $manifestJSON['id'];
+				} else {
+					$id = $manifest['id'].'.'.[explode('.',$filePath)[2]];
+				}
+
+				$location = FlyVarsReplace($index.$options,true,$FLY);
+				if (substr($location,0,4) !== 'http') {
+					$location = $FLY['WORKING_URL'].$location;
+				}
+
+				$return = [
+					'file' => $id,
+					'ffile' => $id,
+					'type' => $type,
+					'name' => $manifestJSON['name'],
+					'bname' => $manifestJSON['name'],
+					'fname' => $manifestJSON['name'],
+					'publisher' => $manifest['publisher'],
+					'version' => $manifest['version'],
+					'icon' => FlyVarsReplace($manifestJSON['icon'],true,$FLY),
+					'date' => $manifest['date'],
+					'location' => $_FLY['RESOURCE']['PATH']['APPS'].$appCheck,
+					'manifest' => $_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.json',
+					'description' => $manifest['description']
+				];
+
+				if (isset($manifestJSON['window']) && !!$manifestJSON['window']) {
+					$window = [
+						'title' => $manifestJSON['window']['title'],
+						'name' => $return['name'],
+						'x' => $manifestJSON['window']['position']['x'], 
+						'y' => $manifestJSON['window']['position']['y'],
+						'width' => $manifestJSON['window']['size']['width'],
+						'height' => $manifestJSON['window']['size']['height'],
+						'minwidth' => (isset($manifestJSON['window']['size']['minwidth']) ? $manifestJSON['window']['size']['minwidth'] : false),
+						'minheight' => (isset($manifestJSON['window']['size']['minheight']) ? $manifestJSON['window']['size']['minheight'] : false),
+						'maxwidth' => (isset($manifestJSON['window']['size']['maxwidth']) ? $manifestJSON['window']['size']['maxwidth'] : false),
+						'maxheight' => (isset($manifestJSON['window']['size']['maxheight']) ? $manifestJSON['window']['size']['maxheight'] : false),
+						'maxinitwidth' => (isset($manifestJSON['window']['size']['maxinitwidth']) ? $manifestJSON['window']['size']['maxinitwidth'] : false),
+						'maxinitheight' => (isset($manifestJSON['window']['size']['maxinitheight']) ? $manifestJSON['window']['size']['maxinitheight'] : false),
+						'location' => $location,
+						'icon' => $return['icon'],
+						'expand' => (isset($manifestJSON['window']['expand']) ? $manifestJSON['window']['expand'] : false),
+						'minimize' => (isset($manifestJSON['window']['minimize']) ? $manifestJSON['window']['minimize'] : true),
+						'close' => (isset($manifestJSON['window']['close']) ? $manifestJSON['window']['close'] : true),
+						'resize' => (isset($manifestJSON['window']['resize']) ? $manifestJSON['window']['resize'] : false),
+						'background' => false
+					];
+					$return['window'] = $window;
+					$return['action'] = 'task.create(\''.$return['id'].'\','.json_encode($window).')';
+				} else {
+					$window = [
+						'title' => $manifestJSON['title'],
+						'name' => $return['name'],
+						'location' => $location,
+						'icon' => $return['icon'],
+						'background' => true
+					];
+					$return['action'] = 'task.background(\''.$return['id'].'\', '.json_encode($window).')';
+				}
+				return $return;
+
+			} else if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.xml')) {
 				$manifestXML = simpleXML_load_file($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.xml');
 				if (!empty(explode('.',$filePath)[2])) {
 					if (isset($manifestXML->masks->xpath("//mask[@id='".explode('.',$filePath)[2]."']")[0])) {
@@ -238,7 +325,7 @@ function FlyFileStringProcessor($item) {
 						'resize' => $resize,
 						'background' => false
 					];
-					$action = 'task.create(\''.$id.'\', '.json_encode($window).')';
+					$action = 'task.create(\''.$id.'\', '.json_encode($window).');system.command(\'run:SprocketComputers.Utilities.XMLManifestNotif,id='.$id.'\');';
 				} else {
 					$window = [
 						'title' => (string)$manifestXML->title,
@@ -247,7 +334,7 @@ function FlyFileStringProcessor($item) {
 						'icon' => $icon,
 						'background' => true
 					];
-					$action = 'task.background(\''.$id.'\', '.json_encode($window).')';
+					$action = 'task.background(\''.$id.'\', '.json_encode($window).');system.command(\'run:SprocketComputers.Utilities.XMLManifestNotif,id='.$id.'\');';
 				}
 				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"bname"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"window"=>$window,"location"=>$location,"manifest"=>$manifest];
 			} else {
