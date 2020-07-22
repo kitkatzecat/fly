@@ -25,7 +25,16 @@ if ($_GET['file'] == '') {
 		goto noexist;
 	}
 
+	if ($process['extension'] == 'als') {
+		$icon = '<div style="display:inline-block;width:36px;height:36px;vertical-align:middle;margin-right:8px;position:relative;background-size:100% 100%;background-image:url(\\\''.$process['icon'].'\\\');"><img style="position:absolute;bottom:0;left:0;width:14px;height:14px;" src="'.$_FLY['APP']['URL'].'alias.svg"></div>';
+	} else {
+		$icon = '<img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$process['icon'].'">';
+	}
+	$item = '<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;">'.$icon.$process['fname'].'</div>';
+	
 	if (in_array($process['ffile'],$protected)) {
+		$icon = '<div style="display:inline-block;width:36px;height:36px;vertical-align:middle;margin-right:8px;position:relative;background-size:100% 100%;background-image:url(\\\''.$process['icon'].'\\\');"><img style="position:absolute;bottom:0;left:0;width:14px;height:14px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'lock.svg"></div>';
+		$item = '<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;">'.$icon.$process['fname'].'</div>';
 		$extra .= '<p style="margin-top:4px;color:#f00;" class="FlyCSDescriptionHint">This item is a system '.$process['type'].'. Modifying this '.$process['type'].' can harm your computer.</p>';
 		if ($sysfiles !== 'true') {
 			goto nosysfiles;
@@ -62,7 +71,7 @@ if ($process['type'] == 'application') {
 		title: '<?php echo $process['fname']; ?>',
 		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>trash.svg',
 		message: 'Delete',
-		content: 'Are you sure you want to permanently delete this <?php echo $process['type']; ?>?<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><?php echo $extra; ?>',
+		content: 'Are you sure you want to permanently delete this <?php echo $process['type']; ?>?<?php echo $item.$extra; ?>',
 		callback: function(r) {
 			if (r) {
 				Fly.command('delete:<?php echo $process['file']; ?>,true',function() {
@@ -97,7 +106,7 @@ if ($process['type'] == 'application') {
 		title: '<?php echo $process['fname']; ?>',
 		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',
 		message: 'Rename',
-		content: 'Enter a new name for this <?php echo $process['type']; ?>.<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><?php echo $extra; ?>',
+		content: 'Enter a new name for this <?php echo $process['type']; ?>.<?php echo $item.$extra; ?>',
 		sound: "question",
 		input: {
 			type: "text",
@@ -166,7 +175,7 @@ nosysfiles:
 		title: 'System Item',
 		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg',
 		message: 'Item is a system <?php echo $process['type']; ?>',
-		content: 'The specified item is a system <?php echo $process['type']; ?>. Modifying these items is disabled to protect your computer.<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="<?php echo $process['icon']; ?>"><?php echo $process['fname']; ?></div><p class="FlyCSDescriptionHint" style="margin-top:4px">To change this, turn on Show System Files in File Manager.</p>',
+		content: 'The specified item is a system <?php echo $process['type']; ?>. Modifying these items is disabled to protect your computer.<?php echo $item; ?><p class="FlyCSDescriptionHint" style="margin-top:4px">To change this, turn on Show System Files in File Manager.</p>',
 		callback: function() {
 			Fly.window.close();
 		}
