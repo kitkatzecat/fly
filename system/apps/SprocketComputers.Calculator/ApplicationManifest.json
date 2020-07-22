@@ -1,0 +1,21 @@
+{
+    "id": "SprocketComputers.Calculator",
+    "name": "Calculator",
+    "publisher": "Sprocket Computers",
+    "version": "1.0",
+    "icon": "%FLY.WORKING_URL%calculator.svg",
+    "date": 1493614800,
+    "index": "index.php",
+    "description": "Perform mathematical calculations.",
+    "window": {
+        "position": {
+            "x": "auto",
+            "y": "auto"
+        },
+        "size": {
+            "width": "240",
+            "height": "316"
+        },
+        "title": "Calculator"
+    }
+}

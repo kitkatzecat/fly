@@ -1,0 +1,25 @@
+{
+    "id": "SprocketComputers.Memo",
+    "name": "Memo",
+    "publisher": "Sprocket Computers",
+    "version": "0.1",
+    "icon": "%FLY.WORKING_URL%memo.svg",
+    "date": 1493614800,
+    "index": "index.php",
+    "description": "View, edit, and save plain text files on your computer.",
+    "window": {
+        "position": {
+            "x": "auto",
+            "y": "auto"
+        },
+        "size": {
+            "width": "60%",
+            "minwidth": "400",
+            "height": "60%",
+            "minheight": "160"
+        },
+        "title": "Memo",
+        "expand": true,
+        "resize": true
+    }
+}
