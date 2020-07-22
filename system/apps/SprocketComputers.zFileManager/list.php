@@ -199,10 +199,10 @@ function Click(obj) {
 	}
 }
 
+var Protected = <?php echo json_encode(json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['COMPONENTS'].'protected.json'),true)); ?>;
+
 function ContextMenu(obj,e,ret=false) {
 	var menu = [];
-
-	var protected = <?php echo json_encode(json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['COMPONENTS'].'protected.json'),true)); ?>;
 
 	// Opening/running
 	if (obj['file'] != Folder['file']) {
@@ -250,7 +250,7 @@ function ContextMenu(obj,e,ret=false) {
 
 	// File/dir operations
 	var fileoperations = false;
-	if (protected.indexOf(obj['ffile']) != -1) {
+	if (Protected.indexOf(obj['ffile']) != -1) {
 		fileoperations = true;
 	}
 	menu.push([
@@ -382,6 +382,8 @@ function Icon(file) {
 		icon.style.backgroundImage = 'url(\''+file['URL']+'\')';
 	} else if (file['extension'] == 'als') {
 		icon.innerHTML = '<img style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['WORKING_URL']; ?>alias.svg">';
+	} else if (Protected.indexOf(file['ffile']) != -1) {
+		icon.innerHTML = '<img style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg">';
 	} else {
 		icon.innerHTML = '<img style="width:100%;height:100%;" src="'+file['icon']+'">';
 	}
