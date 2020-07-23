@@ -46,11 +46,16 @@ var Dialog = {
 			}
 
 			b.onclick = function() {
+				if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.hasOwnProperty('validate') && element.hasOwnProperty('validate') && element.validate == true) {
+					if (!Dialog.validateInput()) {
+						return false;
+					}
+				}
 				var v = document.getElementById('input').value;
-				Fly.window.onclose();
 				try {
 					element.onclick(v);
 				} catch(e) {console.log(e)}
+				Fly.window.onclose();
 			};
 			if (element.default) {
 				Dialog.default = b.onclick;
@@ -75,6 +80,22 @@ var Dialog = {
 				input.type = 'text';
 			}
 
+			if (Dialog.attributes.input.hasOwnProperty('min')) {
+				input.min = Dialog.attributes.input['min'];
+			}
+			if (Dialog.attributes.input.hasOwnProperty('max')) {
+				input.max = Dialog.attributes.input['max'];
+			}
+
+			if (Dialog.attributes.input.hasOwnProperty('validate')) {
+				var valmsg = document.querySelector('p#validateMessage');
+				if (Dialog.attributes.input.hasOwnProperty('validateMessage')) {
+					valmsg.innerHTML = Dialog.attributes.input['validateMessage'];
+				} else {
+					valmsg.innerHTML = 'Invalid input';
+				}
+			}
+
 			if (Dialog.attributes.input.hasOwnProperty('placeholder')) {
 				input.placeholder = Dialog.attributes.input.placeholder;
 			}
@@ -85,18 +106,10 @@ var Dialog = {
 			input.focus();
 		}
 
-		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
-		Fly.window.size.set(400,height);
-		var width = Fly.window.size.get()[0];
+		Dialog.size();
+		Dialog.position();
 
-		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isBackground) {
-			height = window.top.document.getElementById(Fly.window.id).offsetHeight;
-			width = window.top.document.getElementById(Fly.window.id).offsetWidth;
-		}
-
-		Fly.window.position.set((Dialog.opener.Fly.window.position.get()[0]+((Dialog.opener.Fly.window.size.get()[0]/2)-(width/2))),(Dialog.opener.Fly.window.position.get()[1]+((Dialog.opener.Fly.window.size.get()[1]/2)-(height/2))))
-
-		document.addEventListener("keydown", function(e) {
+		document.addEventListener("keypress", function(e) {
 			if (e.keyCode == 13) {
 				e.preventDefault();
 				try {
@@ -106,9 +119,10 @@ var Dialog = {
 				}
 			}
 		}, false);
-		document.getElementById('input').addEventListener("keydown", function(e) {
+		document.getElementById('input').addEventListener("keypress", function(e) {
 			if (e.keyCode == 13) {
 				e.preventDefault();
+				e.stopPropagation();
 				try {
 					Dialog.default();
 				} catch(e) {
@@ -120,6 +134,50 @@ var Dialog = {
 		try {
 			window.top.shell.sound.system(Dialog.attributes.sound);
 		} catch(e) {}
+	},
+	size: function() {
+		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
+		Fly.window.size.set(400,height);
+		var width = Fly.window.size.get()[0];
+
+		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isBackground) {
+			height = window.top.document.getElementById(Fly.window.id).offsetHeight;
+			width = window.top.document.getElementById(Fly.window.id).offsetWidth;
+		}
+	},
+	position: function() {
+		var width = Fly.window.size.get()[0];
+		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
+		Fly.window.position.set((Dialog.opener.Fly.window.position.get()[0]+((Dialog.opener.Fly.window.size.get()[0]/2)-(width/2))),(Dialog.opener.Fly.window.position.get()[1]+((Dialog.opener.Fly.window.size.get()[1]/2)-(height/2))));
+	},
+	positionRelative: function(oldheight) {
+		var position = Fly.window.position.get();
+		var height = window.top.document.getElementById(Fly.window.id).offsetHeight;
+		Fly.window.position.set(position[0],Math.max((position[1]-((height-oldheight)/2)),0))
+	},
+	validateInput: function() {
+		var input = document.querySelector('input#input');
+		var rx = new RegExp(Dialog.attributes.input.validate);
+		var valmsg = document.querySelector('p#validateMessage');
+		
+		var test = rx.test(input.value);
+
+		if (test) {
+			return true;
+		} else {
+			if (valmsg.style.display != 'block') {
+				valmsg.style.display = 'block';
+				var oldheight = window.top.document.getElementById(Fly.window.id).offsetHeight;
+				Dialog.size();
+				Dialog.positionRelative(oldheight);
+			} else {
+				Fly.window.flash();
+			}
+			try {
+				window.top.shell.sound.system('alert');
+			} catch(e) {}
+			return false;
+		}
 	}
 };
 Fly.window.ready = function() {
@@ -223,6 +281,12 @@ input#input {
 	position: absolute;
 	bottom: 9px;
 }
+#validateMessage {
+	color: #f00;
+	display: none;
+	margin-top: 6px;
+	margin-bottom: -14px;
+}
 </style>
 </head>
 <body>
@@ -231,7 +295,9 @@ input#input {
 
 <div class="title FlyUiNoSelect"><img id="icon" class="title-icon" src=""><span id="title"></span></div>
 <div class="description FlyUiNoSelect"><p id="content"></p></div>
-<div class="input"><input autocomplete="off" type="text" id="input"></div>
+<div class="input"><input autocomplete="off" type="text" id="input">
+<p id="validateMessage" class="FlyCSDescriptionHint"></p></div>
+
 
 </div>
 
