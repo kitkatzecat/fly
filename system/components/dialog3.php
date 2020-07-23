@@ -122,7 +122,6 @@ var Dialog = {
 			input.focus();
 		}
 
-		Dialog.size();
 		Dialog.position();
 
 		document.addEventListener("keypress", function(e) {
@@ -151,19 +150,15 @@ var Dialog = {
 			window.top.shell.sound.system(Dialog.attributes.sound);
 		} catch(e) {}
 	},
-	size: function() {
+	position: function() {
 		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.size.set(400,height);
 		var width = Fly.window.size.get()[0];
 
-		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isBackground) {
+		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isBackground || window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isExpand) {
 			height = window.top.document.getElementById(Fly.window.id).offsetHeight;
 			width = window.top.document.getElementById(Fly.window.id).offsetWidth;
 		}
-	},
-	position: function() {
-		var width = Fly.window.size.get()[0];
-		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.position.set((Dialog.opener.Fly.window.position.get()[0]+((Dialog.opener.Fly.window.size.get()[0]/2)-(width/2))),(Dialog.opener.Fly.window.position.get()[1]+((Dialog.opener.Fly.window.size.get()[1]/2)-(height/2))));
 	},
 	positionRelative: function(oldheight) {
