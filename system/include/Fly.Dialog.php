@@ -117,8 +117,38 @@ Fly.dialog = {
 			]
 		});
 	},
+	select: function(properties={}) {
+		properties = Object.assign({title:'Select',message:'Select',content:'Select an option.',options:[],icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
+
+		Fly.dialog.custom({
+			modal: true,
+			title: properties.title,
+			message: properties.message,
+			content: properties.content,
+			sound: "question",
+			input: {
+				type: "select",
+				options: properties.options
+			},
+			icon: properties.icon,
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
+					default: true,
+					onclick: function(i) {
+						properties.callback(i);
+					}
+				},
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"
+				}
+			]
+		});
+	},
 	input: function(properties={}) {
-		properties = Object.assign({title:'Input',message:'Input',content:'Input some text.',placeholder:'',value:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
+		properties = Object.assign({title:'Input',message:'Input',content:'Input some text.',validate:false,validateMessage:'',placeholder:'',value:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
 
 		Fly.dialog.custom({
 			modal: true,
@@ -129,7 +159,9 @@ Fly.dialog = {
 			input: {
 				type: "text",
 				placeholder: properties.placeholder,
-				value: properties.value
+				value: properties.value,
+				validate: properties.validate,
+				validateMessage: properties.validateMessage
 			},
 			icon: properties.icon,
 			buttons: [
