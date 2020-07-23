@@ -46,7 +46,7 @@ var Dialog = {
 			}
 
 			b.onclick = function() {
-				if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.hasOwnProperty('validate') && element.hasOwnProperty('validate') && element.validate == true) {
+				if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.hasOwnProperty('validate') && !!Dialog.attributes.input.validate && element.hasOwnProperty('validate') && element.validate == true) {
 					if (!Dialog.validateInput()) {
 						return false;
 					}
@@ -103,7 +103,7 @@ var Dialog = {
 				input.max = Dialog.attributes.input['max'];
 			}
 
-			if (Dialog.attributes.input.hasOwnProperty('validate') && Dialog.attributes.input.type != 'select') {
+			if (Dialog.attributes.input.hasOwnProperty('validate') && !!Dialog.attributes.input.validate && Dialog.attributes.input.type != 'select') {
 				var valmsg = document.querySelector('p#validateMessage');
 				if (Dialog.attributes.input.hasOwnProperty('validateMessage')) {
 					valmsg.innerHTML = Dialog.attributes.input['validateMessage'];
