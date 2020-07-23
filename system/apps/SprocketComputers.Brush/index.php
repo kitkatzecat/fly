@@ -210,7 +210,7 @@ function OnLoad() {
 		['Zoom Out',ZoomOut,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-minus.svg'}],
 		['Actual Size',ZoomActual],
 		[''],
-		['Zoom...',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg'}],
+		['Zoom...',ZoomChoose,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg'}],
 		[''],
 		['Window',[
 			['Fit to canvas',WindowFitCanvas],
@@ -916,32 +916,45 @@ function SetOpaque() {
 
 
 var Zoom = 100;
+var ZoomOptions = [25,50,75,100,125,150,200,250,300,400,500,750,1000];
+function ZoomChoose() {
+	var options = [];
+	ZoomOptions.forEach(function(z,i) {
+		options.push({
+			text: z+'%',
+			value: z,
+			selected: (ZoomOptions.indexOf(Zoom) == i)
+		});
+	});
+	Fly.dialog.select({
+		title: 'Zoom',
+		message: 'Zoom',
+		content: 'Choose a zoom level.',
+		icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg',
+		options: options,
+		callback: function(z) {
+			Zoom = parseInt(z);
+			ZoomRender();
+		}
+	});
+}
 function ZoomIn() {
-	if (Zoom < 300) {
-		Zoom += 25;
-	} else if (Zoom < 1000) {
-		Zoom += 100;
-	} else {
-		Zoom += 250;
+	if (ZoomOptions.indexOf(Zoom) != ZoomOptions.length-1) {
+		Zoom = ZoomOptions[ZoomOptions.indexOf(Zoom)+1];
 	}
-	canvas.style.transform = 'scale('+(Zoom/100)+')';
-	ovrlay.style.transform = 'scale('+(Zoom/100)+')';
+	ZoomRender();
 }
 function ZoomOut() {
-	if (Zoom > 25) {
-		if (Zoom > 1000) {
-			Zoom -= 250;
-		} else if (Zoom > 1000) {
-			Zoom -= 100;
-		} else {
-			Zoom -= 25;
-		}
+	if (ZoomOptions.indexOf(Zoom) != 0) {
+		Zoom = ZoomOptions[ZoomOptions.indexOf(Zoom)-1];
 	}
-	canvas.style.transform = 'scale('+(Zoom/100)+')';
-	ovrlay.style.transform = 'scale('+(Zoom/100)+')';
+	ZoomRender();
 }
 function ZoomActual() {
 	Zoom = 100;
+	ZoomRender();
+}
+function ZoomRender() {
 	canvas.style.transform = 'scale('+(Zoom/100)+')';
 	ovrlay.style.transform = 'scale('+(Zoom/100)+')';
 }
