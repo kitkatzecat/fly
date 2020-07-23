@@ -110,13 +110,16 @@ if ($process['type'] == 'application') {
 		sound: "question",
 		input: {
 			type: "text",
-			value: '<?php echo $process['fname']; ?>'
+			value: '<?php echo $process['fname']; ?>',
+			validate: /^[^\\\/\'\"\?\+\=\&\|\*\:\<\>\,\%\`]+$/,
+			validateMessage: 'The following characters cannot be part of a file name:<br>\\ / \' &quot; ? + = &amp; | * : &lt; &gt; , % `'
 		},
 		buttons: [
 			{
 				align: "right",
 				image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
 				default: true,
+				validate: true,
 				onclick: function(i) {
 					<?php
 					if ($extensions == 'true' || ($extensionsALS !== 'true' && $process['extension'] == 'als')) {
@@ -125,7 +128,9 @@ if ($process['type'] == 'application') {
 						<?php
 					}
 					?>
-					Fly.command('rename:<?php echo $process['file']; ?>,'+i+',true');
+					Fly.command('rename:<?php echo $process['file']; ?>,'+i+',true',function() {
+						Fly.window.close();
+					});
 				}
 			},
 			{
