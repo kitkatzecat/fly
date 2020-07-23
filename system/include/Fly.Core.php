@@ -71,7 +71,7 @@ function trimslashes($content,$trimtrailing=true) {
 }
 }
 
-$_FLY_CONFIG = simpleXML_load_file($_SERVER['DOCUMENT_ROOT'].'/system/config.xml');
+//$_FLY_CONFIG = simpleXML_load_file($_SERVER['DOCUMENT_ROOT'].'/system/config.xml');
 if (session_status() == PHP_SESSION_NONE) {
 	include 'Fly.Session.php';
 	if (!isset($_SESSION['fly_user_id'])) {
