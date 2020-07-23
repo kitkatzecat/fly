@@ -51,6 +51,9 @@ var Dialog = {
 						return false;
 					}
 				}
+				if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.type == 'select') {
+					document.getElementById('input').value = document.getElementById('select').value;
+				}
 				var v = document.getElementById('input').value;
 				try {
 					element.onclick(v);
@@ -76,6 +79,19 @@ var Dialog = {
 				input.type = 'number';
 			} else if (Dialog.attributes.input.type == 'password') {
 				input.type = 'password';
+			} else if (Dialog.attributes.input.type == 'select') {
+				document.querySelector('div.input').style.display = 'none';
+				document.querySelector('div.select').style.display = 'block';
+				var select = document.getElementById('select');
+
+				Dialog.attributes.input.options.forEach(function(element) {
+					let option = document.createElement('option');
+					option.text = element['text'];
+					option.value = element['value'];
+					option.selected = (element['selected'] ? true : false);
+					option.disabled = (element['disabled'] ? true : false);
+					select.add(option);
+				});
 			} else {
 				input.type = 'text';
 			}
@@ -87,7 +103,7 @@ var Dialog = {
 				input.max = Dialog.attributes.input['max'];
 			}
 
-			if (Dialog.attributes.input.hasOwnProperty('validate')) {
+			if (Dialog.attributes.input.hasOwnProperty('validate') && Dialog.attributes.input.type != 'select') {
 				var valmsg = document.querySelector('p#validateMessage');
 				if (Dialog.attributes.input.hasOwnProperty('validateMessage')) {
 					valmsg.innerHTML = Dialog.attributes.input['validateMessage'];
@@ -266,10 +282,10 @@ img.button-image {
 p#content {
 	margin-top: -12px;
 }
-input#input {
+input#input,select#select {
 	width: 90%;
 }
-.input {
+.input,.select {
 	display: none;
 	padding-left: 9%;
 	padding-right: 9%;
@@ -297,6 +313,7 @@ input#input {
 <div class="description FlyUiNoSelect"><p id="content"></p></div>
 <div class="input"><input autocomplete="off" type="text" id="input">
 <p id="validateMessage" class="FlyCSDescriptionHint"></p></div>
+<div class="select"><select id="select"></select></div>
 
 
 </div>
