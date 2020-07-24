@@ -1,53 +1,27 @@
 <script>
 function system() {};
-var request = new XMLHttpRequest();
 system.command = function(cmd='') {
-	var now     = new Date(); 
-	var year    = now.getFullYear();
-	var month   = now.getMonth()+1; 
-	var day     = now.getDate();
-	var hour    = now.getHours();
-	var minute  = now.getMinutes();
-	var second  = now.getSeconds(); 
-	var millisecond  = now.getMilliseconds(); 
-	if(month.toString().length == 1) {
-		var month = '0'+month;
-	}
-	if(day.toString().length == 1) {
-		var day = '0'+day;
-	}   
-	if(hour.toString().length == 1) {
-		var hour = '0'+hour;
-	}
-	if(minute.toString().length == 1) {
-		var minute = '0'+minute;
-	}
-	if(second.toString().length == 1) {
-		var second = '0'+second;
-	}   
-	var dateTime = year+''+month+''+day+''+hour+''+minute+''+second+''+millisecond;
-	
+	var request = new XMLHttpRequest();
 	try {
 		ui.loading.show();
 	} catch(err) {}
 	
-    request.open("GET", '/system/components/cmd.php?time='+dateTime+'&cmd='+encodeURIComponent(cmd), true);
-    request.onreadystatechange = system.command.response;
+    request.open("GET", '/system/components/cmd.php?time='+Date.now()+'&cmd='+encodeURIComponent(cmd), true);
+    request.onreadystatechange = function() {
+		if (request.readyState == 4) {
+			try {
+				ui.loading.hide();
+			} catch (err) {}
+				if(request.status == 200) {
+					result = request.responseText;
+					window.top.eval(result);
+				} else {
+					shell.dialog( "An error occurred", request.statusText);
+			}
+		}
+	}
     request.setRequestHeader("Cache-Control", "no-cache");
     request.send(null);
-}
-system.command.response = function() {
-    if(request.readyState == 4) {
-	try {
-		ui.loading.hide();
-	} catch (err) {}
-        if(request.status == 200) {
-            result = request.responseText;
-			eval(result);
-        } else {
-            shell.dialog( "An error occurred", request.statusText);
-      }
-   }
 }
 system.eval64 = function(code) {
 	var cmd = atob(code);
