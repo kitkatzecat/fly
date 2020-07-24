@@ -24,6 +24,7 @@ function onload() {
 		document.getElementById('expandWindows-i').innerHTML = '-';
 		document.getElementById('inactiveWindows-i').innerHTML = '-';
 		document.getElementById('minimizedWindows-i').innerHTML = '-';
+		document.getElementById('borderlessWindows-i').innerHTML = '-';
 		document.getElementById('backgroundWindows-i').innerHTML = '-';
 	},500);
 }
@@ -59,6 +60,13 @@ function getWindows() {
 		}
 	}
 	
+	var borderlessWindows = window.top.document.getElementsByClassName('FlyWindowTransparent');
+	var bdl = '';
+	
+	for (i = 0; i < borderlessWindows.length; i++) { 
+		bdl += '<div style="font-size:12px;" title="'+borderlessWindows[i].window.id+'" oncontextmenu="windowContext(event,\''+borderlessWindows[i].id+'\');return false;" onclick="" id="TaskButton-'+borderlessWindows[i].id+'" class="FlyUiMenuItem FlyUiNoSelect"><img src="'+borderlessWindows[i].window.icon+'" style="width:16px;height:16px;vertical-align:middle;margin-right:6px;margin-top:-8px;"><div style="width: 180px; overflow: hidden; display: inline-block; white-space: nowrap; text-overflow: ellipsis;">'+borderlessWindows[i].window.title+'</div><div style="width:16px;height:16px;float:right;line-height:8px;font-size:8px;text-align:center;" onclick="closeWindow(\''+borderlessWindows[i].id+'\');event.stopPropagation();" class="FlyUiMenuItem"><img style="width:8px;height:8px;vertical-align:middle;pointer-events:none;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"></div></div>';
+	}
+
 	var backgroundWindows = window.top.document.getElementsByClassName('FlyWindowBackground');
 	var bkg = '';
 	
@@ -70,6 +78,7 @@ function getWindows() {
 	document.getElementById('expandWindows').innerHTML = exp;
 	document.getElementById('inactiveWindows').innerHTML = inact;
 	document.getElementById('minimizedWindows').innerHTML = min;
+	document.getElementById('borderlessWindows').innerHTML = bdl;
 	document.getElementById('backgroundWindows').innerHTML = bkg;
 	
 	setTimeout(getWindows,1000);
@@ -218,6 +227,7 @@ function toggle(id) {
 	</div><div oncontextmenu="sectionContext('expandWindows',event);return false;" ondblclick="toggle('expandWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Expanded<span id="expandWindows-i" class="i">+</span></div><div data-title="Expanded" id="expandWindows">
 	</div><div oncontextmenu="sectionContext('inactiveWindows',event);return false;" ondblclick="toggle('inactiveWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Inactive<span id="inactiveWindows-i" class="i">+</span></div><div data-title="Inactive" id="inactiveWindows">
 	</div><div oncontextmenu="sectionContext('minimizedWindows',event);return false;" ondblclick="toggle('minimizedWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Minimized<span id="minimizedWindows-i" class="i">+</span></div><div data-title="Minimized" id="minimizedWindows">
+	</div><div oncontextmenu="sectionContext('borderlessWindows',event);return false;" ondblclick="toggle('borderlessWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Borderless<span id="borderlessWindows-i" class="i">+</span></div><div data-title="Borderless" id="borderlessWindows">
 	</div><div oncontextmenu="sectionContext('backgroundWindows',event);return false;" ondblclick="toggle('backgroundWindows')" class="divider FlyUiMenuItem FlyUiNoSelect">Background<span id="backgroundWindows-i" class="i">+</span></div><div data-title="Background" id="backgroundWindows">
 	</div>
 </div>
