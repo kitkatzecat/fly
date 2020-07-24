@@ -6,7 +6,7 @@ include 'Fly.Standard.php';
 include 'Fly.File.php';
 include 'Fly.Dialog.php';
 
-$THEME = FlyLoadThemeFile()[1];
+$THEME = FlyLoadThemeFile(FlyUserThemeGenerate(),false)[1];
 ?>
 <link rel="stylesheet" href="../style.css">
 <style>
