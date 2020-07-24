@@ -194,7 +194,7 @@ function FlyFileStringProcessor($item) {
 						'icon' => $return['icon'],
 						'background' => true
 					];
-					$return['action'] = 'task.background(\''.$return['id'].'\', '.json_encode($window).')';
+					$return['action'] = 'task.background(\''.$id.'\', '.json_encode($window).')';
 				}
 				return $return;
 
