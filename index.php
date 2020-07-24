@@ -115,7 +115,9 @@ function onload() {
 		shell.sound.system('login');
 	} catch(err) {}
 	
-	system.command('run:%FLY.USER.PATH%data/autostart.jsc');
+	setTimeout(function() {
+		system.command('run:%FLY.USER.PATH%data/autostart.jsc');
+	},1000);
 	
 	return true;
 }
