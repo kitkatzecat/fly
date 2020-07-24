@@ -23,5 +23,10 @@
 		"name": "Time & Date",
 		"icon": "%FLY.RESOURCE.URL.ICONS%clock.svg",
 		"index": "timedate/index.php"
+	},
+	{
+		"name": "Accessibility",
+		"icon": "%FLY.RESOURCE.URL.ICONS%accessibility.svg",
+		"index": "personalization/accessibility.php"
 	}
 ]
