@@ -154,8 +154,9 @@ var Dialog = {
 		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.size.set(400,height);
 		var width = Fly.window.size.get()[0];
+		var opener = window.top.document.getElementById(Dialog.opener.Fly.window.id);
 
-		if (window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isBackground || window.top.document.getElementById(Dialog.opener.Fly.window.id).window.isExpand) {
+		if (opener.window.isBackground || opener.window.isExpand || opener.window.isBorderless) {
 			height = window.top.document.getElementById(Fly.window.id).offsetHeight;
 			width = window.top.document.getElementById(Fly.window.id).offsetWidth;
 		}
