@@ -82,6 +82,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	}
 	
 	frame.window.isBackground = attributes.background;
+	frame.window.isBorderless = false;
 	frame.window.isMinimized = false;
 	frame.window.isMaximized = true;
 	frame.window.isResizable = attributes.resize;
@@ -644,6 +645,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		
 		frame.window.inactiveClass = 'FlyWindowTransparent';
 		frame.window.activeClass = 'FlyWindowTransparent';
+
+		frame.window.isBorderless = true;
 	}
 	
 	// Show the window's border
@@ -660,6 +663,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		} else {
 			frame.className = 'FlyWindow '+frame.window.inactiveClass;
 		}
+
+		frame.window.isBorderless = false;
 	}
 	
 	// Set window position
