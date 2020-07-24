@@ -80,7 +80,7 @@ function Save() {
 <p class="FlyCSHint">Scales the display of Fly windows.</p>
 
 
-<div class="FlyCSSticky FlyCSStickyBottom" style="text-align:right;"><button onclick="Save()"><img style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg">Save</button></div>
+<div class="FlyCSSticky FlyCSStickyBottom" style="text-align:right;"><button onclick="Save()"><img class="FlyCSButtonIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg"></button></div>
 
 </body>
 </html>
