@@ -3,7 +3,7 @@
 	<name>Sticky Notes</name>
 	<publisher>Sprocket Computers</publisher>
 	<version>1.0</version>
-	<icon>%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo/memo.svg</icon>
+	<icon>%FLY.WORKING_URL%sticky.svg</icon>
 	<date>1595551051</date>
 	<description><![CDATA[[TODO]]]></description>
 	<title>Sticky Notes</title>
@@ -12,7 +12,7 @@
 		<mask id="Note" hidden="true">
 		<name>Sticky Note</name>
 		<index>sticky.php</index>
-		<icon>%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo/memo.svg</icon>	
+		<icon>%FLY.WORKING_URL%sticky.svg</icon>	
 		<window>
 			<title>Sticky Note</title>
 			<width>250</width>

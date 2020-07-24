@@ -3,7 +3,7 @@
     "name": "Sticky Notes",
     "publisher": "Sprocket Computers",
     "version": "1.0",
-    "icon": "%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo\/memo.svg",
+    "icon": "%FLY.WORKING_URL%sticky.svg",
     "date": 1595551051,
     "index": "init.php",
     "description": "[TODO]",
@@ -12,7 +12,7 @@
     "masks": {
         "Note": {
             "name": "Sticky Note",
-            "icon": "%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo\/memo.svg",
+            "icon": "%FLY.WORKING_URL%sticky.svg",
             "index": "sticky.php",
             "hidden": true,
             "window": {
