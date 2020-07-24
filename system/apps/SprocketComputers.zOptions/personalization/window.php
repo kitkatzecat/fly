@@ -3,10 +3,11 @@
 <head>
 <?php
 include 'Fly.Standard.php';
+include 'Fly.CommonStyle.php';
 include 'Fly.File.php';
 include 'Fly.Dialog.php';
 
-$THEME = FlyLoadThemeFile()[1];
+$THEME = FlyLoadThemeFile(FlyUserThemeGenerate(),false)[1];
 ?>
 <link rel="stylesheet" href="../style.css">
 <style>
@@ -104,7 +105,7 @@ function ShowColors() {
 	SetColor([<?php echo $THEME['COLOR_R'].','.$THEME['COLOR_G'].','.$THEME['COLOR_B']; ?>]);
 }
 function CustomColor() {
-	Fly.dialog.color({title:'Custom Color',custom:true,callback:function(c) {
+	Fly.dialog.color({title:'Custom Color',value:[CurrentColor[0],CurrentColor[1],CurrentColor[2]],custom:true,callback:function(c) {
 		if (c) {
 			SetColor(c);
 		}
@@ -197,8 +198,8 @@ function Auto() {
 <!--<p><input type="range" name="" id=""></p>-->
 
 <div class="buttons">
-	<button><img style="width:16px;height:16px;vertical-align:middle;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"></button>
-	<button><img style="width:16px;height:16px;vertical-align:middle;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg"></button>
+	<button title="Preview"><img class="FlyCSButtonIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg"></button>
+	<button title="Save"><img class="FlyCSButtonIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg"></button>
 </div>
 
 </body>
