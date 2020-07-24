@@ -94,6 +94,7 @@ Fly.window.ready = function() {
 	movement();
 	window.addEventListener('resize',movement);
 	document.body.addEventListener('mouseover',function() {
+		clearTimeout(grabberTimeout);
 		document.getElementById('grabber').style.opacity = '1';
 	});
 	document.body.addEventListener('mouseleave',function() {
