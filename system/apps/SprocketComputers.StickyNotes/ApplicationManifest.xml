@@ -1,0 +1,30 @@
+<manifest>
+	<id>SprocketComputers.StickyNotes</id>
+	<name>Sticky Notes</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>1.0</version>
+	<icon>%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo/memo.svg</icon>
+	<date>1595551051</date>
+	<description><![CDATA[[TODO]]]></description>
+	<title>Sticky Notes</title>
+	<index>init.php</index>
+	<masks>
+		<mask id="Note" hidden="true">
+		<name>Sticky Note</name>
+		<index>sticky.php</index>
+		<icon>%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo/memo.svg</icon>	
+		<window>
+			<title>Sticky Note</title>
+			<width>250</width>
+			<height>250</height>
+			<minwidth>150</minwidth>
+			<minheight>100</minheight>
+			<x>auto</x>
+			<y>auto</y>
+			<expand>false</expand>
+			<minimize>false</minimize>
+			<resize>true</resize>
+		</window>
+		</mask>
+	</masks>
+</manifest>

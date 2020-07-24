@@ -1,0 +1,36 @@
+{
+    "id": "SprocketComputers.StickyNotes",
+    "name": "Sticky Notes",
+    "publisher": "Sprocket Computers",
+    "version": "1.0",
+    "icon": "%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo\/memo.svg",
+    "date": 1595551051,
+    "index": "init.php",
+    "description": "[TODO]",
+    "window": false,
+    "title": "Sticky Notes",
+    "masks": {
+        "Note": {
+            "name": "Sticky Note",
+            "icon": "%FLY.RESOURCE.URL.APPS%SprocketComputers.Memo\/memo.svg",
+            "index": "sticky.php",
+            "hidden": true,
+            "window": {
+                "position": {
+                    "x": "auto",
+                    "y": "auto"
+                },
+                "size": {
+                    "width": "250",
+					"height": "250",
+					"minwidth": "150",
+					"minheight": "100"
+                },
+                "title": "Sticky Note",
+                "expand": true,
+                "resize": true,
+                "minimize": true
+            }
+        }
+    }
+}

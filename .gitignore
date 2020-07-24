@@ -24,3 +24,4 @@ system/apps/*
 !system/apps/SprocketComputers.zFileManager
 !system/apps/SprocketComputers.zOptions
 !system/apps/SprocketGames.TicTacToe
+!system/apps/SprocketComputers.StickyNotes
