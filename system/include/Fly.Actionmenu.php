@@ -301,7 +301,7 @@ Fly.actionmenu = function(pos,moptions,onclose=function(){},show=true) {
 			
 			menuobject.options[index].mouseHoverTimeout = false;
 			menuobject.options[index].onmouseenter = function() {
-				menuobject.options[index].mouseHoverTimeout = setTimeout(menuobject.options[index].onclick,600);
+				menuobject.options[index].mouseHoverTimeout = setTimeout(menuobject.options[index].onclick,400);
 			}
 			menuobject.options[index].onmouseout = function() {
 				clearTimeout(menuobject.options[index].mouseHoverTimeout);
