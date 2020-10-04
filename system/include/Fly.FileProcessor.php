@@ -348,6 +348,7 @@ function FlyFileStringProcessor($item) {
 		if (is_dir($filePath)) { // DIRECTORY -----------------------------------------------------------------------------------
 			$filePath = trimslashes($filePath);
 			$type = 'folder';
+			$description = 'Folder';
 			
 			$url = str_replace($_FLY['PATH'],$_FLY['URL'],$filePath);
 			if (str_replace(basename($filePath),'',$filePath) == $_FLY['RESOURCE']['PATH']['APPS']) {
@@ -369,8 +370,10 @@ function FlyFileStringProcessor($item) {
 			}
 			if (fnmatch($_FLY['RESOURCE']['PATH']['USERS']."*/data/registry/*",$filePath)) {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/settingfolder.svg';
+				$description = 'Registry Group';
 			} else if (fnmatch($_FLY['REGISTRY']."*",$filePath)) {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/settingfolder.svg';
+				$description = 'Registry Group';
 			}
 		/*	if (fnmatch($_FLY['RESOURCE']['PATH']['USERS']."[!/]/Documents",$filePath)) {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/docsfolder.svg';
@@ -384,7 +387,6 @@ function FlyFileStringProcessor($item) {
 			if (trimslashes($filePath) == trimslashes($_FLY['PATH'])) {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'computer.svg';
 			}
-			$description = 'Folder';
 			$action = 'system.command(\'run:SprocketComputers.zFileManager,p='.$filePath.'\')';
 			$path = trimslashes(str_lreplace(basename($filePath),'',$filePath));
 			$ffile = trimslashes(str_freplace($_SERVER['DOCUMENT_ROOT'],'.',$filePath));
@@ -445,10 +447,10 @@ function FlyFileStringProcessor($item) {
 			$description = $lookup['description'];
 			if (fnmatch($_FLY['RESOURCE']['PATH']['USERS']."*/data/registry/*",$filePath) && $extension == '') {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/setting.svg';
-				$description = 'Registry';
+				$description = 'Registry Entry';
 			} else if (fnmatch($_FLY['REGISTRY']."*",$filePath) && $extension == '') {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'type/setting.svg';
-				$description = 'Registry';
+				$description = 'Registry Entry';
 			}
 			if ($description ==  '') {
 				$description = 'Unknown';
