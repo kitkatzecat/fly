@@ -389,6 +389,33 @@ function Icon(file) {
 	}
 	return icon;
 }
+function Subtitle(file) {
+	var id = Math.ceil(Date.now()*Math.random());
+	var property = '<?php echo FlyRegistryGet('ItemSubtitle'); ?>';
+	if (property == 'type') {
+		var description = file['description'];
+		if (!file['isdir'] && !file['registered'] && file['extension'] != '') {
+			description += ' ('+file['extension']+')';
+		}
+		if (Protected.indexOf(file['ffile']) != -1) {
+			return 'System '+description;
+		} else {
+			return description;
+		}
+	} else if (property == 'mime') {
+		return file['mime'];
+	} else if (property == 'size') {
+		return file['FileManager_Size'];
+	} else if (property == 'modified') {
+		return file['FileManager_Modified'];
+	} else if (property == 'modified-date') {
+		return file['FileManager_DateModified'];
+	} else if (property == 'accessed') {
+		return file['FileManager_Accessed'];
+	} else {
+		return false;
+	}
+}
 
 var CheckInterval;
 function Check() {

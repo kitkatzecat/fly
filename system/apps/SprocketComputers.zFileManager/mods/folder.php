@@ -1,4 +1,57 @@
 <?php
+function FileManagerFolderModProperties(&$process) {
+	$process['FileManager_Modified'] = nicetime(filemtime($process['file']));
+	$process['FileManager_DateModified'] = date("M j, Y g:i A",filemtime($process['file']));
+	if (!$process['isdir']) {
+		$process['FileManager_Size'] = formatFileSize(filesize($process['file']));
+	}
+}
+function formatFileSize($filesize) {
+	$filesize = abs(intval($filesize));
+	if ($filesize > 1000000000) {
+		$filesize = round($filesize/1000000000,2).' GB';
+	} else if ($filesize > 1000000 && $filesize < 10000000000) {
+		$filesize = round($filesize/1000000,2).' MB';
+	} else if ($filesize > 1000 && $filesize < 10000000) {
+		$filesize = round($filesize/1000).' KB';
+	} else {
+		$filesize = $filesize.' bytes';
+	}
+	
+	return $filesize;
+}
+function nicetime($date)
+{
+	if (empty($date)) {
+		return "Not available";
+	}
+	$periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+	$lengths = array("60","60","24","7","4.35","12","10");
+	$now = time();
+	$unix_date = $date;
+	
+	if (empty($unix_date)) {    
+		return "Not available";
+	}
+	
+	if ($now > $unix_date) {    
+		$difference = $now - $unix_date;
+		$tense = "ago";
+	} else {
+		$difference = $unix_date - $now;
+		$tense = "from now";
+	}
+	for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
+		$difference /= $lengths[$j];
+	}
+	$difference = round($difference);
+
+	if ($difference != 1) {
+		$periods[$j].= "s";
+	}
+	return "$difference $periods[$j] {$tense}";
+}
+
 $Path = FlyVarsReplace($Path,false,FlyCoreVars($_FLY['PATH']));
 $FolderProcess = FlyFileStringProcessor($Path);	
 
@@ -39,6 +92,7 @@ if (in_array($FolderProcess['ffile'],$protected) && $protected_enforce !== 'true
 		foreach ($FolderListArray as &$Item) {
 			$process = FlyFileStringProcessor($Path.'/'.$Item);
 			$Item = $process;
+			FileManagerFolderModProperties($Item);
 		}
 		echo '
 		<script>

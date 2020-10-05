@@ -77,7 +77,9 @@ function ToolbarInit() {
 		['Home',function(){Nav('?home');},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg'}],
 		[''],
 		['Icon View',[
-			<?php echo $vm; ?>
+			<?php echo $vm; ?>,
+			[''],
+			['Subtitle...',function(){Subtitle.dialog()}]
 		],{icon:'icon.xl.svg'}],
 		['Image Previews',function(){ImagePreviews.toggle();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg'}],
 		['File Extensions',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg'}],
@@ -293,8 +295,8 @@ var Pane = {
 
 var View = {
 	set: function(view) {
-		Fly.command('registry:set,View,'+view,View.callback);
 		View.setting = view;
+		Fly.command('registry:set,View,'+view,View.callback);
 	},
 	callback: function(a) {
 		if (!a.return) {
@@ -312,6 +314,52 @@ var View = {
 	current: '<?php echo $cv; ?>',
 	setting: false
 };
+var Subtitle = {
+	options: {
+		'none': 'None',
+		'type': 'Type',
+		'mime': 'MIME',
+		'size': 'Size',
+		//'accessed': 'Date Accessed',
+		'modified': 'Modified',
+		'modified-date': 'Date Modified'
+	},
+	dialog: function() {
+		var options = [];
+		for (let type in Subtitle.options) {
+			let o = {
+				text: Subtitle.options[type],
+				value: type,
+				selected: (type == Subtitle.show)
+			};
+			options.push(o);
+		}
+		Fly.dialog.select({
+			title: 'Item Subtitle',
+			message: 'Item subtitle',
+			content: 'Some views can show a property of the item as a subtitle along with the item\'s name and icon.</p><p>Select which property to show as the subtitle:',
+			icon: `${Fly.core['WORKING_URL']}icon.ls.svg`,
+			options: options,
+			callback: Subtitle.set
+		});
+	},
+	show: '<?php echo FlyRegistryGet('ItemSubtitle'); ?>',
+	setting: false,
+	set: function(subtitle) {
+		Subtitle.setting = subtitle;
+		Fly.command('registry:set,ItemSubtitle,'+subtitle,Subtitle.callback);
+	},
+	callback: function(a) {
+		if (!a.return) {
+			Fly.window.message.show('An error occurred while saving your options to the registry');
+			Subtitle.setting = false;
+		} else {
+			Subtitle.show = Subtitle.setting;
+			Subtitle.setting = false;
+		}
+		Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+	},
+}
 
 var StatusBar = {
 	visible: false,
