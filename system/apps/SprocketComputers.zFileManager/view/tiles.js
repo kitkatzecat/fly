@@ -45,11 +45,39 @@ function View(Folder=false,List=false) {
 			icn.style.width = '48px';
 			icn.style.height = '48px';
 			icn.style.verticalAlign = 'middle';
+			//icn.style.float = 'left';
 			icn.style.marginRight = '6px';
 			icn.style.marginBottom = '4px';
 			itm.appendChild(icn);
 
-			itm.innerHTML += List[i]['fname'];
+			var title = document.createElement('div');
+			title.style.display = 'inline-block';
+			title.style.width = '256px';
+			
+			var name = document.createElement('div');
+			name.innerText = List[i]['fname'];
+			name.style.width = '100%';
+			name.style.overflow = 'hidden';
+			name.style.whiteSpace = 'no-wrap';
+			name.style.textOverflow = 'ellipsis';
+
+			title.appendChild(name);
+
+			var sub = Subtitle(List[i]);
+			if (sub) {
+				icn.style.verticalAlign = 'top';
+				title.style.marginTop = '4px';
+				var subtitle = document.createElement('div');
+				subtitle.style.opacity = '0.8';
+				subtitle.innerHTML = sub;
+				subtitle.style.width = '100%';
+				subtitle.style.overflow = 'hidden';
+				subtitle.style.whiteSpace = 'no-wrap';
+				subtitle.style.textOverflow = 'ellipsis';
+					title.appendChild(subtitle);
+			}
+
+			itm.appendChild(title);
 			itm.title = List[i]['name'];
 			itm.draggable = true;
 			
