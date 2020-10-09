@@ -49,7 +49,12 @@ function nicetime($date)
 	if ($difference != 1) {
 		$periods[$j].= "s";
 	}
-	return "$difference $periods[$j] {$tense}";
+	$return = "$difference $periods[$j] {$tense}";
+	if ($return == "0 seconds from now") {
+		$return = "Just now";
+	}
+	
+	return $return;
 }
 
 $Path = FlyVarsReplace($Path,false,FlyCoreVars($_FLY['PATH']));
