@@ -87,7 +87,8 @@ Fly.file = {
 			return file.substr(0,file.lastIndexOf(Fly.file.string.name(file)));
 		},
 		bname: function(file) {
-			return file.substr(0,file.lastIndexOf('.'));
+			var name = Fly.file.string.name(file);
+			return name.substr(0,name.lastIndexOf('.'));
 		},
 		extension: function(file) {
 			return file.substr(file.lastIndexOf('.')+1);
