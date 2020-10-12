@@ -30,7 +30,7 @@ if ($_GET['file'] == '') {
 	} else {
 		$icon = '<img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'.$process['icon'].'">';
 	}
-	$item = '<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;">'.$icon.$process['fname'].'</div>';
+	$item = '<div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><div style="display:inline-block;vertical-align:middle;">'.$icon.'</div><div style="display:inline-block;vertical-align:middle;width:calc(100% - 44px);">'.$process['fname'].'</div></div>';
 	
 	if (in_array($process['ffile'],$protected)) {
 		$icon = '<div style="display:inline-block;width:36px;height:36px;vertical-align:middle;margin-right:8px;position:relative;background-size:100% 100%;background-image:url(\\\''.$process['icon'].'\\\');"><img style="position:absolute;bottom:0;left:0;width:14px;height:14px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'lock.svg"></div>';
