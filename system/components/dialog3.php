@@ -55,8 +55,9 @@ var Dialog = {
 					document.getElementById('input').value = document.getElementById('select').value;
 				}
 				var v = document.getElementById('input').value;
+				var c = document.getElementById('checkbox').checked;
 				try {
-					element.onclick(v);
+					element.onclick(v,c);
 				} catch(e) {console.log(e)}
 				Fly.window.onclose();
 			};
@@ -65,6 +66,29 @@ var Dialog = {
 			}
 			document.body.appendChild(b);
 		});
+
+		if (!!Dialog.attributes.checkbox) {
+			var checkboxContainer = document.getElementById('checkboxContainer');
+			var checkbox = document.getElementById('checkbox');
+			var checkboxLabel = document.getElementById('checkboxLabel');
+
+			checkboxContainer.style.display = 'block';
+
+			if (Dialog.attributes.checkbox.hasOwnProperty('text')) {
+				checkboxLabel.innerText = Dialog.attributes.checkbox.text;
+			}
+			if (Dialog.attributes.checkbox.hasOwnProperty('checked')) {
+				checkbox.checked = !!Dialog.attributes.checkbox.checked;
+			}
+
+			if (checkboxContainer.offsetWidth+10 > window.innerWidth-(Dialog.attributes.buttons.length)*109) {
+				Dialog.positionModifier += 28;
+				checkboxContainer.classList.add('checkbox');
+				document.getElementById('Content').classList.add('checkbox');
+			}
+
+			//checkboxContainer.style.right = ((Dialog.attributes.buttons.length)*109)+'px';
+		}
 
 		if (!!Dialog.attributes.input) {
 			var input = document.querySelector('input#input');
@@ -150,8 +174,9 @@ var Dialog = {
 			window.top.shell.sound.system(Dialog.attributes.sound);
 		} catch(e) {}
 	},
+	positionModifier: 56,
 	position: function() {
-		var height = (56+Math.max(document.getElementById('Content').scrollHeight,0));
+		var height = (Dialog.positionModifier+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.size.set(400,height);
 		var width = Fly.window.size.get()[0];
 		var opener = window.top.document.getElementById(Dialog.opener.Fly.window.id);
@@ -275,6 +300,9 @@ img.button-image {
 	background-color: #fff;
 	overflow-y: auto;
 }
+#Content.checkbox {
+	bottom: 76px;
+}
 p#content {
 	margin-top: -12px;
 }
@@ -292,6 +320,27 @@ input#input,select#select {
 	width: 100px;
 	position: absolute;
 	bottom: 9px;
+}
+#checkboxContainer {
+	position: absolute;
+	bottom: 14px;
+	left: 6px;
+	padding-top: 6px;
+	padding-bottom: 6px;
+	padding-right: 6px;
+	margin-top: -6px;
+	margin-bottom: -6px;
+	overflow: hidden;
+	max-width: calc(100vw - 18px);
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	display: none;
+}
+#checkboxContainer.checkbox {
+	bottom: 48px;
+}
+#checkbox {
+	margin-top: -3px;
 }
 #validateMessage {
 	color: #f00;
@@ -311,7 +360,9 @@ input#input,select#select {
 <p id="validateMessage" class="FlyCSDescriptionHint"></p></div>
 <div class="select"><select id="select"></select></div>
 
-
+</div>
+<div id="checkboxContainer" class="FlyUiNoSelect FlyUiTextHover">
+	<input type="checkbox" id="checkbox" class="FlyCSInlineIcon"><label for="checkbox" id="checkboxLabel"></label>
 </div>
 
 </body>

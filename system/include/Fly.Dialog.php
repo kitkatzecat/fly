@@ -21,6 +21,7 @@ Fly.dialog = {
 		content: "Something happened",
 		sound: "error",
 		input: false,
+		checkbox: false,
 		icon: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg",
 		buttons: [
 			{
