@@ -670,7 +670,7 @@ if ($_GET['file'] == '' || !file_exists($_GET['file'])) {
 		}
 	';
 } else {
-	$load = 'Load(\'' . FlyConvertPathtoURL($_GET['file']) . '\',\'' . basename($_GET['file']) . '\');Fly.window.title.set(\'Media Player - ' . htmlentities(basename($_GET['file'])) . '\');';
+	$load = 'Load(\'' . FlyConvertPathtoURL($_GET['file']) . '\',\'' . basename($_GET['file']) . '\');Fly.window.title.set(\'Media Player - ' . htmlentities(basename($_GET['file'])) . '\');ButtonModeFull();TabLibrary();';
 }
 
 echo '
@@ -808,7 +808,9 @@ function onload() {
 	ShortcutInit();
 	' . $mode . '
 	' . $repeat . '
-	' . $load . '
+	document.getElementById(\'Main-Frame\').addEventListener(\'load\',function() {
+		' . $load . '
+	});
 }
 </script>
 ';
