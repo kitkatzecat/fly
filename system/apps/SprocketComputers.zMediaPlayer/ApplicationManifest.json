@@ -1,0 +1,25 @@
+{
+    "id": "SprocketComputers.zMediaPlayer",
+    "name": "zMedia Player",
+    "publisher": "Sprocket Computers",
+    "version": "1.1",
+    "icon": "%FLY.WORKING_URL%media.svg",
+    "date": 1602106471,
+    "index": "index.php",
+    "description": "View, play, and manage your library of multimedia files stored on your computer.",
+    "window": {
+        "position": {
+            "x": "auto",
+            "y": "auto"
+        },
+        "size": {
+            "width": "60%",
+            "minwidth": "375",
+            "height": "60%",
+            "minheight": "75"
+        },
+        "title": "Media Player",
+        "expand": true,
+        "resize": true
+    }
+}

@@ -1,0 +1,49 @@
+<manifest>
+	<id>SprocketComputers.zMediaPlayer</id>
+	<name>zMedia Player</name>
+	<publisher>Sprocket Computers</publisher>
+	<version>1.1</version>
+	<icon>%FLY.WORKING_URL%media.svg</icon>
+	<date>1602106471</date>
+	<index>index.php</index>
+	<description><![CDATA[View, play, and manage your library of multimedia files stored on your computer.]]></description>
+	<types>
+		<mp3>
+			<icon><![CDATA[%FLY.RESOURCE.URL.ICONS%type/audio.svg]]></icon>
+			<description><![CDATA[MPEG Audio Layer 3]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%]]></action>
+		</mp3>
+		<mp4>
+			<icon><![CDATA[%FLY.RESOURCE.URL.ICONS%type/video.svg]]></icon>
+			<description><![CDATA[MPEG-4 Video]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%]]></action>
+		</mp4>
+		<m4a>
+			<icon><![CDATA[%FLY.RESOURCE.URL.ICONS%type/audio.svg]]></icon>
+			<description><![CDATA[MPEG-4 Audio]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%]]></action>
+		</m4a>
+		<ogg>
+			<icon><![CDATA[%FLY.RESOURCE.URL.ICONS%type/audio.svg]]></icon>
+			<description><![CDATA[OGG Audio]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%]]></action>
+		</ogg>
+		<wav>
+			<icon><![CDATA[%FLY.RESOURCE.URL.ICONS%type/audio.svg]]></icon>
+			<description><![CDATA[WAVE Audio]]></description>
+			<action><![CDATA[file=%FLY.CURRENT_PATH%]]></action>
+		</wav>
+	</types>
+	<mime>audio/*,video/*</mime>
+	<window>
+		<title>Media Player</title>
+		<width>375</width>
+		<height>110</height>
+		<minwidth>375</minwidth>
+		<minheight>110</minheight>
+		<x>auto</x>
+		<y>auto</y>
+		<expand>true</expand>
+		<resize>true</resize>
+	</window>
+</manifest>

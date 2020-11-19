@@ -13,6 +13,7 @@ system/apps/*
 !system/apps/SprocketComputers.FlyHelp
 !system/apps/SprocketComputers.Maps
 !system/apps/SprocketComputers.MediaPlayer
+!system/apps/SprocketComputers.zMediaPlayer
 !system/apps/SprocketComputers.Memo
 !system/apps/SprocketComputers.Notebook
 !system/apps/SprocketComputers.Options
