@@ -61,31 +61,31 @@
 	"mp3": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
 		"description": "MPEG Audio Layer 3",
-		"app": "SprocketComputers.MediaPlayer",
+		"app": "SprocketComputers.zMediaPlayer",
 		"mime": "audio/mpeg"
 	},
 	"ogg": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
 		"description": "OGG Audio",
-		"app": "SprocketComputers.MediaPlayer",
+		"app": "SprocketComputers.zMediaPlayer",
 		"mime": "audio/ogg"
 	},
 	"m4a": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
 		"description": "MPEG-4 Audio",
-		"app": "SprocketComputers.MediaPlayer",
+		"app": "SprocketComputers.zMediaPlayer",
 		"mime": "application/octet-stream"
 	},
 	"wav": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/audio.svg",
 		"description": "WAVE Audio",
-		"app": "SprocketComputers.MediaPlayer",
+		"app": "SprocketComputers.zMediaPlayer",
 		"mime": "audio/x-wav"
 	},
 	"mp4": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/video.svg",
 		"description": "MPEG-4 Video",
-		"app": "SprocketComputers.MediaPlayer"
+		"app": "SprocketComputers.zMediaPlayer"
 	},
 	"exe": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/windows.svg",
