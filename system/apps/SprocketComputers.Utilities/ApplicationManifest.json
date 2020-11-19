@@ -290,6 +290,14 @@
                 "minimize": true
             }
         },
+        "LogOff": {
+            "name": "Log Off",
+            "icon": "%FLY.RESOURCE.URL.ICONS%lock.svg",
+            "index": "%FLY.WORKING_URL%logoff.php",
+            "hidden": true,
+            "window": false,
+            "title": "Log Off"
+        },
         "ShellDialog": {
             "name": "Message",
             "icon": "%FLY.RESOURCE.URL.ICONS%application.svg",
