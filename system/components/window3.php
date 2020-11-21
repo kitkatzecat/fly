@@ -43,13 +43,22 @@ task.init = function() {
 }
 
 task.count = function(id) {
-	var windows = window.top.document.querySelectorAll('.FlyWindow');
 	var count = 0;
+
+	var windows = window.top.document.querySelectorAll('.FlyWindow');
 	windows.forEach(function(w) {
 		if (w.getAttribute('window-id') == id) {
 			count++;
 		}
 	});
+
+	var bwindows = window.top.document.querySelectorAll('.FlyWindowBackground');
+	bwindows.forEach(function(bw) {
+		if (bw.getAttribute('window-id') == id) {
+			count++;
+		}
+	});
+	
 	return count;
 }
 task.isOpen = function(id) {
