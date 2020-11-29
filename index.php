@@ -116,6 +116,7 @@ function onload() {
 	} catch(err) {}
 	
 	setTimeout(function() {
+		system.command('run:%FLY.RESOURCE.PATH.COMPONENTS%autostart.jsc');
 		system.command('run:%FLY.USER.PATH%data/autostart.jsc');
 	},1000);
 	
