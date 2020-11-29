@@ -62,6 +62,14 @@
                 "resize": true
             }
         },
+        "Desktop": {
+            "name": "Desktop",
+            "icon": "%FLY.RESOURCE.URL.ICONS%desktop.svg",
+            "index": "%FLY.WORKING_URL%desktop.php",
+            "hidden": true,
+            "window": false,
+            "title": "Fly Desktop"
+        },
         "Rename": {
             "name": "Rename",
             "icon": "%FLY.WORKING_URL%fileman.svg",

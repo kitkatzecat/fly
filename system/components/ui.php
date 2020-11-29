@@ -147,7 +147,7 @@ ui.init = function() {
 		
 			if (ob == false) {
 				ar.push(['Desktop',[
-					['Refresh',function() {try {document.getElementById('FlyUiDesktopFrame').contentWindow.Refresh();} catch(e) {document.getElementById('FlyUiDesktopFrame').contentWindow.window.location.reload();}},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg'}]
+					['Refresh',function() {try {ui.desktop.frame.contentWindow.Refresh();} catch(e) {ui.desktop.frame.contentWindow.window.location.reload();}},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg'}]
 				],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>desktop.svg'}]);
 			} else {
 				var wn = ui.toolbar.activeApplication.applicationMenu(ob);
@@ -380,6 +380,7 @@ ui.init = function() {
 		ui.toolbar.trayExpand.onclick = function() {ui.tray.toggle();};
 		ui.toolbar.appendChild(ui.toolbar.trayExpand);
 		
+		/*
 		ui.desktop = document.createElement("div");
 		ui.desktop.style.position = 'fixed';
 		ui.desktop.style.top = ui.toolbar.offsetHeight+'px';
@@ -401,6 +402,7 @@ ui.init = function() {
 			});
 		},2000);		
 		document.body.appendChild(ui.desktop);
+		*/
 		
 		ui.time = document.createElement("div");
 		ui.time.style.position = 'fixed';
