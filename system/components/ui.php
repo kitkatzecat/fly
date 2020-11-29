@@ -1,4 +1,9 @@
 <?php
+if (in_array(FlyRegistryGet('LegacyJump','SprocketComputers.Options'),['true','yes','on'])) {
+	$toggle_jump = 'toggleLegacy';
+} else {
+	$toggle_jump = 'toggleNew';
+}
 if (in_array(FlyRegistryGet('TimeShowSeconds','SprocketComputers.Options'),['true','yes','on'])) {
 	$script_show_seconds = '":" + seconds';
 } else {
@@ -662,6 +667,19 @@ ui.init = function() {
 		document.body.appendChild(ui.jump);
 
 		ui.jump.toggle = function() {
+			ui.jump.<?php echo $toggle_jump; ?>();
+		}
+
+		ui.jump.toggleNew = function() {
+			if (task.isOpen('SprocketComputers.Utilities.Jump')) {
+				task.get('SprocketComputers.Utilities.Jump').forEach(function(w) {
+					w.window.close();
+				});
+			} else {
+				system.command('run:SprocketComputers.Utilities.Jump');
+			}
+		}
+		ui.jump.toggleLegacy = function() {
 			if (ui.jump.style.display == 'none') {
 				document.body.appendChild(ui.jump.coverDiv);
 				document.getElementById('fly-ui-jump-list').src = '/system/components/jump.php';

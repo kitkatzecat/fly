@@ -23,7 +23,7 @@
             "name": "Window Manager",
             "icon": "%FLY.WORKING_URL%winmgr.svg",
             "index": "winmgr.php",
-            "hidden": true,
+            "hidden": false,
             "window": {
                 "position": {
                     "x": "auto",
@@ -41,7 +41,7 @@
             "name": "Run",
             "icon": "%FLY.WORKING_URL%run.svg",
             "index": "run.php",
-            "hidden": true,
+            "hidden": false,
             "window": {
                 "position": {
                     "x": "auto",
@@ -59,7 +59,7 @@
             "name": "Command Prompt",
             "icon": "%FLY.WORKING_URL%command.svg",
             "index": "command.php",
-            "hidden": true,
+            "hidden": false,
             "window": {
                 "position": {
                     "x": "auto",
@@ -78,7 +78,7 @@
             "name": "Executor",
             "icon": "%FLY.WORKING_URL%executor.svg",
             "index": "executor.php",
-            "hidden": true,
+            "hidden": false,
             "window": {
                 "position": {
                     "x": "auto",
@@ -97,7 +97,7 @@
             "name": "Registry Editor",
             "icon": "%FLY.WORKING_URL%regedit.svg",
             "index": "regedit.php",
-            "hidden": true,
+            "hidden": false,
             "window": {
                 "position": {
                     "x": "auto",
@@ -133,7 +133,7 @@
             "name": "System Variables",
             "icon": "%FLY.RESOURCE.URL.ICONS%index.svg",
             "index": "vars.php",
-            "hidden": true,
+            "hidden": false,
             "window": {
                 "position": {
                     "x": "auto",
@@ -169,7 +169,7 @@
             "name": "About Fly",
             "icon": "%FLY.RESOURCE.URL.ICONS%fly.svg",
             "index": "aboutfly.php",
-            "hidden": true,
+            "hidden": false,
             "window": {
                 "position": {
                     "x": "auto",
@@ -297,6 +297,14 @@
             "hidden": true,
             "window": false,
             "title": "Log Off"
+		},
+        "Jump": {
+            "name": "Jump Menu",
+            "icon": "%FLY.RESOURCE.URL.ICONS%fly.svg",
+            "index": "jump/open.php",
+            "hidden": true,
+            "window": false,
+            "title": "Jump Menu"
         },
         "ShellDialog": {
             "name": "Message",

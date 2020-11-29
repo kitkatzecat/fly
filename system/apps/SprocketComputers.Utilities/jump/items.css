@@ -1,0 +1,34 @@
+.icon {
+	width: 32px;
+	height: 32px;
+	margin-right: 8px;
+	vertical-align: middle;
+}
+.letter {
+	padding-top: 8px;
+	background-color: #fff;
+	position: sticky;
+	top: 0;
+	left: 0;
+	border-bottom: 1px solid;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(to right, rgba(136,136,136,1), rgba(136,136,136,0));
+	color: #888;
+	margin-left: 3px;
+	margin-right: 3px;
+	padding-left: 4px;
+	padding-right: 6px;
+	padding-bottom: 3px;
+	margin-bottom: 2px;
+	font-size: 14px;
+}
+.masks {
+	margin-top: 6px;
+}
+.masks-button {
+	width: 22px;
+	height: 32px;
+	float: right;
+	line-height: 22px;
+	font-size: 12px;
+}
