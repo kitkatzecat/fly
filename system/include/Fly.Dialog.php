@@ -41,8 +41,10 @@ Fly.dialog = {
 
 		var att64 = btoa(JSON.stringify(attributes));
 
+		var title = (!attributes.hasOwnProperty('title') || attributes.title == '' ? Fly.window.name.get() : `${Fly.window.name.get()} - ${attributes.title}`);
+
 		var win = {
-			title: `${Fly.window.name.get()} - ${attributes.title}`,
+			title: title,
 			name: Fly.window.name.get(),
 			icon: Fly.window.icon.get(),
 			x: (pos[0]+(size[0]/2))-200,
