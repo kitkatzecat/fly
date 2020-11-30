@@ -88,6 +88,13 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	
 	// Init new task
 	task.index += 1;
+
+	// Record app history
+	try {
+		system.command('history:add,'+id);
+	} catch(e) {
+		console.log('Cannot record app history: '+e);
+	}
 	
 	// Create window object
 	var frame = document.createElement('div');
@@ -1378,7 +1385,14 @@ if ($window_move) {
 }
 
 task.background = function(id='public', attributes={title:'Untitled', name:'Untitled', icon:'', location:''}) {
-	
+
+	// Record app history
+	try {
+		system.command('history:add,'+id);
+	} catch(e) {
+		console.log('Cannot record app history: '+e);
+	}
+
 	// Create window object
 	var frame = document.createElement('div');
 	frame.window = {};
