@@ -11,6 +11,10 @@ include 'Fly.Dialog.php';
 <script>
 var Desktop = {
 	init: function() {
+		if (window.top.task.count('<?php echo $_FLY['APP']['ID']; ?>.Desktop') > 1) {
+			Fly.dialog.message({title:'',message:'Desktop already open',content:'Another instance of the desktop file view is already open.',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>error.svg',callback:Fly.window.close});
+		} else {
+
 		Desktop.desktop = document.createElement("div");
 		Desktop.desktop.style.position = 'fixed';
 		Desktop.desktop.style.top = window.top.ui.toolbar.offsetHeight+'px';
@@ -41,12 +45,16 @@ var Desktop = {
 		window.top.document.body.appendChild(Desktop.desktop);
 
 		window.top.ui.desktop = Desktop.desktop;
+
+		}
 	},
 	opacity: function(opacity) {
 		Desktop.desktop.style.opacity = opacity;
 	},
 	close: function() {
-		Desktop.desktop.remove();
+		try {
+			Desktop.desktop.remove();
+		} catch(e) {}
 		Fly.window.close();
 	}
 };
