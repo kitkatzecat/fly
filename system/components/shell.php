@@ -213,6 +213,7 @@ shell.notification.init = function() {
 	block.style.marginTop = '0px';
 	block.style.overflowY = 'auto';
 	block.style.overflowX = 'visible';
+	block.style.zIndex = '1';
 	block.style.pointerEvents = 'none';
 	document.body.appendChild(shell.notification.block);
 	
