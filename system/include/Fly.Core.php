@@ -221,8 +221,27 @@ function FlyCoreVars($scope=false,$_FLY=false) {
 	}
 
 	if ($_FLY['IS_APP']) {
-		$_FLY_APP_MANIFEST = simpleXML_load_file($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',trimslashes(str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.xml');
-		$_FLY['APP'] = array(
+		if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',trimslashes(str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.json')) {
+			$_FLY_APP_MANIFEST = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',trimslashes(str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.json'),true);
+			$_FLY_APP_COREVARS_SYSTEM = FlyCoreVars_System($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.json');
+			$_FLY['APP'] = array(
+				'PATH' => $_FLY['RESOURCE']['PATH']['APPS'].explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/',
+				'URL' => $_FLY['RESOURCE']['URL']['APPS'].explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/',
+				'ID' => $_FLY_APP_MANIFEST['id'],
+				'NAME' => $_FLY_APP_MANIFEST['name'],
+				'PUBLISHER' => $_FLY_APP_MANIFEST['publisher'],
+				'VERSION' => $_FLY_APP_MANIFEST['version'],
+				'INDEX' => $_FLY['RESOURCE']['URL']['APPS'].$_FLY_APP_MANIFEST['id'].'/'.$_FLY_APP_MANIFEST['index'],
+				'INDEX_URL' => $_FLY['RESOURCE']['URL']['APPS'].$_FLY_APP_MANIFEST['id'].'/'.$_FLY_APP_MANIFEST['index'],
+				'INDEX_PATH' =>$_FLY['RESOURCE']['PATH']['APPS'].$_FLY_APP_MANIFEST['id'].'/'.$_FLY_APP_MANIFEST['index'],
+				'ICON' => FlyVarsReplace($_FLY_APP_MANIFEST['icon'],true,$_FLY_APP_COREVARS_SYSTEM),
+				'ICON_URL' => FlyVarsReplace($_FLY_APP_MANIFEST['icon'],true,$_FLY_APP_COREVARS_SYSTEM),
+				'ICON_PATH' => FlyVarsReplace($_FLY_APP_MANIFEST['icon'],false,$_FLY_APP_COREVARS_SYSTEM)
+			);
+		} else {
+			$_FLY_APP_MANIFEST = simpleXML_load_file($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',trimslashes(str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.xml');
+			$_FLY_APP_COREVARS_SYSTEM = FlyCoreVars_System($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.xml');
+			$_FLY['APP'] = array(
 				'PATH' => $_FLY['RESOURCE']['PATH']['APPS'].explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/',
 				'URL' => $_FLY['RESOURCE']['URL']['APPS'].explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/',
 				'ID' => (string)$_FLY_APP_MANIFEST->id,
@@ -232,10 +251,11 @@ function FlyCoreVars($scope=false,$_FLY=false) {
 				'INDEX' => $_FLY['RESOURCE']['URL']['APPS'].(string)$_FLY_APP_MANIFEST->id.'/'.(string)$_FLY_APP_MANIFEST->index,
 				'INDEX_URL' => $_FLY['RESOURCE']['URL']['APPS'].(string)$_FLY_APP_MANIFEST->id.'/'.(string)$_FLY_APP_MANIFEST->index,
 				'INDEX_PATH' =>$_FLY['RESOURCE']['PATH']['APPS'].(string)$_FLY_APP_MANIFEST->id.'/'.(string)$_FLY_APP_MANIFEST->index,
-				'ICON' => FlyVarsReplace(str_replace('%app_path%','%FLY.WORKING_URL%',(string)$_FLY_APP_MANIFEST->icon),true,FlyCoreVars_System($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.xml')),
-				'ICON_URL' => FlyVarsReplace(str_replace('%app_path%','%FLY.WORKING_URL%',(string)$_FLY_APP_MANIFEST->icon),true,FlyCoreVars_System($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.xml')),
-				'ICON_PATH' => FlyVarsReplace(str_replace('%app_path%','%FLY.WORKING_PATH%',(string)$_FLY_APP_MANIFEST->icon),false,FlyCoreVars_System($_FLY['RESOURCE']['PATH']['APPS'].'/'.explode('/',preg_replace('#/+#','/',str_replace($_FLY['RESOURCE']['PATH']['APPS'],'',$_FLY['WORKING_PATH'])))[0].'/ApplicationManifest.xml'))
+				'ICON' => FlyVarsReplace(str_replace('%app_path%','%FLY.WORKING_URL%',(string)$_FLY_APP_MANIFEST->icon),true,$_FLY_APP_COREVARS_SYSTEM),
+				'ICON_URL' => FlyVarsReplace(str_replace('%app_path%','%FLY.WORKING_URL%',(string)$_FLY_APP_MANIFEST->icon),true,$_FLY_APP_COREVARS_SYSTEM),
+				'ICON_PATH' => FlyVarsReplace(str_replace('%app_path%','%FLY.WORKING_PATH%',(string)$_FLY_APP_MANIFEST->icon),false,$_FLY_APP_COREVARS_SYSTEM)
 			);
+		}
 	} else {
 		$_FLY['APP'] = false;
 	}
