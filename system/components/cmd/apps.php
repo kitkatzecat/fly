@@ -21,11 +21,22 @@ while (false !== ($file = readdir($dh))) {
 			if (match($file,$cmd)) {
 				array_push($return,$file);
 			}
-			$xml = simpleXML_load_file($path.'/'.$file.'/ApplicationManifest.xml');
-			if (isset($xml->masks)) {
-				foreach ($xml->masks->children() as $mask) {
-					if (match($file.'.'.(string)$mask['id'],$cmd)) {
-						array_push($return,$file.'.'.(string)$mask['id']);
+			if (file_exists($path.'/'.$file.'/ApplicationManifest.json')) {
+				$json = json_decode(file_get_contents($path.'/'.$file.'/ApplicationManifest.json'),true);
+				if (isset($json['masks'])) {
+					foreach ($json['masks'] as $id => $mask) {
+						if (match($file.'.'.$id,$cmd)) {
+							array_push($return,$file.'.'.$id);
+						}
+					}
+				}
+			} else {
+				$xml = simpleXML_load_file($path.'/'.$file.'/ApplicationManifest.xml');
+				if (isset($xml->masks)) {
+					foreach ($xml->masks->children() as $mask) {
+						if (match($file.'.'.(string)$mask['id'],$cmd)) {
+							array_push($return,$file.'.'.(string)$mask['id']);
+						}
 					}
 				}
 			}
