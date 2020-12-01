@@ -110,6 +110,8 @@ function FlyFileStringProcessor($item) {
 		if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].$appCheck) && $appCheck) { // APPLICATION ------------------------------------------------
 			$type = 'application';
 			$icon = $_FLY['RESOURCE']['URL']['ICONS'].'application.svg';
+
+			$hidden = false;
 			
 			if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.json')) {
 				$manifestJSON = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.json'),true);
@@ -146,6 +148,10 @@ function FlyFileStringProcessor($item) {
 					$location = $FLY['WORKING_URL'].$location;
 				}
 
+				if (isset($manifestJSON['hidden']) && !!$manifestJSON['hidden']) {
+					$hidden = true;
+				}
+
 				$return = [
 					'file' => $id,
 					'ffile' => $id,
@@ -156,6 +162,7 @@ function FlyFileStringProcessor($item) {
 					'publisher' => $manifest['publisher'],
 					'version' => $manifest['version'],
 					'icon' => FlyVarsReplace($manifestJSON['icon'],true,$FLY),
+					'hidden' => $hidden,
 					'date' => $manifest['date'],
 					'location' => $_FLY['RESOURCE']['PATH']['APPS'].$appCheck,
 					'manifest' => $_FLY['RESOURCE']['PATH']['APPS'].$appCheck.'/ApplicationManifest.json',
@@ -203,6 +210,7 @@ function FlyFileStringProcessor($item) {
 				if (!empty(explode('.',$filePath)[2])) {
 					if (isset($manifestXML->masks->xpath("//mask[@id='".explode('.',$filePath)[2]."']")[0])) {
 						$manifestXML = $manifestXML->masks->xpath("//mask[@id='".explode('.',$filePath)[2]."']")[0];
+						$hidden = ($manifestXML['hidden'] == 'true' ? true : false);
 					} else {
 						return false;
 					}
@@ -336,7 +344,7 @@ function FlyFileStringProcessor($item) {
 					];
 					$action = 'task.background(\''.$id.'\', '.json_encode($window).');system.command(\'run:SprocketComputers.Utilities.XMLManifestNotif,id='.$id.'\');';
 				}
-				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"bname"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"window"=>$window,"location"=>$location,"manifest"=>$manifest];
+				return ["file"=>$filePath,"ffile"=>$filePath,"type"=>$type,"name"=>$name,"bname"=>$name,"fname"=>$name,"publisher"=>$publisher,"version"=>$version,"hidden"=>$hidden,"date"=>$date,"icon"=>$icon,"description"=>$description,"action"=>$action,"window"=>$window,"location"=>$location,"manifest"=>$manifest];
 			} else {
 				return false;
 			}
