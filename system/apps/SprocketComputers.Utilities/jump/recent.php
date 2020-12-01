@@ -77,8 +77,9 @@ foreach ($recent as $app) {
 	if (is_string($app)) {
 		echo '<div class="letter FlyUiNoSelect">'.$app.'</div>';
 	} else {
-		if (!$app[''])
-		echo '<div oncontextmenu="return contextMenu(\''.$app['file'].'\',this,event);" onclick="window.parent.run(\''.$app['file'].'\');" class="FlyUiMenuItem FlyUiNoSelect"><img class="icon" src="'.$app['icon'].'">'.$app['fname'].'</div>';
+		if (!$app['hidden']) {
+			echo '<div oncontextmenu="return contextMenu(\''.$app['file'].'\',this,event);" onclick="window.parent.run(\''.$app['file'].'\');" class="FlyUiMenuItem FlyUiNoSelect"><img class="icon" src="'.$app['icon'].'">'.$app['fname'].'</div>';
+		}
 	}
 }
 
