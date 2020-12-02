@@ -50,6 +50,10 @@ var Dialog = {
 					if (!Dialog.validateInput()) {
 						return false;
 					}
+				} else if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes['input']['type'] == 'list') {
+					if (!Dialog.validateList()) {
+						return false;
+					}
 				}
 				if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.type == 'select') {
 					document.getElementById('input').value = document.getElementById('select').value;
@@ -116,6 +120,39 @@ var Dialog = {
 					option.disabled = (element['disabled'] ? true : false);
 					select.add(option);
 				});
+			} else if (Dialog.attributes.input.type == 'list') {
+				document.querySelector('div.input').style.display = 'none';
+				document.querySelector('div.richSelect').style.display = 'block';
+
+				var list = document.querySelector('.richSelect');
+				var input = document.getElementById('input');
+
+				Dialog.attributes.input.options.forEach(function(element,i) {
+					if (element.hasOwnProperty('header') && !!element['header']) {
+						let header = document.createElement('div');
+						header.className = 'richSelectHeader';
+						header.innerHTML = element['text'];
+						list.appendChild(header);
+					} else {
+						let option = document.createElement('div');
+						option.className = 'richSelectItem FlyUiMenuItem FlyUiNoSelect '+(element['selected'] ? 'FlyUiMenuItemActive' : '');
+						option.innerHTML = (element.hasOwnProperty('icon') ? '<img class="richSelectIcon" src="'+element['icon']+'">' : '')+'<div class="richSelectTitle">'+element['text']+'</div>';
+						option.value = element['value'];
+						option.onclick = function() {
+							document.querySelectorAll('.richSelectItem').forEach(function(e) {
+								e.classList.remove('FlyUiMenuItemActive');
+							});
+							option.classList.add('FlyUiMenuItemActive');
+							input.value = option.value;
+						};
+						list.appendChild(option);
+						if (!!element['selected']) {
+							option.onclick();
+						}
+					}
+				});
+
+				list.style.height = Math.min(list.scrollHeight+8,300)+'px';
 			} else {
 				input.type = 'text';
 			}
@@ -174,7 +211,7 @@ var Dialog = {
 			window.top.shell.sound.system(Dialog.attributes.sound);
 		} catch(e) {}
 	},
-	positionModifier: 56,
+	positionModifier: 48,
 	position: function() {
 		var height = (Dialog.positionModifier+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.size.set(400,height);
@@ -205,11 +242,31 @@ var Dialog = {
 			if (valmsg.style.display != 'block') {
 				valmsg.style.display = 'block';
 				var oldheight = window.top.document.getElementById(Fly.window.id).offsetHeight;
-				Dialog.size();
+				console.log(Dialog.positionModifier);
+				Dialog.position();
 				Dialog.positionRelative(oldheight);
 			} else {
 				Fly.window.flash();
 			}
+			try {
+				window.top.shell.sound.system('alert');
+			} catch(e) {}
+			return false;
+		}
+	},
+	validateList: function() {
+		let r = false;
+		document.querySelectorAll('.richSelectItem').forEach(function(i) {
+			if (i.classList.contains('FlyUiMenuItemActive')) {
+				r = true;
+			}
+		});
+
+		if (r) {
+			return true;
+		} else {
+			Fly.window.message('Select an option.',4);
+			Fly.window.flash();
 			try {
 				window.top.shell.sound.system('alert');
 			} catch(e) {}
@@ -245,7 +302,7 @@ h1,h2,h3,h4,h5,h6,p {
 .title {
 	font-size: 1.2em;
 	font-weight: bold;
-	padding-top: 18px;
+	padding-top: 16px;
 	padding-bottom: 16px;
 	padding-left: 9%;
 	padding-right: 9%;
@@ -309,12 +366,54 @@ p#content {
 input#input,select#select {
 	width: 90%;
 }
-.input,.select {
+.input,.select,.richSelect {
 	display: none;
 	padding-left: 9%;
 	padding-right: 9%;
 	margin-top: -6px;
 	padding-bottom: 12px;
+}
+.richSelect {
+	margin: -4px;
+	/*transform: translateY(16px);*/
+	box-sizing: border-box;
+	overflow-x: hidden;
+	overflow-y: auto;
+	display: block;
+	position: relative;
+}
+.richSelectItem {
+
+}
+.richSelectIcon {
+	width: 24px;
+	height: 24px;
+	vertical-align: middle;
+	margin-right: 6px;
+}
+.richSelectTitle {
+	vertical-align: middle;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	width: calc(100% - 30px);
+	display: inline-block;
+}
+.richSelectHeader {
+	position: sticky;
+	top: -4px;
+	background-color: #fff;
+	z-index: 2;
+	border-bottom: 1px solid;
+	border-image-slice: 1;
+	border-image-source: linear-gradient(to right, rgba(136,136,136,1), rgba(136,136,136,0));
+	color: #888;
+	padding-left: 4px;
+	padding-right: 6px;
+	padding-bottom: 3px;
+	padding-top: 4px;
+	margin-bottom: 2px;
+	font-size: 14px;
 }
 .Button {
 	width: 100px;
@@ -358,6 +457,7 @@ input#input,select#select {
 <div class="description FlyUiNoSelect"><p id="content"></p></div>
 <div class="input"><input autocomplete="off" type="text" id="input">
 <p id="validateMessage" class="FlyCSDescriptionHint"></p></div>
+<div class="richSelect"></div>
 <div class="select"><select id="select"></select></div>
 
 </div>

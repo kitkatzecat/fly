@@ -150,6 +150,36 @@ Fly.dialog = {
 			]
 		});
 	},
+	list: function(properties={}) {
+		properties = Object.assign({title:'List',message:'Select',content:'Select an option.',options:[],icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
+
+		Fly.dialog.custom({
+			modal: true,
+			title: properties.title,
+			message: properties.message,
+			content: properties.content,
+			sound: "question",
+			input: {
+				type: "list",
+				options: properties.options
+			},
+			icon: properties.icon,
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
+					default: true,
+					onclick: function(i) {
+						properties.callback(i);
+					}
+				},
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"
+				}
+			]
+		});
+	},
 	input: function(properties={}) {
 		properties = Object.assign({title:'Input',message:'Input',content:'Input some text.',validate:false,validateMessage:'',placeholder:'',value:'',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',callback:function(){}},properties);
 
