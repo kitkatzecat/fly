@@ -17,13 +17,13 @@ var Desktop = {
 
 		Desktop.desktop = document.createElement("div");
 		Desktop.desktop.style.position = 'fixed';
-		Desktop.desktop.style.top = window.top.ui.toolbar.offsetHeight+'px';
 		Desktop.desktop.style.left = '0px';
 		Desktop.desktop.style.right = '0px';
 		Desktop.desktop.style.bottom = '0px';
 		Desktop.desktop.style.zIndex = '0';
 		Desktop.desktop.style.transition = 'opacity .2s linear';
 		Desktop.desktop.style.opacity = '0';
+		Desktop.checkTop();
 
 		Desktop.frame = document.createElement('iframe');
 		Desktop.frame.style.width = '100%';
@@ -46,6 +46,14 @@ var Desktop = {
 
 		window.top.ui.desktop = Desktop.desktop;
 
+		}
+	},
+	checkTop: function() {
+		try {
+			Desktop.desktop.style.top = window.top.ui.toolbar.offsetHeight+'px';
+		} catch(e) {
+			Desktop.desktop.style.top = '0px';
+			setTimeout(Desktop.checkTop,1000);
 		}
 	},
 	opacity: function(opacity) {

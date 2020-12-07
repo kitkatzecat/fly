@@ -100,7 +100,9 @@ function View(Folder=false,List=false) {
 		};
 
 		document.addEventListener('mousedown',function() {
-			window.top.ui.toolbar.setActiveApplication('Desktop');
+			try {
+				window.top.ui.toolbar.setActiveApplication('Desktop');
+			} catch(e) {}
 	
 			window.top.task.index += 1;
 			

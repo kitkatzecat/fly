@@ -34,7 +34,7 @@ ui.dev = false;
 
 ui.init = function() {
 	// if UI is not already initialized
-	if (typeof ui.toolbar == "undefined") {
+	if (typeof ui.loading == "undefined") {
 		ui.loading = document.createElement("div");
 		ui.loading.style.position = 'fixed';
 		ui.loading.style.bottom = '32px';
@@ -75,7 +75,13 @@ ui.init = function() {
 			ui.loadingCursor.style.display = 'none';
 		}
 		ui.loading.onclick = ui.loading.hide;
-		
+
+		ui.toolbarHook = function(uih) {
+			ui.toolbar = uih.toolbar;
+			ui.time = uih.time;
+			ui.tray = uih.tray;
+		}
+	/*	
 		ui.toolbar = document.createElement("div");
 		ui.toolbar.className = 'FlyToolbar';
 		ui.toolbar.oncontextmenu = function() {
@@ -379,7 +385,7 @@ ui.init = function() {
 		ui.toolbar.trayExpand.innerHTML = '▼';
 		ui.toolbar.trayExpand.onclick = function() {ui.tray.toggle();};
 		ui.toolbar.appendChild(ui.toolbar.trayExpand);
-		
+	*/	
 		/*
 		ui.desktop = document.createElement("div");
 		ui.desktop.style.position = 'fixed';
@@ -403,7 +409,7 @@ ui.init = function() {
 		},2000);		
 		document.body.appendChild(ui.desktop);
 		*/
-		
+	/*	
 		ui.time = document.createElement("div");
 		ui.time.style.position = 'fixed';
 		ui.time.style.top = ui.toolbar.offsetHeight+'px';
@@ -493,7 +499,7 @@ ui.init = function() {
 		ui.tray.openWinMgr.innerHTML = 'Open Window Manager';
 		ui.tray.openWinMgr.onclick = function() {ui.tray.toggle();system.command('run:SprocketComputers.Utilities.WinMgr');};
 		ui.tray.appendChild(ui.tray.openWinMgr);
-		
+	*/	
 		/*
 		ui.tray.add = function(id) {
 			var win = document.getElementById(id);
@@ -523,7 +529,7 @@ ui.init = function() {
 			document.getElementById('TaskIcon-'+id).parentNode.removeChild(document.getElementById('TaskIcon-'+id));
 			document.getElementById('TaskButton-'+id).parentNode.removeChild(document.getElementById('TaskButton-'+id));
 		}*/
-		
+	/*	
 		ui.tray.minimized = [];
 		
 		ui.tray.add = function(frame) {
@@ -643,12 +649,12 @@ ui.init = function() {
 		spacerDiv.style.width = '100%';
 		spacerDiv.style.height = ui.toolbar.offsetHeight+'px';
 		document.body.appendChild(spacerDiv);
-		
+	
 		var flyStylesheet = document.createElement('style');
-		flyStylesheet.textContent = '/* Added by ui.php - window spacing for toolbar */';
 		flyStylesheet.textContent += '\n.FlyWindowActive,.FlyWindowInactive,.FlyWindowMinimize,.FlyWindowTransparent,.FlyWindowTransparent,.FlyWindowExpand { margin-top: '+ui.toolbar.offsetHeight+'px; }';
 		flyStylesheet.textContent += '\n.FlyWindowExpand { height: calc(100% - '+ui.toolbar.offsetHeight+'px) !important; }';
 		document.head.appendChild(flyStylesheet);
+	*/
 
 		ui.jump = document.createElement("div");
 		ui.jump.className = 'FlyUiControlScaled';
@@ -662,7 +668,7 @@ ui.init = function() {
 		ui.jump.style.position = 'fixed';
 		ui.jump.style.transition = 'height .3s ease-in-out';
 		ui.jump.style.visibility = 'visible';
-		ui.jump.style.top = ui.toolbar.offsetHeight+'px';
+		ui.jump.style.top = '0';
 		ui.jump.style.left = '0px';
 		ui.jump.style.zIndex = '4999999';
 		ui.jump.innerHTML = '<iframe allowtransparency="true" id="fly-ui-jump-list" frameborder="0" scrolling="no" style="height:456px;overflow:auto;width:295px;padding:2px;background-color:#FFFFFF;" src=""></iframe><div onclick="system.command(\'run:SprocketComputers.Options,page=personalization,action=jump\');ui.jump.toggle();" class="FlyUiTextHoverControl" style="margin-top:4px;padding:4px;height:36px;">Customize...</div>';
@@ -684,6 +690,7 @@ ui.init = function() {
 		ui.jump.toggleLegacy = function() {
 			if (ui.jump.style.display == 'none') {
 				document.body.appendChild(ui.jump.coverDiv);
+				ui.jump.style.top = ui.toolbar.offsetHeight+'px';
 				document.getElementById('fly-ui-jump-list').src = '/system/components/jump.php';
 			} else {
 				ui.jump.style.height = '0px';
@@ -702,13 +709,14 @@ ui.init = function() {
 		ui.jump.coverDiv.style.transition = 'background-color .2s linear';
 		ui.jump.coverDiv.style.zIndex = '4999998';
 		ui.jump.coverDiv.onclick = ui.jump.toggle;
-		ui.updateTime();
+		//ui.updateTime();
 		
 		return true;
 	} else {
 		return false;
 	}
 }
+/*
 ui.updateTime = function() {
 	var currentTime = new Date();
 	var hours = currentTime.getHours();
@@ -734,4 +742,5 @@ ui.updateTime = function() {
 	ui.toolbar.time.title = dstring;
 	ui.time.content.timedate.innerHTML=td;
 }
+*/
 </script>

@@ -1,1 +1,2 @@
+cmd('run:SprocketComputers.Utilities.Toolbar');
 cmd('run:SprocketComputers.zFileManager.Desktop');
