@@ -265,7 +265,7 @@ var Dialog = {
 		if (r) {
 			return true;
 		} else {
-			Fly.window.message('Select an option.',4);
+			Fly.window.message('Select an option',4);
 			Fly.window.flash();
 			try {
 				window.top.shell.sound.system('alert');
