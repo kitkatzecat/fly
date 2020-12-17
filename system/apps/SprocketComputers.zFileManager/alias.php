@@ -11,13 +11,15 @@ include 'Fly.File.php';
 
 if ($_GET['create'] == 'true') {
 	if (!isset($_GET['name'])) {
-		$file = base64_encode(json_encode(FlyFileStringProcessor(FlyVarsReplace($_GET['file']))));
+		$cfile = base64_encode(json_encode(FlyFileStringProcessor(FlyVarsReplace($_GET['file']))));
 	} else {
-		$file = base64_encode(json_encode($_GET['file']));
+		$cfile = base64_encode($_GET['file']);
 	}
+	$ifile = '';
 	$ready = 'Create.open';
 } else if ($_GET['icon'] == 'true') {
-	$file = base64_encode(json_encode($_GET['file']));
+	$cfile = base64_encode('{}');
+	$ifile = base64_encode($_GET['file']);
 	$ready = 'Icon.check';
 } else {
 	$ready = 'Fly.window.close';
@@ -25,8 +27,9 @@ if ($_GET['create'] == 'true') {
 ?>
 </head>
 <script>
+
 var Create = {
-	file: JSON.parse(atob('<?php echo $file; ?>')),
+	file: JSON.parse(atob('<?php echo $cfile; ?>')),
 	open: function() {
 		Fly.window.name.set('Create Alias');
 		Fly.window.title.set('Create Alias');
@@ -79,7 +82,7 @@ var Create = {
 	},
 };
 var Icon = {
-	file: atob('<?php echo $file; ?>'),
+	file: atob('<?php echo $ifile; ?>'),
 	check: function() {
 		Fly.window.name.set('Change Alias Icon');
 		Fly.window.title.set('Change Alias Icon');
