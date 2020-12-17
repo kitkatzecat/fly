@@ -269,6 +269,17 @@ function ContextMenu(obj,e,ret=false) {
 		}
 	]);
 
+	if (obj['type'] == 'file') {
+		menu.push([
+			'Copy to',
+			function() {},
+			{
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>copy.svg',
+				disabled: true
+			}
+		]);
+	}
+
 	// More
 	var more = [];
 	
@@ -278,14 +289,28 @@ function ContextMenu(obj,e,ret=false) {
 		{
 			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>fly.svg'
 		}
-	],[
-		'Create alias...',
-		function() {},
-		{
-			icon: '<?php echo $_FLY['WORKING_URL']; ?>alias.svg',
-			disabled: true
-		}
 	]);
+
+	if (obj['extension'] != 'als') {
+		more.push([
+			'Create alias...',
+			function() {window.top.system.command('run:SprocketComputers.zFileManager.Alias,create,file='+encodeURIComponent(obj['file']));},
+			{
+				icon: '<?php echo $_FLY['WORKING_URL']; ?>alias.svg',
+				disabled: (obj['extension'] == 'als')
+			}
+		]);
+	}
+
+	if (obj['extension'] == 'als') {
+		more.push([
+			'Change alias icon...',
+			function() {window.top.system.command('run:SprocketComputers.zFileManager.Alias,icon,file='+encodeURIComponent(obj['file']));},
+			{
+				icon: '<?php echo $_FLY['WORKING_URL']; ?>alias.svg'
+			}
+		]);
+	}
 
 	if (obj['isdir']) {
 		more.push([
