@@ -65,7 +65,19 @@ function contextMenu(file,item,e) {
 				item.onclick();
 			},
 			{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>run.svg'}
+		],[''],[
+			'Pin to Jump',
+			function() {
+				window.parent.run('SprocketComputers.Utilities.PinJump,file='+file);
+			},
+			{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pin.svg'}
 		],[
+			'Create alias...',
+			function() {
+				window.parent.run('SprocketComputers.zFileManager.Alias,create,file='+file);
+			},
+			{icon:'<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.zFileManager/alias.svg'}
+		],[''],[
 			'Application Options',
 			function() {
 				window.parent.run('SprocketComputers.zOptions,page=filesapps%2Fappdetails.php%3Fapp%3D'+file);
