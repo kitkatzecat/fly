@@ -202,6 +202,8 @@ shell.notification.init = function() {
 	if (typeof ui !== "undefined") {
 		if (typeof ui.toolbar !== "undefined") {
 			block.style.top = ui.toolbar.offsetHeight+'px';
+		} else {
+			block.style.top = '0px';
 		}
 	} else {
 		block.style.top = '0px';

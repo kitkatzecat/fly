@@ -80,6 +80,12 @@ ui.init = function() {
 			ui.toolbar = uih.toolbar;
 			ui.time = uih.time;
 			ui.tray = uih.tray;
+
+			try {
+				shell.notification.block.style.top = ui.toolbar.offsetHeight+'px';
+			} catch(e) {
+				console.log('ui.toolbarHook - Cannot adjust top of notification block: '+e);
+			}
 		}
 	/*	
 		ui.toolbar = document.createElement("div");
