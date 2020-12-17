@@ -169,12 +169,14 @@ Fly.dialog = {
 					align: "right",
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
 					default: true,
+					validate: true,
 					onclick: function(i) {
 						properties.callback(i);
 					}
 				},
 				{
 					align: "right",
+					validate: false,
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"
 				}
 			]
@@ -202,12 +204,14 @@ Fly.dialog = {
 					align: "right",
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
 					default: true,
+					validate: properties.validate,
 					onclick: function(i) {
 						properties.callback(i);
 					}
 				},
 				{
 					align: "right",
+					validate: false,
 					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"
 				}
 			]

@@ -50,7 +50,7 @@ var Dialog = {
 					if (!Dialog.validateInput()) {
 						return false;
 					}
-				} else if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes['input']['type'] == 'list') {
+				} else if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes['input']['type'] == 'list' && element.hasOwnProperty('validate') && element.validate == true) {
 					if (!Dialog.validateList()) {
 						return false;
 					}
@@ -149,6 +149,10 @@ var Dialog = {
 						if (!!element['selected']) {
 							option.onclick();
 						}
+						if (!!element['disabled']) {
+							option.style.filter = 'grayscale(100%)';
+							option.style.pointerEvents = 'none';
+						}
 					}
 				});
 
@@ -211,7 +215,7 @@ var Dialog = {
 			window.top.shell.sound.system(Dialog.attributes.sound);
 		} catch(e) {}
 	},
-	positionModifier: 48,
+	positionModifier: 50,
 	position: function() {
 		var height = (Dialog.positionModifier+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.size.set(400,height);
