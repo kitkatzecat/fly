@@ -82,8 +82,10 @@ if (typeof Fly.window == "undefined") {
 	}
 	Fly.window.size.get = function() {
 		var height = window.top.innerHeight;
-		if (typeof window.top.ui.toolbar !== 'undefined') {
+		try {
 			height -= window.top.ui.toolbar.offsetHeight;
+		} catch(e) {
+			console.log('Fly.window.size.get - Couldn\'t get toolbar size: UI may not be active');
 		}
 		return [window.top.innerWidth,height];
 	}
