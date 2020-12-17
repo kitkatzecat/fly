@@ -13,6 +13,8 @@ var Player = {
 		Player.c.big = document.getElementById('Button-Big');
 		Player.c.small = document.getElementById('Button-Small');
 		Player.c.canvasContainer = document.getElementById('Canvas-Container');
+		Player.c.canvasBgContainer = document.getElementById('Canvas-Bg-Container');
+		Player.c.canvasBg = document.getElementById('Canvas-Bg');
 		Player.c.title = document.getElementById('Text-Title');
 		Player.c.artist = document.getElementById('Text-Artist');
 		Player.c.subtitle = document.getElementById('Text-Subtitle');
@@ -87,15 +89,43 @@ var Player = {
 	},
 	initVisualize: function(visual) {
 		if (!!Player.c.canvas) {
-			Player.c.canvasContainer.removeChild(Player.c.canvas);
+			Player.c.canvas.remove();
 		}
+		if (!!Player.c.canvasBg) {
+			Player.c.canvasBg.remove();
+		}
+		var date = Date.now();
+
 		Player.c.canvas = document.createElement('canvas');
-		Player.c.canvas.id = 'Canvas-Visualize-'+Date.now();
+		Player.c.canvas.id = 'Canvas-Visualize-'+date;
 		Player.c.canvasContainer.appendChild(Player.c.canvas);
+
+		Player.c.canvasBg = document.createElement('canvas');
+		Player.c.canvasBg.style.filter = 'blur(40px) brightness(50%) saturate(200%)';
+		Player.c.canvasBg.id = 'Canvas-Bg-Visualize-'+date;
+		Player.c.canvasBg.className = 'Canvas-Bg';
+		Player.c.canvasBgContainer.appendChild(Player.c.canvasBg);
+		Player.visualizeBg(Player.c.canvas.id);
+
 		Player.sizeCanvas();
 
 		Player.wave = new Wave();
-		Player.wave.fromElement("Audio",Player.c.canvas.id,{type:visual,skipUserEventsWatcher:true,colors:['rgb(180,180,255)','rgb(80,80,155)']});
+		Player.wave.fromElement("Audio",Player.c.canvas.id,{type:visual,skipUserEventsWatcher:true,colors:['rgb(180,180,255)','rgb(80,80,155)','rgb(40,40,115)']});
+	},
+	visualizeBg: function(canvas) {
+		var bg = Player.c.canvasBg;
+		if (Player.c.canvas.id == canvas) {
+			var ctx = bg.getContext('2d');
+			try {
+				ctx.drawImage(Player.c.canvas,0,0);
+			} catch(e) {console.log(e)}
+			ctx.fillStyle = 'rgba(0,0,0,0.05)';
+			ctx.fillRect(0,0,Player.c.canvasBg.width,Player.c.canvasBg.height);
+
+			window.requestAnimationFrame(function() {
+				Player.visualizeBg(canvas);
+			});
+		}
 	},
 	defaultAlbumArt: 'img/art.default.svg',
 	c: {
@@ -278,6 +308,10 @@ var Player = {
 	sizeCanvas: function() {
 		Player.c.canvas.width = Player.c.canvasContainer.offsetWidth;
 		Player.c.canvas.height = Player.c.canvasContainer.offsetHeight;
+
+		Player.c.canvasBg.width = Player.c.canvasBgContainer.offsetWidth;
+		Player.c.canvasBg.height = Player.c.canvasBgContainer.offsetHeight;
+		Player.c.canvasBg.getContext('2d').clearRect(0,0,Player.c.canvasBg.width,Player.c.canvasBg.height);
 	},
 	filter: function() {
 		Fly.dialog.select({

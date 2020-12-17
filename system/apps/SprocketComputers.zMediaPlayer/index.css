@@ -233,7 +233,7 @@
 	transform: scale(2);
 	box-shadow: 0px 2px 8px #000;
 }
-#Canvas-Container {
+#Canvas-Container,#Canvas-Bg-Container {
 	position: absolute;
 	bottom: 0;
 	left: 0;

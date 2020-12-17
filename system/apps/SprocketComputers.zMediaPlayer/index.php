@@ -43,8 +43,8 @@ Fly.window.ready = function() {
 
 <div id="Main" style="display:block;">
 	<video id="Video"></video>
-	<div id="Canvas-Container">
-	</div>
+	<div id="Canvas-Bg-Container"></div>
+	<div id="Canvas-Container"></div>
 	<div id="Text-Info">
 		<img id="AlbumArt" src="img/art.default.svg">
 		<div id="Text-Title" class="FlyCSTitle"></div>
