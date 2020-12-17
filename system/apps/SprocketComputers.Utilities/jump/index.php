@@ -232,7 +232,7 @@ function nav(page) {
 	<div onclick="run('SprocketComputers.zOptions,page=users');" title="Change user options" class="FlyUiToolbarItem item"><img class="userImage" src="<?php echo $_FLY['RESOURCE']['URL']['OS']; ?>userimagelight.svg"><?php echo htmlspecialchars($_FLY['USER']['NAME']); ?></div>
 	<div class="divider"></div>
 	<div onclick="run('SprocketComputers.Utilities.LogOff');" title="Close all applications and end your session" class="FlyUiToolbarItem item"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg" class="itemicon">Log Off</div>
-	<div class="FlyUiToolbarItem item" title="Close all applications and power off the computer"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>power.svg" class="itemicon">Power</div>
+	<div class="FlyUiToolbarItem item" onclick="run('SprocketComputers.Utilities.PowerOptions');" title="Close all applications and power off the computer"><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>power.svg" class="itemicon">Power</div>
 </div>
 <div id="right">
 	<iframe id="frame" src="" style="width:100%;height:100%;" frameborder="0"></iframe>
