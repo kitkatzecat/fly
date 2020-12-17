@@ -273,22 +273,12 @@
             }
         },
         "PowerOptions": {
-            "name": "Power Options",
+            "name": "Power",
             "icon": "%FLY.RESOURCE.URL.ICONS%power.svg",
             "index": "power.php",
             "hidden": true,
-            "window": {
-                "position": {
-                    "x": "32",
-                    "y": "32"
-                },
-                "size": {
-                    "width": "500",
-                    "height": "220"
-                },
-                "title": "Power Options",
-                "minimize": true
-            }
+            "window": false,
+            "title": "Power"
         },
         "LogOff": {
             "name": "Log Off",
