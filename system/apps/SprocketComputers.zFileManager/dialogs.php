@@ -726,7 +726,6 @@ var Dialog = {
 		type_any.innerHTML = 'Any (*.*)';
 		typebar.appendChild(type_any);
 		typebar.addEventListener('change',Dialog.updateType);
-		Dialog.updateType();
 
 		Fly.window.onclose = function() {
 			Dialog.callback(false);
