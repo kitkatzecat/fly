@@ -185,7 +185,7 @@ var ui = {
 				}
 			}
 			wn.push(['']);
-			if (ui.dev) {
+			if (window.top.ui.dev) {
 				wn.push(['Developer',[
 					['Reload',function(){ob.window.content.contentWindow.location.reload();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg'}]
 				],{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>options.svg'}]);
@@ -579,11 +579,12 @@ var ui = {
 		ui.flyStylesheet.textContent += '\n.FlyWindowExpand { height: calc(100% - '+ui.toolbar.offsetHeight+'px) !important; }';
 		window.top.document.head.appendChild(ui.flyStylesheet);
 
-		setInterval(ui.updateTime(),1000);
+		ui.timeInterval = setInterval(ui.updateTime,1000);
 
 		window.top.ui.toolbarHook(ui);
 	},
 	close: function() {
+		clearInterval(ui.timeInterval);
 		ui.toolbar.flyButton.remove();
 		ui.toolbar.remove();
 		ui.time.remove();
