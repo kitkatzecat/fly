@@ -53,7 +53,8 @@ var Create = {
 				{
 					path: (Create.file['type'] == 'application' ? '<?php echo $_FLY['USER']['PATH']; ?>' : Create.file['fpath']),
 					name: Create.file['bname'],
-					extensions: ['als']
+					extensions: ['als'],
+					confirmOverwrite: true
 				}
 			);
 		}
