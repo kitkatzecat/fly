@@ -1166,9 +1166,11 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 		if (typeof frame.window.content.contentWindow.Fly.window != 'undefined') {
 			frame.window.content.contentWindow.Fly.window.id = frame.id;
 			frame.window.content.contentWindow.Fly.window.frame = frame;
-			try {
-				frame.window.content.contentWindow.Fly.window.ready();
-			} catch(err) {console.log(err);}
+			frame.window.content.contentWindow.document.fonts.ready.then(function() {
+				try {
+					frame.window.content.contentWindow.Fly.window.ready();
+				} catch(err) {console.log(err);}
+			});
 		}
 
 		frame.window.content.contentWindow.document.body.addEventListener('mousedown', function(e) {
