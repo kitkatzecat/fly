@@ -359,7 +359,8 @@ img.button-image {
 	bottom: 48px;
 	padding: 4px;
 	background-color: #fff;
-	overflow-y: auto;
+	/*overflow-y: auto;*/
+	overflow: hidden;
 }
 #Content.checkbox {
 	bottom: 76px;
