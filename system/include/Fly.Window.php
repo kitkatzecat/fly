@@ -18,6 +18,8 @@ if (typeof Fly.window == "undefined") {
 			Fly.window.id = window.parent.Fly.window.id;
 		} catch(err) {}
 	}
+	
+	Fly.window.frame = window.top.document.getElementById(Fly.window.id);
 
 	Fly.window.ready = function() {}
 
@@ -25,39 +27,39 @@ if (typeof Fly.window == "undefined") {
 		return Fly.window.title.get();
 	}
 	Fly.window.title.get = function() {
-		return window.top.document.getElementById(Fly.window.id).window.title;
+		return Fly.window.frame.window.title;
 	}
 	Fly.window.title.set = function(title) {
-		window.top.document.getElementById(Fly.window.id).window.setTitle(title);
-		return window.top.document.getElementById(Fly.window.id).window.title;
+		Fly.window.frame.window.setTitle(title);
+		return Fly.window.frame.window.title;
 	}
 	Fly.window.title.hide = function() {
-		window.top.document.getElementById(Fly.window.id).window.hideTitlebar();
+		Fly.window.frame.window.hideTitlebar();
 	}
 	Fly.window.title.show = function() {
-		window.top.document.getElementById(Fly.window.id).window.showTitlebar();
+		Fly.window.frame.window.showTitlebar();
 	}
 	
 	Fly.window.message = function(msg,duration=8) {
 		return Fly.window.message.show(msg,duration);
 	}
 	Fly.window.message.show = function(msg,duration=8) {
-		window.top.document.getElementById(Fly.window.id).window.showMessage(msg,duration);
+		Fly.window.frame.window.showMessage(msg,duration);
 	}
 	
 	Fly.window.buttons = function() {
 		return Fly.window.buttons.hide();
 	}
 	Fly.window.buttons.hide = function() {
-		window.top.document.getElementById(Fly.window.id).window.hideButtons();
+		Fly.window.frame.window.hideButtons();
 	}
 	Fly.window.buttons.show = function() {
-		window.top.document.getElementById(Fly.window.id).window.showButtons();
+		Fly.window.frame.window.showButtons();
 	}
 
 	Fly.window.hide = function() {
-		window.top.document.getElementById(Fly.window.id).style.display = 'none';
-		window.top.document.getElementById(Fly.window.id).window.isBackground = true;
+		Fly.window.frame.style.display = 'none';
+		Fly.window.frame.window.isBackground = true;
 
 		Fly.window.hide.handles.sizeSet = Fly.window.size.set;
 		Fly.window.hide.handles.sizeGet = Fly.window.size.get;
@@ -83,8 +85,8 @@ if (typeof Fly.window == "undefined") {
 	}
 	Fly.window.hide.handles = {};
 	Fly.window.unhide = function() {
-		window.top.document.getElementById(Fly.window.id).style.display = 'block';
-		window.top.document.getElementById(Fly.window.id).window.isBackground = false;
+		Fly.window.frame.style.display = 'block';
+		Fly.window.frame.window.isBackground = false;
 
 		Fly.window.size.set = Fly.window.hide.handles.sizeSet;
 		Fly.window.size.get = Fly.window.hide.handles.sizeGet;
@@ -96,121 +98,138 @@ if (typeof Fly.window == "undefined") {
 		return Fly.window.border.hide();
 	}
 	Fly.window.border.hide = function() {
-		window.top.document.getElementById(Fly.window.id).window.hideBorder();
+		Fly.window.frame.window.hideBorder();
 	}
 	Fly.window.border.show = function() {
-		window.top.document.getElementById(Fly.window.id).window.showBorder();
+		Fly.window.frame.window.showBorder();
 	}
 	
 	Fly.window.name = function() {
 		return Fly.window.name.get();
 	}
 	Fly.window.name.get = function() {
-		return window.top.document.getElementById(Fly.window.id).window.name;
+		return Fly.window.frame.window.name;
 	}
 	Fly.window.name.set = function(name) {
-		window.top.document.getElementById(Fly.window.id).window.setName(name);
-		return window.top.document.getElementById(Fly.window.id).window.name;
+		Fly.window.frame.window.setName(name);
+		return Fly.window.frame.window.name;
 	}
 
 	Fly.window.icon = function() {
 		return Fly.window.icon.get();
 	}
 	Fly.window.icon.get = function() {
-		return window.top.document.getElementById(Fly.window.id).window.icon;
+		return Fly.window.frame.window.icon;
 	}
 	Fly.window.icon.set = function(icon) {
-		window.top.document.getElementById(Fly.window.id).window.setIcon(icon);
-		return window.top.document.getElementById(Fly.window.id).window.icon;
+		Fly.window.frame.window.setIcon(icon);
+		return Fly.window.frame.window.icon;
 	}
 
 	Fly.window.position = function() {
 		return Fly.window.position.get();
 	}
 	Fly.window.position.get = function() {
-		if (window.top.document.getElementById(Fly.window.id).window.isExpand) {
+		if (Fly.window.frame.window.isExpand) {
 			return [0,0];
 		} else {
-			return [parseInt(window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,'')),parseInt(window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,''))];
+			return [parseInt(Fly.window.frame.style.left.replace(/\\D/g,'')),parseInt(Fly.window.frame.style.top.replace(/\\D/g,''))];
 		}
 	}
 	Fly.window.position.set = function(x=32,y=32) {
-		window.top.document.getElementById(Fly.window.id).window.setPosition(x,y);
-		return [parseInt(window.top.document.getElementById(Fly.window.id).style.left.replace(/\\D/g,'')),parseInt(window.top.document.getElementById(Fly.window.id).style.top.replace(/\\D/g,''))];
+		Fly.window.frame.window.setPosition(x,y);
+		return [parseInt(Fly.window.frame.style.left.replace(/\\D/g,'')),parseInt(Fly.window.frame.style.top.replace(/\\D/g,''))];
+	}
+	Fly.window.position.center = function() {
+		var windowHeight = Fly.window.frame.offsetHeight;
+		var windowWidth = Fly.window.frame.offsetWidth;
+
+		var screenHeight = window.top.innerHeight;
+		try {
+			screenHeight -= window.top.ui.toolbar.offsetHeight;
+		} catch(e) {
+			console.log('Fly.window.position.center - Couldn\'t get toolbar size: UI may not be active');
+		}
+		var screenWidth = window.top.innerWidth;
+
+		var x = (screenWidth/2)-(windowWidth/2);
+		var y = (screenHeight/2)-(windowHeight/2);
+
+		return Fly.window.position.set(x,y);
 	}
 
 	Fly.window.size = function() {
 		return Fly.window.size.get();
 	}
 	Fly.window.size.get = function() {
-		return [parseInt(window.top.document.getElementById(Fly.window.id).window.content.offsetWidth),parseInt(window.top.document.getElementById(Fly.window.id).window.content.offsetHeight)];
+		return [parseInt(Fly.window.frame.window.content.offsetWidth),parseInt(Fly.window.frame.window.content.offsetHeight)];
 	}
 	Fly.window.size.set = function(width=320,height=240) {
-		window.top.document.getElementById(Fly.window.id).window.setSize(width,height);
-		return [parseInt(window.top.document.getElementById(Fly.window.id).window.content.style.width.replace(/\\D/g,'')),parseInt(window.top.document.getElementById(Fly.window.id).window.content.style.height.replace(/\\D/g,''))];
+		Fly.window.frame.window.setSize(width,height);
+		return [parseInt(Fly.window.frame.window.content.style.width.replace(/\\D/g,'')),parseInt(Fly.window.frame.window.content.style.height.replace(/\\D/g,''))];
 	}
 	Fly.window.resize = function() {
 		return Fly.window.resize.enable();
 	}
 	Fly.window.resize.enable = function() {
-		window.top.document.getElementById(Fly.window.id).window.isResizable = true;
+		Fly.window.frame.window.isResizable = true;
 	}
 	Fly.window.resize.disable = function() {
-		window.top.document.getElementById(Fly.window.id).window.isResizable = false;
+		Fly.window.frame.window.isResizable = false;
 	}
 
 	Fly.window.close = function() {
-		window.top.document.getElementById(Fly.window.id).window.forceClose();
+		Fly.window.frame.window.forceClose();
 	}
 	Fly.window.close.enable = function() {
-		window.top.document.getElementById(Fly.window.id).window.composition.close.status.show();
+		Fly.window.frame.window.composition.close.status.show();
 	}
 	Fly.window.close.disable = function() {
-		window.top.document.getElementById(Fly.window.id).window.composition.close.status.hide();
+		Fly.window.frame.window.composition.close.status.hide();
 	}
 	Fly.window.onclose = Fly.window.close;
 	Fly.window.sendToBack = function() {
-		window.top.document.getElementById(Fly.window.id).window.sendToBack();
+		Fly.window.frame.window.sendToBack();
 	}
 	Fly.window.bringToFront = function() {
-		window.top.document.getElementById(Fly.window.id).window.bringToFront();
+		Fly.window.frame.window.bringToFront();
 	}
 	Fly.window.minimize = function() {
-		window.top.document.getElementById(Fly.window.id).window.minimize();
+		Fly.window.frame.window.minimize();
 	}
 	Fly.window.minimize.enable = function() {
-		window.top.document.getElementById(Fly.window.id).window.composition.minimize.status.show();
+		Fly.window.frame.window.composition.minimize.status.show();
 	}
 	Fly.window.minimize.disable = function() {
-		window.top.document.getElementById(Fly.window.id).window.composition.minimize.status.hide();
+		Fly.window.frame.window.composition.minimize.status.hide();
 	}
 	Fly.window.maximize = function() {
-		window.top.document.getElementById(Fly.window.id).window.maximize();
+		Fly.window.frame.window.maximize();
 	}
 	Fly.window.expand = function() {
-		window.top.document.getElementById(Fly.window.id).window.expand();
+		Fly.window.frame.window.expand();
 	}
 	Fly.window.expand.enable = function() {
-		window.top.document.getElementById(Fly.window.id).window.composition.expand.status.show();
+		Fly.window.frame.window.composition.expand.status.show();
 	}
 	Fly.window.expand.disable = function() {
-		window.top.document.getElementById(Fly.window.id).window.composition.expand.status.hide();
+		Fly.window.frame.window.composition.expand.status.hide();
 	}
 	Fly.window.restore = function() {
-		window.top.document.getElementById(Fly.window.id).window.restore();
+		Fly.window.frame.window.restore();
 	}
 
 	Fly.window.focus = function() {
 		Fly.window.focus.self();
 	}
 	Fly.window.focus.self = function() {
-		window.top.document.getElementById(Fly.window.id).window.resetFocus();
+		Fly.window.frame.window.resetFocus();
 	}
 	Fly.window.focus.get = function() {
-		return window.top.document.getElementById(Fly.window.id).window.focus;
+		return Fly.window.frame.window.focus;
 	}
 	Fly.window.focus.set = function(id) {
-		return window.top.document.getElementById(Fly.window.id).window.setFocus(id);
+		return Fly.window.frame.window.setFocus(id);
 	}
 	Fly.window.focus.take = function(id) {
 		window.top.document.getElementById(id).window.setFocus(Fly.window.id);
@@ -220,17 +239,17 @@ if (typeof Fly.window == "undefined") {
 	}
 
 	Fly.window.flash = function() {
-		window.top.document.getElementById(Fly.window.id).window.flash();
+		Fly.window.frame.window.flash();
 	}
 	
 	Fly.window.movement = function(x,y,w,h) {
 		return Fly.window.movement.set(x,y,w,h);
 	}
 	Fly.window.movement.set = function(x,y,w,h) {
-		window.top.document.getElementById(Fly.window.id).window.composition.secondaryMovement.set(x,y,w,h);
+		Fly.window.frame.window.composition.secondaryMovement.set(x,y,w,h);
 	}
 	Fly.window.movement.reset = function() {
-		window.top.document.getElementById(Fly.window.id).window.composition.secondaryMovement.reset();
+		Fly.window.frame.window.composition.secondaryMovement.reset();
 	}
 
 	Fly.window.child = function(a,b) {
@@ -304,7 +323,7 @@ if (typeof Fly.window == "undefined") {
 				} catch(e) {console.log(e);}
 			}
 		}
-		window.top.task.create(window.top.document.getElementById(Fly.window.id).window.id,attributes);
+		window.top.task.create(Fly.window.frame.window.id,attributes);
 	}
 	Fly.window.child.children = {};
 	Fly.window.child.close = function() {
