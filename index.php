@@ -276,7 +276,11 @@ function onload() {
 
 }
 window.addEventListener('DOMContentLoaded',function() {
-	setTimeout(function() {document.getElementById('logo').style.opacity = 1;}, 500);
+	setTimeout(function() {
+		if (!skiplogo) {
+			document.getElementById('logo').style.opacity = 1;
+		}
+	}, 500);
 })
 function openWindow() {
 	<?php
