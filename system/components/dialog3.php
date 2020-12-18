@@ -187,7 +187,11 @@ var Dialog = {
 			input.focus();
 		}
 
-		Dialog.position();
+		if (Dialog.windowLoad) {
+			Dialog.position();
+		} else {
+			window.addEventListener('load',Dialog.position);
+		}
 
 		document.addEventListener("keypress", function(e) {
 			if (e.keyCode == 13) {
@@ -215,7 +219,8 @@ var Dialog = {
 			window.top.shell.sound.system(Dialog.attributes.sound);
 		} catch(e) {}
 	},
-	positionModifier: 50,
+	windowLoad: false,
+	positionModifier: 52,
 	position: function() {
 		var height = (Dialog.positionModifier+Math.max(document.getElementById('Content').scrollHeight,0));
 		Fly.window.size.set(400,height);
@@ -278,6 +283,9 @@ var Dialog = {
 		}
 	}
 };
+window.addEventListener('load',function() {
+	Dialog.windowLoad = true;
+});
 Fly.window.ready = function() {
 	Fly.window.disableContext();
 	Dialog.ready();
