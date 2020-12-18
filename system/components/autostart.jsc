@@ -1,2 +1,3 @@
 cmd('run:SprocketComputers.Utilities.Toolbar');
 cmd('run:SprocketComputers.zFileManager.Desktop');
+cmd('run:SprocketComputers.FlyHelp.StabilityCheck');
