@@ -1,0 +1,37 @@
+{
+    "id": "SprocketComputers.FlyHelp",
+    "name": "Fly Help",
+    "publisher": "Sprocket Computers",
+    "version": "1.0",
+    "icon": "%FLY.RESOURCE.URL.ICONS%question.svg",
+    "date": 1591225553,
+    "index": "index.php",
+    "description": "Get help and tutorials with a range of topics related to Fly.",
+    "window": {
+        "position": {
+            "x": "auto",
+            "y": "auto"
+        },
+        "size": {
+            "width": "60%",
+            "minwidth": "640",
+            "maxinitwidth": "1280",
+            "height": "60%",
+            "minheight": "480",
+            "maxinitheight": "720"
+        },
+        "title": "Fly Help",
+        "expand": true,
+        "resize": true
+	},
+	"masks": {
+        "StabilityCheck": {
+            "name": "Stability Checker",
+            "icon": "%FLY.WORKING_URL%stability.svg",
+            "index": "stability.php",
+            "hidden": false,
+            "window": false,
+            "title": "Fly Stability Checker"
+        }
+	}
+}
