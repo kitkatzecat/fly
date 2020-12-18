@@ -923,7 +923,7 @@ file_set:
 <head>
 <?php
 include 'Fly.Standard.php';
-include 'Fly.Actionbar.php';
+include 'Fly.Dialog.php';
 include 'Fly.Command.php';
 
 if (isset($_GET['p'])) {
@@ -1118,7 +1118,26 @@ var Dialog = {
 	submit: function() {
 		var filebar = document.getElementById('filebar');
 		if (Dialog.validateInput(filebar.value)) {
-			Dialog.select();
+			if (Dialog.options.hasOwnProperty('confirmOverwrite') && !!Dialog.options.confirmOverwrite) {
+				Fly.command('exists:'+Dialog.file['file'],function(r) {
+					if (!r['return']) {
+						Dialog.select();
+					} else {
+						Fly.dialog.confirm({
+							title: 'Overwrite',
+							message: 'Overwrite file?',
+							content: `A file named "${Dialog.file['name']}" already exists in this directory. Do you want to overwrite it?`,
+							callback: function(r) {
+								if (r) {
+									Dialog.select();
+								}
+							}
+						});
+					}
+				});
+			} else {
+				Dialog.select();
+			}
 		} else {
 			try {
 				window.top.shell.sound.system('alert');
@@ -1195,6 +1214,11 @@ var Dialog = {
 			Fly.window.message.show('The following characters cannot be part of a file name:<br>\\ / \' &quot; ? + = &amp; | * : &lt; &gt; , % `')
 			e.preventDefault();
 			return false;
+		} else if (e.which == 13) {
+			Dialog.updateFile();
+			Dialog.submit();
+			e.preventDefault();
+			return false;
 		}
 	},
 	updateFile: function() {
@@ -1228,7 +1252,7 @@ var Dialog = {
 	},
 	validateInput: function(s) {
 		var disallowed = Dialog.disallowedChars;
-		if (disallowed.indexOf(s) != -1) {
+		if (disallowed.indexOf(s) != -1 || s.length < 1) {
 			return false;
 		} else {
 			return true;

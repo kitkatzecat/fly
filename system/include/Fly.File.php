@@ -17,7 +17,7 @@ if (typeof Fly == 'undefined') {
 }
 
 Fly.file = {
-	get: function(callback=function(){},options={}) { // TODO - Add options for type/mime filtering
+	get: function(callback=function(){},options={}) {
 		var pos = Fly.window.position.get();
 
 		var attributes = {
@@ -48,7 +48,7 @@ Fly.file = {
 			frame.window.Dialog.callback = callback;
 		});
 	},
-	set: function(callback=function(){},options={}) { // TODO - add more in-depth type specification, prompt to overwrite
+	set: function(callback=function(){},options={}) {
 		var pos = Fly.window.position.get();
 
 		var attributes = {
