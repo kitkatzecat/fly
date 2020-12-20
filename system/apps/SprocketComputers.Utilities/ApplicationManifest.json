@@ -221,20 +221,10 @@
         "PinJump": {
             "name": "Pin to Jump",
             "icon": "%FLY.RESOURCE.URL.ICONS%fly.svg",
-            "index": "pinjump.php",
+            "index": "pinjump2.php",
             "hidden": true,
-            "window": {
-                "position": {
-                    "x": "32",
-                    "y": "32"
-                },
-                "size": {
-                    "width": "500",
-                    "height": "100"
-                },
-                "title": "Pin to Jump",
-                "minimize": true
-            }
+			"window": false,
+			"title": "Pin to Jump"
         },
         "Applications": {
             "name": "Applications",
