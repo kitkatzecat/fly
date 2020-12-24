@@ -72,9 +72,11 @@ var ui = {
 		ui.toolbar.time.style.position = 'absolute';
 		ui.toolbar.time.style.top = '9px';
 		ui.toolbar.time.style.left = '58px';
-		ui.toolbar.time.style.width = '110px';
+		ui.toolbar.time.style.width = 'auto';
+		ui.toolbar.time.style.maxWidth = '30%';
+		ui.toolbar.time.style.transition = 'opacity .2s linear';
 		ui.toolbar.time.className = 'FlyUiTextHoverControl';
-		ui.toolbar.time.innerHTML = '12:00 AM';
+		ui.toolbar.time.innerHTML = 'Welcome, <?php echo htmlspecialchars($_FLY['USER']['NAME']); ?>';
 		ui.toolbar.time.onclick = function() {ui.time.toggle();};
 		ui.toolbar.appendChild(ui.toolbar.time);
 
@@ -579,7 +581,15 @@ var ui = {
 		ui.flyStylesheet.textContent += '\n.FlyWindowExpand { height: calc(100% - '+ui.toolbar.offsetHeight+'px) !important; }';
 		window.top.document.head.appendChild(ui.flyStylesheet);
 
-		ui.timeInterval = setInterval(ui.updateTime,1000);
+		setTimeout(function() {
+			ui.timeInterval = setInterval(ui.updateTime,1000);
+		},500);
+		setTimeout(function() {
+			ui.toolbar.time.style.opacity = '0';
+			setTimeout(function() {
+				ui.toolbar.time.style.opacity = '1';
+			},400)
+		},1300);
 
 		window.top.ui.toolbarHook(ui);
 	},
