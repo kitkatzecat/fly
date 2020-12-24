@@ -319,6 +319,12 @@ function ContextMenu(obj,e,ret=false) {
 			{
 				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg'
 			}
+		],[
+			'Create folder...',
+			function() {window.top.system.command('run:SprocketComputers.zFileManager.NewFolder,p='+encodeURIComponent(obj['file']));},
+			{
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg'
+			}
 		],[''],[
 			'Open in new window',
 			function() {window.top.system.command('run:'+obj['file']);},

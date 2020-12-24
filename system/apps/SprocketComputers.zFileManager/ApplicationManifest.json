@@ -70,6 +70,14 @@
             "window": false,
             "title": "Alias"
         },
+        "NewFolder": {
+            "name": "New Folder",
+            "icon": "%FLY.WORKING_URL%fileman.svg",
+            "index": "%FLY.WORKING_URL%newfolder.php",
+            "hidden": true,
+            "window": false,
+            "title": "New Folder"
+        },
         "Desktop": {
             "name": "Desktop",
             "icon": "%FLY.RESOURCE.URL.ICONS%desktop.svg",
