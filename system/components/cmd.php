@@ -8,6 +8,7 @@ ob_end_flush();
 ob_implicit_flush(true);
 
 $FlyCommandVersion = '1.2';
+$_FLY['IS_COMMAND'] = true;
 
 $COMMAND_ECHO = '';
 $COMMAND_DISPLAY = '';
@@ -16,6 +17,9 @@ $COMMAND_RETURN = '';
 function FlyCommandError($string) {
 	global $COMMAND_ERROR;
 	$COMMAND_ERROR .= $string.';';
+}
+function FlyCommandJS($string) {
+	FlyCommandError($string);
 }
 function FlyCommandExecute($execute) {
 	global $COMMAND_ECHO;
@@ -90,16 +94,28 @@ function FlyCommand($cmd,$execute=false,$error=false,$silent=false) {
 	$COMMAND = $cmd;
 	$ARGUMENTS = $cmd;
 
-	$process = FlyFileStringProcessor($do);
+	$FlyCommandFile = false;
+	$process = FlyFileStringProcessor(FlyVarsReplace(FlyStringReplaceConstants($do)));
 	
 	if (file_exists($_FLY['RESOURCE']['PATH']['CMD'].$do.'.php')) {
-		include $_FLY['RESOURCE']['PATH']['CMD'].$do.'.php';
+		$FlyCommandFile = $_FLY['RESOURCE']['PATH']['CMD'].$do.'.php';
+	} else if ($process !== false && $process['type'] == 'file') {
+		if (!!strpos(file_get_contents($process['file'],false,null,0,50),'Fly.SingleFileCommand')) {
+			$FlyCommandFile = $process['file'];
+		} else {
+			FlyCommandError('shell.dialog("Command file not valid",\'The specified command is not a valid command file.\',"Command File Not Valid","'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg")');
+			FlyCommandDisplay('The specified command is not a valid command file.');
+		}
 	} else if ($process !== false && $process['type'] == 'application') {
 		FlyCommandError('shell.dialog("Command not available",\'Using an application\\\'s name as a command is not yet available.<br><small><pre>Fly error code 1d500</pre></small>\',"Command Not Available","'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg")');
 		FlyCommandDisplay('Using an application\'s name as a command is not yet available. (Fly error code 1d500)');
 	} else {
 		FlyCommandError('shell.dialog("Command not recognized",\'"'.htmlentities($do).'" is not a recognized command.<br><small><pre>Fly error code 1d400</pre></small>\',"Invalid Command","'.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg")');
-		FlyCommandDisplay('"'.$do.'" is not a recognized command. (Fly error code 1d400)');
+		FlyCommandDisplay('"'.$do.'" is not a recognized command. (Fly error code 1d400)'.print_r(FlyFileStringProcessor($do),true));
+	}
+
+	if ($FlyCommandFile != false) {
+		include $FlyCommandFile;
 	}
 	ext:
 	if (!$silent) {
