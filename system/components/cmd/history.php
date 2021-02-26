@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 if (!$_FLY['IS_USER']) {
 	FlyCommandDisplay('This command can only be used when a user is logged in.');
 	FlyCommandReturn('false');

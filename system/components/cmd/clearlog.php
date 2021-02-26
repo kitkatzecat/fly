@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 unlink($_FLY['PATH'].'system/cmd.log');
 $display = $_FLY['VERSION_STRING'].' (version '.$_FLY['VERSION_MAJOR'].' build '.$_FLY['VERSION_BUILD'].')';
 if ($_FLY['IS_USER']) {

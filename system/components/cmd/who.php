@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 	if ($_FLY['IS_USER'] == true) {
 		FlyCommandError('shell.dialog(\'Who\',\'Logged in as '.$_FLY['USER']['NAME'].' ('.$_FLY['USER']['ID'].')\',\'Who\',\''.$_FLY['RESOURCE']['URL']['ICONS'].'info.svg\')');
 		FlyCommandDisplay('Logged in as '.$_FLY['USER']['NAME'].' ('.$_FLY['USER']['ID'].')');

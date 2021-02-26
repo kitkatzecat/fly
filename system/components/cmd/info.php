@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 /*$process = FlyFileStringProcessor($cmd[0]);
 if($process != false) {
 	if ($process["type"]=="file") {

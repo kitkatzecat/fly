@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 // for this command to work, make sure the PECL zip extension is installed
 if (is_dir($cmd[0])) {
 	$source = str_replace('\\', '/', realpath($cmd[0]));

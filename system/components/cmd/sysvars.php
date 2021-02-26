@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 function allVars($array,$str) {
 	$return = '';
 	foreach ($array as $key => $value) {

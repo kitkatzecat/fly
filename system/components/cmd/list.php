@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 error_reporting(0);
 
 include 'Fly.FileProcessor.php';

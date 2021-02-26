@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 	function getSymbolByQuantity($bytes) {
 		$symbols = array('bytes','KB','MB','GB','TB','PB','EB','ZB','YB');
 		$exp = floor(log($bytes)/log(1024));

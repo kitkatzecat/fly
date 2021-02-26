@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 for ($x = 1; $x < count($cmd); $x++) {
 	$var = explode('=',$cmd[$x]);
 	if ($var[0] !== '') {

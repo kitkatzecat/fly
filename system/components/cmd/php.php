@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 	try {
 		$output = eval(implode(',',$cmd));
 	} catch(ParseError $e) {

@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 function isUp($host)
 {
     // use 80 for http or 443 for https protocol

@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 
 include 'Fly.Registry.php';
 include 'Fly.FileProcessor.php';

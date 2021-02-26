@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 	include 'Fly.FileProcessor.php';
 	$process = FlyFileStringProcessor($cmd[0]);
 	if ($process) {

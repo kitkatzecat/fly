@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 
 function match($s,$cmd) {
 	if (count($cmd) > 0 && $cmd[0] !== "") {

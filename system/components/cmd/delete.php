@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 	include 'Fly.FileProcessor.php';
 	function unlink_dir($dir) { 
 		if (is_dir($dir)) { 

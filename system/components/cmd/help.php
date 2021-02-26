@@ -1,4 +1,5 @@
 <?php
+// Fly.SingleFileCommand
 function getCommands() {
 global $_FLY;
 
