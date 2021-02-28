@@ -82,17 +82,29 @@ function FlyCommand($cmd,$execute=false,$error=false,$silent=false) {
 	
 	$cmd = explode(':',$cmd,2);
 	$do = $cmd[0];
+	$args = [];
 	if (!empty($cmd[1])) {
 		$cmd = FlyVarsReplace(FlyStringReplaceConstants($cmd[1]));
+		$i = 0;
+		$arg_preg = '/^\$([A-Za-z0-9_-])+=.+/';
 		$cmd = explode(',',$cmd);
-	} else {
-		$cmd = [];
+		foreach ($cmd as $a) {
+			if ($a !== "") {
+				if (preg_match($arg_preg,$a)) {
+					$a = explode('=',$a,2);
+					$args[substr($a[0],1)] = $a[1];
+				} else {
+					$args[$i] = $a;
+					$i += 1;
+				}
+			}
+		}
 	}
 
-	$cmd = array_diff($cmd,[""]);
+	//$cmd = array_diff($cmd,[""]);
 	
-	$COMMAND = $cmd;
-	$ARGUMENTS = $cmd;
+	$COMMAND = $args;
+	$ARGUMENTS = $args;
 
 	$FlyCommandFile = false;
 	$process = FlyFileStringProcessor(FlyVarsReplace(FlyStringReplaceConstants($do)));
@@ -129,8 +141,8 @@ function FlyCommand($cmd,$execute=false,$error=false,$silent=false) {
 	}
 
 	$COMMAND_RETURN = array(
-		'command' => $do.':'.implode(',',$cmd),
-		'arguments' => $cmd,
+		'command' => $do.':'.implode(',',$args),
+		'arguments' => $args,
 		'date' => (string)time(),
 		'display' => $COMMAND_DISPLAY,
 		'execute' => $COMMAND_ECHO,

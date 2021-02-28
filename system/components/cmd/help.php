@@ -36,6 +36,6 @@ foreach ($commands as $c) {
 $display = str_lreplace(', ','',$display);
 
 FlyCommandReturn(json_encode($commands));
-FlyCommandError('shell.dialog(\'Available commands\',\''.$display.'<small><br><br>Fly Command Interpreter '.$FlyCommandVersion.'</small>\',\'Available Commands\',\''.$_FLY['RESOURCE']['URL']['ICONS'].'info.svg\')');
-FlyCommandDisplay('Available commands: '.$display);
+FlyCommandError('shell.dialog(\'Installed commands\',\''.$display.'<br><br>External command files may be run by entering the path to the command file as the command name.<small><br><br>Fly Command Interpreter '.$FlyCommandVersion.'</small>\',\'Available Commands\',\''.$_FLY['RESOURCE']['URL']['ICONS'].'info.svg\')');
+FlyCommandDisplay('Installed commands: '.$display."\r\n\r\nExternal command files may be run by entering the path to the command file as the command name.");
 ?>
