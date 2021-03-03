@@ -1,3 +1,8 @@
+<?php
+if (function_exists('FlyIncludeRegister')) {
+	FlyIncludeRegister('FLY.COMMONSTYLE');
+}
+?>
 <style>
 body {
 	background-color: #fff;
