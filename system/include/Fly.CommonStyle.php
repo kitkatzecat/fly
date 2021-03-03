@@ -34,26 +34,18 @@ p.FlyCSDescription {
 p.FlyCSDescriptionHint {
 	font-size: 0.8em;
 	opacity: 0.8;
-	margin-top: -12px;
+	margin-top: -10px;
 }
 p.FlyCSHint {
 	font-size: 0.8em;
 	opacity: 0.8;
-	margin-top: -16px;
+	margin-top: -14px;
 	padding-left: calc(6% + 26px);
 }
 p.FlyCSParagraphTitle {
 	font-size: 0.8em;
 	opacity: 0.8;
-	margin-bottom: -14px;
-}
-.FlyCSInlineIcon {
-	width: 18px;
-	height: 18px;
-	vertical-align: middle;
-	margin: 0px;
-	margin-right: 8px;
-	margin-top: -4px;
+	margin-bottom: -12px;
 }
 img.FlyCSTitleIcon {
 	width: 20px;
@@ -107,6 +99,18 @@ input[type=text],select,input[type=date],input[type=number],input[type=date] {
 	min-width: 200px;
 	width: 30%;
 	max-width: 600px;
+}
+input[type=checkbox].FlyCSInlineIcon {
+	width: 18px;
+	height: 18px;
+}
+.FlyCSInlineIcon {
+	width: 18px;
+	height: 18px;
+	vertical-align: middle;
+	margin: 0px;
+	margin-right: 8px;
+	margin-top: -4px;
 }
 img.FlyCSButtonIcon {
 	width: 16px;
