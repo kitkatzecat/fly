@@ -82,6 +82,13 @@ function FlyLoadThemeFile($file = false, $loading_from_file = true) {
 }
 
 function FlyThemeVarsReplace($string,$THEME=[]) {
+	$json = json_decode($string,true);
+	if ($json && array_key_exists('vars',$json)) {
+		$VARS = $json['vars'];
+	} else {
+		$VARS = [];
+	}
+
 	$pattern = '/(\%[A-Za-z1-9\.\_]*?\%)/';
 	$matches = [];
 	$return = $string;
@@ -93,6 +100,15 @@ function FlyThemeVarsReplace($string,$THEME=[]) {
 		if ($ma[0] == 'THEME') {
 			array_shift($ma);
 			$var = '$THEME';
+			foreach($ma as $a) {
+				$var .= '[\''.$a.'\']';
+			}
+			if (eval('return '.$var.';') !== null) {
+			    $return = str_replace('%'.$m.'%',eval('return '.$var.';'),$return);
+			}
+		} else if ($ma[0] == 'VAR') {
+			array_shift($ma);
+			$var = '$VARS';
 			foreach($ma as $a) {
 				$var .= '[\''.$a.'\']';
 			}
