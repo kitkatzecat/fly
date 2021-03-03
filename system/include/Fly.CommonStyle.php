@@ -35,12 +35,12 @@ p.FlyCSHint {
 	font-size: 0.8em;
 	opacity: 0.8;
 	margin-top: -16px;
-	padding-left: calc(6% + 24px);
+	padding-left: calc(6% + 26px);
 }
 p.FlyCSParagraphTitle {
 	font-size: 0.8em;
 	opacity: 0.8;
-	margin-bottom: -16px;
+	margin-bottom: -14px;
 }
 .FlyCSInlineIcon {
 	width: 18px;
@@ -97,6 +97,11 @@ div.FlyCSSticky.FlyCSStickyTop {
 }
 button,input[type=submit],input[type=reset],input[type=button] {
 	min-width: 100px;
+}
+input[type=text],select,input[type=date],input[type=number],input[type=date] {
+	min-width: 200px;
+	width: 30%;
+	max-width: 600px;
 }
 img.FlyCSButtonIcon {
 	width: 16px;
