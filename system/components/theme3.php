@@ -287,6 +287,13 @@ function FlyThemeCSS($json,$THEME,$categories=['controls','text','toolbar','wind
 		addRule('input[type=checkbox]:checked',$json['style']['controls']['checkbox']['checked']['normal'],$css);
 		addRule('input[type=checkbox]:checked:hover',$json['style']['controls']['checkbox']['checked']['hover'],$css);
 		addRule('input[type=checkbox]:checked:active',$json['style']['controls']['checkbox']['checked']['active'],$css);
+
+		addRule('input[type=radio]',$json['style']['controls']['radio']['normal']['normal'],$css);
+		addRule('input[type=radio]:hover',$json['style']['controls']['radio']['normal']['hover'],$css);
+		addRule('input[type=radio]:active',$json['style']['controls']['radio']['normal']['active'],$css);
+		addRule('input[type=radio]:checked',$json['style']['controls']['radio']['checked']['normal'],$css);
+		addRule('input[type=radio]:checked:hover',$json['style']['controls']['radio']['checked']['hover'],$css);
+		addRule('input[type=radio]:checked:active',$json['style']['controls']['radio']['checked']['active'],$css);
 		
 		addRule('input[type=text], input[type=password], input[type=date], input[type=time], input[type=number]',$json['style']['controls']['text']['normal'],$css);
 		addRule('input[type=text]:hover, input[type=password]:hover, input[type=date]:hover, input[type=time]:hover, input[type=number]:hover',$json['style']['controls']['text']['hover'],$css);

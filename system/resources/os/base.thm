@@ -421,6 +421,44 @@
 					}
 				}
 			},
+			"radio": {
+				"normal": {
+					"normal": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%radio_empty.svg')",
+						"transition": "filter .3s ease-out",
+						"width": "16px",
+						"height": "16px",
+						"vertical-align": "middle",
+						"margin-top": "-1px"
+					},
+					"hover": {
+						"filter": "drop-shadow(0px 0px 1.5px rgba(0,0,0,0.3))"
+					},
+					"active": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%radio_empty_pressed.svg')"
+					}
+				},
+				"checked": {
+					"normal": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%radio_checked.svg')",
+						"transition": "filter .3s ease-out",
+						"width": "16px",
+						"height": "16px",
+						"vertical-align": "middle",
+						"margin-top": "-1px"
+					},
+					"hover": {
+						"filter": "drop-shadow(0px 0px 1.5px rgba(0,0,0,0.3))"
+					},
+					"active": {
+						"appearance": "none",
+						"background-image": "url('%FLY.RESOURCE.URL.OS%radio_checked_pressed.svg')"
+					}
+				}
+			},
 			"text": {
 				"normal": {
 					"padding-left": "4px",
