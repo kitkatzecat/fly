@@ -2,7 +2,10 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
+include 'Fly.CommonStyle.php';
+
+$types = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['COMPONENTS'].'types.json'),true);
 ?>
 <link rel="stylesheet" href="../style.css">
 <script>
@@ -14,7 +17,13 @@ var OptionsTree = [
 </head>
 <body class="FlyUiText FlyUiNoSelect">
 
-<div class="title">Manage file types and associations</div>
+<div class="FlyCSTitle">Manage file types and associations</div>
+
+<?php
+foreach ($types as $extension => $type) {
+	echo '<p><a onclick="window.location.href=\'\';"><img class="FlyCSInlineIcon" src="'.FlyVarsReplace($type['icon']).'">'.htmlspecialchars($type['description']).'</a></p><p class="FlyCSHint">'.$extension.'</p>';
+}
+?>
 
 </body>
 </html>

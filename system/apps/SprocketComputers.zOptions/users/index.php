@@ -72,6 +72,7 @@ if ($user == $_FLY['USER']['ID']) {
 <p><a onclick="window.location.href='name.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg">Change <?php echo $p; ?> name</a></p>
 <p><a onclick="window.location.href='image.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg">Change <?php echo $p; ?> picture</a></p>
 <p><a onclick="window.location.href='password.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg">Change <?php echo $p; ?> password</a></p>
+<p><a onclick="window.location.href='login.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>application.svg">Manage <?php echo $p; ?> login experience</a></p>
 <?php
 if ($user == $_FLY['USER']['ID']) {
 	echo '

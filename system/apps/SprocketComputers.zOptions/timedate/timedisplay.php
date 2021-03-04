@@ -2,7 +2,8 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
+include 'Fly.CommonStyle.php';
 ?>
 <link rel="stylesheet" href="../style.css">
 <script>
@@ -32,9 +33,9 @@ function updatePreview() {
 <div class="title">Change how times are displayed</div>
 <p class="description">This only affects how the time is shown on the toolbar, not in any applications. [?]</p>
 <div class="box"><h1 id="preview">3:45 PM</h1></div><br>
-<p><input class="inline-icon" type="checkbox" onchange="updatePreview()" id="24hr"><label for="24hr">Show 24-hour time</label></p>
-<p><input class="inline-icon" type="checkbox" onchange="updatePreview()" id="secs"><label for="secs">Show seconds</label></p>
-<div class="buttons"><button><img style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg">Save</button></div>
+<p><input class="FlyCSInlineIcon" type="checkbox" onchange="updatePreview()" id="24hr"><label for="24hr">Show 24-hour time</label></p>
+<p><input class="FlyCSInlineIcon" type="checkbox" onchange="updatePreview()" id="secs"><label for="secs">Show seconds</label></p>
+<div class="buttons"><button><img class="FlyCSButtonIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg"></button></div>
 
 </body>
 </html>

@@ -2,8 +2,8 @@
 <html>
 <head>
 <?php
-include 'fly.php';
-include 'Fly.Constants.php';
+include 'Fly.Standard.php';
+include 'Fly.CommonStyle.php';
 ?>
 <link rel="stylesheet" href="../style.css">
 <?php
@@ -89,13 +89,13 @@ function submit() {
 
 <p id="match" style="display:none;color:#f00;">It doesn't look like those match.</p>
 
-<p class="shead">New Password</p>
+<p class="FlyCSParagraphTitle">New Password</p>
 <p><input onblur="checkMatch()" onkeypress="change()" id="pass" type="password"></p>
 
-<p class="shead">Confirm New Password</p>
+<p class="FlyCSParagraphTitle">Confirm New Password</p>
 <p><input onblur="checkMatch()" onkeypress="change()" id="passconfirm" type="password"></p>
 
-<p class="shead">Password Hint (optional)</p>
+<p class="FlyCSParagraphTitle">Password Hint (optional)</p>
 <p><input id="hint" type="text"></p>
 
 <div class="buttons"><button onclick="authSubmit()" id="save"><img style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg">Save</button></div>

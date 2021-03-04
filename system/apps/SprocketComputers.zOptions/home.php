@@ -2,8 +2,9 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
 include 'Fly.Constants.php';
+include 'Fly.CommonStyle.php';
 ?>
 <link rel="stylesheet" href="style.css">
 <?php
@@ -46,7 +47,9 @@ var OptionsTree = [
 echo '<div class="title category">Options Home<img class="category-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'options.svg"></div>';
 ?>
 <div class="box"><h1><img class="userImage" src="<?php echo $_FLY['RESOURCE']['URL']['OS']; ?>userimagelight.svg"><?php echo htmlentities($userXML->user->name); ?></h1></div>
-<div class="title">Common tasks</div>
+<div class="FlyCSTitle">Welcome</div>
+<p class="FlyCSDescription">Pick a common task below, or choose a category from the sidebar on the left.</p>
+
 <p><a onclick="window.location.href='personalization/background.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>personalization.svg">Change your background</a></p>
 <p><a onclick="window.location.href='users/name.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg">Change your name</a></p>
 <p><a onclick="window.location.href='users/image.php?user=<?php echo $user; ?>';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>type/image.svg">Change your picture</a></p>
