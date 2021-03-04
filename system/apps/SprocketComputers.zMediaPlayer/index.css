@@ -217,6 +217,72 @@
 	perspective: 1000px;
 	perspective-origin: 100% 0%;
 }
+@keyframes AlbumArt-Background {
+	0% {
+		background-image: linear-gradient(180deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	5% {
+		background-image: linear-gradient(179.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	10% {
+		background-image: linear-gradient(179deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	15% {
+		background-image: linear-gradient(178.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	20% {
+		background-image: linear-gradient(178deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	25% {
+		background-image: linear-gradient(177.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	30% {
+		background-image: linear-gradient(177deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	35% {
+		background-image: linear-gradient(176.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	40% {
+		background-image: linear-gradient(176deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	45% {
+		background-image: linear-gradient(175.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	50% {
+		background-image: linear-gradient(175deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	55% {
+		background-image: linear-gradient(174.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	60% {
+		background-image: linear-gradient(174deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	65% {
+		background-image: linear-gradient(173.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	70% {
+		background-image: linear-gradient(173deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	75% {
+		background-image: linear-gradient(172.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	80% {
+		background-image: linear-gradient(172deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	85% {
+		background-image: linear-gradient(171.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	90% {
+		background-image: linear-gradient(171deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	95% {
+		background-image: linear-gradient(170.5deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+	100% {
+		background-image: linear-gradient(170deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	}
+
+}
 #AlbumArt {
 	float: right;
 	min-width: 66px;
@@ -226,15 +292,20 @@
 	margin-right: 6vw;
 	margin-top: 18px;
 	transform-origin: 100% 0;
-	transition: transform .2s ease-in-out, filter .2s linear;
+	transition: transform .2s ease-in-out, background-image .2s ease-in-out, filter .2s linear;
 	z-index: 10;
-	border: 1px solid rgba(255,255,255,0.3);
+	border: 2px solid transparent;
 	margin-bottom: 15px;
+	background-image: linear-gradient(180deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	background-origin: border-box;
+	background-size: 100% 100%;
 }
 #AlbumArt:hover, #AlbumArt:focus {
 	transform: scale(2.2) rotateX(10deg) rotateY(-10deg) rotateZ(3deg) translateY(12px);
 	transform-style: preserve-3d;
 	filter: drop-shadow(2px 4px 8px #000);
+	background-image: linear-gradient(170deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
+	animation: AlbumArt-Background .2s ease-in-out 1;
 }
 #Canvas-Container,#Canvas-Bg-Container {
 	position: absolute;
