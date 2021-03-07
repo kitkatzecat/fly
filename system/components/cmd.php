@@ -7,7 +7,7 @@ include 'Fly.FileProcessor.php';
 ob_end_flush();
 ob_implicit_flush(true);
 
-$FlyCommandVersion = '1.2';
+$FlyCommandVersion = '1.3';
 $_FLY['IS_COMMAND'] = true;
 
 $COMMAND_ECHO = '';
