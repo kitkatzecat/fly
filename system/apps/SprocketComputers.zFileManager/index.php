@@ -620,8 +620,11 @@ function FrameLoad() {
 	display: none;
 }
 </style>
+<script>
+window.addEventListener('DOMContentLoaded',Load);
+</script>
 </head>
-<body onload="Load()">
+<body>
 
 <div id="pane">
 	<iframe id="frame-pane" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>

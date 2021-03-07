@@ -99,8 +99,6 @@ function Load() {
 		window.parent.SystemFiles.visible = window.SystemFiles;
 	} catch(e) {console.log(e);}
 
-	CheckInterval = setInterval(Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
-
 	document.addEventListener('mousedown',function() {Deselect();});
 
 	try {
@@ -448,15 +446,6 @@ function Subtitle(file) {
 	}
 }
 
-var CheckInterval;
-function Check() {
-	Fly.command('list:'+Folder['file'],function(a){
-		if (JSON.stringify(a.return) != JSON.stringify(Files) && !!a.return) {
-			Refresh(window.pageYOffset);
-		}
-	},{silent:true});
-}
-
 function Refresh(a) {
 	window.parent.Refresh(a);
 }
@@ -498,8 +487,11 @@ p {
 	padding-right: 6%;
 }
 </style>
+<script>
+window.addEventListener('DOMContentLoaded',Load);
+</script>
 </head>
-<body class="FlyUiText FlyUiNoSelect" onload="Load()">
+<body class="FlyUiText FlyUiNoSelect">
 
 </body>
 </html>

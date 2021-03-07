@@ -74,8 +74,9 @@ if (in_array($FolderProcess['ffile'],$protected) && $protected_enforce !== 'true
 	</script>
 	';
 } else if (is_dir($Path)) {
-	$FolderList = FlyCommand('list:'.$Path);
+	$FolderList = FlyCommand($_FLY['APP']['PATH'].'cmd/list.php:'.$Path);
 	$FolderListArray = json_decode($FolderList['return']);
+	// add sorting code somewhere around here
 	if (count($FolderListArray) == 0) {
 		// Directory is empty
 		$Output = '<div class="title"><img class="title-icon" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'folder.svg">This directory is empty.</div>';
@@ -146,6 +147,14 @@ onLoad.push(function() {
 			} else {
 				Display.Status('Ready');
 			}
+			window.Check = function() {
+			Fly.command('<?php echo $_FLY['APP']['PATH']; ?>cmd/list.php:'+Folder['file'],function(a){
+				if (JSON.stringify(a.return) != JSON.stringify(Files) && !!a.return) {
+					Refresh(window.pageYOffset);
+				}
+			},{silent:true});
+		}
+		window.CheckInterval = setInterval(window.Check,<?php echo FlyRegistryGet('RefreshInterval'); ?>);
 
 		} catch(e) {
 			console.log(e); // Change the = below to a += for debugging directories that always break views
