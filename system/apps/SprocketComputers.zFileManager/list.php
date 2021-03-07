@@ -403,7 +403,7 @@ function Icon(file) {
 	icon.style.display = 'inline-block';
 	icon.style.position = 'relative';
 
-	if (file.hasOwnProperty('mime') && file['mime'].indexOf('image/') !== -1 && window.ImagePreviews) {
+	if (file.hasOwnProperty('mime') && typeof file['mime'] == 'string' && file['mime'].indexOf('image/') !== -1 && window.ImagePreviews) {
 		icon.style.boxShadow = '0px 1px 4px #888';
 		icon.style.backgroundSize = 'contain';
 		icon.style.backgroundRepeat = 'no-repeat';
