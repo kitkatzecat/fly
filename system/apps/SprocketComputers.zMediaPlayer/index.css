@@ -305,7 +305,7 @@
 	transform-style: preserve-3d;
 	filter: drop-shadow(2px 4px 8px #000);
 	background-image: linear-gradient(170deg, rgba(158,158,158,1) 0%,rgba(87,87,87,1) 50%,rgba(42,42,42,1) 51%,rgba(83,83,83,1) 100%);
-	animation: AlbumArt-Background .2s ease-in-out 1;
+	animation: AlbumArt-Background .2s ease-out 1;
 }
 #Canvas-Container,#Canvas-Bg-Container {
 	position: absolute;
