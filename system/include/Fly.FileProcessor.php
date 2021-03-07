@@ -484,7 +484,11 @@ function FlyFileStringProcessor($item) {
 			if ($action == 'system.command(\'run:\')') {
 				$action = '';
 			}
-			$url = str_ireplace($_SERVER['DOCUMENT_ROOT'],$protocol.$_SERVER['HTTP_HOST'],$filePath);
+			if (substr($filePath,0,1) == '/') {
+				$url = $_FLY['RESOURCE']['URL']['COMPONENTS'].'localfile.php?file='.urlencode($filePath);
+			} else {
+				$url = str_ireplace($_SERVER['DOCUMENT_ROOT'],$protocol.$_SERVER['HTTP_HOST'],$filePath);
+			}
 			$path = preg_replace('#/+#','/',str_ireplace(basename($filePath),'',$filePath));
 			$ffile = preg_replace('#/+#','/',str_ireplace($_SERVER['DOCUMENT_ROOT'],'.',$filePath));
 			$fpath = preg_replace('#/+#','/',str_ireplace($_SERVER['DOCUMENT_ROOT'],'.',str_replace('/'.basename($filePath),'',$filePath)));
