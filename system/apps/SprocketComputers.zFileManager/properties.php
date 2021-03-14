@@ -74,7 +74,12 @@ function nicetime($date)
 	if ($difference != 1) {
 		$periods[$j].= "s";
 	}
-	return "$difference $periods[$j] {$tense}";
+	$t = "$difference $periods[$j] {$tense}";
+	if ($t == '0 seconds from now') {
+		return 'Just now';
+	} else {
+		return $t;
+	}
 }
 
 if ($_GET['properties_filesize'] == 'true') {
