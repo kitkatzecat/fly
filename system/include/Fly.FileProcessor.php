@@ -34,6 +34,7 @@ function FlyConvertURLtoPath($link) {
 	return $path.$options;
 }
 function FlyConvertPathtoURL($path) {
+	global $_FLY;
 	if(isset($_SERVER['HTTPS'])) {
 	    if (!empty($_SERVER['HTTPS'])) {
 	        $protocol = 'https://';
@@ -43,8 +44,12 @@ function FlyConvertPathtoURL($path) {
 	} else {
 		$protocol = 'http://';
 	}
-	$url = str_replace($_SERVER['DOCUMENT_ROOT'],$protocol.$_SERVER['HTTP_HOST'].'/',$path);
-	return $url;
+	if (strpos($path,$_SERVER['DOCUMENT_ROOT']) === false) {
+		$url = $_FLY['RESOURCE']['URL']['COMPONENTS'].'localfile.php?file='.urlencode($path);
+	} else {
+		$url = str_ireplace($_SERVER['DOCUMENT_ROOT'],$protocol.$_SERVER['HTTP_HOST'],$path);
+	}
+return $url;
 }
 function FlyFileStringProcessor($item) {
 	global $_FLY;
