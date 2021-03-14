@@ -72,6 +72,14 @@ div.FlyCSBox {
 	padding-bottom: 16px;
 	text-align: center;
 }
+div.FlyCSDivider {
+	padding: 0;
+	width: 100%;
+	height: 0;
+	border-top: 1px solid rgba(0,0,0,0.1);
+	margin-top: 24px;
+	margin-bottom: 24px;
+}
 div.FlyCSSticky {
 	background-color: #fff;
 	width: 100%;
