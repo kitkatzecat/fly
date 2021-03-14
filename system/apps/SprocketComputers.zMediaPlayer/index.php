@@ -6,6 +6,7 @@ include 'Fly.Standard.php';
 include 'Fly.Dialog.php';
 include 'Fly.File.php';
 include 'Fly.CommonStyle.php';
+include 'Fly.CommonScript.php';
 ?>
 <style>
 body,html {

@@ -313,64 +313,14 @@ var Player = {
 		Player.c.canvasBg.height = Player.c.canvasBgContainer.offsetHeight;
 		Player.c.canvasBg.getContext('2d').clearRect(0,0,Player.c.canvasBg.width,Player.c.canvasBg.height);
 	},
-	filter: function() {
-		Fly.dialog.select({
-			title: 'Video Filter',
-			message: 'Change video filter',
-			content: 'Select a filter to apply to the video:',
-			icon: `${Fly.core['RESOURCE']['URL']['ICONS']}colors.svg`,
-			options: [
-				{text:'None',value:false},
-				{text:'Grayscale',value:'Grayscale'},
-				{text:'Invert',value:'Invert'},
-				{text:'Saturate',value:'Saturate'},
-				{text:'Sepia',value:'Sepia'},
-				{text:'Brightness 50%',value:'Brightness-50'},
-				{text:'Brightness 150%',value:'Brightness-150'},
-				{text:'Brightness 200%',value:'Brightness-200'}
-			],
-			callback: Player.setFilter
-		});
-	},
 	setFilter: function(filter) {
 		Player.c.video.className = '';
 		if (!!filter) {
 			Player.c.video.className = 'Filter-'+filter;
 		}
 	},
-	visualization: function() {
-		Fly.dialog.select({
-			title: 'Audio Visualization',
-			message: 'Change visualization',
-			content: 'Select a visualization to show:',
-			icon: `${Fly.core['RESOURCE']['URL']['ICONS']}type/image.svg`,
-			options: [
-				{text:"bars",value:"bars"},
-				{text:"bars blocks",value:"bars blocks"},
-				{text:"big bars",value:"big bars"},
-				{text:"cubes",value:"cubes"},
-				{text:"dualbars",value:"dualbars"},
-				{text:"dualbars blocks",value:"dualbars blocks"},
-				{text:"fireworks",value:"fireworks"},
-				{text:"flower",value:"flower"},
-				{text:"flower blocks",value:"flower blocks"},
-				{text:"orbs",value:"orbs"},
-				{text:"ring",value:"ring"},
-				{text:"rings",value:"rings"},
-				{text:"round layers",value:"round layers"},
-				{text:"round wave",value:"round wave"},
-				{text:"shine",value:"shine"},
-				{text:"shine rings",value:"shine rings"},
-				{text:"shockwave",value:"shockwave"},
-				{text:"star",value:"star"},
-				{text:"static",value:"static"},
-				{text:"stitches",value:"stitches"},
-				{text:"web",value:"web"},
-				{text:"wave",value:"wave"}
-			],
-			callback: Player.initVisualize
-		});
-	},
+	filters: [['None',false],['Grayscale','Grayscale'],['Invert','Invert'],['Saturate','Saturate'],['Sepia','Sepia'],['Brightness 50%','Brightness-50'],['Brightness 150%','Brightness-150'],['Brightness 200%','Brightness-200'],['Blur','Blur']],
+	visualizations: ['bars','bars blocks','big bars','cubes','dualbars','dualbars blocks','fireworks','flower','flower blocks','orbs','ring','rings','round layers','round wave','shine','shine rings','shockwave','star','static','stitches','web','wave'],
 	close: function() {
 		Player.c.albumArt.src = Player.defaultAlbumArt;
 		Player.c.title.innerText = 'Now Playing';

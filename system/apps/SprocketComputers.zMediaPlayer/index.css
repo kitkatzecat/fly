@@ -325,6 +325,9 @@
 	background-color: #000;
 	z-index: 3;
 }
+#Video.Infobar {
+	height: calc(100% - 24px);
+}
 #Video.Filter-Grayscale {
 	filter: grayscale(100%);
 }
@@ -346,6 +349,9 @@
 }
 #Video.Filter-Brightness-200 {
 	filter: brightness(200%);
+}
+#Video.Filter-Blur {
+	filter: blur(8px);
 }
 #Background {
 	position: absolute;
@@ -411,6 +417,24 @@
 	background-position: top left;
 	background-image: url('img/background.edge.right.svg');
 	display: inline-block;
+}
+
+#Infobar {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	height: 24px;
+	background-size: 100% 100%;
+	background-image: linear-gradient(to top, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 50%,rgba(255,255,255,0.1) 51%,rgba(255,255,255,0.2) 100%);
+	background-color: rgba(0,0,0,0.6);
+	border-top: 1px solid rgb(0,0,0,0.1);
+	color: #fff;
+	box-sizing: border-box;
+	line-height: 24px;
+	font-size: 12px;
+	padding-left: 2%;
+	padding-right: 2%;
 }
 
 @media (max-width: 600px) {
