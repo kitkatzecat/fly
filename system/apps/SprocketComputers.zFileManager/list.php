@@ -404,17 +404,21 @@ function Icon(file) {
 	icon.style.position = 'relative';
 
 	if (file.hasOwnProperty('mime') && typeof file['mime'] == 'string' && file['mime'].indexOf('image/') !== -1 && window.ImagePreviews) {
-		icon.style.boxShadow = '0px 1px 4px #888';
-		icon.style.backgroundSize = 'contain';
-		icon.style.backgroundRepeat = 'no-repeat';
-		icon.style.backgroundPosition = 'center center';
-		icon.style.backgroundImage = 'url(\''+file['URL']+'\')';
+		let img = document.createElement('img');
+		img.style.boxShadow = '0px 1px 4px #888';
+		img.style.objectFit = 'contain';
+		img.style.width = '100%';
+		img.style.height = '100%';
+		img.style.objectPosition = '50% 50%';
+		img.loading = 'lazy';
+		img.src = file['URL'];
+		icon.appendChild(img);
 	} else if (file['extension'] == 'als') {
-		icon.innerHTML = '<img style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['WORKING_URL']; ?>alias.svg">';
+		icon.innerHTML = '<img loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img loading="lazy" style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['WORKING_URL']; ?>alias.svg">';
 	} else if (Protected.indexOf(file['ffile']) != -1) {
-		icon.innerHTML = '<img style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg">';
+		icon.innerHTML = '<img loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img loading="lazy" style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg">';
 	} else {
-		icon.innerHTML = '<img style="width:100%;height:100%;" src="'+file['icon']+'">';
+		icon.innerHTML = '<img loading="lazy" style="width:100%;height:100%;" src="'+file['icon']+'">';
 	}
 	return icon;
 }
