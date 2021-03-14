@@ -43,10 +43,31 @@ if ($_GET['pane'] == 'folders') {
 	';
 	goto folders;
 } else if ($_GET['pane'] == 'bookmarks') {
-	echo '
+	?>
+	<script>
+	function addBookmark() {
+		window.parent.Fly.dialog.confirm({
+			title: 'Add Bookmark',
+			message:'Add to bookmarks?',
+			content: 'Do you want to add this folder to your bookmarks?</p><p><div class="FlyUiMenuItem FlyUiText FlyUiNoSelect" style="margin-top:8px;width:289px;"><div style="display:inline-block;vertical-align:middle;"><img style="width:36px;height:36px;vertical-align:middle;margin-right:8px;" src="'+window.parent.Nav.current.icon+'"></div><div style="display:inline-block;vertical-align:middle;width:calc(100% - 44px);">'+window.parent.Nav.current.fname+'</div></div>',
+			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-star.svg',
+			callback: function(r) {
+				if (r) {
+					Fly.command('%FLY.APP.PATH%cmd/bookmark.php:$mode=add,$path=%FLY.APP.DATA%bookmarks.json,'+window.parent.Nav.current.ffile,function(r) {
+						if (r['return']['status']) {
+							window.location.reload();
+						} else {
+							window.parent.Fly.window.message('Unable to add bookmark: '+r['return']['message']);
+						}
+					});
+				}
+			}
+		});
+	}
+	</script>
 	<span id="title" class="FlyUiTextHighlight">Bookmarks</span>
-	<div onclick="window.parent.Dialog.open(\'dialogs.php?dialog=bookmark_add\',\'Add Bookmark\');" class="FlyUiToolbarItem FlyUiNoSelect" style="position:fixed;bottom:2px;left:2px;right:2px;text-align:center;"><img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="'.$_FLY['RESOURCE']['URL']['ICONS'].'mark-plus.svg">Add bookmark</div>
-	';
+	<div onclick="addBookmark()" class="FlyUiToolbarItem FlyUiNoSelect" style="position:fixed;bottom:2px;left:2px;right:2px;text-align:center;"><img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-plus.svg">Add bookmark</div>
+	<?php
 	goto bookmarks;
 } else if ($_GET['pane'] == 'search') {
 	echo '
