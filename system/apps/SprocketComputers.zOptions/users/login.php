@@ -144,7 +144,7 @@ custom.process = {};
 <p><a onclick="window.advancedToggle.toggle()"><img id="advancedIcon" class="FlyCSInlineIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>chevron-down.svg"><span id="advancedLabel">Show advanced options</span></a></p>
 
 <div id="advancedOptions" style="display:none;">
-<p class="FlyCSDescription">Changing these options is not recommended unless you are an advanced user.</p>
+<p class=""><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg" class="FlyCSInlineIcon">Changing these options is not recommended unless you are an advanced user.</p>
 
 <p><input class="FlyCSInlineIcon" type="checkbox" id="system"><label for="system">Run system autostart file on login</label></p>
 <p class="FlyCSHint">On login, runs the system autostart file (autostart.jsc located in system components folder). The system autostart starts critical user experience applications, including the toolbar and desktop file view.</p>

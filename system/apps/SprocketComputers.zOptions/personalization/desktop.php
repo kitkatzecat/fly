@@ -2,7 +2,8 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
+include 'Fly.CommonStyle.php';
 ?>
 <link rel="stylesheet" href="../style.css">
 <script>
@@ -14,10 +15,13 @@ var OptionsTree = [
 </head>
 <body class="FlyUiText FlyUiNoSelect">
 
-<div class="title">Manage your desktop</div>
-<p><input class="inline-icon" type="checkbox" id="scroll"><label for="scroll">Enable desktop scrolling</label></p>
-<p class="hint">Allows the desktop to scroll to show more content when windows are placed at or below the bottom of the screen</p>
-<div class="buttons"><button><img style="width:16px;height:16px;vertical-align:middle;margin-right:6px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg">Save</button></div>
+<div class="FlyCSTitle">Manage your desktop</div>
+<p><input class="FlyCSInlineIcon" type="checkbox" id="scroll"><label for="scroll">Enable desktop scrolling</label></p>
+<p class="FlyCSHint">Allows the desktop to scroll to show more content when windows are placed at or below the bottom of the screen</p>
+
+<p><br><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg" class="FlyCSInlineIcon">To change the size of the icons on your desktop, right click in an empty space and select the Icon View option from the menu.</p>
+
+<div class="FlyCSSticky FlyCSStickyBottom" style="text-align:right;"><button><img class="FlyCSButtonIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>save.svg"></button></div>
 
 </body>
 </html>

@@ -2,7 +2,8 @@
 <html>
 <head>
 <?php
-include 'fly.php';
+include 'Fly.Standard.php';
+include 'Fly.CommonStyle.php';
 ?>
 <link rel="stylesheet" href="../style.css">
 <script>
@@ -21,6 +22,9 @@ var OptionsTree = [
 <p><a onclick="window.location.href='sounds.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>sound.svg">Change system sounds</a></p>
 <p><a onclick="window.location.href='desktop.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>desktop.svg">Manage your desktop</a></p>
 <p><a onclick="window.location.href='accessibility.php';"><img class="inline-icon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>accessibility.svg">Accessibility</a></p>
+
+<div class="FlyCSDivider"></div>
+<p><img src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>info.svg" class="FlyCSInlineIcon">To quickly get to this page from your desktop, right click in an empty space and select the Personalization option from the menu.</p>
 
 </body>
 </html>
