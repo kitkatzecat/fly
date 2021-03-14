@@ -484,7 +484,7 @@ function FlyFileStringProcessor($item) {
 			if ($action == 'system.command(\'run:\')') {
 				$action = '';
 			}
-			if (substr($filePath,0,1) == '/') {
+			if (strpos($filePath,$_SERVER['DOCUMENT_ROOT']) === false) {
 				$url = $_FLY['RESOURCE']['URL']['COMPONENTS'].'localfile.php?file='.urlencode($filePath);
 			} else {
 				$url = str_ireplace($_SERVER['DOCUMENT_ROOT'],$protocol.$_SERVER['HTTP_HOST'],$filePath);
