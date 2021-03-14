@@ -157,10 +157,11 @@ function ToolbarInit() {
 		else if (document.selection) {document.selection.empty();}
 	}
 	
-	Navbar.add({text:'',title:'Back',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
+	Navbar.add({text:'',title:'Back',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:Back});
+	Navbar.add({text:'',title:'Forward',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-right.svg',action:Forward});
 	Navbar.add({text:'',title:'Up',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-up.svg',action:Up});
 	var ab = Navbar.add({type:'custom',content:Addressbar});
-	ab.style.width = 'calc(100% - 164px)';
+	ab.style.width = 'calc(100% - 200px)';
 	Navbar.add({text:'',title:'Refresh',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg',action:Refresh,align:'right'});
 	Navbar.add({text:'Go',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',action:Go,align:'right'});
 	
@@ -186,8 +187,11 @@ function Go() {
 	Addressbar.blur();
 }
 
-function Nav(path) {
+function Nav(path,clearForward=true) {
 	window.top.shell.sound.system('click');
+	if (clearForward) {
+		Nav.forward = [];
+	}
 	Addressbar.value = '';
 	document.getElementById('statusbar').innerHTML = 'Loading...';
 	document.getElementById('frame-main').style.display = 'none';
@@ -199,6 +203,8 @@ function Nav(path) {
 		document.getElementById('frame-main').src = 'list.php?p='+encodeURIComponent(path);
 
 		Nav.current = path;
+
+		Nav.back.push(path);
 	} else {
 		Fly.command('fileprocess:'+path,function(pth){
 			if (pth['return'].hasOwnProperty('ffile')) {
@@ -211,12 +217,27 @@ function Nav(path) {
 				Fly.window.title.set('Not Found');
 			}
 			Nav.current = pth['return'];
+
+			Nav.back.push(pth['return']['ffile']);
 		});
 		document.getElementById('frame-main').src = 'list.php?p='+encodeURIComponent(path);
 	}
 }
 Nav.current = false;
+Nav.back = [];
+Nav.forward = [];
 
+function Back() {
+	if (Nav.back.length > 1) {
+		Nav.forward.push(Nav.back.pop());
+		Nav(Nav.back.pop(),false);
+	}
+}
+function Forward() {
+	if (Nav.forward.length > 0) {
+		Nav(Nav.forward.pop(),false);
+	}
+}
 function Up() {
 	Nav(Nav.current['fpath']);
 }
