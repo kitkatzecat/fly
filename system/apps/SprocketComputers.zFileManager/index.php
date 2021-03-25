@@ -10,7 +10,7 @@ include 'Fly.Dialog.php';
 if (isset($_GET['p'])) {
 	$p = $_GET['p'];
 } else {
-	$p = '%FLY.PATH%';
+	$p = '?home';
 }
 $p = base64_encode($p);
 
