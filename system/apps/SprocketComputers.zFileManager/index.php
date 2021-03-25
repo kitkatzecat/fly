@@ -177,7 +177,7 @@ var New = {
 	}
 };
 function Properties() {
-	window.top.system.command('run:SprocketComputers.zFileManager.Properties,file='+CurrentLocation.path);
+	window.top.system.command('run:SprocketComputers.zFileManager.Properties,file='+SelectedFile['file']);
 }
 function Close() {
 	Fly.window.close();
@@ -218,7 +218,9 @@ function Nav(path,clearForward=true) {
 			}
 			Nav.current = pth['return'];
 
-			Nav.back.push(pth['return']['ffile']);
+			if (pth['return']['extension'] !== 'als') {
+				Nav.back.push(pth['return']['ffile']);
+			}
 		});
 		document.getElementById('frame-main').src = 'list.php?p='+encodeURIComponent(path);
 	}
