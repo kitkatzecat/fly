@@ -130,7 +130,7 @@ if (typeof Fly.window == "undefined") {
 		return Fly.window.position.get();
 	}
 	Fly.window.position.get = function() {
-		if (Fly.window.frame.window.isExpand) {
+		if (Fly.window.frame.window.isExpand || Fly.window.frame.window.isMinimized) {
 			return [0,0];
 		} else {
 			return [parseInt(Fly.window.frame.style.left.replace(/\\D/g,'')),parseInt(Fly.window.frame.style.top.replace(/\\D/g,''))];
@@ -162,7 +162,17 @@ if (typeof Fly.window == "undefined") {
 		return Fly.window.size.get();
 	}
 	Fly.window.size.get = function() {
-		return [parseInt(Fly.window.frame.window.content.offsetWidth),parseInt(Fly.window.frame.window.content.offsetHeight)];
+		if (Fly.window.frame.window.isMinimized) {
+			var height = window.top.innerHeight;
+			try {
+				height -= window.top.ui.toolbar.offsetHeight;
+			} catch(e) {
+				console.log('Fly.window.size.get - Couldn\'t get toolbar size: UI may not be active');
+			}
+			return [window.top.innerWidth,height];
+		} else {
+			return [parseInt(Fly.window.frame.window.content.offsetWidth),parseInt(Fly.window.frame.window.content.offsetHeight)];
+		}
 	}
 	Fly.window.size.set = function(width=320,height=240) {
 		Fly.window.frame.window.setSize(width,height);

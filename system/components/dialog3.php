@@ -222,7 +222,7 @@ var Dialog = {
 		var width = Fly.window.size.get()[0];
 		var opener = window.top.document.getElementById(Dialog.opener.Fly.window.id);
 
-		if (opener.window.isBackground || opener.window.isExpand || opener.window.isBorderless) {
+		if (opener.window.isBackground || opener.window.isExpand || opener.window.isBorderless || opener.window.isMinimized) {
 			height = window.top.document.getElementById(Fly.window.id).offsetHeight;
 			width = window.top.document.getElementById(Fly.window.id).offsetWidth;
 		}
