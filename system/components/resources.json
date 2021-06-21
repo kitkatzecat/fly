@@ -1,15 +1,18 @@
 {
 	"RESOURCE": {
-	    "RESOURCES": "\/system\/resources\/",
-	    "ICONS": "\/system\/resources\/icons\/",
-	    "SOUNDS": "\/system\/resources\/sounds\/",
-	    "APPS": "\/system\/apps\/",
-	    "TEMP": "\/system\/tmp\/",
-	    "USERS": "\/system\/users\/",
-	    "OS": "\/system\/resources\/os\/",
-	    "CMD": "\/system\/components\/cmd\/",
-	    "SYSTEM": "\/system\/",
-	    "COMPONENTS": "\/system\/components\/",
-	    "TYPES": "\/system\/reg\/SprocketComputers.Fly\/System.Types.xml"
+	    "RESOURCES": "system\/resources\/",
+	    "ICONS": "system\/resources\/icons_new\/",
+	    "SOUNDS": "system\/resources\/sounds\/",
+	    "APPS": "system\/apps\/",
+	    "TEMP": "system\/tmp\/",
+	    "USERS": "users\/",
+	    "OS": "system\/resources\/os\/",
+	    "CMD": "system\/components\/cmd\/",
+	    "SYSTEM": "system\/",
+	    "COMPONENTS": "system\/components\/",
+	    "TYPES": "system\/reg\/SprocketComputers.Fly\/System.Types.xml",
+	    "FILETYPES": "system\/components\/types.json",
+		"FONTS": "system\/resources\/fonts\/",
+		"THEMES": "system\/resources\/themes\/"
 	}
 }

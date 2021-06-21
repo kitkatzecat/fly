@@ -91,10 +91,22 @@ if (session_status() == PHP_SESSION_NONE) {
 	}
 }
 
+if (isset($_SESSION['fly_resources'])) {
+	$_FLY_RESOURCES = $_SESSION['fly_resources'];
+} else {
+	if (file_exists($_SERVER['DOCUMENT_ROOT'].'system/components/resources.json')) {
+		$_SESSION['fly_resources'] = json_decode(file_get_contents($_SERVER['DOCUMENT_ROOT'].'system/components/resources.json'),true);
+	} else {
+		$_SESSION['fly_resources'] = ['RESOURCE' => ['RESOURCES' => 'system/resources/','ICONS' => 'system/resources/icons/','SOUNDS' => 'system/resources/sounds/','APPS' => 'system/apps/','TEMP' => 'system/tmp/','USERS' => 'users/','OS' => 'system/resources/os/','CMD' => 'system/components/cmd/','SYSTEM' => 'system/','COMPONENTS' => 'system/components/','TYPES' => 'system/reg/SprocketComputers.Fly/System.Types.xml','FILETYPES' => 'system/components/types.json','FONTS' => 'system/resources/fonts/','THEMES' => 'system/resources/themes/']];
+	}
+	$_FLY_RESOURCES = $_SESSION['fly_resources'];
+}
+
 function FlyCoreVars_System($scope=false,$_FLY=false) {
 	
 	global $_FLY_USER;
 	global $_FLY_CONFIG;
+	global $_FLY_RESOURCES;
 	
 	if (!is_array($_FLY)) {
 		$_FLY = array();
@@ -151,36 +163,36 @@ function FlyCoreVars_System($scope=false,$_FLY=false) {
 
 		$_FLY['RESOURCE'] = array(
 			'PATH' => array(
-					'RESOURCES' => $_FLY['PATH'].'system/resources/',
-					'ICONS' => $_FLY['PATH'].'system/resources/icons/',
-					'SOUNDS' => $_FLY['PATH'].'system/resources/sounds/',
-					'APPS' => $_FLY['PATH'].'system/apps/',
-					'TEMP' => $_FLY['PATH'].'system/tmp/',
-					'USERS' => $_FLY['PATH'].'users/',
-					'OS' => $_FLY['PATH'].'system/resources/os/',
-					'CMD' => $_FLY['PATH'].'system/components/cmd/',
-					'SYSTEM' => $_FLY['PATH'].'system/',
-					'COMPONENTS' => $_FLY['PATH'].'system/components/',
-					'TYPES' => $_FLY['PATH'].'system/reg/SprocketComputers.Fly/System.FileTypes.xml',
-					'FILETYPES' => $_FLY['PATH'].'system/components/types.json',
-					'FONTS' => $_FLY['PATH'].'system/resources/fonts/',
-					'THEMES' => $_FLY['PATH'].'system/resources/themes/'
+					'RESOURCES' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['RESOURCES'],
+					'ICONS' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['ICONS'],
+					'SOUNDS' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['SOUNDS'],
+					'APPS' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['APPS'],
+					'TEMP' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['TEMP'],
+					'USERS' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['USERS'],
+					'OS' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['OS'],
+					'CMD' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['CMD'],
+					'SYSTEM' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['SYSTEM'],
+					'COMPONENTS' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['COMPONENTS'],
+					'TYPES' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['TYPES'],
+					'FILETYPES' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['FILETYPES'],
+					'FONTS' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['FONTS'],
+					'THEMES' => $_FLY['PATH'].$_FLY_RESOURCES['RESOURCE']['THEMES']
 				),
 			'URL' => array(
-					'RESOURCES' => $_FLY['URL'].'system/resources/',
-					'ICONS' => $_FLY['URL'].'system/resources/icons/',
-					'SOUNDS' => $_FLY['URL'].'system/resources/sounds/',
-					'APPS' => $_FLY['URL'].'system/apps/',
-					'TEMP' => $_FLY['URL'].'system/tmp/',
-					'USERS' => $_FLY['URL'].'users/',
-					'OS' => $_FLY['URL'].'system/resources/os/',
-					'CMD' => $_FLY['URL'].'system/components/cmd/',
-					'SYSTEM' => $_FLY['URL'].'system/',
-					'COMPONENTS' => $_FLY['URL'].'system/components/',
-					'TYPES' => $_FLY['URL'].'system/reg/SprocketComputers.Fly/System.FileTypes.xml',
-					'FILETYPES' => $_FLY['URL'].'system/components/types.json',
-					'FONTS' => $_FLY['URL'].'system/resources/fonts/',
-					'THEMES' => $_FLY['URL'].'system/resources/themes/'
+					'RESOURCES' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['RESOURCES'],
+					'ICONS' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['ICONS'],
+					'SOUNDS' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['SOUNDS'],
+					'APPS' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['APPS'],
+					'TEMP' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['TEMP'],
+					'USERS' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['USERS'],
+					'OS' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['OS'],
+					'CMD' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['CMD'],
+					'SYSTEM' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['SYSTEM'],
+					'COMPONENTS' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['COMPONENTS'],
+					'TYPES' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['TYPES'],
+					'FILETYPES' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['FILETYPES'],
+					'FONTS' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['FONTS'],
+					'THEMES' => $_FLY['URL'].$_FLY_RESOURCES['RESOURCE']['THEMES']
 				)
 			);
 		
