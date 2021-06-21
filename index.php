@@ -116,6 +116,9 @@ function onload() {
 	} catch(err) {}
 	
 	setTimeout(function() {
+		<?php
+		//if ()
+		?>
 		system.command('run:%FLY.RESOURCE.PATH.COMPONENTS%autostart.jsc');
 		system.command('run:%FLY.USER.PATH%data/autostart.jsc');
 	},1000);
@@ -181,6 +184,10 @@ if (in_array(FlyRegistryGet('DesktopShowVersion', 'SprocketComputers.Options'), 
 exit;
 
 login :
+
+session_destroy();
+session_start();
+
 ?>
 <!DOCTYPE html>
 <html>
