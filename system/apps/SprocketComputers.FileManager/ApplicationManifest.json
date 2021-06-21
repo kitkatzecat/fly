@@ -46,7 +46,7 @@
         "Properties": {
             "name": "Properties",
             "icon": "%FLY.RESOURCE.URL.ICONS%properties.svg",
-            "index": "..\/SprocketComputers.zFileManager\/properties.php",
+            "index": "%FLY.RESOURCE.URL.APPS%\/SprocketComputers.zFileManager\/properties.php",
             "hidden": true,
             "window": {
                 "position": {
