@@ -84,6 +84,63 @@ task.get = function(id) {
 	return wins;
 }
 
+task.hook = function(event='generic',callback=function(){}) {
+	if (!task.hook.hooks.hasOwnProperty(event)) {
+		task.hook.hooks[event] = [];
+	}
+	let e = [callback,true];
+	task.hook.hooks[event].push(e);
+
+	let r = {
+		enable: function() {
+			e[1] = true;
+		},
+		disable: function() {
+			e[1] = false;
+		},
+		remove: function() {
+			task.hook.hooks[event].splice(task.hook.hooks[event].indexOf(e),1);
+		},
+		setCallback: function(f=function(){}) {
+			e[0] = f;
+		}
+	}
+
+	return r;
+}
+task.hook.hooks = {};
+task.hook.exec = function(event='generic', ...args) {
+	//console.log('Task hook fired - '+event,...args);
+	if (task.hook.hooks.hasOwnProperty(event)) {
+		task.hook.hooks[event].forEach(function(e) {
+			if (e[1]) {
+				try {
+					e[0](...args);
+				} catch(err) {
+					console.log('Task hook error on event "'+event+'":',err,e);
+				}
+			}
+		});
+	}
+}
+/*
+TASK HOOKS
+window_open
+window-foreground_open
+window-background_open
+window_close
+window-foreground_close
+window-background_close
+window_minimize
+window_maximize
+window_expand
+window_restore
+window_title
+window_icon
+window_active
+window_inactive
+*/
+
 task.create = function(id='public', attributes={title:'Untitled', name:'Untitled', icon:'', x:'auto', y:'auto', width:320, height:240, location:'/system/components/document-otf.php?content=PGRpdiBjbGFzcz0iRmx5VWlUZXh0IiBzdHlsZT0icG9zaXRpb246YWJzb2x1dGU7dG9wOjBweDtsZWZ0OjBweDtyaWdodDowcHg7Ym90dG9tOjBweDtiYWNrZ3JvdW5kOiNmZmZmZmY7cGFkZGluZzo4cHg7Ij5ObyBjb250ZW50IHByb3ZpZGVkPC9zcGFuPg==', expand:false, minimize:true, close:true, resize:false, background:false, minheight:60, minwidth:100, maxheight:false, maxwidth:false, maxinitheight:false, maxinitwidth:false}) {
 	
 	// Init new task
@@ -351,7 +408,9 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 
 				echo 'setTimeout(function() {frame.window.clear();frame.parentNode.removeChild(frame);}, '.((((float)$theme3[0]['style']['window']['animations']['close']['length']*(int)$theme3[0]['style']['window']['animations']['close']['repeat'])+(float)$theme3[0]['style']['window']['animations']['close']['delay'])*1000).');';
 			?>
+			task.hook.exec('window-foreground_close',frame);
 		}
+		task.hook.exec('window_close',frame);
 	}
 	frame.window.clear = function() {
 		frame.innerHTML = '';
@@ -381,6 +440,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			try {
 				ui.toolbar.setActiveApplication('Desktop');
 			} catch(err) {}
+			task.hook.exec('window_minimize',frame);
 		} catch(err) {
 			frame.style.display = 'block';
 			frame.style.position = 'absolute';
@@ -406,6 +466,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			?>
 
 			frame.window.bringToFront();
+
+			task.hook.exec('window_maximize',frame);
 		}
 	}
 	
@@ -442,6 +504,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			frame.window.composition.expand.onclick = frame.window.restore;
 			
 			frame.window.hideTitlebar();
+
+			task.hook.exec('window_expand',frame);
 		}
 	}
 	
@@ -468,6 +532,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			}
 			
 			frame.window.composition.title.adjustWidth();
+
+			task.hook.exec('window_restore',frame);
 		}
 	}
 	
@@ -513,6 +579,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 				try {
 					ui.toolbar.setActiveApplication('Desktop');
 				} catch(err) {}
+
+				task.hook.exec('window_inactive',frame);
 			}
 			
 			frame.window.isActive = false;
@@ -530,6 +598,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 				try {
 					if (!frame.window.isBackground) {
 						ui.toolbar.setActiveApplication(frame);
+
+						task.hook.exec('window_active',frame);
 					} else {
 						ui.toolbar.setActiveApplication('Desktop');
 					}
@@ -619,8 +689,9 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 				
 				frame.window.isActive = false;
 				frame.window.isInactive = true;
+
+				task.hook.exec('window_inactive',frame);
 			}
-		
 		}
 	}
 	
@@ -639,6 +710,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			try {
 				ui.toolbar.setActiveApplication(frame);
 			} catch(err) {}
+			task.hook.exec('window_title',frame);
 		}
 	}
 
@@ -646,6 +718,7 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 	frame.window.setName = function(name) {
 		frame.window.name = name;
 		frame.setAttribute('window-name', name);
+		task.hook.exec('window_name',frame);
 	}
 	
 	// Set window icon
@@ -657,7 +730,8 @@ task.create = function(id='public', attributes={title:'Untitled', name:'Untitled
 			frame.window.composition.icon = '';
 			frame.window.icon = '';
 		}
-		
+
+		task.hook.exec('window_icon',frame);
 		frame.window.composition.title.innerHTML = frame.window.composition.icon+frame.window.title;
 	}
 	
@@ -1384,6 +1458,8 @@ if ($window_move) {
 	frame.window.composition.title.adjustWidth();
 	
 	console.log(`Window opened - ${id} "${attributes.name}" (${frame.id})`);
+	task.hook.exec('window_open',frame);
+	task.hook.exec('window-foreground_open',frame);
 	return frame;
 }
 
@@ -1486,6 +1562,9 @@ task.background = function(id='public', attributes={title:'Untitled', name:'Unti
 	frame.window.forceClose = function() {
 		frame.window.clear();
 		frame.parentNode.removeChild(frame);
+
+		task.hook.exec('window_close',frame);
+		task.hook.exec('window-background_close',frame);
 	}
 	frame.window.clear = function() {
 		frame.innerHTML = '';
@@ -1577,6 +1656,9 @@ task.background = function(id='public', attributes={title:'Untitled', name:'Unti
 	if (document.querySelectorAll('.FlyWindowBackground').length > 10) {
 		shell.notification.create('Many background windows open','A large amount of background windows are open. This may cause your computer to run slowly. To see open background windows, open Window Manager.','<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>warning.svg');
 	}
+
+	task.hook.exec('window_open',frame);
+	task.hook.exec('window-background_open',frame);
 
 	return frame;
 }
