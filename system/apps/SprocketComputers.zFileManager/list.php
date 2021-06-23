@@ -154,8 +154,10 @@ function Deselect(item=false) {
 		for (i = 0; i < selected.length; i++) { 
 			selected[i].className = selected[i].className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
 		}
-		Selected.className = Selected.className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
-		Selected = false;
+		if (!!Selected) {
+			Selected.className = Selected.className.replace('FlyUiMenuItemActive','FlyUiMenuItem');
+			Selected = false;
+		}
 		try {
 			window.parent.SelectedFile = Folder;
 			window.parent.OnSelectionChange();
