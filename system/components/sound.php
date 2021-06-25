@@ -1,5 +1,15 @@
 <?php
+if (!isset($_FLY)) {
+	include 'Fly.Core.php';
+}
+if (!FlyIncludeCheck('FLY.REGISTRY')) {
+	include 'Fly.Registry.php';
+}
+
 function audio_sound_init($config) {
+	global $_FLY;
+	$FLY = FlyCoreVars($_FLY['PATH']);
+	/*
 	if(isset($_SERVER['HTTPS'])) {
 	    if (!empty($_SERVER['HTTPS'])) {
 	        $protocol = 'https://';
@@ -9,6 +19,18 @@ function audio_sound_init($config) {
 	} else {
 		$protocol = 'http://';
 	}
+	*/
+
+	if ($_FLY['IS_USER']) {
+		$sounds_user = json_decode(FlyUserRegistryGet('SystemSounds','root.public'),true);
+	} else {
+		$sounds_user = [];
+	}
+	if ($sounds_user == false) {
+		$sounds_user = [];
+	}
+	$sounds_global = json_decode(FlyGlobalRegistryGet('SystemSounds','root.public'),true);
+	$sounds = array_merge($sounds_global,$sounds_user);
 
 	echo '
 	<script>
@@ -22,21 +44,21 @@ function audio_sound_init($config) {
 	shell.sound.system = function(type=\'error\') {
 		var source;
 		if (type == "error") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/error.mp3\';
+			source = \''.FlyVarsReplace($sounds['error'],true,$FLY).'\';
 		} else if (type == "login") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/login.mp3\';
+			source = \''.FlyVarsReplace($sounds['login'],true,$FLY).'\';
 		} else if (type == "startup") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/startup.mp3\';
+			source = \''.FlyVarsReplace($sounds['startup'],true,$FLY).'\';
 		} else if (type == "question") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/question.mp3\';
+			source = \''.FlyVarsReplace($sounds['question'],true,$FLY).'\';
 		} else if (type == "notification") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/notification.mp3\';
+			source = \''.FlyVarsReplace($sounds['notification'],true,$FLY).'\';
 		} else if (type == "alert") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/alert.mp3\';
+			source = \''.FlyVarsReplace($sounds['alert'],true,$FLY).'\';
 		} else if (type == "password") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/password.mp3\';
+			source = \''.FlyVarsReplace($sounds['password'],true,$FLY).'\';
 		} else if (type == "click") {
-			source = \''.$protocol.$_SERVER['HTTP_HOST'].'/system/resources/sounds/click.mp3\';
+			source = \''.FlyVarsReplace($sounds['click'],true,$FLY).'\';
 		} else {
 			source = type;
 		}

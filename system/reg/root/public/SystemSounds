@@ -1,0 +1,10 @@
+{
+	"error":"%FLY.RESOURCE.URL.SOUNDS%error.mp3",
+	"login":"%FLY.RESOURCE.URL.SOUNDS%login.mp3",
+	"startup":"%FLY.RESOURCE.URL.SOUNDS%startup.mp3",
+	"question":"%FLY.RESOURCE.URL.SOUNDS%question.mp3",
+	"notification":"%FLY.RESOURCE.URL.SOUNDS%notification.mp3",
+	"password":"%FLY.RESOURCE.URL.SOUNDS%password.mp3",
+	"alert":"%FLY.RESOURCE.URL.SOUNDS%alert.mp3",
+	"click":"%FLY.RESOURCE.URL.SOUNDS%click.mp3"
+}
