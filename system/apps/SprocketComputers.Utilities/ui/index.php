@@ -29,6 +29,7 @@ if (in_array(FlyRegistryGet('TimeShowMilitary','SprocketComputers.Options'),['tr
 			hours-=12;
 		}';
 }
+$script_show_date = in_array(FlyRegistryGet('TimeShowDate','SprocketComputers.Options'),['true','yes','on']);
 ?>
 <script>
 var ui = {
@@ -343,7 +344,7 @@ var ui = {
 		ui.time = document.createElement("div");
 		ui.time.style.position = 'fixed';
 		ui.time.style.top = ui.toolbar.offsetHeight+'px';
-		ui.time.style.left = '50px';
+		ui.time.style.left = '52px';
 		ui.time.style.display = 'none';
 		ui.time.style.zIndex = '4999997';
 		ui.time.style.transformOrigin = '0% 0%';
@@ -559,7 +560,11 @@ var ui = {
 			var year    = currentTime.getFullYear();
 			var month   = currentTime.getMonth()+1; 
 			var day     = currentTime.getDate();
+			var wkday	= currentTime.getDay();
 			var dstring  = currentTime.toDateString();
+
+			var days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+			var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 			<?php
 			echo $script_show_military;
 			?>
@@ -571,10 +576,16 @@ var ui = {
 			}
 			var v = hours + ":" + minutes + <?php echo $script_show_seconds; ?> + hr;
 			var td = "<b>" + hours + ":" + minutes + ":" + seconds + hr + "</b><br>" + (month/1) + "/" + (day/1) + "/" + year;
+
+			if (<?php echo ($script_show_date?'true':'false'); ?>) {
+				v += `&nbsp;&nbsp;&nbsp;${days[wkday]} ${months[month-1]} ${day}`;
+			}
+
 			ui.toolbar.time.innerHTML=v;
 			ui.toolbar.time.title = dstring;
 			ui.time.content.timedate.innerHTML=td;
 		}
+
 		ui.flyStylesheet = document.createElement('style');
 		ui.flyStylesheet.textContent = '/* Added by ui.php - window spacing for toolbar */';
 		ui.flyStylesheet.textContent += '\n.FlyWindowActive,.FlyWindowInactive,.FlyWindowMinimize,.FlyWindowTransparent,.FlyWindowTransparent,.FlyWindowExpand { margin-top: '+ui.toolbar.offsetHeight+'px; }';
