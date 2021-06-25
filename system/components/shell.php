@@ -34,13 +34,9 @@ function cmd(cmd) {
 }
 
 system.logout = function() {
-	var audio = document.createElement('audio');
-	audio.style.display = 'none';
-	audio.innerHTML = '<source src="system/resources/sounds/logout.mp3"></source>';
-	audio.onended = function() {
+	shell.sound.system('logout').onended = function() {
 		window.location.href = 'index.php?logout=true';
 	};
-	document.body.appendChild(audio);
 	
 	var cover = document.createElement('div');
 	cover.style.position = 'fixed';
@@ -58,7 +54,6 @@ system.logout = function() {
 		windows[i].window.forceClose();
 	}
 	document.body.appendChild(cover);
-	audio.play();
 	setTimeout(function() {cover.style.opacity = '1';}, 1500);
 }
 

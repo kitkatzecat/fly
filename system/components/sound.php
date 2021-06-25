@@ -59,6 +59,8 @@ function audio_sound_init($config) {
 			source = \''.FlyVarsReplace($sounds['password'],true,$FLY).'\';
 		} else if (type == "click") {
 			source = \''.FlyVarsReplace($sounds['click'],true,$FLY).'\';
+		} else if (type == "logout") {
+			source = \''.FlyVarsReplace($sounds['logout'],true,$FLY).'\';
 		} else {
 			source = type;
 		}
@@ -71,6 +73,8 @@ function audio_sound_init($config) {
 		document.body.appendChild(audio);
 
 		audio.play();
+
+		return audio;
 	}
 	</script>
 	';

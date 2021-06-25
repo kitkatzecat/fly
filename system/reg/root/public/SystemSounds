@@ -6,5 +6,6 @@
 	"notification":"%FLY.RESOURCE.URL.SOUNDS%notification.mp3",
 	"password":"%FLY.RESOURCE.URL.SOUNDS%password.mp3",
 	"alert":"%FLY.RESOURCE.URL.SOUNDS%alert.mp3",
-	"click":"%FLY.RESOURCE.URL.SOUNDS%click.mp3"
+	"click":"%FLY.RESOURCE.URL.SOUNDS%click.mp3",
+	"logout":"%FLY.RESOURCE.URL.SOUNDS%logout.mp3"
 }
