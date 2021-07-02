@@ -1,0 +1,21 @@
+{
+    "id": "SprocketComputers.PhotoViewer",
+	"name": "Photo Viewer",
+	"icon": "%FLY.WORKING_URL%photoviewer.svg",
+	"index": "index.php",
+	"window": {
+		"position": {
+			"x": "32",
+			"y": "32"
+		},
+		"size": {
+			"width": "300",
+			"height": "200"
+		},
+		"title": "Photo Viewer",
+		"expand": true,
+		"resize": true,
+		"close": true,
+		"minimize": true
+	}
+}

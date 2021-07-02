@@ -8,19 +8,19 @@
 	"jpg": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
 		"description": "JPEG Image",
-		"app": "SprocketComputers.PhotoViewer",
+		"action": "SprocketComputers.PhotoViewer,file=%1",
 		"mime": "image/jpeg"
 	},
 	"png": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
 		"description": "PNG Image",
-		"app": "SprocketComputers.PhotoViewer",
+		"action": "SprocketComputers.PhotoViewer,file=%1",
 		"mime": "image/png"
 	},
 	"gif": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
 		"description": "GIF Image",
-		"app": "SprocketComputers.PhotoViewer",
+		"action": "SprocketComputers.PhotoViewer,file=%1",
 		"mime": "image/gif"
 	},
 	"bmp": {
@@ -31,7 +31,7 @@
 	"svg": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
 		"description": "SVG Image",
-		"app": "SprocketComputers.PhotoViewer",
+		"action": "SprocketComputers.PhotoViewer,file=%1",
 		"mime": "image/svg+xml"
 	},
 	"txt": {
