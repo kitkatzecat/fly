@@ -555,6 +555,29 @@ document.addEventListener('DOMContentLoaded',function() {
 </script>
 	<?php
 }
+// Alias - show linked file
+if ($process['extension'] == 'als') {
+	$processALS = FlyFileStringProcessor($process['alias']);
+	?>
+<div class="category FlyUiText FlyUiNoSelect">Alias</div>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect" style="cursor:pointer;" onclick="window.top.system.command('run:<?php echo htmlentities($process['alias']); ?>')">
+	<span class="title">Target</span>
+	<span class="info">
+	<?php
+	if ($processALS !== false) {
+		?><img style="width:16px;height:16px;vertical-align:middle;margin-right:4px;" src="<?php echo $processALS['icon']; ?>"><?php echo $processALS['fname']; ?></span><?php
+	} else {
+		echo $procesALS['alias'];
+	}
+	?>
+</div>
+<!-- <div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Icon</span>
+	<span class="info"><button>Set</button><button>Clear</button></span>
+</div> -->
+	<?php
+}
+
 ?>
 
 </div>
