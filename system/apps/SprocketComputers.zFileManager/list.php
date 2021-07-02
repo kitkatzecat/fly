@@ -417,6 +417,8 @@ function Icon(file) {
 		icon.appendChild(img);
 	} else if (file['extension'] == 'als') {
 		icon.innerHTML = '<img loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img loading="lazy" style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['WORKING_URL']; ?>alias.svg">';
+	} else if ((file['path']+'/').indexOf(Fly.core['RESOURCE']['PATH']['APPS']) !== -1) {
+		icon.innerHTML = '<img loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img loading="lazy" style="position:absolute;bottom:0;right:0;width:45%;height:45%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg">';
 	} else if (Protected.indexOf(file['ffile']) != -1) {
 		icon.innerHTML = '<img loading="lazy" style="position:absolute;top:0;left:0;width:100%;height:100%;" src="'+file['icon']+'"><img loading="lazy" style="position:absolute;bottom:0;left:0;width:35%;height:35%;min-height:12px;min-width:12px;" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>lock.svg">';
 	} else {
