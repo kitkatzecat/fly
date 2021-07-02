@@ -368,9 +368,13 @@ function FlyFileStringProcessor($item) {
 				if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].basename($filePath).'/ApplicationManifest.json')) {
 					$manifestJSON = json_decode(file_get_contents($_FLY['RESOURCE']['PATH']['APPS'].basename($filePath).'/ApplicationManifest.json'),true);
 					$icon = FlyVarsReplace($manifestJSON['icon'],true,FlyCoreVars_System($_FLY['RESOURCE']['PATH']['APPS'].basename($filePath).'/ApplicationManifest.json'));
-				} else {
+					$description = 'Application Folder';
+				} else if (file_exists($_FLY['RESOURCE']['PATH']['APPS'].basename($filePath).'/ApplicationManifest.xml')) {
 					$manifestXML = simpleXML_load_file($_FLY['RESOURCE']['PATH']['APPS'].basename($filePath).'/ApplicationManifest.xml');
 					$icon = FlyVarsReplace(str_replace('%app_path%',$protocol.$_SERVER['HTTP_HOST'].'/system/apps/'.basename($filePath).'/',str_replace('%icon_path%',$protocol.$_SERVER['HTTP_HOST'].'/system/resources/icons/',$manifestXML->icon)),true,FlyCoreVars_System($_FLY['RESOURCE']['PATH']['APPS'].basename($filePath).'/ApplicationManifest.xml'));
+					$description = 'Application Folder';
+				} else {
+					$icon = $_FLY['RESOURCE']['URL']['ICONS'].'folder.svg';
 				}
 			} else {
 				$icon = $_FLY['RESOURCE']['URL']['ICONS'].'folder.svg';
