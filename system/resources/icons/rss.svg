@@ -103,7 +103,7 @@
        id="radialGradient7710"
        xlink:href="#linearGradient7702" />
     <linearGradient
-       gradientTransform="matrix(1.0821608,0,0,1.0821608,-1.9718608,1002.288)"
+       gradientTransform="matrix(1.0821608,0,0,1.0821608,49.529316,1010.0809)"
        gradientUnits="userSpaceOnUse"
        y2="36.773438"
        x2="22.339844"
@@ -122,6 +122,24 @@
          id="feGaussianBlur8493"
          stdDeviation="1.1367188" />
     </filter>
+    <radialGradient
+       gradientTransform="matrix(1.9033199,2.9888631e-7,-1.7778583e-7,1.1321471,-21.398926,-1142.333)"
+       gradientUnits="userSpaceOnUse"
+       r="18.945312"
+       fy="1044.4731"
+       fx="23.74371"
+       cy="1044.4731"
+       cx="23.74371"
+       id="radialGradient7710-2"
+       xlink:href="#linearGradient7767" />
+    <linearGradient
+       xlink:href="#linearGradient7767"
+       id="linearGradient1529"
+       x1="25.526672"
+       y1="-11.011029"
+       x2="25.526672"
+       y2="34.617207"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <metadata
      id="metadata7">
@@ -172,8 +190,9 @@
        d="M 33.515567,1043.0338 A 24.187237,24.187237 0 0 0 9.3283303,1018.8465 l 0,-6.0467 a 30.234046,30.234046 0 0 1 30.2340467,30.234 z"
        style="fill:#ffffff" />
     <path
-       id="rect7700-1"
-       d="m 9.0653349,1007.9695 c -2.9666835,0 -5.3558514,2.3891 -5.3558514,5.3558 l 0,28.4193 c 8.4720505,-11.8449 27.6258195,-20.7068 40.5810305,-23.7441 l 0,-4.6752 c 0,-2.9667 -2.389168,-5.3558 -5.355851,-5.3558 l -29.8693281,0 z"
-       style="opacity:0.98999999;fill:url(#linearGradient7765);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.30000001;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+       id="rect7700-2"
+       style="opacity:0.99;fill:url(#linearGradient1529);fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:0.3;stroke-linecap:square;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       d="M 9.203125 3.8984375 C 6.2640272 3.8984375 3.8984375 6.2640272 3.8984375 9.203125 L 3.8984375 25.349609 A 26.174116 6.6070585 0 0 0 24 27.726562 A 26.174116 6.6070585 0 0 0 44.101562 25.349609 L 44.101562 9.203125 C 44.101562 6.2640272 41.735973 3.8984375 38.796875 3.8984375 L 9.203125 3.8984375 z "
+       transform="translate(0,1004.3622)" />
   </g>
 </svg>
