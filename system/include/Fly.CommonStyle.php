@@ -128,4 +128,14 @@ img.FlyCSButtonIcon {
 img.FlyCSButtonIcon.FlyCSButtonIconText {
 	margin-right: 6px;
 }
+@media (max-height: 300px) {
+	div.FlyCSTitle.FlyCSSectionTitle {
+		padding-top: 12px;
+		padding-bottom: 8px;
+	}
+	img.FlyCSSectionIcon {
+		width: 55px;
+		height: 55px;
+	}
+}
 </style>

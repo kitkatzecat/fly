@@ -47,7 +47,7 @@ window.addEventListener('DOMContentLoaded',function() {
 	Display.Path('Home');
 	Display.Status('Ready');
 
-	document.body.innerHTML = '<style>body {padding-left:6%;padding-right:6%;margin-top:60px;}</style><div style="position:absolute;top:0;left:0;right:0;margin-top:0;" class="FlyCSTitle FlyCSSectionTitle">Home<img class="FlyCSSectionIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg"></div>';
+	document.body.innerHTML = '<style>body {margin-top:60px;} @media (max-height:300px) { body {margin-top:40px} }</style><div style="position:absolute;top:0;left:0;right:0;margin-top:0;" class="FlyCSTitle FlyCSSectionTitle">Home<img class="FlyCSSectionIcon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>home.svg"></div>';
 	
 	window.View(Folder,List);
 });
