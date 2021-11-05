@@ -122,14 +122,34 @@ if ($process['type'] == 'application') {
 				validate: true,
 				onclick: function(i) {
 					<?php
-					if ($extensions == 'true' || ($extensionsALS !== 'true' && $process['extension'] == 'als')) {
+					if (($extensions == 'true' || ($extensionsALS !== 'true' && $process['extension'] == 'als')) && $process['type'] == 'file') {
 						?>
 						i += '.<?php echo $process['extension']; ?>';
 						<?php
 					}
 					?>
-					Fly.command('rename:<?php echo $process['file']; ?>,'+i+',true',function() {
-						Fly.window.close();
+					Fly.command('exists:<?php echo $process['path']; ?>/'+i,function(r) {
+						if (r['return']) {
+							Fly.dialog.confirm({
+								title: '<?php echo $process['fname']; ?>',
+								message: 'Overwrite <?php echo $process['type']; ?>?',
+								icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>question.svg',
+								content: `The <?php echo $process['type']; ?> "${i}" already exists in this directory. Do you want to overwrite it?`,
+								callback: function(c) {
+									if (c) {
+										Fly.command('rename:<?php echo $process['file']; ?>,'+i+',true',function() {
+											Fly.window.close();
+										});
+									} else {
+										Fly.window.close();
+									}
+								}
+							});
+						} else {
+							Fly.command('rename:<?php echo $process['file']; ?>,'+i+',true',function() {
+								Fly.window.close();
+							});
+						}
 					});
 				}
 			},
