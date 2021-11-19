@@ -150,9 +150,15 @@ function ShortcutInit() {
 			e.preventDefault();
 		}
 		
-		//Font (ctrl+f)
+		//Find (ctrl+f)
 		if (e.keyCode == 70 && e.ctrlKey) {
-			Font();
+			Find.dialog();
+			e.preventDefault();
+		}
+				
+		//Find Next (ctrl+g)
+		if (e.keyCode == 71 && e.ctrlKey) {
+			Find.next();
 			e.preventDefault();
 		}
 	}, false);
@@ -411,18 +417,40 @@ function NewFile(boolean) {
 
 var Find = {
 	dialog: function() {
-		Fly.dialog.input({
+		Fly.dialog.custom({
+			modal: true,
 			title: 'Find',
 			message: 'Find',
 			content: 'Enter the text to find:',
+			sound: 'question',
+			checkbox: {
+				text: 'Ignore case',
+				checked: Find.ignoreCase
+			},
+			input: {
+				type: 'text',
+				value: (Find.finding ? Find.finding : '')
+			},
 			icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>search.svg',
-			callback: function(i) {
-				if (!!i) {
-					EditMenu.menu.options[3].enable();
-					Find.finding = i;
-					Find.next();
+			buttons: [
+				{
+					align: 'right',
+					image: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg',
+					default: true,
+					onclick: function(i,c) {
+						if (!!i) {
+							EditMenu.menu.options[3].enable();
+							Find.finding = i;
+							Find.ignoreCase = c;
+							Find.next();
+						}
+					}
+				},
+				{
+					align: 'right',
+					image: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'
 				}
-			}
+			]
 		})
 	},
 	next: function() {
@@ -430,21 +458,36 @@ var Find = {
 			Find.dialog();
 		} else {
 			var text = document.getElementById('TextArea');
-			if (text.innerHTML.indexOf(Find.finding) == -1) {
+			var originalText = text.innerHTML;
+			var haystack = text.innerHTML;
+			var needle = Find.finding;
+
+			if (Find.ignoreCase) {
+				haystack = haystack.toLowerCase();
+				needle = needle.toLowerCase();
+			}
+
+			if (haystack.indexOf(needle) == -1) {
 				Fly.window.message('No matches found');
 			} else {
 				var pos = text.selectionEnd;
-				var ind = text.innerHTML.indexOf(Find.finding,pos);
+				var ind = haystack.indexOf(needle,pos);
 				if (ind == -1) {
-					Fly.window.message('No more matches found');
+					Fly.window.message('No more matches found, end of file');
 				} else {
 					text.focus();
-					text.setSelectionRange(ind,ind+Find.finding.length);
+
+					text.value = originalText.substring(0,ind+needle.length);
+					text.scrollTop = text.scrollHeight;
+					text.value = originalText;
+
+					text.setSelectionRange(ind,ind+needle.length);
 				}
 			}
 		}
 	},
-	finding: false
+	finding: false,
+	ignoreCase: true
 };
 </script>
 <style>
