@@ -75,5 +75,5 @@ Tools.Eyedropper.bar.style.width = 'auto';
 Tools.Eyedropper.bar.style.right = '0px';
 Tools.Eyedropper.buttons = {};
 
-Tools.Eyedropper.buttons.title = Tools.Eyedropper.bar.add({text:'Eyedropper'});
+Tools.Eyedropper.buttons.title = Tools.Eyedropper.bar.add({text:'Color Picker'});
 Tools.Eyedropper.buttons.title.style.pointerEvents = 'none';
