@@ -33,7 +33,7 @@ if (!empty($_GET['file'])) {
 	$process = FlyFileStringProcessor($_GET['file']);
 	if (!$process) {
 		$canvasinitother = '
-		window.top.shell.dialog(\'File not found\',\'The file "'.basename($_GET['file']).'" could not be loaded for editing because it does not exist.\',\'Not Found\');
+		Fly.dialog.message({message:\'File not found\',content:\'The file "'.basename($_GET['file']).'" could not be loaded for editing because it does not exist.\',title:\'Not Found\',icon:\''.$_FLY['RESOURCE']['URL']['ICONS'].'error.svg\'});
 		';
 	} else {
 		if (in_array($process['extension'],['jpg','jpeg','bmp','gif','png']) || strpos($process['mime'],'image/') !== false) {
