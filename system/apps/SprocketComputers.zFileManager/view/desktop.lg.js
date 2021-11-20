@@ -126,6 +126,9 @@ function View(Folder=false,List=false) {
 				});
 			},500);
 		}
+		window.Nav = function(p) {
+			window.top.system.command('run:'+p);
+		}
 	} else {
 		throw "Folder or List is not valid";
 	}

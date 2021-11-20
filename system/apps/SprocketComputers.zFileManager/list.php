@@ -63,6 +63,8 @@ var Output = atob(\''.base64_encode($Output).'\');
 
 ?>
 <script>
+var Nav = window.parent.Nav;
+var Refresh = window.parent.Refresh;
 
 if (typeof onLoad == 'undefined') {
 	onLoad = [];
@@ -191,9 +193,9 @@ var SelectedFile = {};
 
 function Click(obj) {
 	if (obj['isdir']) {
-		window.parent.Nav(obj['file']);
+		Nav(obj['file']);
 	} else if (obj['extension'] == 'als') {
-		window.parent.Nav(obj['file']);
+		Nav(obj['file']);
 	} else {
 		window.top.system.command('run:'+obj['file']);
 	}
@@ -454,9 +456,6 @@ function Subtitle(file) {
 	}
 }
 
-function Refresh(a) {
-	window.parent.Refresh(a);
-}
 </script>
 <script src="view/<?php echo $View; ?>?r=<?php echo rand(); ?>"></script>
 <style>
