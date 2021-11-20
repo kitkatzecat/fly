@@ -13,12 +13,31 @@ if (typeof Fly == "undefined") {
 	var Fly = {};
 }
 
-Fly.actionbar = function() {
+Fly.actionbar = function(options) {
+	options = Object.assign({
+		position: 'top',
+		iconSize: 'small',
+		iconPosition: 'left'
+	},options);
+
+	var iconSize = 16;
+	var buttonSize = 34;
+
 	var actionbar = document.createElement('div');
-	actionbar.style.height = '34px';
-	actionbar.style.width = '100%';
+	if (options.position == 'left' || options.position == 'right') {
+		actionbar.style.height = '100%';
+		actionbar.style.width = (buttonSize+2)+'px';
+	} else {
+		actionbar.style.height = buttonSize+'px';
+		actionbar.style.width = '100%';
+	}
+
 	actionbar.oncontextmenu = function() {return false};
 	actionbar.buttons = [];
+	actionbar.properties = Object.assign(options,{
+		iconSize: iconSize,
+		buttonSize: buttonSize,
+	});
 	
 	actionbar.add = function(options) {
 		if (options.type === undefined || options.type == '') {
@@ -45,9 +64,9 @@ Fly.actionbar = function() {
 				}
 				if (exists) {
 		            if (options.text === undefined || options.text == '') {
-						button.icon = '<img src="'+options.icon+'" style="width:16px;height:16px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${options.icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;vertical-align:middle;pointer-events:none;">`;
 					} else {
-						button.icon = '<img src="'+options.icon+'" style="width:16px;height:16px;margin-right:4px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${options.icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;margin-right:4px;vertical-align:middle;pointer-events:none;">`;
 					}
 				} else {
 					button.icon = '';
@@ -88,9 +107,9 @@ Fly.actionbar = function() {
 				}
 				if (exists) {
 		            if (button.text == '') {
-						button.icon = '<img src="'+icon+'" style="width:16px;height:16px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;vertical-align:middle;pointer-events:none;">`;
 					} else {
-						button.icon = '<img src="'+icon+'" style="width:16px;height:16px;margin-right:4px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;margin-right:4px;vertical-align:middle;pointer-events:none;">`;
 					}
 				} else {
 					button.icon = '';
@@ -160,9 +179,9 @@ Fly.actionbar = function() {
 				}
 				if (exists) {
 		            if (options.text === undefined || options.text == '') {
-						button.icon = '<img src="'+options.icon+'" style="width:16px;height:16px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${options.icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;vertical-align:middle;pointer-events:none;">`;
 					} else {
-						button.icon = '<img src="'+options.icon+'" style="width:16px;height:16px;margin-right:4px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${options.icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;margin-right:4px;vertical-align:middle;pointer-events:none;">`;
 					}
 				} else {
 					button.icon = '';
@@ -202,9 +221,9 @@ Fly.actionbar = function() {
 				}
 				if (exists) {
 		            if (button.text == '') {
-						button.icon = '<img src="'+icon+'" style="width:16px;height:16px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;vertical-align:middle;pointer-events:none;">`;
 					} else {
-						button.icon = '<img src="'+icon+'" style="width:16px;height:16px;margin-right:4px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;margin-right:4px;vertical-align:middle;pointer-events:none;">`;
 					}
 				} else {
 					button.icon = '';
@@ -232,9 +251,9 @@ Fly.actionbar = function() {
 				}
 				if (exists) {
 		            if (options.text === undefined || options.text == '') {
-						button.icon = '<img src="'+options.icon+'" style="width:16px;height:16px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${options.icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;vertical-align:middle;pointer-events:none;">`;
 					} else {
-						button.icon = '<img src="'+options.icon+'" style="width:16px;height:16px;margin-right:4px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${options.icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;margin-right:4px;vertical-align:middle;pointer-events:none;">`;
 					}
 				} else {
 					button.icon = '';
@@ -301,9 +320,9 @@ Fly.actionbar = function() {
 				}
 				if (exists) {
 		            if (button.text == '') {
-						button.icon = '<img src="'+icon+'" style="width:16px;height:16px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;vertical-align:middle;pointer-events:none;">`;
 					} else {
-						button.icon = '<img src="'+icon+'" style="width:16px;height:16px;margin-right:4px;vertical-align:middle;pointer-events:none;">';
+						button.icon = `<img src="${icon}" style="width:${actionbar.properties.iconSize}px;height:${actionbar.properties.iconSize}px;margin-right:4px;vertical-align:middle;pointer-events:none;">`;
 					}
 				} else {
 					button.icon = '';
@@ -366,13 +385,25 @@ Fly.actionbar = function() {
 			button.oncontextmenu = function() {return false};
 
 			button.style.display = 'inline-block';
-			button.style.height = '24px';
-			button.style.width = '0px';
-			button.style.marginTop = '5px';
-			button.style.marginLeft = '4px';
-			button.style.marginRight = '4px';
-			button.style.borderLeft = '.1px solid #c0c0c0';
-			button.style.borderRight = '.1px solid #808080';
+
+			if (actionbar.properties.position == 'left' || actionbar.properties.position == 'right') {
+				button.style.width = 'calc(100% - 10px)';
+				button.style.height = '0px';
+				button.style.marginLeft = '5px';
+				button.style.marginRight = '5px';
+				button.style.marginTop = '4px';
+				button.style.marginBottom = '4px';
+				button.style.borderTop = '.1px solid #808080';
+				button.style.borderBottom = '.1px solid #c0c0c0';
+			} else {
+				button.style.height = '24px';
+				button.style.width = '0px';
+				button.style.marginTop = '5px';
+				button.style.marginLeft = '4px';
+				button.style.marginRight = '4px';
+				button.style.borderLeft = '.1px solid #c0c0c0';
+				button.style.borderRight = '.1px solid #808080';
+			}
 		}
 
 		if (typeof options.title != 'undefined') {
