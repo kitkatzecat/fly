@@ -219,10 +219,10 @@ function OnLoad() {
 	]});
 	
 	
-	Actionbars.Colorbar = new Fly.actionbar();
+	Actionbars.Colorbar = new Fly.actionbar({position:'left'});
 	Actionbars.Colorbar.style.position = 'absolute';
-	Actionbars.Colorbar.style.top = '0px';
-	Actionbars.Colorbar.style.width = 'auto';
+	Actionbars.Colorbar.style.top = '34px';
+	Actionbars.Colorbar.style.height = 'auto';
 	Actionbars.Colorbar.style.right = '0px';
 	Actionbars.Colorbar.buttonsList = {};
 	
@@ -242,7 +242,7 @@ function OnLoad() {
 	Actionbars.Colorbar.buttonsList.custom3 = Actionbars.Colorbar.add({text:'<div class="color-button" style="background-color:#404040;"></div>',action:function(){SetColor(Actionbars.Colorbar.buttonsList.custom3.hex);}});
 	Actionbars.Colorbar.buttonsList.custom3.hex = '#404040';
 	Actionbars.Colorbar.add({type:'divider'});
-	Actionbars.Colorbar.buttonsList.color = Actionbars.Colorbar.add({text:'Custom',action:function(){
+	Actionbars.Colorbar.buttonsList.color = Actionbars.Colorbar.add({text:'<div class="color-button color-button-custom" style=""></div>',action:function(){
 		var current = hexToRgb(Color);
 		Fly.dialog.color({
 			value: [current.r,current.g,current.b],
@@ -268,15 +268,15 @@ function OnLoad() {
 	Actionbars.Toolsbar.buttonsList = {};
 	
 	Actionbars.Toolsbar.buttonsList.pencil = Actionbars.Toolsbar.add({type:'button',title:'Pencil',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg',action:Tools.Pencil});
-	Actionbars.Toolsbar.buttonsList.paint = Actionbars.Toolsbar.add({type:'dropdown',title:'Brush',icon:'<?php echo WORKING_URL; ?>paint.svg',menu:[
+	Actionbars.Toolsbar.buttonsList.paint = Actionbars.Toolsbar.add({type:'dropdown',title:'Brush',icon:'paint.svg',menu:[
 		['Paint',Tools.Brush],
 		['Watercolor',Tools.Watercolor]
 	]});
 	Actionbars.Toolsbar.buttonsList.brush = Actionbars.Toolsbar.buttonsList.paint.menu.options[0];
 	Actionbars.Toolsbar.buttonsList.watercolor = Actionbars.Toolsbar.buttonsList.paint.menu.options[1];
-	Actionbars.Toolsbar.buttonsList.bucket = Actionbars.Toolsbar.add({type:'button',title:'Bucket',icon:'<?php echo WORKING_URL; ?>brush.svg',action:Tools.Bucket});
-	Actionbars.Toolsbar.buttonsList.text = Actionbars.Toolsbar.add({type:'button',title:'Text',icon:'<?php echo WORKING_URL; ?>txt.svg',action:Tools.Text});
-	Actionbars.Toolsbar.buttonsList.eyedropper = Actionbars.Toolsbar.add({type:'button',title:'Eyedropper',icon:'<?php echo WORKING_URL; ?>eyedropper.svg',action:Tools.Eyedropper});
+	Actionbars.Toolsbar.buttonsList.bucket = Actionbars.Toolsbar.add({type:'button',title:'Bucket',icon:'brush.svg',action:Tools.Bucket});
+	Actionbars.Toolsbar.buttonsList.text = Actionbars.Toolsbar.add({type:'button',title:'Text',icon:'txt.svg',action:Tools.Text});
+	Actionbars.Toolsbar.buttonsList.eyedropper = Actionbars.Toolsbar.add({type:'button',title:'Color Picker',icon:'eyedropper.svg',action:Tools.Eyedropper});
 	
 
 	Actionbars.Toolsbar.toggleAllOff = function() {
@@ -1085,7 +1085,7 @@ body {
 	position: absolute;
 	top: 34px;
 	left: 0px;
-	right: 0px;
+	right: 36px;
 	bottom: 36px;
 	background-color: #808080;
 	overflow: auto;
@@ -1107,7 +1107,11 @@ body {
 	vertical-align: middle;
 	border: .1px solid rgba(255,255,255,0.3);
 	border-radius: 2px;
-	background-image: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%,rgba(255,255,255,0.3) 49%,rgba(255,255,255,0.2) 50%,rgba(255,255,255,0.3) 100%);
+	background-image: linear-gradient(to bottom, rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.2) 49%,rgba(255,255,255,0.1) 50%,rgba(255,255,255,0.2) 100%);
+}
+.color-button-custom {
+	background-image: linear-gradient(to bottom, rgba(255,255,255,0.4) 0%,rgba(255,255,255,0.3) 49%,rgba(255,255,255,0.2) 50%,rgba(255,255,255,0.3) 100%), linear-gradient(135deg,red,red,orange,yellow,green,blue,purple,purple);
+	background-size: 100% 100%;
 }
 #overlay {
 	position: absolute;
