@@ -59,6 +59,8 @@ Tools.Brush.onPaint = function() {
 Tools.Brush.onMouseDown = function() {
 	ctx.beginPath();
 	ctx.moveTo(mouse.x, mouse.y);
+	ctx.lineTo(mouse.x, mouse.y);
+	ctx.stroke();
 	canvas.addEventListener('mousemove', Tools.Brush.onPaint, false);
 }
 Tools.Brush.onMouseOut = function() {
