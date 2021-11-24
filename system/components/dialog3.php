@@ -163,7 +163,7 @@ var Dialog = {
 					//document.querySelector('div.input').style.display = 'none';
 					//document.querySelector('div.select').style.display = 'block';
 					//var select = document.getElementById('select');
-					input = document.createElement('select');
+					var input = document.createElement('select');
 					input.className = 'dInput';
 					document.querySelector('div.input').appendChild(input);
 
@@ -175,6 +175,27 @@ var Dialog = {
 						option.disabled = (element['disabled'] ? true : false);
 						input.add(option);
 					});
+				} else if (o.type == 'checkbox') {
+					var input = document.createElement('p');
+					input.value = false;
+
+					var checkbox = document.createElement('input');
+					checkbox.type = 'checkbox';
+					checkbox.className = 'FlyCSInlineIcon';
+					checkbox.checked = (o.hasOwnProperty('value') ? !!o.value : false);
+					checkbox.id = 'checkbox'+i;
+					checkbox.onchange = function() {
+						input.value = checkbox.checked;
+					};
+
+					var label = document.createElement('label');
+					label.setAttribute('for','checkbox'+i);
+					label.innerHTML = (o.hasOwnProperty('placeholder') ? o.placeholder : 'Checkbox');
+
+					input.appendChild(checkbox);
+					input.appendChild(label);
+
+					document.querySelector('div.input').appendChild(input);
 				} else {
 					var input = document.createElement('input');
 					document.querySelector('div.input').appendChild(input);
@@ -324,7 +345,7 @@ var Dialog = {
 						if (n.attributes.hasOwnProperty('valMsgVisible') && !!n.attributes.valMsgVisible) {
 							n.attributes.valMsgVisible = false;
 							n.attributes.valMsg.remove();
-							
+
 							var oldheight = window.top.document.getElementById(Fly.window.id).offsetHeight;
 
 							Dialog.position();
