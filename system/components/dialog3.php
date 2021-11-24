@@ -46,19 +46,27 @@ var Dialog = {
 			}
 
 			b.onclick = function() {
-				if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.hasOwnProperty('validate') && !!Dialog.attributes.input.validate && element.hasOwnProperty('validate') && element.validate == true) {
+				if (Dialog.checkValidate() && element.hasOwnProperty('validate') && element.validate == true) {
 					if (!Dialog.validateInput()) {
 						return false;
 					}
-				} else if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes['input']['type'] == 'list' && element.hasOwnProperty('validate') && element.validate == true) {
+				}/* else if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes['input']['type'] == 'list' && element.hasOwnProperty('validate') && element.validate == true) {
 					if (!Dialog.validateList()) {
 						return false;
 					}
-				}
-				if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.type == 'select') {
+				}*/
+				/*if (Dialog.attributes.hasOwnProperty('input') && Dialog.attributes.input.type == 'select') {
 					document.getElementById('input').value = document.getElementById('select').value;
+				}*/
+				var v = [];
+				Dialog.inputs.forEach(function(n) {
+					v.push(n.input.value);
+				});
+				if (v.length == 1) {
+					v = v[0];
+				} else if (v.length == 0) {
+					v = '';
 				}
-				var v = document.getElementById('input').value;
 				var c = document.getElementById('checkbox').checked;
 				try {
 					element.onclick(v,c);
@@ -94,97 +102,133 @@ var Dialog = {
 			//checkboxContainer.style.right = ((Dialog.attributes.buttons.length)*109)+'px';
 		}
 
+		Dialog.inputs = [];
 		if (!!Dialog.attributes.input) {
-			var input = document.querySelector('input#input');
 			document.querySelector('div.input').style.display = 'block';
-			if (Dialog.attributes.input.type == 'text') {
-				input.type = 'text';
-			} else if (Dialog.attributes.input.type == 'date') {
-				input.type = 'date';
-			} else if (Dialog.attributes.input.type == 'time') {
-				input.type = 'time';
-			} else if (Dialog.attributes.input.type == 'number') {
-				input.type = 'number';
-			} else if (Dialog.attributes.input.type == 'password') {
-				input.type = 'password';
-			} else if (Dialog.attributes.input.type == 'select') {
-				document.querySelector('div.input').style.display = 'none';
-				document.querySelector('div.select').style.display = 'block';
-				var select = document.getElementById('select');
+			if (!Array.isArray(Dialog.attributes.input)) {
+				Dialog.attributes.input = [Dialog.attributes.input];
+			}
+			Dialog.attributes.input.forEach(function(o,i) {
+				//var input = document.querySelector('input#input');
+				//input.id = `input${i}`;
+				if (o.type == 'list') {
+					//document.querySelector('div.input').style.display = 'none';
+					//document.querySelector('div.richSelect').style.display = 'block';
+					//var list = document.querySelector('.richSelect');
+					//var input = document.getElementById('input');
 
-				Dialog.attributes.input.options.forEach(function(element) {
-					let option = document.createElement('option');
-					option.text = element['text'];
-					option.value = element['value'];
-					option.selected = (element['selected'] ? true : false);
-					option.disabled = (element['disabled'] ? true : false);
-					select.add(option);
-				});
-			} else if (Dialog.attributes.input.type == 'list') {
-				document.querySelector('div.input').style.display = 'none';
-				document.querySelector('div.richSelect').style.display = 'block';
+					var input = document.createElement('div');
+					input.className = 'richSelect';
+					o.validate = true;
 
-				var list = document.querySelector('.richSelect');
-				var input = document.getElementById('input');
+					input.options = [];
 
-				Dialog.attributes.input.options.forEach(function(element,i) {
-					if (element.hasOwnProperty('header') && !!element['header']) {
-						let header = document.createElement('div');
-						header.className = 'richSelectHeader';
-						header.innerHTML = element['text'];
-						list.appendChild(header);
-					} else {
-						let option = document.createElement('div');
-						option.className = 'richSelectItem FlyUiMenuItem FlyUiNoSelect '+(element['selected'] ? 'FlyUiMenuItemActive' : '');
-						option.innerHTML = (element.hasOwnProperty('icon') ? '<img class="richSelectIcon" src="'+element['icon']+'">' : '')+'<div class="richSelectTitle">'+element['text']+'</div>';
+					document.querySelector('div.input').appendChild(input);
+
+					o.options.forEach(function(element,i) {
+						if (element.hasOwnProperty('header') && !!element['header']) {
+							let header = document.createElement('div');
+							header.className = 'richSelectHeader';
+							header.innerHTML = element['text'];
+							input.appendChild(header);
+						} else {
+							let option = document.createElement('div');
+							option.className = 'richSelectItem FlyUiMenuItem FlyUiNoSelect '+(element['selected'] ? 'FlyUiMenuItemActive' : '');
+							option.innerHTML = (element.hasOwnProperty('icon') ? '<img class="richSelectIcon" src="'+element['icon']+'">' : '')+'<div class="richSelectTitle">'+element['text']+'</div>';
+							option.value = element['value'];
+							option.onclick = function() {
+								document.querySelectorAll('.richSelectItem').forEach(function(e) {
+									e.classList.remove('FlyUiMenuItemActive');
+								});
+								option.classList.add('FlyUiMenuItemActive');
+								input.value = option.value;
+							};
+							option.ondblclick = function() {
+								Dialog.default();
+							}
+							input.appendChild(option);
+							if (!!element['selected']) {
+								option.onclick();
+							}
+							if (!!element['disabled']) {
+								option.style.filter = 'grayscale(100%)';
+								option.style.pointerEvents = 'none';
+							}
+							input.options.push(option);
+						}
+					});
+
+					input.style.height = Math.min(input.scrollHeight+8,300)+'px';
+				} else if (o.type == 'select') {
+					//document.querySelector('div.input').style.display = 'none';
+					//document.querySelector('div.select').style.display = 'block';
+					//var select = document.getElementById('select');
+					input = document.createElement('select');
+					input.className = 'dInput';
+					document.querySelector('div.input').appendChild(input);
+
+					o.options.forEach(function(element) {
+						let option = document.createElement('option');
+						option.text = element['text'];
 						option.value = element['value'];
-						option.onclick = function() {
-							document.querySelectorAll('.richSelectItem').forEach(function(e) {
-								e.classList.remove('FlyUiMenuItemActive');
-							});
-							option.classList.add('FlyUiMenuItemActive');
-							input.value = option.value;
-						};
-						list.appendChild(option);
-						if (!!element['selected']) {
-							option.onclick();
-						}
-						if (!!element['disabled']) {
-							option.style.filter = 'grayscale(100%)';
-							option.style.pointerEvents = 'none';
-						}
-					}
-				});
-
-				list.style.height = Math.min(list.scrollHeight+8,300)+'px';
-			} else {
-				input.type = 'text';
-			}
-
-			if (Dialog.attributes.input.hasOwnProperty('min')) {
-				input.min = Dialog.attributes.input['min'];
-			}
-			if (Dialog.attributes.input.hasOwnProperty('max')) {
-				input.max = Dialog.attributes.input['max'];
-			}
-
-			if (Dialog.attributes.input.hasOwnProperty('validate') && !!Dialog.attributes.input.validate && Dialog.attributes.input.type != 'select') {
-				var valmsg = document.querySelector('p#validateMessage');
-				if (Dialog.attributes.input.hasOwnProperty('validateMessage')) {
-					valmsg.innerHTML = Dialog.attributes.input['validateMessage'];
+						option.selected = (element['selected'] ? true : false);
+						option.disabled = (element['disabled'] ? true : false);
+						input.add(option);
+					});
 				} else {
-					valmsg.innerHTML = 'Invalid input';
+					var input = document.createElement('input');
+					document.querySelector('div.input').appendChild(input);
+					input.className = 'dInput';
+					input.autocomplete = false;
+
+					if (o.type == 'text') {
+						input.type = 'text';
+					} else if (o.type == 'date') {
+						input.type = 'date';
+					} else if (o.type == 'time') {
+						input.type = 'time';
+					} else if (o.type == 'number') {
+						input.type = 'number';
+					} else if (o.type == 'password') {
+						input.type = 'password';
+					} else {
+						input.type = 'text';
+					}
+
+					if (o.hasOwnProperty('min')) {
+						input.min = o['min'];
+					}
+					if (o.hasOwnProperty('max')) {
+						input.max = o['max'];
+					}
+
+					if (o.hasOwnProperty('placeholder')) {
+						input.placeholder = o.placeholder;
+					}
+					if (o.hasOwnProperty('value')) {
+						input.value = o.value;
+					}
 				}
-			}
 
-			if (Dialog.attributes.input.hasOwnProperty('placeholder')) {
-				input.placeholder = Dialog.attributes.input.placeholder;
-			}
-			if (Dialog.attributes.input.hasOwnProperty('value')) {
-				input.value = Dialog.attributes.input.value;
-			}
+				/*if (o.hasOwnProperty('validate') && !!o.validate && o.type != 'select') {
+					var valmsg = document.querySelector('p#validateMessage');
+					if (o.hasOwnProperty('validateMessage')) {
+						valmsg.innerHTML = o['validateMessage'];
+					} else {
+						valmsg.innerHTML = 'Invalid input';
+					}
+				}*/
 
-			input.focus();
+				if (o.hasOwnProperty('heading') && !! o.heading) {
+					var heading = document.createElement('p');
+					heading.className = 'FlyCSParagraphTitle FlyUiNoSelect inputHeading';
+					heading.innerHTML = o.heading;
+					document.querySelector('div.input').insertBefore(heading,input);
+				}
+
+				Dialog.inputs.push({attributes:o,input:input});
+				//input.focus();
+			});
 		}
 
 		Dialog.position();
@@ -199,7 +243,7 @@ var Dialog = {
 				}
 			}
 		}, false);
-		document.getElementById('input').addEventListener("keypress", function(e) {
+		/*document.getElementById('input').addEventListener("keypress", function(e) {
 			if (e.keyCode == 13) {
 				e.preventDefault();
 				e.stopPropagation();
@@ -209,7 +253,7 @@ var Dialog = {
 					console.log('Error in executing default function from input: '+e,e);
 				}
 			}
-		}, false);
+		}, false);*/
 
 		try {
 			window.top.shell.sound.system(Dialog.attributes.sound);
@@ -233,49 +277,83 @@ var Dialog = {
 		var height = window.top.document.getElementById(Fly.window.id).offsetHeight;
 		Fly.window.position.set(position[0],Math.max((position[1]-((height-oldheight)/2)),0))
 	},
-	validateInput: function() {
-		var input = document.querySelector('input#input');
-		var rx = new RegExp(Dialog.attributes.input.validate);
-		var valmsg = document.querySelector('p#validateMessage');
-		
-		var test = rx.test(input.value);
-
-		if (test) {
-			return true;
-		} else {
-			if (valmsg.style.display != 'block') {
-				valmsg.style.display = 'block';
-				var oldheight = window.top.document.getElementById(Fly.window.id).offsetHeight;
-				console.log(Dialog.positionModifier);
-				Dialog.position();
-				Dialog.positionRelative(oldheight);
-			} else {
-				Fly.window.flash();
+	checkValidate: function() {
+		var validate = false;
+		Dialog.inputs.forEach(function(n) {
+			if (n.attributes.hasOwnProperty('validate') && !!n.attributes.validate) {
+				validate = true;
 			}
+		});
+		return validate;
+	},
+	validateInput: function() {
+		//var input = document.querySelector('input#input');
+		var pass = true;
+		Dialog.inputs.forEach(function(n) {
+			if (n.attributes.hasOwnProperty('validate') && !!n.attributes.validate) {
+				if (n.input.classList.contains('richSelect')) {
+					if (!Dialog.validateList(n)) {
+						pass = false;
+					}
+				} else {
+					var rx = new RegExp(n.attributes.validate);
+					var test = rx.test(n.input.value);
+
+					if (!test) {
+						if (n.attributes.hasOwnProperty('valMsgVisible') && !!n.attributes.valMsgVisible) {
+							Fly.window.flash();
+						} else {
+							n.attributes.valMsg = document.createElement('p');
+							n.attributes.valMsg.className = 'FlyCSDescriptionHint validateMessage';
+							if (n.attributes.hasOwnProperty('validateMessage')) {
+								n.attributes.valMsg.innerHTML = n.attributes.validateMessage;
+							} else {
+								n.attributes.valMsg.innerHTML = 'Invalid input';
+							}
+							n.attributes.valMsgVisible = true;
+
+							//console.log(Dialog.positionModifier);
+							document.querySelector('div.input').insertBefore(n.attributes.valMsg,n.input.nextSibling);
+							var oldheight = window.top.document.getElementById(Fly.window.id).offsetHeight;
+
+							Dialog.position();
+							Dialog.positionRelative(oldheight);
+						}
+						pass = false;
+					} else {
+						if (n.attributes.hasOwnProperty('valMsgVisible') && !!n.attributes.valMsgVisible) {
+							n.attributes.valMsgVisible = false;
+							n.attributes.valMsg.remove();
+							
+							var oldheight = window.top.document.getElementById(Fly.window.id).offsetHeight;
+
+							Dialog.position();
+							Dialog.positionRelative(oldheight);
+						}
+					}
+				}
+			}
+		});
+		if (!pass) {
 			try {
 				window.top.shell.sound.system('alert');
 			} catch(e) {}
-			return false;
 		}
+		return pass;
 	},
-	validateList: function() {
-		let r = false;
-		document.querySelectorAll('.richSelectItem').forEach(function(i) {
+	validateList: function(n) {
+		var r = false;
+		n.input.options.forEach(function(i) {
 			if (i.classList.contains('FlyUiMenuItemActive')) {
 				r = true;
 			}
 		});
 
-		if (r) {
-			return true;
-		} else {
+		if (!r) {
 			Fly.window.message('Select an option',4);
 			Fly.window.flash();
-			try {
-				window.top.shell.sound.system('alert');
-			} catch(e) {}
-			return false;
 		}
+		return r;
 	}
 };
 Fly.window.ready = function() {
@@ -368,10 +446,10 @@ img.button-image {
 p#content {
 	margin-top: -12px;
 }
-input#input,select#select {
-	width: 90%;
+.dInput {
+	width: 90% !important;
 }
-.input,.select,.richSelect {
+.input,.select {
 	display: none;
 	padding-left: 9%;
 	padding-right: 9%;
@@ -446,11 +524,13 @@ input#input,select#select {
 #checkbox {
 	margin-top: -3px;
 }
-#validateMessage {
+.validateMessage {
 	color: #f00;
-	display: none;
-	margin-top: 6px;
-	margin-bottom: -14px;
+	margin-top: 6px !important;
+	margin-bottom: 0px !important;
+}
+.inputHeading {
+	margin-bottom: 2px !important;
 }
 </style>
 </head>
@@ -460,10 +540,10 @@ input#input,select#select {
 
 <div class="title FlyUiNoSelect"><img id="icon" class="title-icon" src=""><span id="title"></span></div>
 <div class="description FlyUiNoSelect"><p id="content"></p></div>
-<div class="input"><input autocomplete="off" type="text" id="input">
-<p id="validateMessage" class="FlyCSDescriptionHint"></p></div>
-<div class="richSelect"></div>
-<div class="select"><select id="select"></select></div>
+<div class="input"><!--<input autocomplete="off" type="text" id="input">-->
+<!--<p id="validateMessage" class="FlyCSDescriptionHint"></p>--></div>
+<!--<div class="richSelect"></div>
+<div class="select"><select id="select"></select></div>-->
 
 </div>
 <div id="checkboxContainer" class="FlyUiNoSelect FlyUiTextHover">
