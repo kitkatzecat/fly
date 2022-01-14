@@ -446,8 +446,9 @@ function FlyFileStringProcessor($item) {
 			return ["file"=>$path.'/'.basename($filePath),"name"=>basename($filePath),"bname"=>basename($filePath),"fname"=>basename($filePath),"type"=>$type,"mime"=>'directory',"icon"=>$icon,"description"=>$description,"URL"=>$url,"action"=>$action,"path"=>$path,"fpath"=>$fpath,"ffile"=>$ffile,"fname"=>$fname,"isdir"=>true];
 		} else { // FILE ------------------------------------------------------------------------------------------------------
 			$filePath = trimslashes($filePath);
-			$extension = strtolower(end(explode('.',basename($filePath))));
-			if ($extension == strtolower(basename($filePath))) {
+			if (!!strpos(basename($filePath),'.')) {
+				$extension = strtolower(end(explode('.',basename($filePath))));
+			} else {
 				$extension = '';
 			}
 			
@@ -498,9 +499,9 @@ function FlyFileStringProcessor($item) {
 			} else {
 				$url = str_ireplace($_SERVER['DOCUMENT_ROOT'],$protocol.$_SERVER['HTTP_HOST'],$filePath);
 			}
-			$path = preg_replace('#/+#','/',str_ireplace(basename($filePath),'',$filePath));
+			$path = preg_replace('#/+#','/',str_lreplace(basename($filePath),'',$filePath));
 			$ffile = preg_replace('#/+#','/',str_ireplace($_SERVER['DOCUMENT_ROOT'],'.',$filePath));
-			$fpath = preg_replace('#/+#','/',str_ireplace($_SERVER['DOCUMENT_ROOT'],'.',str_replace('/'.basename($filePath),'',$filePath)));
+			$fpath = preg_replace('#/+#','/',str_ireplace($_SERVER['DOCUMENT_ROOT'],'.',str_lreplace('/'.basename($filePath),'',$filePath)));
 			$mime = mime_content_type($path.'/'.basename($filePath));
 			
 			if (FlyUserRegistryGet('HideFileExtensions','SprocketComputers.zFileManager') == 'true' || (FlyUserRegistryGet('ShowExtensionALS','SprocketComputers.zFileManager') == 'false' && $extension == 'als')) {
@@ -511,7 +512,11 @@ function FlyFileStringProcessor($item) {
 			} else {
 				$fname = basename($filePath);
 			}
-			$bname = str_lireplace('.'.$extension,'',$fname);
+			if (!!strpos($fname,'.')) {
+				$bname = str_lireplace('.'.$extension,'',$fname);
+			} else {
+				$bname = $fname;
+			}
 			if ($path == '') {
 				$path = '/';
 			}
