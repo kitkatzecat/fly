@@ -79,6 +79,37 @@ Fly.file = {
 			frame.window.Dialog.callback = callback;
 		});
 	},
+	dir: function(callback=function(){},options={}) {
+		var pos = Fly.window.position.get();
+
+		var attributes = {
+			title: Fly.window.name.get() + ' - Choose a Folder',
+			name: Fly.window.name.get(),
+			icon: Fly.window.icon.get(),
+			x: parseInt(pos[0]+32),
+			y: parseInt(pos[1]+32),
+			width: 500,
+			height: 266,
+			location: '<?php echo $_FLY['RESOURCE']['URL']['APPS']; ?>SprocketComputers.zFileManager/dialogs.php?dialog=file_dir',
+			expand: false,
+			minimize: false,
+			close: true,
+			resize: true,
+			background: false,
+			minheight: 108,
+			minwidth: 370,
+			maxheight: false,
+			maxwidth: false,
+			maxinitheight: false,
+			maxinitwidth: false
+		}
+
+		Fly.window.child.open({modal: true,attributes: attributes}, function(frame) {
+			frame.window.Dialog.options = options;
+			frame.window.Dialog.opener = window;
+			frame.window.Dialog.callback = callback;
+		});
+	},
 	string: {
 		name: function(file) {
 			return file.replace(/^.*[\\\/]/,'');

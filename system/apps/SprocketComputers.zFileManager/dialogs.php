@@ -24,6 +24,9 @@ if ($_GET['dialog'] == 'file_get') {
 if ($_GET['dialog'] == 'file_set') {
 	goto file_set;
 }
+if ($_GET['dialog'] == 'file_dir') {
+	goto file_dir;
+}
 exit;
 
 bookmark_add:
@@ -1374,4 +1377,348 @@ button#button-ok {
 </html>
 <?php
 exit;
+
+file_dir:
+?>
+<!DOCTYPE html>
+<html>
+<head>
+<?php
+include 'Fly.Standard.php';
+include 'Fly.Actionbar.php';
+include 'Fly.Command.php';
+include 'Fly.Registry.php';
+
+if (isset($_GET['p'])) {
+	$p = $_GET['p'];
+} else {
+	$p = '%FLY.PATH%';
+}
+$p = base64_encode($p);
+
+$cv = FlyRegistryGet('ViewDialog');
+if ($cv == '' || $cv == false) {
+	$cv = 'file.sm.js';
+}
+$views = json_decode(file_get_contents($_FLY['WORKING_PATH'].'view/views.file.json'),true);
+$vm = '';
+$vl = '{';
+$vc = 0;
+foreach ($views as $k => $v) {
+	if ($v['src'] == $cv) {
+		$vm .= '[\''.$k.'\',function(){View.set(\''.$v['src'].'\');},{icon:\''.FlyVarsReplace($v['icon']).'\',toggled:true}],';
+	} else {
+		$vm .= '[\''.$k.'\',function(){View.set(\''.$v['src'].'\');},{icon:\''.FlyVarsReplace($v['icon']).'\'}],';
+	}
+	$vl .= '\''.$v['src'].'\':'.$vc.',';
+	$vc++;
+}
+$vl .= '}';
+$vl = str_lreplace(',','',$vl);
+
+$vm = str_lreplace(',','',$vm);
+
+?>
+<script>
+var Menubar;
+var Navbar;
+var Panebar;
+var Addressbar;
+var Panes = {};
+Fly.window.ready = function() {
+	ToolbarInit();
+	Fly.window.disableContext();
+	Dialog.ready();
+}
+
+function ToolbarInit() {
+	Navbar = new Fly.actionbar();
+	Navbar.style.position = 'absolute';
+	Navbar.style.top = '0px';
+	Navbar.style.right = '0px';
+	Navbar.style.left = '0px';
+	Navbar.style.width = 'auto';
+	Navbar.style.transition = 'right 0.2s ease-in-out';
+	
+	Addressbar = document.createElement("input");
+	Addressbar.type = 'text';
+	Addressbar.className = 'addressbar transparent-white FlyUiTextHighlight';
+	Addressbar.onkeydown = function(event) {
+		if (event.keyCode == 13) {
+			Go();
+		}
+	}
+	Addressbar.onfocus = function() {
+		Addressbar.className = 'addressbar-focus';
+		setTimeout(function(){Addressbar.select()},100);
+	}
+	Addressbar.onblur = function() {
+		Addressbar.className = 'addressbar transparent-white FlyUiTextHighlight';
+		if (window.getSelection) {window.getSelection().removeAllRanges();}
+		else if (document.selection) {document.selection.empty();}
+	}
+	
+	Navbar.add({text:'',title:'Back',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left.svg',action:function(){}});
+	Navbar.add({text:'',title:'Up',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-up.svg',action:Up});
+
+	var ab = Navbar.add({type:'custom',content:Addressbar});
+	ab.style.width = 'calc(100% - 224px)';
+
+	Navbar.add({text:'',title:'Icon View',icon:'<?php echo $_FLY['WORKING_URL']; ?>icon.xl.svg',type:'dropdown',menu:[
+		<?php echo $vm; ?>
+	],align:'right'});
+	Navbar.add({type:'divider',align:'right'});
+	Navbar.add({text:'',title:'Refresh',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>refresh.svg',action:Refresh,align:'right'});
+	Navbar.add({text:'Go',icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>go.svg',action:Go,align:'right'});
+	
+	document.body.appendChild(Navbar);
+}
+function Close() {
+	Fly.window.close();
+}
+function Go() {
+	Nav(Addressbar.value);
+	Addressbar.blur();
+}
+var View = {
+	set: function(view) {
+		Fly.command('registry:set,ViewDialog,'+view,View.callback);
+		View.setting = view;
+	},
+	callback: function(a) {
+		if (!a.return) {
+			Fly.window.message.show('An error occurred while saving your options to the registry');
+			View.setting = false;
+		} else {
+			Navbar.buttons[3].menu.options[View.list[View.current]].toggleOff();
+			Navbar.buttons[3].menu.options[View.list[View.setting]].toggleOn();
+			View.current = View.setting;
+			View.setting = false;
+		}
+		Refresh(document.getElementById('frame-main').contentWindow.pageYOffset);
+	},
+	list: <?php echo $vl; ?>,
+	current: '<?php echo $cv; ?>',
+	setting: false
+};
+
+Fly.window.title.setDirect = Fly.window.title.set;
+Fly.window.title.set = function(title) {
+	Fly.window.title.setDirect(Fly.window.name.get() + ' - '+title);
+}
+Fly.window.icon.set = function() {};
+
+function Nav(path) {
+	var frame = document.getElementById('frame-main');
+	window.top.shell.sound.system('click');
+	Addressbar.value = '';
+	frame.style.display = 'none';
+	Fly.command('fileprocess:'+path,function(pth){
+		if (pth['return'].hasOwnProperty('ffile')) {
+			Addressbar.value = pth['return']['ffile'];
+			Fly.window.title.set(pth['return']['fname']);
+		} else {
+			Addressbar.value = path;
+			Fly.window.title.set('Not Found');
+		}
+		Nav.current = pth['return'];
+	});
+	frame.src = 'list.php?v='+View.current+'&p='+encodeURIComponent(path);
+}
+Nav.current = false;
+
+function Up() {
+	Nav(Nav.current['fpath']);
+}
+function Refresh(pos=false) {
+	if (!!pos) {
+		var frame = document.getElementById('frame-main');
+		var a = function() {
+			frame.contentWindow.scrollTo(0,pos);
+			frame.removeEventListener('load',a);
+		}
+		frame.addEventListener('load',a);
+	}
+	Nav(Nav.current['ffile']);
+}
+
+var CurrentLocation = {
+	basename: 'system',
+	icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg',
+	path: '<?php echo $_FLY['PATH']; ?>system',
+	url: '<?php echo $_FLY['URL']; ?>system',
+	fpath: './system',
+};
+var SelectedFile = CurrentLocation;
+function OnSelectionChange() {
+	if (SelectedFile['type'] !== 'file') {
+		document.getElementById('filename').innerHTML = SelectedFile['fname'];
+		document.getElementById('fileicon').src = SelectedFile['icon'];
+		ChosenFile = SelectedFile;
+		document.getElementById('button-ok').disabled = false;
+		document.getElementById('button-ok').onclick = function() {
+			Dialog.select(SelectedFile);
+		}
+	}
+}
+
+var ChosenFile = false;
+
+function FrameLoad() {
+	var frame = document.getElementById('frame-main');
+
+	frame.style.display = 'block';
+}
+</script>
+
+<script>
+var Dialog = {
+	opener: {},
+	options: {},
+	filter: [],
+	callback: function() {},
+	ready: function() {
+		if (Dialog.options.hasOwnProperty('path')) {
+			Nav(Dialog.options.path);		
+		} else {
+			Nav('%FLY.USER.PATH%');
+		}
+
+		Fly.window.onclose = function() {
+			Dialog.callback(false);
+			Fly.window.close();
+		}
+	},
+	select: function(file) {
+		if (file['type'] == 'folder') {
+			Dialog.selected = true;
+
+			Dialog.opener.Fly.window.focus.self();
+			Dialog.opener.Fly.window.bringToFront();
+			Fly.window.close();
+
+			Dialog.callback(file);
+		} else {
+			Fly.window.message('Please select a folder',3);
+			try {
+				window.top.shell.sound.system('alert');
+			} catch(e) {}
+		}
+	},
+	selected: false
+};
+</script>
+
+<style>
+#main {
+	position: absolute;
+	top: 34px;
+	left: 0px;
+	right: 0px;
+	bottom: 50px;
+	background: #fff;
+	z-index: 2;
+	cursor: wait;
+}
+.addressbar-focus {
+	margin-left: 4px;
+	margin-right: 4px;
+	margin-top: 3px;
+	height: 24px;
+	box-sizing: border-box;
+	cursor: text;
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+	background-color: #fff !important;
+	text-shadow: none !important;
+	color: #000 !important;
+	border-color: #000 !important;
+}
+.addressbar {
+	margin-left: 4px;
+	margin-right: 4px;
+	margin-top: 3px;
+	height: 24px;
+	box-sizing: border-box;
+	background-color: transparent;
+	cursor: text;
+	font-size: 14px;
+	text-align: center;
+	width: 100%;
+}
+.addressbar:disabled {
+	color: #808080 !important;
+}
+.transparent-white {
+	border: 1px solid rgba(255,255,255,0.3) !important;
+}
+.transparent-white:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+.white {
+	border: 1px solid rgb(255,255,255) !important;
+}
+.white:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+.black {
+	border: 1px solid rgb(0,0,0) !important;
+}
+.black:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+#frame-main {
+	width: 100%;
+	height: 100%;
+}
+#filebar {
+	position: absolute;
+	left: 9px;
+	bottom: 9px;
+	width: calc(100% - 125px);
+	border: 1px solid rgba(255,255,255,0.3) !important;
+	border-radius: 4px;
+	height: 28px;
+	padding: 5px;
+	box-sizing: border-box;
+	font-size: 14px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+#filebar:hover {
+	background-color: rgba(255,255,255,0.2);
+}
+#fileicon {
+	width: 16px;
+	height: 16px;
+	margin-right: 4px;
+	margin-bottom: -3px;
+	margin-left: 2px;
+}
+
+img.button-image {
+	width: 16px;
+	height: 16px;
+	vertical-align: middle;
+}
+button#button-ok {
+	width:100px;position:absolute;bottom:9px;right:9px;
+}
+</style>
+</head>
+<body>
+<div id="main">
+<iframe id="frame-main" onload="FrameLoad();" frameborder="0" allowtransparency="true" scrolling="auto" src=""></iframe>
+</div>
+
+<div id="filebar" class="FlyUiTextHighlight"><img id="fileicon" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>file.svg"><span id="filename">No folder selected</span></div>
+<button disabled id="button-ok"><img class="button-image" src="<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg"></button>
+
+</body>
+</html>
+<?php
+exit;
+
 ?>
