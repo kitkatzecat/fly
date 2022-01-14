@@ -606,9 +606,10 @@ Fly.window.title.set = function(title) {
 Fly.window.icon.set = function() {};
 
 function Nav(path) {
+	var frame = document.getElementById('frame-main');
 	window.top.shell.sound.system('click');
 	Addressbar.value = '';
-	document.getElementById('frame-main').style.display = 'none';
+	frame.style.display = 'none';
 	Fly.command('fileprocess:'+path,function(pth){
 		if (pth['return'].hasOwnProperty('ffile')) {
 			Addressbar.value = pth['return']['ffile'];
@@ -618,8 +619,13 @@ function Nav(path) {
 			Fly.window.title.set('Not Found');
 		}
 		Nav.current = pth['return'];
-	})
-	document.getElementById('frame-main').src = 'list.php?v='+View.current+'&p='+encodeURIComponent(path);
+	});
+	var a = function() {
+		Dialog.updateType();
+		frame.removeEventListener('load',a);
+	}
+	frame.addEventListener('load',a);
+	frame.src = 'list.php?v='+View.current+'&p='+encodeURIComponent(path);
 }
 Nav.current = false;
 
