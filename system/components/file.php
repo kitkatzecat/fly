@@ -53,7 +53,7 @@ if ($_GET['d'] == 'write') {
 	}
 
 	if (!is_dir(str_lreplace(basename($file),'',$file))) {
-		$message = 'Parent directory does not exist';
+		$message = 'Directory does not exist';
 		goto end;
 	}
 
