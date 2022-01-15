@@ -286,7 +286,7 @@ Fly.actionbar = function(options) {
 			
 			// MENU HANDLED BY Fly.Actionmenu
 
-			button.onclick = function() {
+			button.onmouseup = function() {
 				button.menu.style.top = ((actionbar.offsetTop+button.offsetTop+button.offsetHeight) - 1)+'px';
 				button.menu.style.left = (button.offsetLeft+actionbar.offsetLeft)+'px';
 				button.className = 'FlyUiNoSelect FlyUiToolbarItemToggle FlyUiText';
