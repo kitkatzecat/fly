@@ -11,6 +11,12 @@
 		"action": "SprocketComputers.PhotoViewer,file=%1",
 		"mime": "image/jpeg"
 	},
+	"jfif": {
+		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
+		"description": "JPEG File Interchange Format",
+		"action": "SprocketComputers.PhotoViewer,file=%1",
+		"mime": "image/jpeg"
+	},
 	"png": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/image.svg",
 		"description": "PNG Image",
@@ -176,5 +182,11 @@
 	"otf": {
 		"icon": "%FLY.RESOURCE.URL.ICONS%type/font.svg",
 		"description": "OpenType Font"
+	},
+	"swf": {
+		"icon": "%FLY.RESOURCE.URL.APPS%SprocketComputers.RufflePlayer/swf.svg",
+		"description": "Shockwave Flash Object",
+		"mime": "application/vnd.adobe.flash-movie",
+		"app": "SprocketComputers.RufflePlayer"
 	}
 }
