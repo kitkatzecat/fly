@@ -523,13 +523,17 @@ if (strpos($process['mime'],'image/') !== false) {
 	}
 }
 
-// Video/Audio - get duration from HTML
+// Video/Audio - get duration & bitrate from HTML
 if ((strpos($process['mime'],'audio/') !== false || strpos($process['mime'],'video/') !== false ) && in_array($process['extension'],['wav','ogg','mp3','m4a','mp4'])) {
 	?>
 <div class="category FlyUiText FlyUiNoSelect">Media</div>
 <div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
 	<span class="title">Duration</span>
 	<span class="info" id="media-duration">Determining...</span>
+</div>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Bitrate</span>
+	<span class="info" id="media-bitrate">Determining...</span>
 </div>
 <script>
 document.addEventListener('DOMContentLoaded',function() {
@@ -550,8 +554,26 @@ document.addEventListener('DOMContentLoaded',function() {
 	audio.src = '<?php echo $process['URL']; ?>';
 	audio.onloadedmetadata = function() {
 		document.getElementById('media-duration').innerText = FormatTime(Math.round(audio.duration));
+		window.rMediaBitrateDuration(audio.duration);
 	}
 });
+var mediaBitrateDuration = false;
+var mediaBitrateSize = false;
+function rMediaBitrateDuration(duration) {
+	window.mediaBitrateDuration = duration;
+	if (!!window.mediaBitrateSize) {
+		window.mediaBitrate(window.mediaBitrateSize,window.mediaBitrateDuration);
+	}
+}
+function rMediaBitrateSize(size) {
+	window.mediaBitrateSize = size;
+	if (!!window.mediaBitrateDuration) {
+		window.mediaBitrate(window.mediaBitrateSize,window.mediaBitrateDuration);
+	}
+}
+function mediaBitrate(size,duration) {
+	document.getElementById('media-bitrate').innerText = Math.floor((size/duration)/100)+' kbps';
+}
 </script>
 	<?php
 }
@@ -578,6 +600,33 @@ if ($process['extension'] == 'als') {
 	<?php
 }
 
+
+// Video - get resolution from HTML
+if (strpos($process['mime'],'video/') !== false) {
+?>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Width</span>
+	<span class="info" id="media-width">Determining...</span>
+</div>
+<div class="item FlyUiMenuItem FlyUiText FlyUiNoSelect">
+	<span class="title">Height</span>
+	<span class="info" id="media-height">Determining...</span>
+</div>
+<video id="video" style="display:none;" src=""></video>
+<script>
+document.addEventListener('DOMContentLoaded',function() {
+	var video = document.querySelector('#video');
+	video.preload = 'metadata';
+	video.src = '<?php echo $process['URL']; ?>';
+	video.onloadedmetadata = function() {
+		document.getElementById('media-width').innerText = video.videoWidth+' pixels';
+		document.getElementById('media-height').innerText = video.videoHeight+' pixels';
+	}
+});
+</script>
+
+<?php
+}
 ?>
 
 </div>
@@ -599,6 +648,9 @@ echo '
 <script>
 window.parent.document.getElementById(\'size-full\').innerHTML = \''.number_format($fullsize).' bytes\';
 window.parent.document.getElementById(\'size-nice\').innerHTML = \''.$filesize.'\';
+try {
+	window.parent.rMediaBitrateSize('.$fullsize.');
+} catch(e) {}
 </script>
 ';
 exit;
