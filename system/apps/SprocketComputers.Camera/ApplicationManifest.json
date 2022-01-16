@@ -6,7 +6,7 @@
     "icon": "%FLY.WORKING_URL%camera.svg",
     "date": 1634700608,
     "index": "index.php",
-    "description": "View your webcam video.",
+    "description": "View and capture photos from a camera connected to your computer.",
     "window": {
         "position": {
             "x": "auto",
