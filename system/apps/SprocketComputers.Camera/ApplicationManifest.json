@@ -1,0 +1,23 @@
+{
+    "id": "SprocketComputers.Camera",
+    "name": "Camera",
+    "publisher": "Sprocket Computers",
+    "version": "1.0",
+    "icon": "%FLY.WORKING_URL%camera.svg",
+    "date": 1634700608,
+    "index": "index.php",
+    "description": "View your webcam video.",
+    "window": {
+        "position": {
+            "x": "auto",
+            "y": "auto"
+        },
+        "size": {
+            "width": "550",
+            "height": "510"
+        },
+        "title": "Camera",
+        "expand": false,
+        "resize": false
+    }
+}
