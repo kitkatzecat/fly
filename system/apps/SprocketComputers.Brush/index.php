@@ -138,8 +138,8 @@ function OnLoad() {
 	
 	Actionbars.Menubar.buttonsList.canvas = Actionbars.Menubar.add({	'text':'Canvas','type':'dropdown','menu':[
 		['Clear',ClearCanvas,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg'}],
-		['Resize...',function(){ResizeCanvas(200,200);},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left-up.svg'}],
-		['Scale...',function(){},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrows-in.svg'}],
+		['Resize...',function(){Resize.open();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left-up.svg'}],
+		['Scale...',function(){Scale.open();},{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrows-in.svg'}],
 		[''],
 		['Tool',[
 			['Pencil',Tools.Pencil,{icon:'<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>pencil.svg'}],
@@ -1002,6 +1002,95 @@ function ResizeCanvas(width,height) {
 		ovrlay.style.height = height+'px';
 		CurrentTool();
 		UpdateState();
+	}
+}
+function ScaleCanvas(width,height) {
+	var oldwidth = canvas.width;
+	var oldheight = canvas.height;
+	var img = new Image;
+	img.src = canvas.toDataURL();
+	img.onload = function() {
+		canvas.width = width;
+		canvas.height = height;
+		ctx.drawImage(img,0,0,width,height);
+		ovrlay.style.width = width+'px';
+		ovrlay.style.height = height+'px';
+		CurrentTool();
+		UpdateState();
+	}
+}
+
+var Resize = {
+	open: function() {
+		Fly.dialog.custom({
+			modal: true,
+			title: 'Resize Canvas',
+			message: 'Resize canvas',
+			content: 'Enter a new size (in pixels) for the canvas:',
+			sound: "question",
+			input: [{
+				type: "number",
+				heading: 'Width',
+				value: canvas.width
+			},{
+				type: "number",
+				heading: 'Height',
+				value: canvas.height
+			}],
+			icon: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrow-left-up.svg",
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
+					default: true,
+					onclick: Resize.callback
+				},
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"
+				}
+			]
+		});
+	},
+	callback: function(r) {
+		ResizeCanvas(parseInt(r[0]),parseInt(r[1]));
+	}
+}
+
+var Scale = {
+	open: function() {
+		Fly.dialog.custom({
+			modal: true,
+			title: 'Scale Image',
+			message: 'Scale image',
+			content: 'Enter a new size (in pixels) for the image:',
+			sound: "question",
+			input: [{
+				type: "number",
+				heading: 'Width',
+				value: canvas.width
+			},{
+				type: "number",
+				heading: 'Height',
+				value: canvas.height
+			}],
+			icon: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>arrows-in.svg",
+			buttons: [
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-check.svg",
+					default: true,
+					onclick: Scale.callback
+				},
+				{
+					align: "right",
+					image: "<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>mark-x.svg"
+				}
+			]
+		});
+	},
+	callback: function(r) {
+		ScaleCanvas(parseInt(r[0]),parseInt(r[1]));
 	}
 }
 
