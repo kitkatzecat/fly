@@ -16,6 +16,7 @@ if (!empty($_POST['user']) || !empty($_POST['password'])) {
 }
 if (!empty($_GET['logout'])) {
 	unset($_SESSION['fly_user_id']);
+	unset($_SESSION['fly_resources']);
 	session_destroy();
 	header('Location: index.php?skiplogo=true');
 	exit;
