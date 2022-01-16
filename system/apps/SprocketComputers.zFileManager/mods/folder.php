@@ -44,7 +44,7 @@ function nicetime($date)
 	for ($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) {
 		$difference /= $lengths[$j];
 	}
-	$difference = round($difference);
+	$difference = floor($difference);
 
 	if ($difference != 1) {
 		$periods[$j].= "s";
