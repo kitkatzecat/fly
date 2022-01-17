@@ -250,6 +250,16 @@ function ContextMenu(obj,e,ret=false) {
 			],['']);
 	}
 
+	if (obj['description'] == 'Application Folder') {
+		menu.push([
+			'Run Application',
+		function() {window.top.system.command('run:'+obj['name']);},
+		{
+			icon: obj['icon'],
+		}
+		],['']);
+	}
+
 	// File/dir operations
 	var fileoperations = false;
 	if (Protected.indexOf(obj['ffile']) != -1) {
