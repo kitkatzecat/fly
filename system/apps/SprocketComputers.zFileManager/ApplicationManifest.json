@@ -102,6 +102,22 @@
             "window": false,
             "title": "Delete"
         },
+        "CopyTo": {
+            "name": "Copy To",
+            "icon": "%FLY.WORKING_URL%fileman.svg",
+            "index": "%FLY.WORKING_URL%fileops.php?d=copy",
+            "hidden": true,
+            "window": false,
+            "title": "Copy To"
+        },
+        "MoveTo": {
+            "name": "Move To",
+            "icon": "%FLY.WORKING_URL%fileman.svg",
+            "index": "%FLY.WORKING_URL%fileops.php?d=move",
+            "hidden": true,
+            "window": false,
+            "title": "Move To"
+        },
         "CreateKeyword": {
             "name": "Create a Keyword",
             "icon": "%FLY.RESOURCE.URL.ICONS%go.svg",

@@ -273,11 +273,10 @@ function ContextMenu(obj,e,ret=false) {
 
 	if (obj['type'] == 'file') {
 		menu.push([
-			'Copy to',
-			function() {},
+			'Copy to...',
+			function() {window.top.system.command('run:SprocketComputers.zFileManager.CopyTo,file='+encodeURIComponent(obj['file']));},
 			{
-				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>copy.svg',
-				disabled: true
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>copy.svg'
 			}
 		]);
 	}
@@ -309,7 +308,8 @@ function ContextMenu(obj,e,ret=false) {
 			'Change alias icon...',
 			function() {window.top.system.command('run:SprocketComputers.zFileManager.Alias,icon,file='+encodeURIComponent(obj['file']));},
 			{
-				icon: '<?php echo $_FLY['WORKING_URL']; ?>alias.svg'
+				icon: '<?php echo $_FLY['WORKING_URL']; ?>alias.svg',
+				disabled: (obj['extension'] != 'als')
 			}
 		]);
 	}
@@ -332,6 +332,16 @@ function ContextMenu(obj,e,ret=false) {
 			function() {window.top.system.command('run:'+obj['file']);},
 			{
 				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>popout.svg'
+			}
+		]);
+	}
+
+	if (obj['type'] == 'file') {
+		more.push([
+			'Move to...',
+			function() {window.top.system.command('run:SprocketComputers.zFileManager.MoveTo,file='+encodeURIComponent(obj['file']));},
+			{
+				icon: '<?php echo $_FLY['RESOURCE']['URL']['ICONS']; ?>folder.svg'
 			}
 		]);
 	}
