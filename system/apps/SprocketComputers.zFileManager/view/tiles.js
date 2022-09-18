@@ -18,7 +18,6 @@ function View(Folder=false,List=false) {
 		item.style.maxWidth = '320px';
 
 		item.style.whiteSpace = 'nowrap';
-		item.style.textOverflow = 'ellipsis';
 		item.style.textAlign = 'left';
 		item.style.fontSize = '16px';
 
@@ -52,7 +51,7 @@ function View(Folder=false,List=false) {
 
 			var title = document.createElement('div');
 			title.style.display = 'inline-block';
-			title.style.width = '256px';
+			title.style.width = 'calc(100% - 56px)'; //100% - (width of icon + margin)
 			
 			var name = document.createElement('div');
 			name.innerText = List[i]['fname'];
